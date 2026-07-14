@@ -1,0 +1,317 @@
+- generic [active] [ref=f1e1]:
+  - banner [ref=f1e2]:
+    - generic [ref=f1e3]:
+      - link "VIPER SECURITY" [ref=f1e4] [cursor=pointer]:
+        - /url: /
+      - button "Toggle navigation menu" [ref=f1e5] [cursor=pointer]
+  - generic [ref=f1e10]:
+    - button "Close navigation menu" [ref=f1e11] [cursor=pointer]
+    - link "Services" [ref=f1e14] [cursor=pointer]:
+      - /url: "#services"
+    - link "Fleet" [ref=f1e15] [cursor=pointer]:
+      - /url: "#fleet"
+    - link "Pricing" [ref=f1e16] [cursor=pointer]:
+      - /url: "#pricing"
+    - link "Membership" [ref=f1e17] [cursor=pointer]:
+      - /url: "#membership"
+    - link "Contact" [ref=f1e18] [cursor=pointer]:
+      - /url: "#contact"
+    - link "BOOK YOUR RIDE" [ref=f1e19] [cursor=pointer]:
+      - /url: "#contact"
+  - main [ref=f1e20]:
+    - region "Hero" [ref=f1e21]:
+      - generic [ref=f1e22]:
+        - heading "VIPER SECURITY" [level=1] [ref=f1e23]
+        - paragraph [ref=f1e24]: TRAVEL IN STYLE. ARRIVE IN COMFORT.
+        - paragraph [ref=f1e25]: VIP Chauffeur & Luxury Transport — Marbella & Milano
+        - link "BOOK YOUR RIDE" [ref=f1e26] [cursor=pointer]:
+          - /url: "#contact"
+        - generic [ref=f1e27]:
+          - 'link "Italy: +39 349 663 8171" [ref=f1e28] [cursor=pointer]':
+            - /url: tel:+393496638171
+          - 'link "Spain: +34 670 038 541" [ref=f1e29] [cursor=pointer]':
+            - /url: tel:+34670038541
+        - generic [ref=f1e30]:
+          - generic "5 star rating" [ref=f1e31]: ★★★★★
+          - paragraph [ref=f1e32]: LUXURY • COMFORT • PRIVACY
+        - generic [ref=f1e33]:
+          - generic [ref=f1e34]: Professional Drivers
+          - generic [ref=f1e37]: Punctual
+          - generic [ref=f1e40]: Premium Vehicles
+          - generic [ref=f1e43]: Discreet
+          - generic [ref=f1e46]: 24/7 Service
+    - generic [ref=f1e50]:
+      - generic [ref=f1e51]:
+        - text: Premium Coverage Areas
+        - heading "OUR SERVICES" [level=2] [ref=f1e52]
+      - generic [ref=f1e54]:
+        - generic [ref=f1e55]:
+          - generic [ref=f1e56]:
+            - heading "Costa del Sol" [level=3] [ref=f1e57]
+            - paragraph [ref=f1e58]: Marbella
+          - generic [ref=f1e59]:
+            - heading "Airport Transfers" [level=4] [ref=f1e60]:
+              - generic [ref=f1e61]: ✈
+            - list [ref=f1e63]:
+              - listitem [ref=f1e64]:
+                - generic [ref=f1e65]: —
+                - generic [ref=f1e66]: Málaga → Marbella, Puerto Banús, Estepona, Sotogrande, Gibraltar
+          - generic [ref=f1e67]:
+            - heading "VIP Villa Transfers" [level=4] [ref=f1e68]:
+              - generic [ref=f1e69]: ❖
+            - paragraph [ref=f1e71]: Luxury transportation between villas, hotels, beach clubs and restaurants.
+          - generic [ref=f1e72]:
+            - heading "Yacht Transfers" [level=4] [ref=f1e73]:
+              - generic [ref=f1e74]: ⛵
+            - list [ref=f1e76]:
+              - listitem [ref=f1e77]:
+                - generic [ref=f1e78]: —
+                - generic [ref=f1e79]: Puerto Banús, Marbella Marina, Estepona Marina, Sotogrande Marina
+          - generic [ref=f1e80]:
+            - heading "Business & Corporate" [level=4] [ref=f1e81]:
+              - generic [ref=f1e82]: ■
+            - list [ref=f1e84]:
+              - listitem [ref=f1e85]: Meetings
+              - listitem [ref=f1e87]: Conferences
+              - listitem [ref=f1e89]: Corporate events
+              - listitem [ref=f1e91]: Business delegations
+          - generic [ref=f1e93]:
+            - heading "Nightlife & VIP Club" [level=4] [ref=f1e94]:
+              - generic [ref=f1e95]: ✩
+            - list [ref=f1e97]:
+              - listitem [ref=f1e98]: Restaurants
+              - listitem [ref=f1e100]: Beach clubs
+              - listitem [ref=f1e102]: Nightclubs
+              - listitem [ref=f1e104]: Private events
+            - paragraph [ref=f1e106]: Available with waiting service.
+        - generic [ref=f1e107]:
+          - generic [ref=f1e108]:
+            - heading "Northern Italy & Alps" [level=3] [ref=f1e109]
+            - paragraph [ref=f1e110]: Milano
+          - generic [ref=f1e111]:
+            - heading "Airport Transfers" [level=4] [ref=f1e112]:
+              - generic [ref=f1e113]: ✈
+            - list [ref=f1e115]:
+              - listitem [ref=f1e116]:
+                - generic [ref=f1e117]: —
+                - generic [ref=f1e118]: Milano Linate / Malpensa / Bergamo →Swiss — Lugano, St. Moritz, Zurich
+              - listitem [ref=f1e119]:
+                - generic [ref=f1e120]: —
+                - generic [ref=f1e121]: Monte Carlo — Monaco
+              - listitem [ref=f1e122]:
+                - generic [ref=f1e123]: —
+                - generic [ref=f1e124]: France — Nice
+              - listitem [ref=f1e125]:
+                - generic [ref=f1e126]: —
+                - generic [ref=f1e127]: Italy — Milano, Lago di Garda
+          - generic [ref=f1e128]:
+            - heading "VIP Villa Transfers" [level=4] [ref=f1e129]:
+              - generic [ref=f1e130]: ❖
+            - paragraph [ref=f1e132]: Luxury transportation between villas, hotels, beach clubs and restaurants.
+          - generic [ref=f1e133]:
+            - heading "Yacht Transfers" [level=4] [ref=f1e134]:
+              - generic [ref=f1e135]: ⛵
+            - paragraph [ref=f1e137]: Private transportation
+          - generic [ref=f1e138]:
+            - heading "Business & Corporate" [level=4] [ref=f1e139]:
+              - generic [ref=f1e140]: ■
+            - list [ref=f1e142]:
+              - listitem [ref=f1e143]: Meetings
+              - listitem [ref=f1e145]: Conferences
+              - listitem [ref=f1e147]: Corporate events
+              - listitem [ref=f1e149]: Business delegations
+          - generic [ref=f1e151]:
+            - heading "Nightlife & VIP Club" [level=4] [ref=f1e152]:
+              - generic [ref=f1e153]: ✩
+            - list [ref=f1e155]:
+              - listitem [ref=f1e156]: Restaurants
+              - listitem [ref=f1e158]: Beach clubs
+              - listitem [ref=f1e160]: Nightclubs
+              - listitem [ref=f1e162]: Private events
+            - paragraph [ref=f1e164]: Available with waiting service.
+    - generic [ref=f1e166]:
+      - heading "Our Fleet" [level=2] [ref=f1e169]
+      - generic [ref=f1e170]:
+        - img "Mercedes-Benz S-Class 4MATIC AMG interior — luxury leather steering wheel and dashboard" [ref=f1e172]
+        - generic [ref=f1e174]:
+          - heading "Mercedes-Benz S-Class 4MATIC AMG" [level=3] [ref=f1e175]: Mercedes-BenzS-Class 4MATIC AMG
+          - generic [ref=f1e176]:
+            - generic [ref=f1e177]: Luxury leather interior
+            - generic [ref=f1e180]: Rear executive seating
+            - generic [ref=f1e183]: Climate control
+            - generic [ref=f1e186]: Privacy glass
+            - generic [ref=f1e189]: Wi‑Fi available upon request
+            - generic [ref=f1e192]: Complimentary bottled water
+            - generic [ref=f1e195]: Phone charging facilities
+            - generic [ref=f1e198]: Professional English‑speaking driver
+          - generic [ref=f1e201]:
+            - generic [ref=f1e202]: Up to 3 passengers
+            - generic [ref=f1e203]: •
+            - generic [ref=f1e204]: 3 large suitcases
+            - generic [ref=f1e205]: •
+            - generic [ref=f1e206]: 2 carry‑on bags
+    - generic [ref=f1e208]:
+      - heading "PRICING" [level=2] [ref=f1e209]
+      - generic [ref=f1e211]:
+        - heading "HOURLY CHAUFFEUR SERVICE" [level=3] [ref=f1e212]
+        - generic [ref=f1e214]:
+          - generic [ref=f1e215]:
+            - paragraph [ref=f1e216]: 1 Hour
+            - paragraph [ref=f1e217]: €120
+            - paragraph [ref=f1e218]: Chauffeur
+          - generic [ref=f1e219]:
+            - paragraph [ref=f1e220]: 2 Hours
+            - paragraph [ref=f1e221]: €220
+            - paragraph [ref=f1e222]: Chauffeur
+          - generic [ref=f1e223]:
+            - paragraph [ref=f1e224]: 4 Hours
+            - paragraph [ref=f1e225]: €400
+            - paragraph [ref=f1e226]: Chauffeur
+          - generic [ref=f1e227]:
+            - paragraph [ref=f1e228]: 8 Hours
+            - paragraph [ref=f1e229]: €700
+            - paragraph [ref=f1e230]: Chauffeur
+          - generic [ref=f1e231]:
+            - paragraph [ref=f1e232]: Full Day
+            - paragraph [ref=f1e233]: 12 Hours
+            - paragraph [ref=f1e234]: €950
+            - paragraph [ref=f1e235]: Chauffeur
+        - paragraph [ref=f1e236]: Driver included.
+      - generic [ref=f1e237]:
+        - heading "AIRPORT TRANSFER PRICES" [level=3] [ref=f1e238]
+        - generic [ref=f1e240]:
+          - generic [ref=f1e241]:
+            - heading "Costa del Sol — Marbella" [level=4] [ref=f1e242]
+            - generic [ref=f1e243]:
+              - generic [ref=f1e244]:
+                - generic [ref=f1e245]: Málaga Airport → Marbella
+                - generic [ref=f1e246]: From €280
+              - generic [ref=f1e247]:
+                - generic [ref=f1e248]: Málaga Airport → Puerto Banús
+                - generic [ref=f1e249]: From €300
+              - generic [ref=f1e250]:
+                - generic [ref=f1e251]: Málaga Airport → Estepona
+                - generic [ref=f1e252]: From €350
+              - generic [ref=f1e253]:
+                - generic [ref=f1e254]: Málaga Airport → Sotogrande
+                - generic [ref=f1e255]: From €380
+              - generic [ref=f1e256]:
+                - generic [ref=f1e257]: Gibraltar Airport → Marbella
+                - generic [ref=f1e258]: From €400
+          - generic [ref=f1e259]:
+            - heading "Northern Italy & Alps — Milano" [level=4] [ref=f1e260]
+            - generic [ref=f1e261]:
+              - generic [ref=f1e262]:
+                - generic [ref=f1e263]: Malpensa Airport → Milano
+                - generic [ref=f1e264]: From €200
+              - generic [ref=f1e265]:
+                - generic [ref=f1e266]: Milano Airport → Lugano
+                - generic [ref=f1e267]: From €300
+              - generic [ref=f1e268]:
+                - generic [ref=f1e269]: Bergamo Airport → St. Moritz
+                - generic [ref=f1e270]: From €350
+              - generic [ref=f1e271]:
+                - generic [ref=f1e272]: Malpensa Airport → Monaco
+                - generic [ref=f1e273]: From €500
+              - generic [ref=f1e274]:
+                - generic [ref=f1e275]: Milano Airport → Zurich
+                - generic [ref=f1e276]: From €600
+    - generic [ref=f1e278]:
+      - generic [ref=f1e279]:
+        - heading "BOOK YOUR RIDE" [level=2] [ref=f1e280]
+        - paragraph [ref=f1e281]: Request a quote and we'll get back to you within 24 hours
+      - generic [ref=f1e283]:
+        - generic [ref=f1e284]:
+          - generic [ref=f1e285]:
+            - heading "Call Us" [level=3] [ref=f1e286]
+            - generic [ref=f1e287]:
+              - 'link "Italy: +39 349 663 8171" [ref=f1e288] [cursor=pointer]':
+                - /url: tel:+393496638171
+              - 'link "Spain: +34 670 038 541" [ref=f1e289] [cursor=pointer]':
+                - /url: tel:+34670038541
+          - generic [ref=f1e290]:
+            - heading "WhatsApp" [level=3] [ref=f1e291]
+            - paragraph [ref=f1e292]: Prefer instant messaging? Reach us on WhatsApp for quick enquiries and booking confirmations. Our team is available 7 days a week.
+        - generic [ref=f1e295]:
+          - paragraph [ref=f1e296]:
+            - generic [ref=f1e297]:
+              - text: "Don't fill this out:"
+              - textbox [ref=f1e298]
+          - generic [ref=f1e299]:
+            - generic [ref=f1e300]:
+              - generic [ref=f1e301]: Full Name *
+              - textbox "Full Name *" [ref=f1e302]:
+                - /placeholder: John Doe
+            - generic [ref=f1e303]:
+              - generic [ref=f1e304]: Email *
+              - textbox "Email *" [ref=f1e305]:
+                - /placeholder: john@example.com
+            - generic [ref=f1e306]:
+              - generic [ref=f1e307]: Phone *
+              - textbox "Phone *" [ref=f1e308]:
+                - /placeholder: +34 670 038 541
+          - generic [ref=f1e309]:
+            - generic [ref=f1e310]:
+              - generic [ref=f1e311]: Service Location *
+              - combobox "Service Location *" [ref=f1e312]:
+                - option "Select a location" [selected]
+                - option "Costa del Sol — Marbella"
+                - option "Northern Italy — Milano"
+            - generic [ref=f1e313]:
+              - generic [ref=f1e314]: Service Interest
+              - combobox "Service Interest" [ref=f1e315]:
+                - option "Select an option (optional)" [selected]
+                - option "Airport Transfer"
+                - option "Hourly Chauffeur"
+                - option "Yacht Transfer"
+                - option "Business Travel"
+                - option "VIP Membership"
+                - option "Other"
+          - generic [ref=f1e316]:
+            - generic [ref=f1e317]:
+              - generic [ref=f1e318]: Pick-up Location
+              - textbox "Pick-up Location" [ref=f1e319]:
+                - /placeholder: Hotel, airport, villa...
+            - generic [ref=f1e320]:
+              - generic [ref=f1e321]: Drop-off Location
+              - textbox "Drop-off Location" [ref=f1e322]:
+                - /placeholder: Destination address
+          - generic [ref=f1e323]:
+            - generic [ref=f1e324]: Preferred Date
+            - textbox "Preferred Date" [ref=f1e325]
+          - generic [ref=f1e326]:
+            - generic [ref=f1e327]: Message
+            - textbox "Message" [ref=f1e328]:
+              - /placeholder: Tell us about your travel requirements...
+          - generic [ref=f1e330] [cursor=pointer]:
+            - checkbox "I consent to being contacted about my inquiry*" [ref=f1e331]
+            - generic [ref=f1e332]: I consent to being contacted about my inquiry*
+          - button "SEND INQUIRY" [ref=f1e333]
+  - contentinfo "Footer" [ref=f1e334]:
+    - generic [ref=f1e336]:
+      - link "VIPER SECURITY" [ref=f1e337] [cursor=pointer]:
+        - /url: /
+      - paragraph [ref=f1e338]: Professional • Discreet • Reliable
+      - generic [ref=f1e339]:
+        - 'link "Italy: +39 349 663 8171" [ref=f1e340] [cursor=pointer]':
+          - /url: tel:+393496638171
+        - 'link "Spain: +34 670 038 541" [ref=f1e341] [cursor=pointer]':
+          - /url: tel:+34670038541
+      - navigation "Footer navigation" [ref=f1e342]:
+        - link "Services" [ref=f1e343] [cursor=pointer]:
+          - /url: "#services"
+        - link "Fleet" [ref=f1e344] [cursor=pointer]:
+          - /url: "#fleet"
+        - link "Pricing" [ref=f1e345] [cursor=pointer]:
+          - /url: "#pricing"
+        - link "Membership" [ref=f1e346] [cursor=pointer]:
+          - /url: "#membership"
+        - link "Contact" [ref=f1e347] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=f1e348]:
+        - generic [ref=f1e349]: Private Chauffeur
+        - generic [ref=f1e350]: Airport Transfers
+        - generic [ref=f1e351]: Yacht Transfers
+        - generic [ref=f1e352]: Business Travel
+        - generic [ref=f1e353]: VIP Events
+      - paragraph [ref=f1e354]: © 2026 Viper Security. All rights reserved.

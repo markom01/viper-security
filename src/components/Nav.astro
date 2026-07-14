@@ -1,0 +1,130 @@
+---
+const navLinks = [
+  { label: "Services", href: "#services" },
+  { label: "Fleet", href: "#fleet" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "Membership", href: "#membership" },
+  { label: "Contact", href: "#contact" },
+];
+---
+
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow] duration-300 ease-out">
+  <div class="flex items-center justify-between px-6 lg:px-12 py-4 max-w-[1440px] mx-auto">
+    <!-- Logo -->
+    <a href="/" class="font-heading text-gold text-xl lg:text-2xl tracking-wider no-underline">
+      VIPER SECURITY
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden lg:flex items-center gap-8" aria-label="Main navigation">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-white/80 hover:text-gold text-sm uppercase tracking-[0.12em] font-body font-light transition-colors duration-200 no-underline"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a
+        href="#contact"
+        class="inline-block bg-gold text-black text-sm uppercase tracking-[0.12em] font-body font-semibold px-6 py-3 no-underline transition-colors duration-200 hover:bg-gold-light"
+      >
+        BOOK YOUR RIDE
+      </a>
+    </nav>
+
+    <!-- Mobile Hamburger -->
+    <button
+      id="menu-toggle"
+      class="lg:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5 bg-transparent border-none cursor-pointer p-2"
+      aria-label="Toggle navigation menu"
+    >
+      <span class="block w-6 h-0.5 bg-white transition-all duration-200"></span>
+      <span class="block w-6 h-0.5 bg-white transition-all duration-200"></span>
+      <span class="block w-6 h-0.5 bg-white transition-all duration-200"></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-40 bg-black translate-x-full transition-transform duration-300 ease-out lg:hidden"
+>
+  <div class="flex flex-col items-center justify-center h-full gap-8 px-6">
+    <button
+      id="menu-close"
+      class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center bg-transparent border-none cursor-pointer"
+      aria-label="Close navigation menu"
+    >
+      <span class="block w-6 h-0.5 bg-white rotate-45 translate-y-0.5"></span>
+      <span class="block w-6 h-0.5 bg-white -rotate-45 -translate-y-0.5"></span>
+    </button>
+
+    {
+      navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="mobile-nav-link text-white/80 hover:text-gold text-xl uppercase tracking-[0.15em] font-heading transition-colors duration-200 no-underline"
+        >
+          {link.label}
+        </a>
+      ))
+    }
+    <a
+      href="#contact"
+      class="mobile-nav-link inline-block bg-gold text-black text-base uppercase tracking-[0.12em] font-body font-semibold px-10 py-4 no-underline transition-colors duration-200 hover:bg-gold-light mt-4"
+    >
+      BOOK YOUR RIDE
+    </a>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const header = document.getElementById("site-header");
+    const menuToggle = document.getElementById("menu-toggle");
+    const menuClose = document.getElementById("menu-close");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    // Scroll — header background transition
+    function onScroll() {
+      if (window.scrollY > 50) {
+        header.classList.add("bg-black", "shadow-[0_1px_0_rgba(255,255,255,0.06)]");
+      } else {
+        header.classList.remove("bg-black", "shadow-[0_1px_0_rgba(255,255,255,0.06)]");
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    // Run once on load to set correct initial state
+    onScroll();
+
+    // Mobile menu open
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener("click", function () {
+        document.body.style.overflow = "hidden";
+        mobileMenu.classList.remove("translate-x-full");
+        mobileMenu.classList.add("translate-x-0");
+      });
+    }
+
+    // Mobile menu close
+    function closeMenu() {
+      document.body.style.overflow = "";
+      mobileMenu.classList.remove("translate-x-0");
+      mobileMenu.classList.add("translate-x-full");
+    }
+
+    if (menuClose) {
+      menuClose.addEventListener("click", closeMenu);
+    }
+
+    // Close mobile menu on link click
+    document.querySelectorAll(".mobile-nav-link").forEach(function (link) {
+      link.addEventListener("click", closeMenu);
+    });
+  })();
+</script>

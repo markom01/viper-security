@@ -1,0 +1,140 @@
+backend:
+  name: git-gateway
+  repo: markom01/viper-security
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: hero
+    label: Hero Section
+    description: Homepage hero banner content
+    files:
+      - name: hero
+        label: Hero Banner
+        file: src/content/hero/hero.md
+        fields:
+          - { name: brand_name, label: Brand Name, widget: string }
+          - { name: tagline, label: Tagline, widget: string }
+          - { name: subtitle, label: Subtitle, widget: text }
+          - { name: cta_text, label: CTA Button Text, widget: string }
+          - { name: phone_italy, label: Phone (Italy), widget: string, required: false }
+          - { name: phone_spain, label: Phone (Spain), widget: string, required: false }
+
+  - name: services-marbella
+    label: Marbella Services
+    description: Services offered in the Costa del Sol / Marbella region
+    files:
+      - name: marbella
+        label: Marbella
+        file: src/content/services/marbella.md
+        fields:
+          - { name: location_name, label: Location Name, widget: string }
+          - label: Airport Routes
+            name: airport_routes
+            widget: list
+            field: { label: Route, name: route, widget: string }
+          - { name: villa_transfers, label: Villa Transfer Description, widget: text }
+          - label: Yacht Marinas
+            name: yacht_marinas
+            widget: list
+            field: { label: Marina, name: marina, widget: string }
+          - label: Business Services
+            name: business_services
+            widget: list
+            field: { label: Service, name: service, widget: string }
+          - label: Nightlife Venues
+            name: nightlife_venues
+            widget: list
+            field: { label: Venue Type, name: venue, widget: string }
+
+  - name: services-milano
+    label: Milano Services
+    description: Services offered in the Northern Italy & Alps / Milano region
+    files:
+      - name: milano
+        label: Milano
+        file: src/content/services/milano.md
+        fields:
+          - { name: location_name, label: Location Name, widget: string }
+          - label: Airport Routes
+            name: airport_routes
+            widget: list
+            field: { label: Route, name: route, widget: string }
+          - { name: villa_transfers, label: Villa Transfer Description, widget: text }
+          - { name: yacht_transfers_desc, label: Yacht Transfer Description, widget: text }
+          - label: Business Services
+            name: business_services
+            widget: list
+            field: { label: Service, name: service, widget: string }
+          - label: Nightlife Venues
+            name: nightlife_venues
+            widget: list
+            field: { label: Venue Type, name: venue, widget: string }
+
+  - name: fleet
+    label: Fleet
+    description: Vehicle fleet information
+    folder: src/content/fleet
+    create: true
+    slug: "{{vehicle_name}}"
+    fields:
+      - { name: vehicle_name, label: Vehicle Name, widget: string }
+      - label: Features
+        name: features
+        widget: list
+        field: { label: Feature, name: feature, widget: string }
+      - { name: capacity_passengers, label: Max Passengers, widget: string }
+      - { name: capacity_suitcases, label: Max Suitcases, widget: number, value_type: int }
+      - { name: capacity_carryon, label: Max Carry-On Bags, widget: number, value_type: int }
+
+  - name: pricing-hourly
+    label: Hourly Pricing
+    description: Hourly chauffeur service rates
+    files:
+      - name: hourly
+        label: Hourly Rates
+        file: src/content/pricing/hourly.md
+        fields:
+          - label: Rates
+            name: rates
+            widget: list
+            fields:
+              - { name: hours, label: Hours, widget: string }
+              - { name: price, label: Price (€), widget: number }
+
+  - name: pricing-airport
+    label: Airport Pricing
+    description: Airport transfer route pricing
+    files:
+      - name: airport-transfers
+        label: Airport Transfers
+        file: src/content/pricing/airport-transfers.md
+        fields:
+          - label: Routes
+            name: routes
+            widget: list
+            fields:
+              - { name: route, label: Route, widget: string }
+              - { name: price_from, label: Price From (€), widget: number }
+
+  - name: membership
+    label: VIP Membership
+    description: VIP membership program tiers
+    files:
+      - name: tiers
+        label: Membership Tiers
+        file: src/content/membership/tiers.md
+        fields:
+          - label: Tiers
+            name: tiers
+            widget: list
+            fields:
+              - { name: name, label: Tier Name, widget: string }
+              - { name: price, label: Annual Price (€), widget: number }
+              - label: Benefits
+                name: benefits
+                widget: list
+                field: { label: Benefit, name: benefit, widget: string }
+              - { name: is_featured, label: Featured Tier, widget: boolean, default: false }

@@ -1,0 +1,76 @@
+---
+// Contact.astro — VIPER SECURITY Contact / Quote Section
+import ContactForm from "./ContactForm.jsx";
+---
+
+<section id="contact" class="py-20 bg-black">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <!-- ─── Section Title ─── -->
+    <div class="text-center mb-16 lg:mb-20">
+      <h2
+        class="font-heading text-gold text-4xl md:text-5xl lg:text-6xl tracking-[0.08em]"
+      >
+        BOOK YOUR RIDE
+      </h2>
+      <p
+        class="text-smoke/60 text-sm md:text-base font-body font-light mt-4 mb-6 max-w-xl mx-auto"
+      >
+        Request a quote and we'll get back to you within 24 hours
+      </p>
+      <div class="w-16 h-px bg-gold/40 mx-auto"></div>
+    </div>
+
+    <!-- ─── Two-Column Layout ─── -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+      <!-- ═══ Left: Contact Details ═══ -->
+      <div class="lg:col-span-1 space-y-10">
+        <!-- Phone Numbers -->
+        <div>
+          <h3
+            class="text-white/60 text-xs uppercase tracking-[0.15em] font-body mb-4"
+          >
+            Call Us
+          </h3>
+          <div class="space-y-3">
+            <a
+              href="tel:+393496638171"
+              class="block text-white/80 hover:text-gold font-body text-sm transition-colors duration-200 no-underline"
+            >
+              Italy: <span class="text-white">+39 349 663 8171</span>
+            </a>
+            <a
+              href="tel:+34670038541"
+              class="block text-white/80 hover:text-gold font-body text-sm transition-colors duration-200 no-underline"
+            >
+              Spain: <span class="text-white">+34 670 038 541</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- WhatsApp -->
+        <div>
+          <h3
+            class="text-white/60 text-xs uppercase tracking-[0.15em] font-body mb-4"
+          >
+            WhatsApp
+          </h3>
+          <p class="text-smoke/60 text-sm font-body leading-relaxed">
+            Prefer instant messaging? Reach us on WhatsApp for quick enquiries
+            and booking confirmations. Our team is available 7 days a week.
+          </p>
+        </div>
+
+        <!-- Divider for visual balance on desktop -->
+        <div
+          class="hidden lg:block w-12 h-px bg-white/5"
+          aria-hidden="true"
+        ></div>
+      </div>
+
+      <!-- ═══ Right: Contact Form ═══ -->
+      <div class="lg:col-span-2">
+        <ContactForm client:load />
+      </div>
+    </div>
+  </div>
+</section>

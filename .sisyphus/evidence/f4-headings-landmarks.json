@@ -1,0 +1,13 @@
+{
+  "headingHierarchy": "h1 -> h2 -> h3 -> h4",
+  "h1Count": 1,
+  "h1Text": "VIPER SECURITY",
+  "h2Count": 5,
+  "h3Count": 7,
+  "h4Count": 12,
+  "headingOrderValid": true,
+  "landmarks": ["header", "nav x2", "main", "footer"],
+  "landmarkRoles": ["Main navigation", "Footer", "Footer navigation"],
+  "sections": ["hero", "services", "fleet", "pricing", "contact"],
+  "landmarkIssues": ["Missing skip link", "1 nav link outside landmark containment"]
+}

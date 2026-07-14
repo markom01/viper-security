@@ -1,0 +1,18 @@
+{
+  "totalFocusable": 41,
+  "visibleFocusable": 34,
+  "tabOrder": [
+    "Logo (home link)",
+    "Menu toggle button (aria-label: 'Toggle navigation menu')",
+    "Close menu button (aria-label: 'Close navigation menu')",
+    "Nav: Services, Fleet, Pricing, Membership, Contact",
+    "CTA: BOOK YOUR RIDE",
+    "Phone: Italy +39 349 663 8171",
+    "Phone: Spain +34 670 038 541",
+    "Form inputs: name, email, phone, service-location, service-interest, pickup, dropoff, date, message",
+    "Consent checkbox",
+    "Submit button"
+  ],
+  "issues": [],
+  "passed": true
+}

@@ -1,0 +1,30 @@
+{
+  "tool": "axe-core 4.10.0",
+  "via": "Playwright injection",
+  "violations": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "nodes": 27,
+      "details": "WCAG AA 4.5:1 ratio required. Multiple text elements with opacity/alpha on dark backgrounds fail contrast thresholds"
+    },
+    {
+      "id": "region",
+      "impact": "moderate",
+      "nodes": 1,
+      "details": "Mobile nav link anchor outside landmark containment"
+    }
+  ],
+  "violationCount": 2,
+  "passes": 39,
+  "incomplete": 2,
+  "inapplicable": 50,
+  "passingA11yChecks": [
+    "button-name", "empty-heading", "form-field-multiple-labels",
+    "heading-order", "label", "landmark-banner-is-top-level",
+    "landmark-contentinfo-is-top-level", "landmark-main-is-top-level",
+    "landmark-no-duplicate-banner", "landmark-no-duplicate-contentinfo",
+    "landmark-no-duplicate-main", "landmark-one-main",
+    "landmark-unique", "link-name", "page-has-heading-one"
+  ]
+}

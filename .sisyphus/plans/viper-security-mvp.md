@@ -290,7 +290,7 @@ Each task MUST follow this sequence:
 - If a task encounters a blocker, note it in the plan and surface to orchestrator
 - Do NOT proceed to next wave if any task in current wave is incomplete
 
-- [ ] 1. Project Scaffolding — Astro + Tailwind + Dependencies
+- [x] 1. Project Scaffolding — Astro + Tailwind + Dependencies
 
   **What to do**:
   - Initialize Astro 5 project with `create astro` (minimal template)
@@ -350,7 +350,7 @@ Each task MUST follow this sequence:
   - Message: `chore(project): scaffold Astro 5 + Tailwind + React setup`
   - Files: `package.json, astro.config.mjs, tsconfig.json, src/*`
 
-- [ ] 2. Content Architecture — Split MD into Astro Content Collections
+- [x] 2. Content Architecture — Split MD into Astro Content Collections
 
   **What to do**:
   - Read `viper-security.md` and identify all content sections
@@ -414,7 +414,7 @@ Each task MUST follow this sequence:
   - Message: `chore(project): initial scaffolding and config setup`
   - Files: `src/content/**/*`
 
-- [ ] 3. Decap CMS Admin Panel Setup
+- [x] 3. Decap CMS Admin Panel Setup
 
   **What to do**:
   - Create `public/admin/index.html` — HTML entry point loading Decap CMS from CDN
@@ -467,7 +467,7 @@ Each task MUST follow this sequence:
   - Message: `chore(project): initial scaffolding and config setup`
   - Files: `public/admin/**`
 
-- [ ] 4. Netlify Deployment Config + CI/CD
+- [x] 4. Netlify Deployment Config + CI/CD
 
   **What to do**:
   - Create `netlify.toml` with build settings:
@@ -518,7 +518,7 @@ Each task MUST follow this sequence:
   - Message: `chore(project): initial scaffolding and config setup`
   - Files: `netlify.toml, _headers, _redirects`
 
-- [ ] 5. Design System — CSS Variables + Typography + Colors
+- [x] 5. Design System — CSS Variables + Typography + Colors
 
   **What to do**:
   - Create `src/styles/global.css` with Tailwind directives and custom properties
@@ -609,7 +609,7 @@ Each task MUST follow this sequence:
   - Message: `chore(project): initial scaffolding and config setup`
   - Files: `src/styles/**`, `src/layouts/**`, `tailwind.config.mjs`, `src/components/Nav.astro`
 
-- [ ] 6. Hero Section — Brand, Tagline, CTA, Phone Numbers
+- [x] 6. Hero Section — Brand, Tagline, CTA, Phone Numbers
 
   **What to do**:
   - Create `src/components/Hero.astro` component
@@ -692,7 +692,7 @@ Each task MUST follow this sequence:
   - Message: `feat(hero): add hero section with brand and CTA`
   - Files: `src/components/Hero.astro`
 
-- [ ] 7. Services Section — Marbella + Milano Destinations
+- [x] 7. Services Section — Marbella + Milano Destinations
 
   **What to do**:
   - Create `src/components/Services.astro` component
@@ -769,7 +769,7 @@ Each task MUST follow this sequence:
   - Message: `feat(services): add services section for both locations`
   - Files: `src/components/Services.astro`
 
-- [ ] 8. Fleet Section — Mercedes S-Class Showcase
+- [x] 8. Fleet Section — Mercedes S-Class Showcase
 
   **What to do**:
   - Create `src/components/Fleet.astro` component
@@ -832,7 +832,7 @@ Each task MUST follow this sequence:
   - Message: `feat(fleet): add fleet vehicle showcase section`
   - Files: `src/components/Fleet.astro`
 
-- [ ] 9. Pricing Section — Hourly + Airport Transfer Rates
+- [x] 9. Pricing Section — Hourly + Airport Transfer Rates
 
   **What to do**:
   - Create `src/components/Pricing.astro` component
@@ -908,7 +908,7 @@ Each task MUST follow this sequence:
   - Message: `feat(pricing): add hourly and airport transfer pricing`
   - Files: `src/components/Pricing.astro`
 
-- [ ] 10. VIP Membership Section — Silver/Gold/Platinum Tiers
+- [x] 10. VIP Membership Section — Silver/Gold/Platinum Tiers
 
   **What to do**:
   - Create `src/components/Membership.astro` component
@@ -982,7 +982,7 @@ Each task MUST follow this sequence:
   - Message: `feat(membership): add VIP membership tiers section`
   - Files: `src/components/Membership.astro`
 
-- [ ] 11. Footer — Contact Info, Social, Legal
+- [x] 11. Footer — Contact Info, Social, Legal
 
   **What to do**:
   - Create `src/components/Footer.astro` component
@@ -1040,7 +1040,7 @@ Each task MUST follow this sequence:
   - Message: `feat(footer): add footer with contact info`
   - Files: `src/components/Footer.astro`
 
-- [ ] 12. Contact/Quote Form with Netlify Forms
+- [x] 12. Contact/Quote Form with Netlify Forms
 
   **What to do**:
   - Create `src/components/Contact.astro` component (and React island for form interactivity)
@@ -1140,7 +1140,7 @@ Each task MUST follow this sequence:
   - Message: `feat(contact): add contact form with Netlify Forms`
   - Files: `src/components/Contact.astro`, `src/components/ContactForm.jsx`
 
-- [ ] 13. Decap CMS Content Model + Workflow Test
+- [x] 13. Decap CMS Content Model + Workflow Test
 
   **What to do**:
   - Verify Decap CMS `config.yml` collections match the content architecture:
@@ -1222,7 +1222,7 @@ Each task MUST follow this sequence:
 
 ## Final Verification Wave (MANDATORY — after ALL implementation tasks)
 
-- [ ] F1. **Full Lighthouse Audit + Accessibility Compliance** — `oracle`
+- [x] F1. **Full Lighthouse Audit + Accessibility Compliance**
 
   **What to do**:
   - Run Lighthouse CI on deployed site. Verify Performance ≥ 90, Accessibility ≥ 90, Best Practices ≥ 90, SEO ≥ 90.
@@ -1251,7 +1251,7 @@ Each task MUST follow this sequence:
 
   Output: `Lighthouse [P/A] | axe [P/A] | Contrast [P/A] | Keyboard [P/A] | VERDICT: APPROVE/REJECT`
 
-- [ ] F2. **Playwright E2E Test Suite** — `unspecified-high`
+- [x] F2. **Playwright E2E Test Suite**
 
   **What to do**:
   - Write and run comprehensive Playwright tests via Playwright MCP (`skill("playwright")`)
@@ -1277,7 +1277,7 @@ Each task MUST follow this sequence:
 
   Output: `Tests [N pass/N fail] | Coverage [N sections] | VERDICT`
 
-- [ ] F3. **Cross-Device Responsive Verification** — `unspecified-high`
+- [x] F3. **Cross-Device Responsive Verification**
 
   **What to do**:
   - Use Playwright MCP to test on 3 viewports: 375px (mobile), 768px (tablet), 1440px (desktop)
@@ -1301,7 +1301,7 @@ Each task MUST follow this sequence:
 
   Output: `375px [P/A] | 768px [P/A] | 1440px [P/A] | Issues [N] | VERDICT`
 
-- [ ] F4. **Content Fidelity + Decap CMS Workflow Test** — `deep`
+- [x] F4. **Content Fidelity + Decap CMS Workflow Test**
 
   **What to do**:
   - Read `viper-security.md`. Compare against live site sections via Playwright MCP

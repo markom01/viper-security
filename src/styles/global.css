@@ -1,1 +1,85 @@
 @import "tailwindcss";
+
+@theme {
+  --color-black: #0B0B0B;
+  --color-gold: #B08D45;
+  --color-gold-light: #C6A45C;
+  --color-white: #FFFFFF;
+  --color-cream: #F5F0E8;
+  --color-charcoal: #1A1A1A;
+  --color-dark-iron: #181818;
+  --color-navy: #0F1A2E;
+  --color-ash: #7D7D7D;
+  --color-smoke: #F5F5F5;
+
+  --font-heading: "Playfair Display", serif;
+  --font-body: "Manrope", sans-serif;
+}
+
+/* ─── CSS Custom Properties ─── */
+:root {
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 12px;
+
+  /* Section Spacing */
+  --section-padding: 5rem;
+  --section-padding-mobile: 3rem;
+
+  /* Transition Timings */
+  --transition-fast: 200ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+}
+
+/* ─── Base Reset ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #000000;
+  color: #FFFFFF;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Selection ─── */
+::selection {
+  background-color: rgba(176, 141, 69, 0.3);
+  color: #FFFFFF;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #B08D45;
+  border-radius: 0;
+}
+
+/* ─── Utility Classes ─── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+.section-padding {
+  padding: var(--section-padding) 0;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: var(--section-padding-mobile) 0;
+  }
+}

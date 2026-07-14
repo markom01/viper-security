@@ -1,0 +1,23 @@
+---
+import BaseLayout from "./layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Viper Security — Elite Protection. Absolute Discretion.">
+  <section class="min-h-screen flex items-center justify-center px-6">
+    <div class="text-center max-w-3xl">
+      <h1 class="font-heading text-5xl md:text-7xl lg:text-8xl text-white leading-[1.1] mb-6">
+        Elite Protection.<br />
+        <span class="text-gold">Absolute Discretion.</span>
+      </h1>
+      <p class="font-body text-ash text-lg md:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
+        Premium private security, armored transport, and executive protection for those who demand the highest standard.
+      </p>
+      <a
+        href="#contact"
+        class="inline-block bg-gold text-black text-sm uppercase tracking-[0.12em] font-body font-semibold px-8 py-4 no-underline transition-colors duration-200 hover:bg-gold-light"
+      >
+        BOOK YOUR RIDE
+      </a>
+    </div>
+  </section>
+</BaseLayout>

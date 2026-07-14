@@ -24,6 +24,7 @@
   "devDependencies": {
     "@playwright/test": "^1.61.1",
     "lighthouse": "^12.8.2",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "yaml": "^2.9.0"
   }
 }

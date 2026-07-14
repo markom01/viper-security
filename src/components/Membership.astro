@@ -1,0 +1,125 @@
+---
+const tiers = [
+  {
+    name: "SILVER VIP",
+    price: "€1,500",
+    period: "/year",
+    badge: null,
+    benefits: [
+      "15 chauffeur hours annually",
+      "Priority booking",
+      "Preferred member rates",
+    ],
+    btnVariant: "outline",
+  },
+  {
+    name: "GOLD VIP",
+    price: "€3,500",
+    period: "/year",
+    badge: null,
+    benefits: [
+      "40 chauffeur hours annually",
+      "Priority booking",
+      "10% discount on additional services",
+      "Complimentary airport transfers (2 per year)",
+    ],
+    btnVariant: "filled",
+  },
+  {
+    name: "PLATINUM VIP",
+    price: "€5,900",
+    period: "/year",
+    badge: "BEST VALUE",
+    benefits: [
+      "80 chauffeur hours annually",
+      "Highest booking priority",
+      "15% discount on additional services",
+      "Complimentary airport transfers (6 per year)",
+      "VIP concierge assistance",
+    ],
+    btnVariant: "filled",
+    featured: true,
+  },
+];
+---
+
+<section id="membership" class="bg-black py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Section Title -->
+    <div class="text-center mb-16">
+      <span class="inline-block text-gold/60 text-xs uppercase tracking-[0.2em] font-body mb-4">
+        EXCLUSIVE ACCESS
+      </span>
+      <h2 class="font-heading text-gold text-4xl md:text-5xl lg:text-6xl tracking-wider">
+        VIP MEMBERSHIP
+      </h2>
+      <div class="w-12 h-0.5 bg-gold/40 mx-auto mt-6"></div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+      {
+        tiers.map((tier) => (
+          <div
+            class={`relative flex flex-col rounded p-8 ${
+              tier.featured
+                ? "bg-dark-iron border-2 border-gold shadow-[0_0_24px_rgba(176,141,69,0.12)]"
+                : "bg-dark-iron border border-white/10"
+            }`}
+          >
+            <!-- Badge -->
+            {
+              tier.badge && (
+                <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-black text-[10px] uppercase tracking-[0.15em] font-body font-semibold px-4 py-1">
+                  {tier.badge}
+                </span>
+              )
+            }
+
+            <!-- Tier Name -->
+            <h3 class="font-heading text-white text-xl md:text-2xl tracking-wider mt-2">
+              {tier.name}
+            </h3>
+
+            <!-- Price -->
+            <div class="mt-4 mb-6">
+              <span class="font-heading text-gold text-4xl md:text-5xl font-bold">
+                {tier.price}
+              </span>
+              <span class="text-white/50 text-sm font-body ml-1">
+                {tier.period}
+              </span>
+            </div>
+
+            <!-- Divider -->
+            <div class="w-full h-px bg-white/5 mb-6"></div>
+
+            <!-- Benefits -->
+            <ul class="flex flex-col gap-3 flex-1 mb-8">
+              {
+                tier.benefits.map((benefit) => (
+                  <li class="flex items-start gap-3 text-white/80 text-sm font-body leading-relaxed">
+                    <span class="text-gold shrink-0 mt-0.5">✦</span>
+                    {benefit}
+                  </li>
+                ))
+              }
+            </ul>
+
+            <!-- CTA Button -->
+            <a
+              href="#contact"
+              class={`block text-center uppercase text-sm tracking-[0.12em] font-body font-semibold px-6 py-3.5 no-underline transition-all duration-200 mt-auto ${
+                tier.btnVariant === "filled"
+                  ? "bg-gold text-black hover:bg-gold-light"
+                  : "bg-transparent border border-gold text-gold hover:bg-gold hover:text-black"
+              }`}
+            >
+              INQUIRE
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

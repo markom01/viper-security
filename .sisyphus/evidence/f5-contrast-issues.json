@@ -1,0 +1,64 @@
+{
+  "totalIssues": 27,
+  "wcagLevel": "AA (4.5:1)",
+  "patterns": [
+    {
+      "foreground": "#91743b (text-gold/80)",
+      "background": "#131212 (bg-charcoal/50)",
+      "ratio": 4.24,
+      "required": 4.5,
+      "elements": "Available with waiting service. (12px italic)",
+      "count": 2
+    },
+    {
+      "foreground": "#555555 (text-ash/60)",
+      "background": "#181818 (bg-dark-iron)",
+      "ratio": 2.38,
+      "required": 4.5,
+      "elements": "Chauffeur, 'From ' labels (10px)",
+      "count": 14
+    },
+    {
+      "foreground": "#4b4a4a (text-ash/50)",
+      "background": "#181818 (bg-dark-iron)",
+      "ratio": 2.01,
+      "required": 4.5,
+      "elements": "12 Hours label (10px)",
+      "count": 2
+    },
+    {
+      "foreground": "#444444 (text-ash/50)",
+      "background": "#0b0b0b (bg-black)",
+      "ratio": 2.02,
+      "required": 4.5,
+      "elements": "Driver included. (11px)",
+      "count": 1
+    },
+    {
+      "foreground": "#6d6d6d (text-white/40)",
+      "background": "#0b0b0b (bg-black)",
+      "ratio": 3.8,
+      "required": 4.5,
+      "elements": "Call Us, WhatsApp headings (12px)",
+      "count": 2
+    },
+    {
+      "foreground": "#767676 (text-white/40)",
+      "background": "#1a1a1a (bg-charcoal)",
+      "ratio": 3.83,
+      "required": 4.5,
+      "elements": "Footer category labels (10px)",
+      "count": 5
+    },
+    {
+      "foreground": "#7d7d7d (text-ash)",
+      "background": "#1a1a1a (bg-charcoal)",
+      "ratio": 4.22,
+      "required": 4.5,
+      "elements": "Copyright text (11px)",
+      "count": 1
+    }
+  ],
+  "severity": "serious",
+  "passed": false
+}
