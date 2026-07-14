@@ -66,14 +66,14 @@ Deploy a production-quality single-page website for Viper Security that showcase
 - Lighthouse scores ≥ 90 across all categories
 
 ### Definition of Done
-- [ ] `npm run build` exits with 0, no errors
-- [ ] Site renders all sections from viper-security.md
+- [x] `npm run build` exits with 0, no errors
+- [x] Site renders all sections from viper-security.md
 - [ ] Contact form submits → appears in Netlify Forms dashboard
 - [ ] Decap CMS login → edit content → save → deploys
-- [ ] Lighthouse ≥ 90 Performance, Accessibility, Best Practices, SEO
-- [ ] Mobile responsive (375px, 768px, 1440px tested)
-- [ ] Phone numbers clickable (tel: protocol)
-- [ ] Netlify auto-deploy from Git push
+- [x] Lighthouse ≥ 90 Performance, Accessibility, Best Practices, SEO
+- [x] Mobile responsive (375px, 768px, 1440px tested)
+- [x] Phone numbers clickable (tel: protocol)
+- [x] Netlify auto-deploy from Git push
 
 ### Must Have
 - All content sections from viper-security.md displayed
@@ -1413,8 +1413,8 @@ npx playwright test      # Expected: All E2E tests pass
 ```
 
 ### Final Checklist
-- [ ] All "Must Have" present on live site
-- [ ] All "Must NOT Have" absent from codebase
-- [ ] All tasks complete with evidence in `.sisyphus/evidence/`
-- [ ] All F1-F4 tests pass
+- [x] All "Must Have" present on live site
+- [x] All "Must NOT Have" absent from codebase
+- [x] All tasks complete with evidence in `.sisyphus/evidence/`
+- [x] All F1-F4 tests pass
 - [ ] User can edit content via Decap CMS and see changes deploy
