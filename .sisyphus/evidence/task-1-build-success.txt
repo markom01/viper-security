@@ -1,0 +1,3 @@
+Build OK
+npm run build exit 0: YES
+✅ Build successful
