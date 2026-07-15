@@ -1,5 +1,5 @@
 ---
-location_name: Costa del Sol — Marbella
+location_name: Costa del Sol - Marbella
 airport_routes:
   - Málaga Airport → Marbella
   - Málaga Airport → Puerto Banús
