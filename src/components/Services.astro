@@ -1,5 +1,18 @@
 ---
 // Services.astro — VIPER SECURITY Services Section
+import { getCollection } from 'astro:content';
+
+const [marbella] = await getCollection('services-marbella');
+const [milano] = await getCollection('services-milano');
+
+// Split location_name like "Costa del Sol — Marbella" into primary + subtitle
+const splitName = (name: string) => {
+  const parts = name.split(/ [\u2014\-] /);
+  return { primary: parts[0] || name, secondary: parts[1] || '' };
+};
+
+const marbellaLoc = splitName(marbella?.data?.location_name || 'Costa del Sol \u2014 Marbella');
+const milanoLoc = splitName(milano?.data?.location_name || 'Northern Italy & Alps - Milano');
 ---
 
 
@@ -23,10 +36,10 @@
         <!-- Location Heading -->
         <div class="border-l-[3px] border-gold pl-5 mb-10">
           <h3 class="font-heading text-2xl md:text-3xl text-white leading-tight">
-            Costa del Sol
+            {marbellaLoc.primary}
           </h3>
           <p class="text-gold text-xs uppercase tracking-[0.2em] font-body font-light mt-1.5">
-            Marbella
+            {marbellaLoc.secondary}
           </p>
         </div>
 
@@ -37,12 +50,12 @@
             <span>Airport Transfers</span>
           </h4>
           <ul class="space-y-1.5">
-            <li class="flex items-start gap-3 text-sm leading-relaxed">
-              <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
-              <span class="text-smoke/70">
-                <span class="text-white/90 font-medium">M&aacute;laga</span> &rarr; Marbella, Puerto Ban&uacute;s, Estepona, Sotogrande, Gibraltar
-              </span>
-            </li>
+            {marbella?.data?.airport_routes?.map((route) => (
+              <li class="flex items-start gap-3 text-sm leading-relaxed">
+                <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
+                <span class="text-smoke/70">{route}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -53,7 +66,7 @@
             <span>VIP Villa Transfers</span>
           </h4>
           <p class="text-smoke/70 text-sm leading-relaxed">
-            Luxury transportation between villas, hotels, beach clubs and restaurants.
+            {marbella?.data?.villa_transfers || 'Luxury transportation between villas, hotels, beach clubs and restaurants.'}
           </p>
         </div>
 
@@ -64,10 +77,12 @@
             <span>Yacht Transfers</span>
           </h4>
           <ul class="space-y-1.5">
-            <li class="flex items-start gap-3 text-sm leading-relaxed">
-              <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
-              <span class="text-smoke/70">Puerto Ban&uacute;s, Marbella Marina, Estepona Marina, Sotogrande Marina</span>
-            </li>
+            {marbella?.data?.yacht_marinas?.map((marina) => (
+              <li class="flex items-start gap-3 text-sm leading-relaxed">
+                <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
+                <span class="text-smoke/70">{marina}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -78,22 +93,12 @@
             <span>Business &amp; Corporate</span>
           </h4>
           <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5">
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Meetings
-            </li>
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Conferences
-            </li>
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Corporate events
-            </li>
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Business delegations
-            </li>
+            {marbella?.data?.business_services?.map((service) => (
+              <li class="flex items-center gap-2.5 text-sm text-smoke/70">
+                <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
+                {service}
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -104,22 +109,12 @@
             <span>Nightlife &amp; VIP Club</span>
           </h4>
           <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5 mb-3">
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Restaurants
-            </li>
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Beach clubs
-            </li>
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Nightclubs
-            </li>
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Private events
-            </li>
+            {marbella?.data?.nightlife_venues?.map((venue) => (
+              <li class="flex items-center gap-2.5 text-sm text-smoke/70">
+                <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
+                {venue}
+              </li>
+            ))}
           </ul>
           <p class="text-gold/80 text-xs italic font-light">
             Available with waiting service.
@@ -132,10 +127,10 @@
         <!-- Location Heading -->
         <div class="border-l-[3px] border-gold pl-5 mb-10">
           <h3 class="font-heading text-2xl md:text-3xl text-white leading-tight">
-            Northern Italy &amp; Alps
+            {milanoLoc.primary}
           </h3>
           <p class="text-gold text-xs uppercase tracking-[0.2em] font-body font-light mt-1.5">
-            Milano
+            {milanoLoc.secondary}
           </p>
         </div>
 
@@ -145,32 +140,13 @@
             <span class="text-base leading-none" aria-hidden="true">&#9992;</span>
             <span>Airport Transfers</span>
           </h4>
-          <ul class="space-y-2">
-            <li class="flex items-start gap-3 text-sm leading-relaxed">
-              <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
-              <span class="text-smoke/70">
-                <span class="text-white/90 font-medium">Milano Linate / Malpensa / Bergamo</span> &rarr;
-                <span class="text-white/90 font-medium">Swiss</span> &mdash; Lugano, St.&nbsp;Moritz, Zurich
-              </span>
-            </li>
-            <li class="flex items-start gap-3 text-sm leading-relaxed">
-              <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
-              <span class="text-smoke/70">
-                <span class="text-white/90 font-medium">Monte Carlo</span> &mdash; Monaco
-              </span>
-            </li>
-            <li class="flex items-start gap-3 text-sm leading-relaxed">
-              <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
-              <span class="text-smoke/70">
-                <span class="text-white/90 font-medium">France</span> &mdash; Nice
-              </span>
-            </li>
-            <li class="flex items-start gap-3 text-sm leading-relaxed">
-              <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
-              <span class="text-smoke/70">
-                <span class="text-white/90 font-medium">Italy</span> &mdash; Milano, Lago di Garda
-              </span>
-            </li>
+          <ul class="space-y-1.5">
+            {milano?.data?.airport_routes?.map((route) => (
+              <li class="flex items-start gap-3 text-sm leading-relaxed">
+                <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
+                <span class="text-smoke/70">{route}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -181,7 +157,7 @@
             <span>VIP Villa Transfers</span>
           </h4>
           <p class="text-smoke/70 text-sm leading-relaxed">
-            Luxury transportation between villas, hotels, beach clubs and restaurants.
+            {milano?.data?.villa_transfers || 'Luxury transportation between villas, hotels, beach clubs and restaurants.'}
           </p>
         </div>
 
@@ -192,7 +168,7 @@
             <span>Yacht Transfers</span>
           </h4>
           <p class="text-smoke/70 text-sm leading-relaxed">
-            Private transportation
+            {milano?.data?.yacht_transfers_desc || 'Private transportation.'}
           </p>
         </div>
 
@@ -203,22 +179,12 @@
             <span>Business &amp; Corporate</span>
           </h4>
           <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5">
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Meetings
-            </li>
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Conferences
-            </li>
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Corporate events
-            </li>
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Business delegations
-            </li>
+            {milano?.data?.business_services?.map((service) => (
+              <li class="flex items-center gap-2.5 text-sm text-smoke/70">
+                <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
+                {service}
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -229,22 +195,12 @@
             <span>Nightlife &amp; VIP Club</span>
           </h4>
           <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5 mb-3">
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Restaurants
-            </li>
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Beach clubs
-            </li>
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Nightclubs
-            </li>
-            <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-              <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-              Private events
-            </li>
+            {milano?.data?.nightlife_venues?.map((venue) => (
+              <li class="flex items-center gap-2.5 text-sm text-smoke/70">
+                <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
+                {venue}
+              </li>
+            ))}
           </ul>
           <p class="text-gold/80 text-xs italic font-light">
             Available with waiting service.
