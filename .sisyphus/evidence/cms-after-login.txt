@@ -1,0 +1,53 @@
+- generic [ref=f7e2]:
+  - banner [ref=f7e3]:
+    - generic [ref=f7e4]:
+      - navigation [ref=f7e5]:
+        - list [ref=f7e6]:
+          - listitem [ref=f7e7]:
+            - link "Contents" [ref=f7e8] [cursor=pointer]:
+              - /url: "#/"
+          - listitem [ref=f7e12]:
+            - button "Media" [ref=f7e13] [cursor=pointer]
+      - generic [ref=f7e17]:
+        - button "Quick add" [ref=f7e20] [cursor=pointer]
+        - button "Account options dropdown" [ref=f7e24] [cursor=pointer]
+  - generic [ref=f7e29]:
+    - complementary [ref=f7e30]:
+      - heading "Collections" [level=2] [ref=f7e31]
+      - textbox "Search all" [ref=f7e34]
+      - list [ref=f7e35]:
+        - listitem [ref=f7e36]:
+          - link "Hero Section" [ref=f7e37] [cursor=pointer]:
+            - /url: "#/collections/hero"
+        - listitem [ref=f7e41]:
+          - link "Marbella Services" [ref=f7e42] [cursor=pointer]:
+            - /url: "#/collections/services-marbella"
+        - listitem [ref=f7e46]:
+          - link "Milano Services" [ref=f7e47] [cursor=pointer]:
+            - /url: "#/collections/services-milano"
+        - listitem [ref=f7e51]:
+          - link "Fleet" [ref=f7e52] [cursor=pointer]:
+            - /url: "#/collections/fleet"
+        - listitem [ref=f7e56]:
+          - link "Hourly Pricing" [ref=f7e57] [cursor=pointer]:
+            - /url: "#/collections/pricing-hourly"
+        - listitem [ref=f7e61]:
+          - link "Airport Pricing" [ref=f7e62] [cursor=pointer]:
+            - /url: "#/collections/pricing-airport"
+        - listitem [ref=f7e66]:
+          - link "VIP Membership" [ref=f7e67] [cursor=pointer]:
+            - /url: "#/collections/membership"
+    - main [ref=f7e71]:
+      - generic [ref=f7e72]:
+        - heading "Hero Section" [level=1] [ref=f7e74]
+        - paragraph [ref=f7e75]: Homepage hero banner content
+      - generic [ref=f7e76]:
+        - generic [ref=f7e77]:
+          - button "List view option" [ref=f7e78] [cursor=pointer]
+          - button "Grid view option" [ref=f7e82] [cursor=pointer]
+        - button "Sort by" [ref=f7e88] [cursor=pointer]
+      - list [ref=f7e90]:
+        - listitem [ref=f7e91]:
+          - link [ref=f7e92] [cursor=pointer]:
+            - /url: "#/collections/hero/entries/hero"
+            - heading "Hero Banner" [level=2] [ref=f7e93]

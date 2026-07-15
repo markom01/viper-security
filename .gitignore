@@ -4,3 +4,6 @@ dist/
 .playwright-mcp/
 scripts/__pycache__/
 
+
+# Local Netlify folder
+.netlify

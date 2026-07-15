@@ -6,9 +6,10 @@
   <title>Viper Security — Admin</title>
 </head>
 <body>
-  <script src="https://unpkg.com/netlify-cms-app@^2.0.0/dist/netlify-cms-app.js"></script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
+    // Netlify Identity redirect
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", function(user) {
         if (!user) {
