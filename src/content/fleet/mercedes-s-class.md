@@ -1,5 +1,5 @@
 ---
-vehicle_name: Mercedes-Benz S-Class 4MATIC AMG
+vehicle_name: Mercedes-Benz S-Class AMG
 features:
   - Luxury leather interior
   - Rear executive seating
