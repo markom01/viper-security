@@ -1,6 +1,13 @@
 ---
 // VIPER SECURITY — Fleet Section
-// Single vehicle showcase: Mercedes-Benz S-Class 4MATIC AMG
+// Reads vehicle data from Astro Content Collection
+import { getCollection } from "astro:content";
+
+const fleetEntries = await getCollection("fleet");
+const vehicle = fleetEntries[0]?.data;
+const nameParts = vehicle?.vehicle_name?.split(" ") || [];
+const brand = nameParts.slice(0, -3).join(" ");
+const model = nameParts.slice(-3).join(" ");
 ---
 
 <section id="fleet" class="relative py-20 lg:py-28 bg-dark-iron overflow-hidden">
@@ -29,7 +36,7 @@
       <div class="lg:w-1/2 relative overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80"
-          alt="Mercedes-Benz S-Class 4MATIC AMG interior — luxury leather steering wheel and dashboard"
+          alt={vehicle?.vehicle_name ? `${vehicle.vehicle_name} interior — luxury leather steering wheel and dashboard` : "Luxury sedan interior"}
           class="fleet-image w-full h-full object-cover aspect-[4/3] lg:aspect-auto lg:min-h-[520px] transition-transform duration-700 ease-out"
           loading="lazy"
         />
@@ -47,97 +54,39 @@
         <h3
           class="font-heading text-white text-2xl md:text-3xl lg:text-4xl leading-snug mb-8"
         >
-          Mercedes-Benz<br />
-          <span class="text-gold">S-Class 4MATIC AMG</span>
+          {vehicle?.vehicle_name || "Mercedes-Benz S-Class 4MATIC AMG"}
         </h3>
 
         <!-- Features Grid -->
         <div
           class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3.5 mb-8"
         >
-          <div class="flex items-center gap-3">
-            <span
-              class="block w-1.5 h-1.5 bg-gold rounded-full shrink-0 mt-px"
-              aria-hidden="true"
-            ></span>
-            <span class="text-white/75 text-sm lg:text-base font-body"
-              >Luxury leather interior</span
-            >
-          </div>
-          <div class="flex items-center gap-3">
-            <span
-              class="block w-1.5 h-1.5 bg-gold rounded-full shrink-0 mt-px"
-              aria-hidden="true"
-            ></span>
-            <span class="text-white/75 text-sm lg:text-base font-body"
-              >Rear executive seating</span
-            >
-          </div>
-          <div class="flex items-center gap-3">
-            <span
-              class="block w-1.5 h-1.5 bg-gold rounded-full shrink-0 mt-px"
-              aria-hidden="true"
-            ></span>
-            <span class="text-white/75 text-sm lg:text-base font-body"
-              >Climate control</span
-            >
-          </div>
-          <div class="flex items-center gap-3">
-            <span
-              class="block w-1.5 h-1.5 bg-gold rounded-full shrink-0 mt-px"
-              aria-hidden="true"
-            ></span>
-            <span class="text-white/75 text-sm lg:text-base font-body"
-              >Privacy glass</span
-            >
-          </div>
-          <div class="flex items-center gap-3">
-            <span
-              class="block w-1.5 h-1.5 bg-gold rounded-full shrink-0 mt-px"
-              aria-hidden="true"
-            ></span>
-            <span class="text-white/75 text-sm lg:text-base font-body"
-              >Wi‑Fi available upon request</span
-            >
-          </div>
-          <div class="flex items-center gap-3">
-            <span
-              class="block w-1.5 h-1.5 bg-gold rounded-full shrink-0 mt-px"
-              aria-hidden="true"
-            ></span>
-            <span class="text-white/75 text-sm lg:text-base font-body"
-              >Complimentary bottled water</span
-            >
-          </div>
-          <div class="flex items-center gap-3">
-            <span
-              class="block w-1.5 h-1.5 bg-gold rounded-full shrink-0 mt-px"
-              aria-hidden="true"
-            ></span>
-            <span class="text-white/75 text-sm lg:text-base font-body"
-              >Phone charging facilities</span
-            >
-          </div>
-          <div class="flex items-center gap-3">
-            <span
-              class="block w-1.5 h-1.5 bg-gold rounded-full shrink-0 mt-px"
-              aria-hidden="true"
-            ></span>
-            <span class="text-white/75 text-sm lg:text-base font-body"
-              >Professional English‑speaking driver</span
-            >
-          </div>
+          {vehicle?.features?.map((feature) => (
+            <div class="flex items-center gap-3">
+              <span
+                class="block w-1.5 h-1.5 bg-gold rounded-full shrink-0 mt-px"
+                aria-hidden="true"
+              ></span>
+              <span class="text-white/75 text-sm lg:text-base font-body"
+                >{feature}</span
+              >
+            </div>
+          ))}
         </div>
 
         <!-- Capacity -->
         <div
           class="flex flex-wrap items-center gap-x-2 text-ash text-sm font-body"
         >
-          <span>Up to 3 passengers</span>
-          <span class="text-white/20" aria-hidden="true">•</span>
-          <span>3 large suitcases</span>
-          <span class="text-white/20" aria-hidden="true">•</span>
-          <span>2 carry‑on bags</span>
+          {vehicle?.capacity_passengers && <span>{vehicle.capacity_passengers}</span>}
+          {vehicle?.capacity_passengers && vehicle?.capacity_suitcases && (
+            <span class="text-white/20" aria-hidden="true">•</span>
+          )}
+          {vehicle?.capacity_suitcases && <span>{vehicle.capacity_suitcases} large suitcases</span>}
+          {vehicle?.capacity_suitcases && vehicle?.capacity_carryon && (
+            <span class="text-white/20" aria-hidden="true">•</span>
+          )}
+          {vehicle?.capacity_carryon && <span>{vehicle.capacity_carryon} carry‑on bags</span>}
         </div>
       </div>
     </div>
