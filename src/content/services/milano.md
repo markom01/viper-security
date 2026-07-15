@@ -1,5 +1,5 @@
 ---
-location_name: Northern Italy & Alps — Milano
+location_name: Northern Italy & Alps - Milano
 airport_routes:
   - Milano Linate / Malpensa / Bergamo → Swiss Alps
   - Lugano
