@@ -5,10 +5,8 @@
   --color-gold: #B08D45;
   --color-gold-light: #C6A45C;
   --color-white: #FFFFFF;
-  --color-cream: #F5F0E8;
   --color-charcoal: #1A1A1A;
   --color-dark-iron: #181818;
-  --color-navy: #0F1A2E;
   --color-ash: #7D7D7D;
   --color-smoke: #F5F5F5;
 
@@ -16,24 +14,17 @@
   --font-body: "Manrope", sans-serif;
 }
 
-/* ─── CSS Custom Properties ─── */
 :root {
-  /* Glassmorphism */
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-blur: 12px;
-
-  /* Section Spacing */
-  --section-padding: 5rem;
-  --section-padding-mobile: 3rem;
-
-  /* Transition Timings */
   --transition-fast: 200ms ease;
   --transition-base: 300ms ease;
   --transition-slow: 500ms ease;
+
+  /* Gold glow tokens (derived from --color-gold) */
+  --gold-glow-subtle: 0 0 24px color-mix(in srgb, var(--color-gold) 12%, transparent);
+  --gold-glow-cta: 0 0 30px -5px color-mix(in srgb, var(--color-gold) 40%, transparent);
+  --gold-gradient-glow: radial-gradient(ellipse at center, color-mix(in srgb, var(--color-gold) 8%, transparent) 0%, transparent 70%);
 }
 
-/* ─── Base Reset ─── */
 html {
   scroll-behavior: smooth;
 }
@@ -44,15 +35,14 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-wrap: break-word;
 }
 
-/* ─── Selection ─── */
 ::selection {
-  background-color: rgba(176, 141, 69, 0.3);
+  background-color: rgba(176, 141, 69, 0.5);
   color: #FFFFFF;
 }
 
-/* ─── Scrollbar ─── */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -66,20 +56,50 @@ body {
   border-radius: 0;
 }
 
-/* ─── Utility Classes ─── */
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-}
-
-.section-padding {
-  padding: var(--section-padding) 0;
-}
-
-@media (max-width: 768px) {
-  .section-padding {
-    padding: var(--section-padding-mobile) 0;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Fluid text sizing */
+.text-fluid-xs {
+  font-size: clamp(0.6875rem, 0.625rem + 0.3125vw, 0.75rem);
+}
+.text-fluid-sm {
+  font-size: clamp(0.75rem, 0.6875rem + 0.3125vw, 0.875rem);
+}
+.text-fluid-base {
+  font-size: clamp(0.875rem, 0.8125rem + 0.3125vw, 1rem);
+}
+
+/* Content visibility for below-fold sections */
+#services,
+#fleet,
+#pricing,
+#membership,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+[aria-label="Hero"] {
+  contain: content;
+}
+
+/* Typography refinements */
+.text-body-readable {
+  max-width: 65ch;
+}
+.text-light-on-dark {
+  line-height: 1.7;
 }

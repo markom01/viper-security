@@ -1,6 +1,6 @@
 ---
-// Services.astro — VIPER SECURITY Services Section
 import { getCollection } from 'astro:content';
+import ServiceCard from './ServiceCard.astro';
 
 const [marbella] = await getCollection('services-marbella');
 const [milano] = await getCollection('services-milano');
@@ -18,7 +18,6 @@ const milanoLoc = splitName(milano?.data?.location_name || 'Northern Italy & Alp
 
 <section id="services" class="py-20 bg-black">
   <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
-    <!-- Section Title -->
     <div class="text-center mb-16 lg:mb-20">
       <span class="text-ash text-xs uppercase tracking-[0.25em] font-body font-light">
         Premium Coverage Areas
@@ -29,11 +28,9 @@ const milanoLoc = splitName(milano?.data?.location_name || 'Northern Italy & Alp
       <div class="w-16 h-px bg-gold/60 mx-auto"></div>
     </div>
 
-    <!-- Two-Column Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16">
-      <!-- ========== LEFT COLUMN — Costa del Sol — Marbella ========== -->
+      <!-- LEFT COLUMN — Costa del Sol — Marbella -->
       <div>
-        <!-- Location Heading -->
         <div class="border-l-[3px] border-gold pl-5 mb-10">
           <h3 class="font-heading text-2xl md:text-3xl text-white leading-tight">
             {marbellaLoc.primary}
@@ -43,88 +40,64 @@ const milanoLoc = splitName(milano?.data?.location_name || 'Northern Italy & Alp
           </p>
         </div>
 
-        <!-- 1 — Airport Transfers -->
-        <div class="bg-charcoal/50 backdrop-blur-sm border border-white/[0.06] rounded-xl p-5 mb-4 transition-all duration-300 hover:border-gold/20 hover:bg-charcoal/70">
-          <h4 class="text-gold font-heading text-lg mb-3 flex items-center gap-2.5">
-            <span class="text-base leading-none" aria-hidden="true">&#9992;</span>
-            <span>Airport Transfers</span>
-          </h4>
-          <ul class="space-y-1.5">
-            {marbella?.data?.airport_routes?.map((route) => (
-              <li class="flex items-start gap-3 text-sm leading-relaxed">
-                <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
-                <span class="text-smoke/70">{route}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <div class="flex flex-col gap-4">
+          <ServiceCard icon="&#9992;" title="Airport Transfers">
+            <ul class="space-y-1.5">
+              {marbella?.data?.airport_routes?.map((route) => (
+                <li class="flex items-start gap-3 text-sm leading-relaxed">
+                  <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
+                  <span class="text-smoke/70">{route}</span>
+                </li>
+              ))}
+            </ul>
+          </ServiceCard>
 
-        <!-- 2 — VIP Villa Transfers -->
-        <div class="bg-charcoal/50 backdrop-blur-sm border border-white/[0.06] rounded-xl p-5 mb-4 transition-all duration-300 hover:border-gold/20 hover:bg-charcoal/70">
-          <h4 class="text-gold font-heading text-lg mb-3 flex items-center gap-2.5">
-            <span class="text-base leading-none" aria-hidden="true">&#10070;</span>
-            <span>VIP Villa Transfers</span>
-          </h4>
-          <p class="text-smoke/70 text-sm leading-relaxed">
-            {marbella?.data?.villa_transfers || 'Luxury transportation between villas, hotels, beach clubs and restaurants.'}
-          </p>
-        </div>
+          <ServiceCard icon="&#10070;" title="VIP Villa Transfers">
+            <p class="text-smoke/70 text-sm leading-relaxed">
+              {marbella?.data?.villa_transfers || 'Luxury transportation between villas, hotels, beach clubs and restaurants.'}
+            </p>
+          </ServiceCard>
 
-        <!-- 3 — Yacht Transfers -->
-        <div class="bg-charcoal/50 backdrop-blur-sm border border-white/[0.06] rounded-xl p-5 mb-4 transition-all duration-300 hover:border-gold/20 hover:bg-charcoal/70">
-          <h4 class="text-gold font-heading text-lg mb-3 flex items-center gap-2.5">
-            <span class="text-base leading-none" aria-hidden="true">&#9973;</span>
-            <span>Yacht Transfers</span>
-          </h4>
-          <ul class="space-y-1.5">
-            {marbella?.data?.yacht_marinas?.map((marina) => (
-              <li class="flex items-start gap-3 text-sm leading-relaxed">
-                <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
-                <span class="text-smoke/70">{marina}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+          <ServiceCard icon="&#9973;" title="Yacht Transfers">
+            <ul class="space-y-1.5">
+              {marbella?.data?.yacht_marinas?.map((marina) => (
+                <li class="flex items-start gap-3 text-sm leading-relaxed">
+                  <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
+                  <span class="text-smoke/70">{marina}</span>
+                </li>
+              ))}
+            </ul>
+          </ServiceCard>
 
-        <!-- 4 — Business & Corporate -->
-        <div class="bg-charcoal/50 backdrop-blur-sm border border-white/[0.06] rounded-xl p-5 mb-4 transition-all duration-300 hover:border-gold/20 hover:bg-charcoal/70">
-          <h4 class="text-gold font-heading text-lg mb-3 flex items-center gap-2.5">
-            <span class="text-base leading-none" aria-hidden="true">&#9632;</span>
-            <span>Business &amp; Corporate</span>
-          </h4>
-          <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5">
-            {marbella?.data?.business_services?.map((service) => (
-              <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-                <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-                {service}
-              </li>
-            ))}
-          </ul>
-        </div>
+          <ServiceCard icon="&#9632;" title="Business & Corporate">
+            <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5">
+              {marbella?.data?.business_services?.map((service) => (
+                <li class="flex items-center gap-2.5 text-sm text-smoke/70">
+                  <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
+                  {service}
+                </li>
+              ))}
+            </ul>
+          </ServiceCard>
 
-        <!-- 5 — Nightlife & VIP Club -->
-        <div class="bg-charcoal/50 backdrop-blur-sm border border-white/[0.06] rounded-xl p-5 transition-all duration-300 hover:border-gold/20 hover:bg-charcoal/70">
-          <h4 class="text-gold font-heading text-lg mb-3 flex items-center gap-2.5">
-            <span class="text-base leading-none" aria-hidden="true">&#10025;</span>
-            <span>Nightlife &amp; VIP Club</span>
-          </h4>
-          <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5 mb-3">
-            {marbella?.data?.nightlife_venues?.map((venue) => (
-              <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-                <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-                {venue}
-              </li>
-            ))}
-          </ul>
-          <p class="text-gold/80 text-xs italic font-light">
-            Available with waiting service.
-          </p>
+          <ServiceCard icon="&#10025;" title="Nightlife & VIP Club">
+            <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5 mb-3">
+              {marbella?.data?.nightlife_venues?.map((venue) => (
+                <li class="flex items-center gap-2.5 text-sm text-smoke/70">
+                  <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
+                  {venue}
+                </li>
+              ))}
+            </ul>
+            <p class="text-gold text-xs italic font-light">
+              Available with waiting service.
+            </p>
+          </ServiceCard>
         </div>
       </div>
 
-      <!-- ========== RIGHT COLUMN — Northern Italy & Alps — Milano ========== -->
+      <!-- RIGHT COLUMN — Northern Italy & Alps — Milano -->
       <div>
-        <!-- Location Heading -->
         <div class="border-l-[3px] border-gold pl-5 mb-10">
           <h3 class="font-heading text-2xl md:text-3xl text-white leading-tight">
             {milanoLoc.primary}
@@ -134,77 +107,54 @@ const milanoLoc = splitName(milano?.data?.location_name || 'Northern Italy & Alp
           </p>
         </div>
 
-        <!-- 1 — Airport Transfers -->
-        <div class="bg-charcoal/50 backdrop-blur-sm border border-white/[0.06] rounded-xl p-5 mb-4 transition-all duration-300 hover:border-gold/20 hover:bg-charcoal/70">
-          <h4 class="text-gold font-heading text-lg mb-3 flex items-center gap-2.5">
-            <span class="text-base leading-none" aria-hidden="true">&#9992;</span>
-            <span>Airport Transfers</span>
-          </h4>
-          <ul class="space-y-1.5">
-            {milano?.data?.airport_routes?.map((route) => (
-              <li class="flex items-start gap-3 text-sm leading-relaxed">
-                <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
-                <span class="text-smoke/70">{route}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <div class="flex flex-col gap-4">
+          <ServiceCard icon="&#9992;" title="Airport Transfers">
+            <ul class="space-y-1.5">
+              {milano?.data?.airport_routes?.map((route) => (
+                <li class="flex items-start gap-3 text-sm leading-relaxed">
+                  <span class="text-gold/60 mt-0.5 shrink-0" aria-hidden="true">&#8212;</span>
+                  <span class="text-smoke/70">{route}</span>
+                </li>
+              ))}
+            </ul>
+          </ServiceCard>
 
-        <!-- 2 — VIP Villa Transfers -->
-        <div class="bg-charcoal/50 backdrop-blur-sm border border-white/[0.06] rounded-xl p-5 mb-4 transition-all duration-300 hover:border-gold/20 hover:bg-charcoal/70">
-          <h4 class="text-gold font-heading text-lg mb-3 flex items-center gap-2.5">
-            <span class="text-base leading-none" aria-hidden="true">&#10070;</span>
-            <span>VIP Villa Transfers</span>
-          </h4>
-          <p class="text-smoke/70 text-sm leading-relaxed">
-            {milano?.data?.villa_transfers || 'Luxury transportation between villas, hotels, beach clubs and restaurants.'}
-          </p>
-        </div>
+          <ServiceCard icon="&#10070;" title="VIP Villa Transfers">
+            <p class="text-smoke/70 text-sm leading-relaxed">
+              {milano?.data?.villa_transfers || 'Luxury transportation between villas, hotels, beach clubs and restaurants.'}
+            </p>
+          </ServiceCard>
 
-        <!-- 3 — Yacht Transfers -->
-        <div class="bg-charcoal/50 backdrop-blur-sm border border-white/[0.06] rounded-xl p-5 mb-4 transition-all duration-300 hover:border-gold/20 hover:bg-charcoal/70">
-          <h4 class="text-gold font-heading text-lg mb-3 flex items-center gap-2.5">
-            <span class="text-base leading-none" aria-hidden="true">&#9973;</span>
-            <span>Yacht Transfers</span>
-          </h4>
-          <p class="text-smoke/70 text-sm leading-relaxed">
-            {milano?.data?.yacht_transfers_desc || 'Private transportation.'}
-          </p>
-        </div>
+          <ServiceCard icon="&#9973;" title="Yacht Transfers">
+            <p class="text-smoke/70 text-sm leading-relaxed">
+              {milano?.data?.yacht_transfers_desc || 'Private transportation.'}
+            </p>
+          </ServiceCard>
 
-        <!-- 4 — Business & Corporate -->
-        <div class="bg-charcoal/50 backdrop-blur-sm border border-white/[0.06] rounded-xl p-5 mb-4 transition-all duration-300 hover:border-gold/20 hover:bg-charcoal/70">
-          <h4 class="text-gold font-heading text-lg mb-3 flex items-center gap-2.5">
-            <span class="text-base leading-none" aria-hidden="true">&#9632;</span>
-            <span>Business &amp; Corporate</span>
-          </h4>
-          <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5">
-            {milano?.data?.business_services?.map((service) => (
-              <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-                <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-                {service}
-              </li>
-            ))}
-          </ul>
-        </div>
+          <ServiceCard icon="&#9632;" title="Business & Corporate">
+            <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5">
+              {milano?.data?.business_services?.map((service) => (
+                <li class="flex items-center gap-2.5 text-sm text-smoke/70">
+                  <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
+                  {service}
+                </li>
+              ))}
+            </ul>
+          </ServiceCard>
 
-        <!-- 5 — Nightlife & VIP Club -->
-        <div class="bg-charcoal/50 backdrop-blur-sm border border-white/[0.06] rounded-xl p-5 transition-all duration-300 hover:border-gold/20 hover:bg-charcoal/70">
-          <h4 class="text-gold font-heading text-lg mb-3 flex items-center gap-2.5">
-            <span class="text-base leading-none" aria-hidden="true">&#10025;</span>
-            <span>Nightlife &amp; VIP Club</span>
-          </h4>
-          <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5 mb-3">
-            {milano?.data?.nightlife_venues?.map((venue) => (
-              <li class="flex items-center gap-2.5 text-sm text-smoke/70">
-                <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
-                {venue}
-              </li>
-            ))}
-          </ul>
-          <p class="text-gold/80 text-xs italic font-light">
-            Available with waiting service.
-          </p>
+          <ServiceCard icon="&#10025;" title="Nightlife & VIP Club">
+            <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5 mb-3">
+              {milano?.data?.nightlife_venues?.map((venue) => (
+                <li class="flex items-center gap-2.5 text-sm text-smoke/70">
+                  <span class="w-1 h-1 rounded-full bg-gold/60 shrink-0" aria-hidden="true"></span>
+                  {venue}
+                </li>
+              ))}
+            </ul>
+            <p class="text-gold text-xs italic font-light">
+              Available with waiting service.
+            </p>
+          </ServiceCard>
         </div>
       </div>
     </div>
@@ -212,7 +162,6 @@ const milanoLoc = splitName(milano?.data?.location_name || 'Northern Italy & Alp
 </section>
 
 <style is:global>
-  /* Subtle hover lift for service cards */
   #services .rounded-xl {
     will-change: transform, border-color, background-color;
   }

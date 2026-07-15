@@ -10,7 +10,7 @@ airport_routes:
   - Milano
   - Lago di Garda
 villa_transfers: Luxury transportation between villas, hotels, beach clubs and restaurants.
-yacht_transfers_desc: Private transportation.
+yacht_transfers_desc: Private luxury transportation to and from marinas along Lake Como, Lake Garda, and the Italian Riviera.
 business_services:
   - Meetings
   - Conferences

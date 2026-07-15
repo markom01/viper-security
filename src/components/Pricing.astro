@@ -10,20 +10,16 @@ const routes = airport?.data?.routes ?? [];
 const marbellaRoutes = routes.slice(0, 5);
 const milanoRoutes = routes.slice(5);
 
-const driverIncludedText = hourly?.body?.trim() || 'Driver included.';
+const driverIncludedText = hourly?.body?.trim() || 'Professional chauffeur included with every booking.';
 ---
 
 <section id="pricing" class="bg-black py-20">
   <div class="mx-auto max-w-[1200px] px-6">
-    <!-- ─── Section Title ─── -->
     <h2 class="font-heading text-gold text-center text-4xl tracking-[0.15em] md:text-5xl">
       PRICING
     </h2>
     <div class="mx-auto mb-16 mt-4 h-px w-16 bg-gold/40"></div>
 
-    <!-- ════════════════════════════════════════════ -->
-    <!-- HOURLY CHAUFFEUR SERVICE                    -->
-    <!-- ════════════════════════════════════════════ -->
     <div class="mb-24">
       <h3
         class="font-body text-white text-center text-base tracking-[0.12em] uppercase md:text-lg"
@@ -32,17 +28,17 @@ const driverIncludedText = hourly?.body?.trim() || 'Driver included.';
       </h3>
       <div class="mx-auto mt-2 mb-12 h-px w-12 bg-white/10"></div>
 
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {rates.map((rate) => {
           const isFullDay = rate.hours === '12';
           return (
             <div
-              class={`border ${isFullDay ? 'border-gold/20 hover:border-gold/50' : 'border-white/5 hover:border-gold/30'} bg-dark-iron p-6 text-center transition-colors duration-300`}
+              class={`rate-card border ${isFullDay ? 'border-gold/20 hover:border-gold/50' : 'border-white/5 hover:border-gold/30'} bg-dark-iron p-6 text-center transition-colors duration-300`}
             >
               {isFullDay ? (
                 <>
                   <p class="font-body text-white text-sm mb-1 uppercase tracking-[0.1em]">Full Day</p>
-                  <p class="font-body text-ash/70 text-[10px] mb-3 uppercase tracking-[0.12em]">12 Hours</p>
+                  <p class="font-body text-ash/70 text-[10px] sm:text-[11px] mb-3 uppercase tracking-[0.12em]">12 Hours</p>
                 </>
               ) : (
                 <p class="font-body text-white text-sm mb-3 uppercase tracking-[0.1em]">
@@ -50,20 +46,17 @@ const driverIncludedText = hourly?.body?.trim() || 'Driver included.';
                 </p>
               )}
               <p class="font-heading text-gold text-3xl md:text-4xl leading-tight">€{rate.price}</p>
-              <p class="font-body text-ash/80 mt-2 text-[10px] uppercase tracking-[0.12em]">Chauffeur</p>
+              <p class="font-body text-ash mt-2 text-[10px] sm:text-[11px] uppercase tracking-[0.12em]">Chauffeur</p>
             </div>
           );
         })}
       </div>
 
-      <p class="font-body text-ash/70 mt-8 text-center text-[11px] uppercase tracking-[0.15em]">
+      <p class="font-body text-ash/70 mt-8 text-center text-[11px] sm:text-xs uppercase tracking-[0.15em]">
         {driverIncludedText}
       </p>
     </div>
 
-    <!-- ════════════════════════════════════════════ -->
-    <!-- AIRPORT TRANSFER PRICES                     -->
-    <!-- ════════════════════════════════════════════ -->
     <div>
       <h3
         class="font-body text-white text-center text-base tracking-[0.12em] uppercase md:text-lg"
@@ -73,7 +66,6 @@ const driverIncludedText = hourly?.body?.trim() || 'Driver included.';
       <div class="mx-auto mt-2 mb-12 h-px w-12 bg-white/10"></div>
 
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <!-- ─── LEFT: Costa del Sol — Marbella ─── -->
         <div>
           <h4
             class="font-body text-white/60 mb-6 border-b border-white/10 pb-3 text-xs uppercase tracking-[0.15em]"
@@ -88,14 +80,13 @@ const driverIncludedText = hourly?.body?.trim() || 'Driver included.';
               >
                 <span class="font-body text-white text-sm">{route.route}</span>
                 <span class="font-heading text-gold text-base"
-                  ><span class="font-body text-ash/80 text-[10px]">From </span>€{route.price_from}</span
+                  ><span class="font-body text-ash text-[10px]">From </span>€{route.price_from}</span
                 >
               </div>
             ))}
           </div>
         </div>
 
-        <!-- ─── RIGHT: Northern Italy &amp; Alps — Milano ─── -->
         <div>
           <h4
             class="font-body text-white/60 mb-6 border-b border-white/10 pb-3 text-xs uppercase tracking-[0.15em]"
@@ -110,7 +101,7 @@ const driverIncludedText = hourly?.body?.trim() || 'Driver included.';
               >
                 <span class="font-body text-white text-sm">{route.route}</span>
                 <span class="font-heading text-gold text-base"
-                  ><span class="font-body text-ash/80 text-[10px]">From </span>€{route.price_from}</span
+                  ><span class="font-body text-ash text-[10px]">From </span>€{route.price_from}</span
                 >
               </div>
             ))}
@@ -118,5 +109,53 @@ const driverIncludedText = hourly?.body?.trim() || 'Driver included.';
         </div>
       </div>
     </div>
+
+    <div class="mt-16 text-center">
+      <p class="text-smoke/50 text-xs uppercase tracking-[0.15em] font-body mb-6">
+        All prices include professional chauffeur. No hidden fees.
+      </p>
+      <a
+        href="#contact"
+        class="inline-block bg-gold text-black text-sm uppercase tracking-[0.12em] font-body font-semibold px-10 py-4 no-underline transition-all duration-300 hover:bg-gold-light hover:shadow-[var(--gold-glow-cta)]"
+      >
+        BOOK YOUR RIDE
+      </a>
+    </div>
   </div>
 </section>
+
+<style>
+  .rate-card {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .rate-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  (function () {
+    var cards = document.querySelectorAll("#pricing .rate-card");
+    if (!cards.length || typeof IntersectionObserver === "undefined") return;
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    cards.forEach(function (card, index) {
+      card.style.transitionDelay = (index * 80) + "ms";
+      observer.observe(card);
+    });
+  })();
+</script>

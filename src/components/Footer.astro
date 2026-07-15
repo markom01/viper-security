@@ -1,24 +1,15 @@
----
-// Footer — VIPER SECURITY luxury chauffeur service
-// Dark theme, gold accents, contact & nav links
----
-
 <footer class="bg-charcoal" aria-label="Footer">
-  <!-- Gold accent border -->
-  <div class="h-0.5 w-full bg-gold" aria-hidden="true"></div>
+  <div class="h-0.5 w-full bg-gold shimmer-bar" aria-hidden="true"></div>
 
   <div class="max-w-[1440px] mx-auto px-6 lg:px-12 py-16 flex flex-col items-center text-center gap-10">
-    <!-- Brand -->
     <a href="/" class="font-heading text-gold text-2xl lg:text-3xl tracking-wider no-underline">
       VIPER SECURITY
     </a>
 
-    <!-- Tagline -->
     <p class="text-white text-sm font-body font-light uppercase tracking-[0.15em]">
       Professional &bull; Discreet &bull; Reliable
     </p>
 
-    <!-- Contact Numbers -->
     <div class="flex flex-wrap justify-center gap-x-10 gap-y-2">
       <a
         href="tel:+393496638171"
@@ -34,7 +25,6 @@
       </a>
     </div>
 
-    <!-- Quick Nav Links -->
     <nav class="flex flex-wrap justify-center gap-x-7 gap-y-2" aria-label="Footer navigation">
       {
         ["Services", "Fleet", "Pricing", "Membership", "Contact"].map((label) => (
@@ -48,7 +38,6 @@
       }
     </nav>
 
-    <!-- Service Badges -->
     <div class="flex flex-wrap justify-center gap-x-5 gap-y-2">
       {
         [
@@ -58,16 +47,25 @@
           "Business Travel",
           "VIP Events",
         ].map((label) => (
-          <span class="text-white/60 text-[10px] uppercase tracking-[0.1em] font-body font-light whitespace-nowrap">
+          <span class="text-white/60 text-[10px] sm:text-xs uppercase tracking-[0.1em] font-body font-light whitespace-nowrap">
             {label}
           </span>
         ))
       }
     </div>
 
-    <!-- Copyright -->
-    <p class="text-ash text-[11px] font-body font-light tracking-[0.05em]">
+    <p class="text-ash text-[11px] sm:text-xs font-body font-light tracking-[0.05em]">
       &copy; 2026 Viper Security. All rights reserved.
     </p>
   </div>
 </footer>
+
+<style>
+  @keyframes gold-shimmer {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .shimmer-bar {
+    animation: gold-shimmer 4s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  }
+</style>

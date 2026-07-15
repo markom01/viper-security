@@ -1,0 +1,17 @@
+---
+interface Props {
+  icon: string;
+  title: string;
+}
+const { icon, title } = Astro.props;
+---
+
+<div
+  class="text-sm lg:text-base bg-charcoal/50 backdrop-blur-sm border border-white/[0.06] rounded-xl p-5 transition-all duration-300 hover:border-gold/20 hover:bg-charcoal/70"
+>
+  <h4 class="text-gold font-heading text-lg mb-3 flex items-center gap-2.5">
+    <span class="text-base leading-none" aria-hidden="true" set:html={icon}></span>
+    <span>{title}</span>
+  </h4>
+  <slot />
+</div>

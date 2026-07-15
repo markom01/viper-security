@@ -1,11 +1,11 @@
 ---
 brand_name: VIPER SECURITY
-tagline: VIP CHAUFFEUR & LUXURY TRANSPORT SERVICES
-subtitle: Travel in comfort, style and complete privacy with our premium
-  chauffeur service. Our luxury fleet and professional drivers are available for
-  airport transfers, business travel, private events, VIP transportation, yacht
-  transfers, villa transfers and exclusive experiences across Marbella, Milano,
-  and beyond.
+tagline: LUXURY CHAUFFEUR & VIP TRANSPORT SERVICES
+subtitle: Experience premium chauffeur-driven travel in comfort, style and
+  complete privacy. Our luxury Mercedes S-Class fleet and professional drivers
+  provide VIP airport transfers, executive business travel, private event
+  transportation, yacht transfers, and villa transfers across Marbella, Costa
+  del Sol, Milano, and beyond.
 cta_text: LUXURY WITHOUT LIMITS
 phone_italy: +39 349 663 8171
 phone_spain: +34 670 038 541

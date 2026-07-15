@@ -1,24 +1,17 @@
 ---
-// VIPER SECURITY — Fleet Section
-// Reads vehicle data from Astro Content Collection
 import { getCollection } from "astro:content";
 
 const fleetEntries = await getCollection("fleet");
 const vehicle = fleetEntries[0]?.data;
-const nameParts = vehicle?.vehicle_name?.split(" ") || [];
-const brand = nameParts.slice(0, -3).join(" ");
-const model = nameParts.slice(-3).join(" ");
 ---
 
 <section id="fleet" class="relative py-20 lg:py-28 bg-dark-iron overflow-hidden">
-  <!-- Subtle top-edge glow -->
   <div
     class="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent"
     aria-hidden="true"
   ></div>
 
   <div class="max-w-7xl mx-auto px-6 lg:px-12">
-    <!-- ─── Section Header ─── -->
     <div class="flex items-center gap-4 mb-12 lg:mb-16">
       <span class="block w-8 h-px bg-gold/70" aria-hidden="true"></span>
       <h2
@@ -28,36 +21,39 @@ const model = nameParts.slice(-3).join(" ");
       </h2>
     </div>
 
-    <!-- ─── Vehicle Showcase Card ─── -->
     <div
       class="fleet-card flex flex-col lg:flex-row bg-charcoal border-l border-gold/40"
     >
-      <!-- ===== Image Side ===== -->
       <div class="lg:w-1/2 relative overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80"
-          alt={vehicle?.vehicle_name ? `${vehicle.vehicle_name} interior — luxury leather steering wheel and dashboard` : "Luxury sedan interior"}
+          srcset="
+            https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=400&q=80 400w,
+            https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80 800w,
+            https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=1200&q=80 1200w
+          "
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          width="800"
+          height="533"
+          alt={vehicle?.vehicle_name ? `${vehicle.vehicle_name} — luxury chauffeur vehicle interior with premium leather seats and ambient lighting` : "Luxury chauffeur service Mercedes S-Class interior"}
           class="fleet-image w-full h-full object-cover aspect-[4/3] lg:aspect-auto lg:min-h-[520px] transition-transform duration-700 ease-out"
           loading="lazy"
+          fetchpriority="low"
         />
 
-        <!-- Hover gradient overlay -->
         <div
           class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 transition-opacity duration-500 ease-out"
           aria-hidden="true"
         ></div>
       </div>
 
-      <!-- ===== Details Side ===== -->
       <div class="lg:w-1/2 p-8 lg:p-12 xl:p-14 flex flex-col justify-center">
-        <!-- Vehicle Name -->
         <h3
           class="font-heading text-white text-2xl md:text-3xl lg:text-4xl leading-snug mb-8"
         >
           {vehicle?.vehicle_name || "Mercedes-Benz S-Class 4MATIC AMG"}
         </h3>
 
-        <!-- Features Grid -->
         <div
           class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3.5 mb-8"
         >
@@ -74,19 +70,18 @@ const model = nameParts.slice(-3).join(" ");
           ))}
         </div>
 
-        <!-- Capacity -->
         <div
-          class="flex flex-wrap items-center gap-x-2 text-ash text-sm font-body"
+          class="flex flex-wrap items-center gap-x-2 text-ash text-sm lg:text-base font-body"
         >
-          {vehicle?.capacity_passengers && <span>{vehicle.capacity_passengers}</span>}
-          {vehicle?.capacity_passengers && vehicle?.capacity_suitcases && (
+          {vehicle?.capacity_passengers != null && <span>{vehicle.capacity_passengers}</span>}
+          {vehicle?.capacity_passengers != null && vehicle?.capacity_suitcases != null && (
             <span class="text-white/20" aria-hidden="true">•</span>
           )}
-          {vehicle?.capacity_suitcases && <span>{vehicle.capacity_suitcases} large suitcases</span>}
-          {vehicle?.capacity_suitcases && vehicle?.capacity_carryon && (
+          {vehicle?.capacity_suitcases != null && <span>{vehicle.capacity_suitcases} large suitcases</span>}
+          {vehicle?.capacity_suitcases != null && vehicle?.capacity_carryon != null && (
             <span class="text-white/20" aria-hidden="true">•</span>
           )}
-          {vehicle?.capacity_carryon && <span>{vehicle.capacity_carryon} carry‑on bags</span>}
+          {vehicle?.capacity_carryon != null && <span>{vehicle.capacity_carryon} carry‑on bags</span>}
         </div>
       </div>
     </div>
@@ -94,25 +89,12 @@ const model = nameParts.slice(-3).join(" ");
 </section>
 
 <style>
-  /* ─── Image scale on hover ─── */
   .fleet-card:hover .fleet-image {
     transform: scale(1.05);
   }
 
   .fleet-card:hover .absolute.inset-0 {
     opacity: 1;
-  }
-
-  /* ─── Scroll-triggered fade-in animation ─── */
-  @keyframes fleet-fade-up {
-    from {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
 
   .fleet-card {

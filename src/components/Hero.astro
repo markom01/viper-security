@@ -16,13 +16,11 @@ const {
   class="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#000000]"
   aria-label="Hero"
 >
-  <!-- Subtle gold radial glow for depth -->
   <div
-    class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(176,141,69,0.08)_0%,_transparent_70%)] pointer-events-none"
+    class="absolute inset-0 bg-[var(--gold-gradient-glow)] pointer-events-none"
     aria-hidden="true"
   ></div>
 
-  <!-- Decorative bottom edge fade -->
   <div
     class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"
     aria-hidden="true"
@@ -31,28 +29,29 @@ const {
   <div
     class="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-24 flex flex-col items-center text-center"
   >
-    <!-- Brand Name -->
+    <p
+      class="animate-fade-in text-ash text-[10px] sm:text-xs uppercase tracking-[0.25em] font-body font-light mb-3"
+    >
+      Private Chauffeur &amp; Luxury Transport
+    </p>
     <h1
       class="animate-fade-in font-heading text-gold text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-[0.08em] leading-[1.1] mb-5"
     >
       {brand_name || 'VIPER SECURITY'}
     </h1>
 
-    <!-- Tagline -->
     <p
       class="animate-fade-in text-white text-base sm:text-lg md:text-xl lg:text-2xl font-body font-light uppercase tracking-[0.15em] mb-3 max-w-3xl"
     >
       {tagline || 'TRAVEL IN STYLE. ARRIVE IN COMFORT.'}
     </p>
 
-    <!-- Subtitle -->
     <p
       class="animate-fade-in text-smoke/60 text-sm sm:text-base md:text-lg font-body font-light mb-10 max-w-xl"
     >
-      {subtitle || 'VIP Chauffeur &amp; Luxury Transport — Marbella &amp; Milano'}
+      {subtitle || 'VIP Chauffeur & Luxury Transport — Marbella & Milano'}
     </p>
 
-    <!-- CTA Button -->
     <a
       href="#contact"
       class="animate-fade-in inline-block bg-gold text-black text-sm uppercase tracking-[0.12em] font-body font-semibold px-10 py-4 no-underline transition-all duration-300 hover:bg-gold-light hover:shadow-[0_0_30px_-5px_rgba(176,141,69,0.4)]"
@@ -60,7 +59,6 @@ const {
       {cta_text || 'BOOK YOUR RIDE'}
     </a>
 
-    <!-- Phone Numbers -->
     <div
       class="animate-fade-in flex flex-wrap justify-center gap-x-8 gap-y-2 mt-10"
     >
@@ -86,7 +84,6 @@ const {
       }
     </div>
 
-    <!-- Stars & Credentials -->
     <div
       class="animate-fade-in flex flex-col items-center mt-8"
     >
@@ -103,7 +100,6 @@ const {
       </p>
     </div>
 
-    <!-- Service Badges -->
     <div
       class="animate-fade-in flex flex-wrap justify-center gap-x-6 gap-y-3 mt-9"
     >
@@ -145,11 +141,12 @@ const {
     opacity: 0;
   }
 
-  .animate-fade-in:nth-child(1) { animation-delay: 0.10s; }
-  .animate-fade-in:nth-child(2) { animation-delay: 0.20s; }
-  .animate-fade-in:nth-child(3) { animation-delay: 0.30s; }
-  .animate-fade-in:nth-child(4) { animation-delay: 0.40s; }
-  .animate-fade-in:nth-child(5) { animation-delay: 0.55s; }
-  .animate-fade-in:nth-child(6) { animation-delay: 0.70s; }
-  .animate-fade-in:nth-child(7) { animation-delay: 0.85s; }
+  .animate-fade-in:nth-child(1) { animation-delay: 0.05s; }
+  .animate-fade-in:nth-child(2) { animation-delay: 0.15s; }
+  .animate-fade-in:nth-child(3) { animation-delay: 0.25s; }
+  .animate-fade-in:nth-child(4) { animation-delay: 0.35s; }
+  .animate-fade-in:nth-child(5) { animation-delay: 0.45s; }
+  .animate-fade-in:nth-child(6) { animation-delay: 0.60s; }
+  .animate-fade-in:nth-child(7) { animation-delay: 0.75s; }
+  .animate-fade-in:nth-child(8) { animation-delay: 0.90s; }
 </style>

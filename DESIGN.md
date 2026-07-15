@@ -2,11 +2,11 @@
 
 ## 1. Visual Theme & Atmosphere
 
-Lamborghini's website is a cathedral of darkness — a digital stage where jet-black surfaces stretch infinitely and every element emerges from the void like a machine under a spotlight. The page is almost entirely black. Not dark gray, not near-black — true, uncompromising black (`#000000`) that saturates the viewport and refuses to yield. Into this abyss, white type and Lamborghini Gold (`#FFC000`) are deployed with surgical precision, creating a visual language that feels like walking through a nighttime motorsport event where every surface absorbs light except the things that matter.
+The Lamborghini website is almost entirely black (`#000000`) — not dark gray — with white type and Lamborghini Gold (`#FFC000`) as the only relief colors. White and gold emerge from the black canvas with precision, creating a visual language of exclusivity and focus.
 
-The hero is a full-viewport video — dark, cinematic, immersive — showing event footage or vehicle reveals with the Lamborghini bull logo floating ethereally above. The navigation is minimal: a centered bull logo, a "MENU" hamburger on the left, and search/bookmark icons on the right, all rendered in white against the black canvas. There are no borders, no visible nav containers, no background color on the header — just white marks floating in darkness. The overall mood is nocturnal luxury: exclusive, theatrical, and deliberately intimidating. Each section transition is a scroll through darkness into the next revelation.
+The hero is a full-viewport video — dark and cinematic — showing event footage or vehicle reveals with the Lamborghini bull logo floating above. Navigation is minimal: a centered bull logo, a "MENU" hamburger on the left, and search/bookmark icons on the right, all in white against the black canvas. There are no borders, no visible nav containers, no background color on the header — just white marks in darkness. The mood is nocturnal luxury: exclusive, theatrical, and deliberately intimidating. Each section transition scrolls through darkness into the next.
 
-Typography is the voice of this darkness. LamboType — a custom Neo-Grotesk typeface created by Character Type and design agency Strichpunkt — is used for everything from 120px uppercase display headlines to 10px micro labels. Its distinctive 12° angled terminals are inspired by the aerodynamic lines of Lamborghini's super sports cars, and its proportions range from Normal to Ultracompressed width. Headlines SHOUT in uppercase at enormous scales with tight line-heights (0.92 at 120px), creating dense blocks of text that feel stamped from steel. The typeface carries hexagonal geometric DNA — constructed from hexagons, three-armed stars, and circles — that echoes throughout the interface in the hexagonal pause button and UI icons. Built on Bootstrap grid with 68 Element Plus/UI components, the technical infrastructure is substantial beneath the theatrical surface.
+LamboType — a custom Neo-Grotesk typeface by Character Type and Strichpunkt — is used for everything from 120px uppercase headlines to 10px micro labels. Its 12° angled terminals are inspired by Lamborghini's aerodynamic lines, with widths from Normal to Ultracompressed. Headlines use uppercase at enormous scales with tight line-heights (0.92 at 120px), creating dense blocks of text. The typeface carries hexagonal geometric DNA — constructed from hexagons, three-armed stars, and circles — that echoes throughout the interface in the hexagonal pause button and UI icons. Built on Bootstrap grid with 68 Element Plus/UI components.
 
 **Key Characteristics:**
 - True black (`#000000`) dominant surfaces with white and gold as the only relief colors
@@ -22,7 +22,7 @@ Typography is the voice of this darkness. LamboType — a custom Neo-Grotesk typ
 ## 2. Color Palette & Roles
 
 ### Primary
-- **Lamborghini Gold** (`#FFC000`): The signature accent color — a warm, saturated amber-gold (rgb 255, 192, 0) used exclusively for primary action buttons ("Discover More", "Tickets", "Start Configuration"). The only chromatic color in the entire interface, it ignites against the black canvas like a headlight cutting through night
+- **Lamborghini Gold** (`#FFC000`): The signature accent color — a warm, saturated amber-gold (rgb 255, 192, 0) used exclusively for primary action buttons ("Discover More", "Tickets", "Start Configuration"). The only chromatic color in the entire interface, it stands out sharply against the black canvas
 - **Pure White** (`#FFFFFF`): Primary text color on dark surfaces, logo rendering, nav elements, and light-mode button fills — the voice that speaks from the darkness
 
 ### Secondary & Accent
@@ -86,10 +86,10 @@ Typography is the voice of this darkness. LamboType — a custom Neo-Grotesk typ
 | Micro | 10px (0.63rem) | 400 | 1.00–2.00 | 0.225px | LamboType, uppercase, smallest text |
 
 ### Principles
-- **ALL-CAPS is the default voice**: Display and feature headings are universally uppercase. This creates a shouting, commanding tone that matches the brand's aggression
-- **Extreme scale range**: From 120px heroes to 10px micro labels — a 12:1 ratio that creates dramatic visual hierarchy
-- **Tight line-heights at scale**: Display sizes use 0.92-1.19 line-height, creating dense, compressed blocks of type that feel stamped rather than typeset
-- **Weight 400 dominates**: Unlike many design systems that use bold for emphasis, Lamborghini's regular weight carries the headlines — the typeface itself is so distinctive it doesn't need weight variation
+- **ALL-CAPS is the default voice**: Display and feature headings are universally uppercase.
+- **Extreme scale range**: From 120px heroes to 10px micro labels — a 12:1 ratio for dramatic visual hierarchy
+- **Tight line-heights at scale**: Display sizes use 0.92-1.19 line-height, creating dense, compressed blocks of type
+- **Weight 400 dominates**: Regular weight carries the headlines — the typeface is distinctive enough without bold emphasis
 - **Negative tracking on captions**: -0.42px letter-spacing on 14px captions creates a compressed, technical aesthetic
 - **Positive tracking on micro text**: +0.225px at 10px ensures legibility at the smallest sizes
 - **Single typeface discipline**: LamboType handles everything — the 12° angled terminals and hexagonal geometry provide visual coherence across all sizes
@@ -172,7 +172,7 @@ All buttons use **zero border-radius** — sharp, angular rectangles that echo t
 - **Content areas**: Centered within 1200px max-width containers
 
 ### Whitespace Philosophy
-Lamborghini uses darkness as whitespace. The generous black expanses between content blocks serve the same function as white space in a light design — creating breathing room that elevates each element to the status of exhibit. A model name floating in the middle of a black viewport has the same visual weight as a gallery piece on a white wall. The absence of color IS the design.
+Lamborghini uses darkness as whitespace. Black expanses between content blocks serve the same function as white space in a light design — creating breathing room. A model name floating in the middle of a black viewport has the same visual weight as a gallery piece on a white wall. The absence of color is the design.
 
 ### Border Radius Scale
 | Value | Context |
@@ -193,7 +193,7 @@ Lamborghini uses darkness as whitespace. The generous black expanses between con
 | Level 4 (Mist) | `rgba(0,0,0,0.25)` | Subtle depth hints |
 
 ### Shadow Philosophy
-Lamborghini achieves depth through surface color layering rather than shadows. On a black canvas, traditional drop shadows are invisible — instead, the system creates elevation by shifting from absolute black to progressively lighter dark grays: `#000000` → `#181818` → `#202020` → `#494949`. This "darkness gradient" approach means that elevated elements are literally lighter than their surroundings, inverting the traditional shadow model.
+Lamborghini achieves depth through surface color layering rather than shadows. On a black canvas, traditional drop shadows are invisible — instead, the system creates elevation by shifting from absolute black to progressively lighter dark grays: `#000000` → `#181818` → `#202020` → `#494949`. This "darkness gradient" approach means elevated elements are lighter than their surroundings, inverting the traditional shadow model.
 
 ### Decorative Depth
 - Full-bleed video provides atmospheric depth through cinematic lighting
@@ -206,7 +206,7 @@ Lamborghini achieves depth through surface color layering rather than shadows. O
 ### Do
 - Use absolute black (`#000000`) as the primary background — never dark gray as a substitute
 - Apply Lamborghini Gold (`#FFC000`) exclusively for primary CTA buttons — never for decorative purposes
-- Set all display headings in uppercase with LamboType — the brand voice is always SHOUTING
+- Set all display headings in uppercase with LamboType — the brand voice is always uppercase
 - Use zero border-radius on buttons and cards — sharp angles are non-negotiable
 - Maintain tight line-heights (0.92–1.19) on display type to create dense, architectural text blocks
 - Use the transparent ghost button (white border, 50% opacity) as the secondary CTA on dark backgrounds

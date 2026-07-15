@@ -10,12 +10,10 @@ const navLinks = [
 
 <header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow] duration-300 ease-out">
   <div class="flex items-center justify-between px-6 lg:px-12 py-4 max-w-[1440px] mx-auto">
-    <!-- Logo -->
     <a href="/" class="font-heading text-gold text-xl lg:text-2xl tracking-wider no-underline">
       VIPER SECURITY
     </a>
 
-    <!-- Desktop Nav -->
     <nav class="hidden lg:flex items-center gap-8" aria-label="Main navigation">
       {
         navLinks.map((link) => (
@@ -35,10 +33,9 @@ const navLinks = [
       </a>
     </nav>
 
-    <!-- Mobile Hamburger -->
     <button
       id="menu-toggle"
-      class="lg:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5 bg-transparent border-none cursor-pointer p-2"
+      class="lg:hidden flex flex-col items-center justify-center w-11 h-11 gap-1.5 bg-transparent border-none cursor-pointer p-2"
       aria-label="Toggle navigation menu"
     >
       <span class="block w-6 h-0.5 bg-white transition-all duration-200"></span>
@@ -48,7 +45,6 @@ const navLinks = [
   </div>
 </header>
 
-<!-- Mobile Menu Overlay -->
 <div
   id="mobile-menu"
   class="fixed inset-0 z-40 bg-black translate-x-full transition-transform duration-300 ease-out lg:hidden"
@@ -56,7 +52,7 @@ const navLinks = [
   <div class="flex flex-col items-center justify-center h-full gap-8 px-6">
     <button
       id="menu-close"
-      class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center bg-transparent border-none cursor-pointer"
+      class="absolute top-6 right-6 w-11 h-11 flex items-center justify-center bg-transparent border-none cursor-pointer"
       aria-label="Close navigation menu"
     >
       <span class="block w-6 h-0.5 bg-white rotate-45 translate-y-0.5"></span>
@@ -89,7 +85,6 @@ const navLinks = [
     const menuClose = document.getElementById("menu-close");
     const mobileMenu = document.getElementById("mobile-menu");
 
-    // Scroll — header background transition
     function onScroll() {
       if (window.scrollY > 50) {
         header.classList.add("bg-black", "shadow-[0_1px_0_rgba(255,255,255,0.06)]");
@@ -102,7 +97,6 @@ const navLinks = [
     // Run once on load to set correct initial state
     onScroll();
 
-    // Mobile menu open
     if (menuToggle && mobileMenu) {
       menuToggle.addEventListener("click", function () {
         document.body.style.overflow = "hidden";
@@ -111,7 +105,6 @@ const navLinks = [
       });
     }
 
-    // Mobile menu close
     function closeMenu() {
       document.body.style.overflow = "";
       mobileMenu.classList.remove("translate-x-0");
@@ -122,9 +115,31 @@ const navLinks = [
       menuClose.addEventListener("click", closeMenu);
     }
 
-    // Close mobile menu on link click
     document.querySelectorAll(".mobile-nav-link").forEach(function (link) {
       link.addEventListener("click", closeMenu);
     });
+
+    // aria-current="section" for hash-based single-page nav
+    function updateAriaCurrent() {
+      var hash = window.location.hash;
+      var navLinks = document.querySelectorAll(
+        'header nav a[href^="#"], #mobile-menu a[href^="#"]'
+      );
+      navLinks.forEach(function (link) {
+        if (hash && link.getAttribute("href") === hash) {
+          link.setAttribute("aria-current", "section");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", updateAriaCurrent);
+    } else {
+      updateAriaCurrent();
+    }
+
+    window.addEventListener("hashchange", updateAriaCurrent);
   })();
 </script>
