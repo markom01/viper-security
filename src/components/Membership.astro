@@ -11,9 +11,6 @@ const formatPrice = (price) => {
 <section id="membership" class="bg-black py-20">
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center mb-16">
-      <span class="inline-block text-gold text-xs uppercase tracking-[0.2em] font-body mb-4">
-        EXCLUSIVE ACCESS
-      </span>
       <h2 class="font-heading text-gold text-4xl md:text-5xl lg:text-6xl tracking-wider">
         VIP MEMBERSHIP
       </h2>
@@ -32,7 +29,7 @@ const formatPrice = (price) => {
           >
             {
               tier.is_featured && (
-                <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-black text-[10px] sm:text-xs uppercase tracking-[0.15em] font-body font-semibold px-4 py-1">
+                <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-black text-[10px] sm:text-xs  font-body font-semibold px-4 py-1">
                   BEST VALUE
                 </span>
               )
@@ -66,13 +63,13 @@ const formatPrice = (price) => {
 
             <a
               href="#contact"
-              class={`block text-center uppercase text-sm tracking-[0.12em] font-body font-semibold px-6 py-3.5 no-underline transition-all duration-200 mt-auto ${
+              class={`block text-center text-sm font-body font-semibold px-6 py-3.5 no-underline transition-all duration-200 mt-auto ${
                 tier.is_featured
                   ? "bg-gold text-black hover:bg-gold-light"
                   : "bg-transparent border border-gold text-gold hover:bg-gold hover:text-black"
               }`}
             >
-              ENQUIRE
+              REQUEST BOOKING
             </a>
           </div>
         ))

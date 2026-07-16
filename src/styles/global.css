@@ -7,7 +7,7 @@
   --color-white: #FFFFFF;
   --color-charcoal: #1A1A1A;
   --color-dark-iron: #181818;
-  --color-ash: #7D7D7D;
+  --color-ash: #8C8C8C;
   --color-smoke: #F5F5F5;
 
   --font-heading: "Playfair Display", serif;
@@ -22,7 +22,7 @@
   /* Gold glow tokens (derived from --color-gold) */
   --gold-glow-subtle: 0 0 24px color-mix(in srgb, var(--color-gold) 12%, transparent);
   --gold-glow-cta: 0 0 30px -5px color-mix(in srgb, var(--color-gold) 40%, transparent);
-  --gold-gradient-glow: radial-gradient(ellipse at center, color-mix(in srgb, var(--color-gold) 8%, transparent) 0%, transparent 70%);
+  --gold-gradient-glow: radial-gradient(ellipse at center, color-mix(in srgb, var(--color-gold) 4%, transparent) 0%, transparent 70%);
 }
 
 html {

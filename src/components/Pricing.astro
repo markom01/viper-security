@@ -22,9 +22,9 @@ const driverIncludedText = hourly?.body?.trim() || 'Professional chauffeur inclu
 
     <div class="mb-24">
       <h3
-        class="font-body text-white text-center text-base tracking-[0.12em] uppercase md:text-lg"
+        class="font-body text-white text-center text-base tracking-[0.05em] md:text-lg"
       >
-        HOURLY CHAUFFEUR SERVICE
+        Hourly Chauffeur Service
       </h3>
       <div class="mx-auto mt-2 mb-12 h-px w-12 bg-white/10"></div>
 
@@ -37,38 +37,67 @@ const driverIncludedText = hourly?.body?.trim() || 'Professional chauffeur inclu
             >
               {isFullDay ? (
                 <>
-                  <p class="font-body text-white text-sm mb-1 uppercase tracking-[0.1em]">Full Day</p>
-                  <p class="font-body text-ash/70 text-[10px] sm:text-[11px] mb-3 uppercase tracking-[0.12em]">12 Hours</p>
+                  <p class="font-body text-white text-sm mb-1">Full Day</p>
+                  <p class="font-body text-ash/70 text-[10px] sm:text-[11px] mb-3">12 hours</p>
                 </>
               ) : (
-                <p class="font-body text-white text-sm mb-3 uppercase tracking-[0.1em]">
-                  {rate.hours} Hour{rate.hours !== '1' ? 's' : ''}
+                <p class="font-body text-white text-sm mb-3">
+                  {rate.hours} hour{rate.hours !== '1' ? 's' : ''}
                 </p>
               )}
               <p class="font-heading text-gold text-3xl md:text-4xl leading-tight">€{rate.price}</p>
-              <p class="font-body text-ash mt-2 text-[10px] sm:text-[11px] uppercase tracking-[0.12em]">Chauffeur</p>
+              <p class="font-body text-ash mt-2 text-[10px] sm:text-[11px]">Total fixed price</p>
             </div>
           );
         })}
       </div>
 
-      <p class="font-body text-ash/70 mt-8 text-center text-[11px] sm:text-xs uppercase tracking-[0.15em]">
+      <p class="font-body text-ash/70 mt-8 text-center text-[11px] sm:text-xs max-w-prose mx-auto">
         {driverIncludedText}
       </p>
+
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="border border-white/8 bg-charcoal/50 p-4">
+          <p class="text-gold text-[10px] font-body">Included</p>
+          <ul class="mt-2 space-y-1">
+            <li class="text-smoke/70 text-sm font-body max-w-prose">Professional chauffeur</li>
+            <li class="text-smoke/70 text-sm font-body max-w-prose">Meet &amp; greet service</li>
+            <li class="text-smoke/70 text-sm font-body max-w-prose">Luggage assistance</li>
+          </ul>
+        </div>
+
+        <div class="border border-white/8 bg-charcoal/50 p-4">
+          <p class="text-gold text-[10px] font-body">Guarantees</p>
+          <ul class="mt-2 space-y-1">
+            <li class="text-smoke/70 text-sm font-body max-w-prose">Fixed confirmed price</li>
+            <li class="text-smoke/70 text-sm font-body max-w-prose">No hidden fees</li>
+            <li class="text-smoke/70 text-sm font-body max-w-prose">24/7 support line</li>
+          </ul>
+        </div>
+
+        <div class="border border-white/8 bg-charcoal/50 p-4">
+          <p class="text-gold text-[10px] font-body">Airport Protection</p>
+          <ul class="mt-2 space-y-1">
+            <li class="text-smoke/70 text-sm font-body max-w-prose">Flight status monitoring</li>
+            <li class="text-smoke/70 text-sm font-body max-w-prose">Adjusted pickup on delays</li>
+            <li class="text-smoke/70 text-sm font-body max-w-prose">Rapid WhatsApp coordination</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <div>
       <h3
-        class="font-body text-white text-center text-base tracking-[0.12em] uppercase md:text-lg"
+        class="font-body text-white text-center text-base tracking-[0.05em] md:text-lg"
       >
-        AIRPORT TRANSFER PRICES
+        Airport Transfer Prices
       </h3>
       <div class="mx-auto mt-2 mb-12 h-px w-12 bg-white/10"></div>
 
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div>
           <h4
-            class="font-body text-white/60 mb-6 border-b border-white/10 pb-3 text-xs uppercase tracking-[0.15em]"
+            class="font-body text-white/60 mb-6 border-b border-white/10 pb-3 text-xs tracking-[0.05em]"
           >
             Costa del Sol — <span class="text-gold">Marbella</span>
           </h4>
@@ -78,8 +107,8 @@ const driverIncludedText = hourly?.body?.trim() || 'Professional chauffeur inclu
               <div
                 class="flex items-center justify-between border border-white/5 bg-dark-iron px-5 py-4 transition-colors duration-300 hover:border-gold/20"
               >
-                <span class="font-body text-white text-sm">{route.route}</span>
-                <span class="font-heading text-gold text-base"
+                <span class="font-body text-white text-sm max-w-xs">{route.route}</span>
+                <span class="font-heading text-gold text-base shrink-0"
                   ><span class="font-body text-ash text-[10px]">From </span>€{route.price_from}</span
                 >
               </div>
@@ -89,7 +118,7 @@ const driverIncludedText = hourly?.body?.trim() || 'Professional chauffeur inclu
 
         <div>
           <h4
-            class="font-body text-white/60 mb-6 border-b border-white/10 pb-3 text-xs uppercase tracking-[0.15em]"
+            class="font-body text-white/60 mb-6 border-b border-white/10 pb-3 text-xs tracking-[0.05em]"
           >
             Northern Italy &amp; Alps — <span class="text-gold">Milano</span>
           </h4>
@@ -99,8 +128,8 @@ const driverIncludedText = hourly?.body?.trim() || 'Professional chauffeur inclu
               <div
                 class="flex items-center justify-between border border-white/5 bg-dark-iron px-5 py-4 transition-colors duration-300 hover:border-gold/20"
               >
-                <span class="font-body text-white text-sm">{route.route}</span>
-                <span class="font-heading text-gold text-base"
+                <span class="font-body text-white text-sm max-w-xs">{route.route}</span>
+                <span class="font-heading text-gold text-base shrink-0"
                   ><span class="font-body text-ash text-[10px]">From </span>€{route.price_from}</span
                 >
               </div>
@@ -111,12 +140,12 @@ const driverIncludedText = hourly?.body?.trim() || 'Professional chauffeur inclu
     </div>
 
     <div class="mt-16 text-center">
-      <p class="text-smoke/50 text-xs uppercase tracking-[0.15em] font-body mb-6">
+      <p class="text-smoke/70 text-xs font-body mb-6 max-w-prose mx-auto">
         All prices include professional chauffeur. No hidden fees.
       </p>
       <a
         href="#contact"
-        class="inline-block bg-gold text-black text-sm uppercase tracking-[0.12em] font-body font-semibold px-10 py-4 no-underline transition-all duration-300 hover:bg-gold-light hover:shadow-[var(--gold-glow-cta)]"
+        class="inline-block bg-gold text-black text-sm tracking-[0.05em] font-body font-semibold px-10 py-4 no-underline transition-all duration-300 hover:bg-gold-light hover:shadow-[var(--gold-glow-cta)]"
       >
         BOOK YOUR RIDE
       </a>

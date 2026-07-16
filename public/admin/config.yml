@@ -119,6 +119,37 @@ collections:
               - { name: route, label: Route, widget: string }
               - { name: price_from, label: Price From (€), widget: number }
 
+  - name: how-it-works
+    label: How It Works
+    description: How booking works steps
+    files:
+      - name: steps
+        label: Steps
+        file: src/content/how-it-works/steps.md
+        fields:
+          - label: Steps
+            name: steps
+            widget: list
+            fields:
+              - { name: step, label: Step Number, widget: string }
+              - { name: title, label: Title, widget: string }
+              - { name: text, label: Description, widget: text }
+
+  - name: faq
+    label: FAQ
+    description: Frequently asked questions
+    files:
+      - name: questions
+        label: Questions
+        file: src/content/faq/questions.md
+        fields:
+          - label: Questions
+            name: questions
+            widget: list
+            fields:
+              - { name: q, label: Question, widget: string }
+              - { name: a, label: Answer, widget: text }
+
   - name: membership
     label: VIP Membership
     description: VIP membership program tiers

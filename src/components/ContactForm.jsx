@@ -20,7 +20,7 @@ const inputClass =
   "w-full bg-dark-iron border border-white/10 rounded-none px-4 py-3 text-white text-sm font-body placeholder-ash/60 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-200";
 const inputErrorClass =
   "w-full bg-dark-iron border border-red-500/60 rounded-none px-4 py-3 text-white text-sm font-body placeholder-ash/60 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400/30 transition-all duration-200";
-const labelClass = "block text-white/70 text-xs uppercase tracking-[0.12em] font-body mb-2";
+const labelClass = "block text-white/70 text-xs font-body mb-2";
 const errorClass = "text-red-400 text-[11px] font-body mt-1.5";
 
 export default function ContactForm() {
@@ -132,7 +132,7 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div class="border border-white/10 bg-dark-iron p-10 lg:p-14 text-center animate-success-in" aria-live="polite" role="status">
+      <div className="border border-white/10 bg-dark-iron p-10 lg:p-14 text-center animate-success-in" aria-live="polite" role="status">
         <style>{`
           @keyframes success-pop {
             0% { opacity: 0; transform: scale(0.5); }
@@ -150,15 +150,15 @@ export default function ContactForm() {
             animation: success-pop 0.5s cubic-bezier(0.25, 1, 0.5, 1) both;
           }
         `}</style>
-        <div class="text-gold text-4xl mb-5 checkmark" aria-hidden="true">&#10003;</div>
-        <h3 class="font-heading text-gold text-2xl mb-3">
+        <div className="text-gold text-4xl mb-5 checkmark" aria-hidden="true">&#10003;</div>
+        <h3 className="font-heading text-gold text-2xl mb-3">
           Thank You
         </h3>
-        <p class="text-smoke/70 font-body text-sm max-w-md mx-auto leading-relaxed">
+        <p className="text-smoke/70 font-body text-sm max-w-md mx-auto leading-relaxed">
           Your booking request has been received. Our concierge team will respond to you shortly.
         </p>
-        <p class="text-ash/60 font-body text-xs mt-4 leading-relaxed">
-          For urgent bookings, call us directly on <a href="tel:+393496638171" class="text-gold hover:text-gold-light no-underline">+39 349 663 8171</a> (Italy) or <a href="tel:+34670038541" class="text-gold hover:text-gold-light no-underline">+34 670 038 541</a> (Spain).
+        <p className="text-ash/60 font-body text-xs mt-4 leading-relaxed">
+          For urgent bookings, call us directly on <a href="tel:+393496638171" className="text-gold hover:text-gold-light no-underline">+39 349 663 8171</a> (Italy) or <a href="tel:+34670038541" className="text-gold hover:text-gold-light no-underline">+34 670 038 541</a> (Spain).
         </p>
       </div>
     );
@@ -166,9 +166,9 @@ export default function ContactForm() {
 
   const errorBanner =
     status === "error" ? (
-      <div class="border border-red-500/30 bg-red-500/10 p-4 mb-8 text-center" role="alert">
-        <p class="text-red-300 text-sm font-body">
-          Something went wrong. Please try again, or contact us directly via <a href="https://wa.me/393496638171" target="_blank" rel="noopener noreferrer" class="text-red-200 underline hover:text-white">WhatsApp</a> or phone: <strong>+39 349 663 8171</strong> (Italy) / <strong>+34 670 038 541</strong> (Spain).
+      <div className="border border-red-500/30 bg-red-500/10 p-4 mb-8 text-center" role="alert">
+        <p className="text-red-300 text-sm font-body">
+          Something went wrong. Please try again, or contact us directly via <a href="https://wa.me/393496638171" target="_blank" rel="noopener noreferrer" className="text-red-200 underline hover:text-white">WhatsApp</a> or phone: <strong>+39 349 663 8171</strong> (Italy) / <strong>+34 670 038 541</strong> (Spain).
         </p>
       </div>
     ) : null;
@@ -180,9 +180,8 @@ export default function ContactForm() {
       data-netlify="true"
       data-netlify-honeypot="bot-field"
       name="contact"
-      netlify
       onSubmit={handleSubmit}
-      class="space-y-6"
+      className="space-y-6"
     >
       <style>{`
         @keyframes spin {
@@ -193,18 +192,18 @@ export default function ContactForm() {
         }
       `}</style>
       <input type="hidden" name="form-name" value="contact" />
-      <p class="!m-0 opacity-0 absolute -z-10" aria-hidden="true">
+      <p className="!m-0 opacity-0 absolute -z-10" aria-hidden="true">
         <label>
-          Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" />
+          Don't fill this out: <input name="bot-field" tabIndex="-1" autoComplete="off" />
         </label>
       </p>
 
       {errorBanner}
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div>
-          <label for="contact-name" class={labelClass}>
-            Full Name <span class="text-red-400/80">*</span>
+          <label htmlFor="contact-name" className={labelClass}>
+            Full Name <span className="text-red-400/80">*</span>
           </label>
           <input
             id="contact-name"
@@ -216,14 +215,14 @@ export default function ContactForm() {
             onChange={handleChange}
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? "error-name" : undefined}
-            class={errors.name ? inputErrorClass : inputClass}
+            className={errors.name ? inputErrorClass : inputClass}
           />
-          {errors.name && <p id="error-name" class={errorClass}>{errors.name}</p>}
+          {errors.name && <p id="error-name" className={errorClass}>{errors.name}</p>}
         </div>
 
         <div>
-          <label for="contact-email" class={labelClass}>
-            Email <span class="text-red-400/80">*</span>
+          <label htmlFor="contact-email" className={labelClass}>
+            Email <span className="text-red-400/80">*</span>
           </label>
           <input
             id="contact-email"
@@ -235,14 +234,14 @@ export default function ContactForm() {
             onChange={handleChange}
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "error-email" : undefined}
-            class={errors.email ? inputErrorClass : inputClass}
+            className={errors.email ? inputErrorClass : inputClass}
           />
-          {errors.email && <p id="error-email" class={errorClass}>{errors.email}</p>}
+          {errors.email && <p id="error-email" className={errorClass}>{errors.email}</p>}
         </div>
 
         <div>
-          <label for="contact-phone" class={labelClass}>
-            Phone <span class="text-red-400/80">*</span>
+          <label htmlFor="contact-phone" className={labelClass}>
+            Phone <span className="text-red-400/80">*</span>
           </label>
           <input
             id="contact-phone"
@@ -254,16 +253,16 @@ export default function ContactForm() {
             onChange={handleChange}
             aria-invalid={!!errors.phone}
             aria-describedby={errors.phone ? "error-phone" : undefined}
-            class={errors.phone ? inputErrorClass : inputClass}
+            className={errors.phone ? inputErrorClass : inputClass}
           />
-          {errors.phone && <p id="error-phone" class={errorClass}>{errors.phone}</p>}
+          {errors.phone && <p id="error-phone" className={errorClass}>{errors.phone}</p>}
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
-          <label for="contact-service-location" class={labelClass}>
-            Service Location <span class="text-red-400/80">*</span>
+          <label htmlFor="contact-service-location" className={labelClass}>
+            Service Location <span className="text-red-400/80">*</span>
           </label>
           <select
             id="contact-service-location"
@@ -273,25 +272,25 @@ export default function ContactForm() {
             onChange={handleChange}
             aria-invalid={!!errors.serviceLocation}
             aria-describedby={errors.serviceLocation ? "error-serviceLocation" : undefined}
-            class={`${errors.serviceLocation ? inputErrorClass : inputClass} appearance-none bg-[length:12px_12px] bg-[right_16px_center]`}
+            className={`${errors.serviceLocation ? inputErrorClass : inputClass} appearance-none bg-[length:12px_12px] bg-[right_16px_center]`}
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 12 8'%3E%3Cpath stroke='%237D7D7D' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1.5L6 6.5L11 1.5'/%3E%3C/svg%3E")`,
               backgroundRepeat: "no-repeat",
             }}
           >
             {SERVICE_LOCATIONS.map((opt) => (
-              <option key={opt.value} value={opt.value} class="bg-dark-iron">
+              <option key={opt.value} value={opt.value} className="bg-dark-iron">
                 {opt.label}
               </option>
             ))}
           </select>
           {errors.serviceLocation && (
-            <p id="error-serviceLocation" class={errorClass}>{errors.serviceLocation}</p>
+            <p id="error-serviceLocation" className={errorClass}>{errors.serviceLocation}</p>
           )}
         </div>
 
         <div>
-          <label for="contact-service-interest" class={labelClass}>
+          <label htmlFor="contact-service-interest" className={labelClass}>
             Service Interest
           </label>
           <select
@@ -299,14 +298,14 @@ export default function ContactForm() {
             name="serviceInterest"
             value={formData.serviceInterest}
             onChange={handleChange}
-            class={`${inputClass} appearance-none bg-[length:12px_12px] bg-[right_16px_center]`}
+            className={`${inputClass} appearance-none bg-[length:12px_12px] bg-[right_16px_center]`}
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 12 8'%3E%3Cpath stroke='%237D7D7D' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1.5L6 6.5L11 1.5'/%3E%3C/svg%3E")`,
               backgroundRepeat: "no-repeat",
             }}
           >
             {SERVICE_INTERESTS.map((opt) => (
-              <option key={opt.value} value={opt.value} class="bg-dark-iron">
+              <option key={opt.value} value={opt.value} className="bg-dark-iron">
                 {opt.label}
               </option>
             ))}
@@ -314,9 +313,9 @@ export default function ContactForm() {
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
-          <label for="contact-pickup" class={labelClass}>
+          <label htmlFor="contact-pickup" className={labelClass}>
             Pick-up Location
           </label>
           <input
@@ -326,11 +325,11 @@ export default function ContactForm() {
             placeholder="Hotel, airport, villa..."
             value={formData.pickupLocation}
             onChange={handleChange}
-            class={inputClass}
+            className={inputClass}
           />
         </div>
         <div>
-          <label for="contact-dropoff" class={labelClass}>
+          <label htmlFor="contact-dropoff" className={labelClass}>
             Drop-off Location
           </label>
           <input
@@ -340,13 +339,13 @@ export default function ContactForm() {
             placeholder="Destination address"
             value={formData.dropoffLocation}
             onChange={handleChange}
-            class={inputClass}
+            className={inputClass}
           />
         </div>
       </div>
 
-      <div class="max-w-xs">
-        <label for="contact-date" class={labelClass}>
+      <div className="max-w-xs">
+        <label htmlFor="contact-date" className={labelClass}>
           Preferred Date
         </label>
         <input
@@ -355,12 +354,12 @@ export default function ContactForm() {
           type="date"
           value={formData.date}
           onChange={handleChange}
-          class={`${inputClass} [color-scheme:dark]`}
+          className={`${inputClass} [color-scheme:dark]`}
         />
       </div>
 
       <div>
-        <label for="contact-message" class={labelClass}>
+        <label htmlFor="contact-message" className={labelClass}>
           Message
         </label>
         <textarea
@@ -370,12 +369,12 @@ export default function ContactForm() {
           placeholder="Tell us about your travel requirements..."
           value={formData.message}
           onChange={handleChange}
-          class={`${inputClass} resize-y min-h-[100px]`}
+          className={`${inputClass} resize-y min-h-[100px]`}
         ></textarea>
       </div>
 
       <div>
-        <label class="flex items-start gap-3 cursor-pointer group">
+        <label className="flex items-start gap-3 cursor-pointer group">
           <input
             name="consent"
             type="checkbox"
@@ -383,28 +382,28 @@ export default function ContactForm() {
             onChange={handleChange}
             aria-invalid={!!errors.consent}
             aria-describedby={errors.consent ? "error-consent" : undefined}
-            class="mt-0.5 accent-gold w-4 h-4 shrink-0"
+            className="mt-0.5 accent-gold w-4 h-4 shrink-0"
           />
-          <span class="text-smoke/70 text-xs font-body leading-relaxed group-hover:text-smoke/90 transition-colors">
+          <span className="text-smoke/70 text-xs font-body leading-relaxed group-hover:text-smoke/90 transition-colors">
             Your privacy matters. We'll only use your details to respond to your booking request.
-            <span class="text-red-400/80 ml-0.5">*</span>
+            <span className="text-red-400/80 ml-0.5">*</span>
           </span>
         </label>
-        {errors.consent && <p id="error-consent" class={errorClass}>{errors.consent}</p>}
+        {errors.consent && <p id="error-consent" className={errorClass}>{errors.consent}</p>}
       </div>
 
       <button
         type="submit"
         disabled={status === "submitting"}
-        class="w-full bg-gold text-black text-sm uppercase tracking-[0.12em] font-body font-semibold px-10 py-4 transition-all duration-300 hover:bg-gold-light hover:shadow-[var(--gold-glow-cta)] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:bg-gold"
+        className="w-full bg-gold text-black text-sm tracking-[0.05em] font-body font-semibold px-10 py-4 transition-all duration-300 hover:bg-gold-light hover:shadow-[var(--gold-glow-cta)] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:bg-gold"
       >
         {status === "submitting" ? (
-          <span class="inline-flex items-center justify-center gap-2.5">
-            <span class="inline-block w-3.5 h-3.5 border-2 border-black/30 border-t-black rounded-full submit-spinner" aria-hidden="true"></span>
+          <span className="inline-flex items-center justify-center gap-2.5">
+            <span className="inline-block w-3.5 h-3.5 border-2 border-black/30 border-t-black rounded-full submit-spinner" aria-hidden="true"></span>
             SENDING...
           </span>
         ) : (
-          "REQUEST BOOKING"
+          "BOOK YOUR RIDE"
         )}
       </button>
     </form>

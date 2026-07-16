@@ -72,6 +72,31 @@ const pricingAirport = defineCollection({
   }),
 });
 
+const howItWorks = defineCollection({
+  loader: glob({ pattern: '**/how-it-works/*.md', base: './src/content' }),
+  schema: z.object({
+    steps: z.array(
+      z.object({
+        step: z.string(),
+        title: z.string(),
+        text: z.string(),
+      })
+    ),
+  }),
+});
+
+const faq = defineCollection({
+  loader: glob({ pattern: '**/faq/*.md', base: './src/content' }),
+  schema: z.object({
+    questions: z.array(
+      z.object({
+        q: z.string(),
+        a: z.string(),
+      })
+    ),
+  }),
+});
+
 const membership = defineCollection({
   loader: glob({ pattern: '**/membership/*.md', base: './src/content' }),
   schema: z.object({
@@ -93,5 +118,7 @@ export const collections = {
   fleet,
   'pricing-hourly': pricingHourly,
   'pricing-airport': pricingAirport,
+  'how-it-works': howItWorks,
+  faq,
   membership,
 };

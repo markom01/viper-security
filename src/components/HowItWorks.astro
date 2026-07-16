@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+
+const [entry] = await getCollection('how-it-works');
+const steps = entry?.data?.steps || [];
+---
+
+<section id="how-it-works" class="bg-black py-20" aria-label="How booking works">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="text-center mb-14">
+      <h2 class="font-heading text-gold text-4xl md:text-5xl tracking-[0.05em]">
+        BOOK IN THREE CLEAR STEPS
+      </h2>
+      <div class="w-16 h-px bg-gold/40 mx-auto mt-5"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+      {steps.map((item) => (
+        <article class="border border-white/10 bg-dark-iron p-6 lg:p-7">
+          <p class="text-gold text-sm  font-body mb-4">Step {item.step}</p>
+          <h3 class="font-heading text-white text-2xl leading-tight mb-3">{item.title}</h3>
+          <p class="text-smoke/70 text-sm leading-relaxed font-body text-light-on-dark max-w-prose">{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

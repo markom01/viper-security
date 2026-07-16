@@ -14,12 +14,19 @@ const navLinks = [
       VIPER SECURITY
     </a>
 
+    <a
+      href="tel:+393496638171"
+      class="hidden md:inline-flex lg:hidden text-white/75 hover:text-gold text-xs  font-body transition-colors duration-200 no-underline"
+    >
+      +39 349 663 8171
+    </a>
+
     <nav class="hidden lg:flex items-center gap-8" aria-label="Main navigation">
       {
         navLinks.map((link) => (
           <a
             href={link.href}
-            class="text-white/80 hover:text-gold text-sm uppercase tracking-[0.12em] font-body font-light transition-colors duration-200 no-underline"
+            class="text-white/80 hover:text-gold text-sm  font-body font-light transition-colors duration-200 no-underline"
           >
             {link.label}
           </a>
@@ -27,7 +34,7 @@ const navLinks = [
       }
       <a
         href="#contact"
-        class="inline-block bg-gold text-black text-sm uppercase tracking-[0.12em] font-body font-semibold px-6 py-3 no-underline transition-colors duration-200 hover:bg-gold-light"
+        class="inline-block bg-gold text-black text-sm  font-body font-semibold px-6 py-3 no-underline transition-colors duration-200 hover:bg-gold-light"
       >
         BOOK YOUR RIDE
       </a>
@@ -63,7 +70,7 @@ const navLinks = [
       navLinks.map((link) => (
         <a
           href={link.href}
-          class="mobile-nav-link text-white/80 hover:text-gold text-xl uppercase tracking-[0.15em] font-heading transition-colors duration-200 no-underline"
+          class="mobile-nav-link text-white/80 hover:text-gold text-xl  font-heading transition-colors duration-200 no-underline"
         >
           {link.label}
         </a>
@@ -71,7 +78,7 @@ const navLinks = [
     }
     <a
       href="#contact"
-      class="mobile-nav-link inline-block bg-gold text-black text-base uppercase tracking-[0.12em] font-body font-semibold px-10 py-4 no-underline transition-colors duration-200 hover:bg-gold-light mt-4"
+      class="mobile-nav-link inline-block bg-gold text-black text-base  font-body font-semibold px-10 py-4 no-underline transition-colors duration-200 hover:bg-gold-light mt-4"
     >
       BOOK YOUR RIDE
     </a>

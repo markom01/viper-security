@@ -17,47 +17,61 @@ const {
   aria-label="Hero"
 >
   <div
-    class="absolute inset-0 bg-[var(--gold-gradient-glow)] pointer-events-none"
+    class="absolute inset-0 pointer-events-none"
     aria-hidden="true"
-  ></div>
-
-  <div
-    class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"
-    aria-hidden="true"
-  ></div>
+  >  </div>
 
   <div
     class="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-24 flex flex-col items-center text-center"
   >
-    <p
-      class="animate-fade-in text-ash text-[10px] sm:text-xs uppercase tracking-[0.25em] font-body font-light mb-3"
-    >
-      Private Chauffeur &amp; Luxury Transport
-    </p>
     <h1
-      class="animate-fade-in font-heading text-gold text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-[0.08em] leading-[1.1] mb-5"
+      class="animate-fade-in font-heading text-gold text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-[0.05em] leading-[1.1] mb-5"
     >
       {brand_name || 'VIPER SECURITY'}
     </h1>
 
     <p
-      class="animate-fade-in text-white text-base sm:text-lg md:text-xl lg:text-2xl font-body font-light uppercase tracking-[0.15em] mb-3 max-w-3xl"
+      class="animate-fade-in text-white text-base sm:text-lg md:text-xl lg:text-2xl font-body font-light mb-3 max-w-3xl"
     >
-      {tagline || 'TRAVEL IN STYLE. ARRIVE IN COMFORT.'}
+      {tagline || 'Travel in style. Arrive in comfort.'}
     </p>
 
     <p
-      class="animate-fade-in text-smoke/60 text-sm sm:text-base md:text-lg font-body font-light mb-10 max-w-xl"
+      class="animate-fade-in text-smoke/75 text-sm sm:text-base md:text-lg font-body font-light mb-10 max-w-xl"
     >
       {subtitle || 'VIP Chauffeur & Luxury Transport — Marbella & Milano'}
     </p>
 
+    <div class="animate-fade-in flex flex-wrap items-center justify-center gap-2 mb-8">
+      {[
+        "Fixed price guarantee",
+        "Flight tracking included",
+        "24/7 concierge support",
+      ].map((badge) => (
+        <span class="border border-white/12 bg-charcoal/55 text-white/75 text-[10px] sm:text-xs tracking-[0.05em] font-body px-3 py-1.5">
+          {badge}
+        </span>
+      ))}
+    </div>
+
     <a
       href="#contact"
-      class="animate-fade-in inline-block bg-gold text-black text-sm uppercase tracking-[0.12em] font-body font-semibold px-10 py-4 no-underline transition-all duration-300 hover:bg-gold-light hover:shadow-[0_0_30px_-5px_rgba(176,141,69,0.4)]"
+      class="animate-fade-in inline-block bg-gold text-black text-sm tracking-[0.05em] font-body font-semibold px-10 py-4 no-underline transition-all duration-300 hover:bg-gold-light hover:shadow-[var(--gold-glow-cta)] relative z-10"
     >
       {cta_text || 'BOOK YOUR RIDE'}
     </a>
+
+    <div class="animate-fade-in mt-4">
+      <a
+        href="https://wa.me/393496638171?text=Hi%20VIPER%2C%20I%20would%20like%20to%20book%20a%20transfer"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-gold hover:text-gold-light text-xs sm:text-sm tracking-[0.05em] font-body transition-colors duration-200 no-underline"
+      >
+        <span aria-hidden="true">✦</span>
+        WhatsApp Instant Booking
+      </a>
+    </div>
 
     <div
       class="animate-fade-in flex flex-wrap justify-center gap-x-8 gap-y-2 mt-10"
@@ -84,21 +98,16 @@ const {
       }
     </div>
 
-    <div
-      class="animate-fade-in flex flex-col items-center mt-8"
-    >
       <div
-        class="text-gold text-lg sm:text-xl tracking-[0.15em] leading-none"
-        aria-label="5 star rating"
+        class="animate-fade-in flex flex-col items-center mt-8"
       >
-        ★★★★★
+        <div
+          class="text-gold text-lg sm:text-xl tracking-[0.15em] leading-none"
+          aria-label="5 star rating"
+        >
+          ★★★★★
+        </div>
       </div>
-      <p
-        class="text-white/60 text-[10px] sm:text-xs uppercase tracking-[0.18em] font-body mt-2.5"
-      >
-        LUXURY • COMFORT • PRIVACY
-      </p>
-    </div>
 
     <div
       class="animate-fade-in flex flex-wrap justify-center gap-x-6 gap-y-3 mt-9"
@@ -113,7 +122,7 @@ const {
         ].map((label) => (
           <div class="flex items-center gap-2">
             <span class="block w-1.5 h-1.5 bg-gold flex-shrink-0"></span>
-            <span class="text-white/60 text-[10px] sm:text-xs uppercase tracking-[0.1em] font-body font-light whitespace-nowrap">
+            <span class="text-white/60 text-[10px] sm:text-xs tracking-[0.05em] font-body font-light whitespace-nowrap">
               {label}
             </span>
           </div>
