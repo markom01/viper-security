@@ -54,17 +54,21 @@ Push to `main` — Netlify auto-builds and deploys. No manual deploy steps.
 ```
 .
 ├── src/
-│   ├── components/        # 10 Astro components + 1 React island
-│   │   ├── Nav.astro           # Header navigation with aria-current tracking
-│   │   ├── Hero.astro          # Full-viewport hero with staggered animations
-│   │   ├── Services.astro      # Two-region service grid (uses ServiceCard 10x)
-│   │   ├── ServiceCard.astro   # Slot-based reusable glassmorphism card
-│   │   ├── Fleet.astro         # Vehicle showcase with scroll-reveal
-│   │   ├── Pricing.astro       # Hourly rates + airport transfer pricing
-│   │   ├── Membership.astro    # 3-tier VIP membership cards
-│   │   ├── Contact.astro       # Contact section wrapper
+│   ├── components/        # 14 React .jsx components (13 section + 1 root)
+│   │   ├── PageRoot.jsx        # Root — receives all data, composes all sections
+│   │   ├── Nav.jsx             # Header navigation, scroll effects, mobile menu
+│   │   ├── Hero.jsx            # Full-viewport hero with staggered animations
+│   │   ├── HowItWorks.jsx      # Booking steps (3-step grid)
+│   │   ├── Services.jsx        # Two-region service grid (uses ServiceCard 10x)
+│   │   ├── ServiceCard.jsx     # Reusable glassmorphism card
+│   │   ├── Fleet.jsx           # Vehicle showcase with scroll-reveal
+│   │   ├── Pricing.jsx         # Hourly rates + airport transfer pricing
+│   │   ├── Membership.jsx      # 3-tier VIP membership cards
+│   │   ├── Faq.jsx             # FAQ accordion
+│   │   ├── Contact.jsx         # Contact section wrapper
 │   │   ├── ContactForm.jsx     # React 19 form with Netlify Forms + a11y
-│   │   └── Footer.astro        # Footer with shimmer animation
+│   │   ├── Footer.jsx          # Footer with shimmer animation
+│   │   └── MobileActionBar.jsx # Fixed bottom bar for mobile
 │   ├── content/            # 7 Zod-validated content collections
 │   │   ├── hero/
 │   │   ├── services/
@@ -72,9 +76,10 @@ Push to `main` — Netlify auto-builds and deploys. No manual deploy steps.
 │   │   ├── pricing/
 │   │   └── membership/
 │   ├── layouts/
-│   │   └── BaseLayout.astro    # HTML shell, SEO meta, JSON-LD schema
+│   │   └── BaseLayout.jsx      # React HTML shell, SEO meta, JSON-LD schema
 │   ├── pages/
-│   │   └── index.astro         # Sole route (single-page site)
+│   │   ├── index.astro         # Data-fetching wrapper for the React root
+│   │   └── 404.astro           # 404 page in React
 │   └── styles/
 │       └── global.css          # Tailwind v4 @theme, fluid typography, animations
 ├── public/
@@ -117,7 +122,8 @@ Content is managed via Decap CMS at `/admin/`. Configuration lives in `public/ad
 ## Architecture Decisions
 
 - **Single-page only** — no SSR, no routing, no Astro adapter.
-- **React only for the contact form** — all other components are pure `.astro` templates.
+- **React-only rendering** — all components are React `.jsx`. `.astro` pages are thin data-fetching wrappers only.
+- **`client:load` on root** — `PageRoot.jsx` hydrates the entire page. No individual `client:*` directives.
 - **No Tailwind config file** — Tailwind v4 uses CSS-first configuration via `@theme` in `global.css`.
 - **Static output** — no server-side rendering, edge functions, or API endpoints.
 - **Netlify Forms** handles contact submission — no backend API required.
