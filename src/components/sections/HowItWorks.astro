@@ -8,7 +8,7 @@ html = html.replace('__STEP_DESC_2__', steps?.[2]?.description);
 html = html.replace('__STEP_TITLE_0__', steps?.[0]?.title);
 html = html.replace('__STEP_TITLE_1__', steps?.[1]?.title);
 html = html.replace('__STEP_TITLE_2__', steps?.[2]?.title);
-html = html.replace('__HOWITWORKS_SUB__', pageContent?.howitworks_subheadline);
-html = html.replace('__HOWITWORKS_HEADING__', pageContent?.howitworks_heading);
+html = html.replace('__HOWITWORKS_SUB__', pageContent?.howitworks?.subheadline);
+html = html.replace('__HOWITWORKS_HEADING__', pageContent?.howitworks?.heading);
 ---
 <Fragment set:html={html} />

@@ -5,16 +5,16 @@ let html = `<section class="footer"><div class="content-wrapper"><div class="foo
 html = html.replace('__FOOTER_TAGLINE__', tagline);
 html = html.replace('__FOOTER_DESC__', 'Premium chauffeur services across Marbella, Milano, and beyond. ' + phoneItaly + ' / ' + phoneSpain);
 html = html.replace('__FOOTER_BRAND__', brandName);
-html = html.replace('__FOOTER_BUTTON__', pageContent?.footer_button);
-html = html.replace('__FOOTER_PAGES__', pageContent?.footer_pages);
-html = html.replace('__FOOTER_HOME__', pageContent?.footer_home);
-html = html.replace('__FOOTER_ABOUT__', pageContent?.footer_about);
-html = html.replace('__FOOTER_FLEET__', pageContent?.footer_fleet);
-html = html.replace('__FOOTER_SERVICES__', pageContent?.footer_services);
-html = html.replace('__FOOTER_CONTACT__', pageContent?.footer_contact);
-html = html.replace('__FOOTER_POWERED__', pageContent?.footer_powered);
-html = html.replace('__FOOTER_WEBFLOW__', pageContent?.footer_webflow);
-html = html.replace('__FOOTER_DESIGNED__', pageContent?.footer_designed);
-html = html.replace('__FOOTER_AM_TEMPLATES__', pageContent?.footer_am_templates);
+html = html.replace('__FOOTER_BUTTON__', pageContent?.footer?.button);
+html = html.replace('__FOOTER_PAGES__', pageContent?.footer?.pages);
+html = html.replace('__FOOTER_HOME__', pageContent?.footer?.home);
+html = html.replace('__FOOTER_ABOUT__', pageContent?.footer?.about);
+html = html.replace('__FOOTER_FLEET__', pageContent?.footer?.fleet);
+html = html.replace('__FOOTER_SERVICES__', pageContent?.footer?.services);
+html = html.replace('__FOOTER_CONTACT__', pageContent?.footer?.contact);
+html = html.replace('__FOOTER_POWERED__', pageContent?.footer?.powered);
+html = html.replace('__FOOTER_WEBFLOW__', pageContent?.footer?.webflow);
+html = html.replace('__FOOTER_DESIGNED__', pageContent?.footer?.designed);
+html = html.replace('__FOOTER_AM_TEMPLATES__', pageContent?.footer?.am_templates);
 ---
 <Fragment set:html={html} />

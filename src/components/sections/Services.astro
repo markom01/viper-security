@@ -10,8 +10,8 @@ html = html.replace('__SVC_DESC_0__', services?.[0]?.description);
 html = html.replace('__SVC_DESC_1__', services?.[1]?.description);
 html = html.replace('__SVC_DESC_2__', services?.[2]?.description);
 html = html.replace('__SVC_DESC_3__', services?.[3]?.description);
-html = html.replace('__SVC_SUB__', pageContent?.services_subheadline);
-html = html.replace('__SVC_ALL_TOP__', pageContent?.services_all);
-html = html.replace('__SVC_ALL_BOTTOM__', pageContent?.services_all);
+html = html.replace('__SVC_SUB__', pageContent?.services?.subheadline);
+html = html.replace('__SVC_ALL_TOP__', pageContent?.services?.all);
+html = html.replace('__SVC_ALL_BOTTOM__', pageContent?.services?.all);
 ---
 <Fragment set:html={html} />

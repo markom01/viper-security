@@ -124,7 +124,63 @@ declare module 'astro:content' {
 		: any;
 
 	type DataEntryMap = {
-		
+		"fleet": Record<string, {
+  id: string;
+  body?: string;
+  collection: "fleet";
+  data: InferEntrySchema<"fleet">;
+  rendered?: RenderedContent;
+  filePath?: string;
+}>;
+"hero": Record<string, {
+  id: string;
+  body?: string;
+  collection: "hero";
+  data: InferEntrySchema<"hero">;
+  rendered?: RenderedContent;
+  filePath?: string;
+}>;
+"how-it-works": Record<string, {
+  id: string;
+  body?: string;
+  collection: "how-it-works";
+  data: InferEntrySchema<"how-it-works">;
+  rendered?: RenderedContent;
+  filePath?: string;
+}>;
+"membership": Record<string, {
+  id: string;
+  body?: string;
+  collection: "membership";
+  data: InferEntrySchema<"membership">;
+  rendered?: RenderedContent;
+  filePath?: string;
+}>;
+"page-content": Record<string, {
+  id: string;
+  body?: string;
+  collection: "page-content";
+  data: InferEntrySchema<"page-content">;
+  rendered?: RenderedContent;
+  filePath?: string;
+}>;
+"pricing": Record<string, {
+  id: string;
+  body?: string;
+  collection: "pricing";
+  data: InferEntrySchema<"pricing">;
+  rendered?: RenderedContent;
+  filePath?: string;
+}>;
+"services": Record<string, {
+  id: string;
+  body?: string;
+  collection: "services";
+  data: InferEntrySchema<"services">;
+  rendered?: RenderedContent;
+  filePath?: string;
+}>;
+
 	};
 
 	type ExtractLoaderTypes<T> = T extends import('astro/loaders').LiveLoader<
@@ -154,6 +210,6 @@ declare module 'astro:content' {
 		LiveContentConfig['collections'][C]['loader']
 	>;
 
-	export type ContentConfig = never;
+	export type ContentConfig = typeof import("../src/content.config.js");
 	export type LiveContentConfig = never;
 }

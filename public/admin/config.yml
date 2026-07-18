@@ -153,6 +153,179 @@ collections:
           - label: Nav
             name: nav_labels
             widget: meta
+          - name: nav
+            label: Nav
+            widget: object
+            collapsed: true
+            fields:
+              - { name: home, label: "Home", widget: string }
+              - { name: about, label: "About", widget: string }
+              - { name: fleet, label: "Fleet", widget: string }
+              - { name: services, label: "Services", widget: string }
+              - { name: blog, label: "Blog", widget: string }
+              - { name: contact, label: "Contact Us", widget: string }
+              - { name: brand, label: "Brand Name", widget: string }
+          - label: Hero
+            name: hero_labels
+            widget: meta
+          - name: hero
+            label: Hero
+            widget: object
+            collapsed: true
+            fields:
+              - { name: learn_more, label: "Learn More Button", widget: string }
+              - { name: explore_fleet, label: "Explore Fleet Button", widget: string }
+          - name: form
+            label: Booking Form
+            widget: object
+            collapsed: true
+            fields:
+              - { name: name, label: "Full Name Label", widget: string }
+              - { name: phone, label: "Phone Label", widget: string }
+              - { name: pickup, label: "Pick Up At Label", widget: string }
+              - { name: date, label: "Date Label", widget: string }
+              - { name: service, label: "Service Label", widget: string }
+              - { name: success, label: "Success Message", widget: text }
+              - { name: error, label: "Error Message", widget: text }
+          - { name: marquee_text, label: "Marquee Text", widget: string }
+          - label: About Section
+            name: about_labels
+            widget: meta
+          - name: about
+            label: About
+            widget: object
+            collapsed: true
+            fields:
+              - { name: subheadline, label: "Subheadline", widget: string }
+              - { name: heading, label: "Heading", widget: string }
+              - { name: text, label: "Body Text", widget: text }
+              - { name: button, label: "Button Text", widget: string }
+          - label: Services Section
+            name: services_labels
+            widget: meta
+          - name: services
+            label: Services
+            widget: object
+            collapsed: true
+            fields:
+              - { name: subheadline, label: "Subheadline", widget: string }
+              - { name: all, label: "All Services Button", widget: string }
+          - label: Fleet Section
+            name: fleet_labels
+            widget: meta
+          - name: fleet
+            label: Fleet
+            widget: object
+            collapsed: true
+            fields:
+              - { name: subheadline, label: "Subheadline", widget: string }
+              - { name: heading, label: "Heading", widget: string }
+              - { name: year, label: "Year Label", widget: string }
+              - { name: seats, label: "Seats Label", widget: string }
+              - { name: baggage, label: "Baggage Label", widget: string }
+          - label: Stats Section
+            name: stats_labels
+            widget: meta
+          - name: stats
+            label: Stats
+            widget: object
+            collapsed: true
+            fields:
+              - { name: heading, label: "Heading", widget: string }
+              - { name: subheading, label: "Subheading", widget: text }
+              - { name: button, label: "Button Text", widget: string }
+              - label: Items
+                name: items
+                widget: list
+                fields:
+                  - { name: label, label: "Label (e.g. 99%)", widget: string }
+                  - { name: title, label: "Title (e.g. Client Satisfaction)", widget: string }
+          - label: How It Works
+            name: howitworks_labels
+            widget: meta
+          - name: howitworks
+            label: How It Works
+            widget: object
+            collapsed: true
+            fields:
+              - { name: subheadline, label: "Subheadline", widget: string }
+              - { name: heading, label: "Heading", widget: string }
+          - label: CTA Banner
+            name: cta_labels
+            widget: meta
+          - name: cta
+            label: CTA Banner
+            widget: object
+            collapsed: true
+            fields:
+              - { name: heading, label: "Heading", widget: string }
+              - { name: text, label: "Body Text", widget: text }
+              - { name: button, label: "Button Text", widget: string }
+          - label: Bottom CTA
+            name: bottomcta_labels
+            widget: meta
+          - name: bottomcta
+            label: Bottom CTA
+            widget: object
+            collapsed: true
+            fields:
+              - { name: heading, label: "Heading", widget: string }
+              - { name: button_services, label: "Services Button", widget: string }
+              - { name: button_fleet, label: "Fleet Button", widget: string }
+              - label: Values
+                name: values
+                widget: list
+                fields:
+                  - { name: title, label: "Title", widget: string }
+                  - { name: text, label: "Text", widget: text }
+          - label: Footer
+            name: footer_labels
+            widget: meta
+          - name: footer
+            label: Footer
+            widget: object
+            collapsed: true
+            fields:
+              - { name: button, label: "Button Text", widget: string }
+              - { name: pages, label: "Pages Heading", widget: string }
+              - { name: home, label: "Home Link", widget: string }
+              - { name: about, label: "About Link", widget: string }
+              - { name: fleet, label: "Fleet Link", widget: string }
+              - { name: services, label: "Services Link", widget: string }
+              - { name: contact, label: "Contact Link", widget: string }
+              - { name: powered, label: "Powered By", widget: string }
+              - { name: designed, label: "Designed By Prefix", widget: string }
+              - { name: webflow, label: "Webflow Text", widget: string }
+              - { name: am_templates, label: "AM Templates Text", widget: string }
+          - label: Pricing Section
+            name: pricing_labels
+            widget: meta
+          - name: pricing
+            label: Pricing
+            widget: object
+            collapsed: true
+            fields:
+              - { name: title, label: "Subheadline", widget: string }
+              - { name: hourly_heading, label: "Hourly Heading", widget: string }
+              - { name: airport_heading, label: "Airport Heading", widget: string }
+          - label: Membership Section
+            name: membership_labels
+            widget: meta
+          - name: membership
+            label: VIP Membership
+            widget: object
+            collapsed: true
+            fields:
+              - { name: title, label: "Subheadline", widget: string }
+              - { name: heading, label: "Heading", widget: string }
+              - { name: badge, label: "Best Value Badge", widget: string }
+              - { name: per_year, label: "Per Year Label", widget: string }name: content
+        label: All Page Text
+        file: src/content/page-content/content.md
+        fields:
+          - label: Nav
+            name: nav_labels
+            widget: meta
           - { name: nav_home, label: "Nav: Home", widget: string }
           - { name: nav_about, label: "Nav: About", widget: string }
           - { name: nav_fleet, label: "Nav: Fleet", widget: string }

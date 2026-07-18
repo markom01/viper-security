@@ -23,9 +23,9 @@ if (tiers) {
   }).join('');
 }
 let html = `<section class="section membership-section"><div class="content-wrapper"><div class="steps-heading-wrapper"><div class="subheadline-wrapper"><div class="subheadline-line"></div><div class="subheadline">__MEMBERSHIP_TITLE__</div></div><h2 class="steps-heading">__MEMBERSHIP_HEADING__</h2></div><div class="w-dyn-list"><div role="list" class="_3-column-collection w-dyn-items">${cardsHtml}</div></div></div><style>.membership-section .booking-form-wrapper{height:100%;}.membership-section .memb-featured-card{border-top-color:var(--colors--gold);border-top-width:8px;}.membership-section .memb-badge{background:var(--colors--amber);color:#000;text-align:center;padding:10px 20px;font-size:0.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;width:100%;border-radius:0;margin-top:0;}.membership-section .memb-card-body{display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 24px 24px;width:100%;}.membership-section .memb-price{font-size:2rem;color:var(--colors--gold);font-family:var(--font-families--accent-font);font-weight:600;line-height:1.1;margin:8px 0 2px;}.membership-section .memb-per-year{font-size:0.8rem;color:var(--colors--slate);margin-bottom:8px;}.membership-section .memb-benefits-list{list-style:none;padding:0;margin:8px 0 0;text-align:left;font-size:0.8rem;width:100%;}.membership-section .memb-benefit-item{padding:8px 12px;border-bottom:1px solid rgba(0,0,0,0.06);line-height:1.5;color:var(--colors--onyx);}.membership-section .memb-benefit-item:last-child{border-bottom:none;}.membership-section .memb-benefit-item:before{content:"✓";color:var(--colors--gold);margin-right:10px;font-weight:700;}</style></section>`;
-html = html.replace('__MEMBERSHIP_TITLE__', pageContent?.membership_title);
-html = html.replace('__MEMBERSHIP_HEADING__', pageContent?.membership_heading);
-html = html.replace('__MEMBERSHIP_BADGE__', pageContent?.membership_badge);
-html = html.replaceAll('__MEMBERSHIP_PER_YEAR__', pageContent?.membership_per_year);
+html = html.replace('__MEMBERSHIP_TITLE__', pageContent?.membership?.title);
+html = html.replace('__MEMBERSHIP_HEADING__', pageContent?.membership?.heading);
+html = html.replace('__MEMBERSHIP_BADGE__', pageContent?.membership?.badge);
+html = html.replaceAll('__MEMBERSHIP_PER_YEAR__', pageContent?.membership?.per_year);
 ---
 <Fragment set:html={html} />

@@ -5,14 +5,14 @@ let html = `<section class="section home-hero-section"><div class="content-wrapp
 html = html.replace('__HERO_SUBTITLE__', subtitle);
 html = html.replace('__HERO_CTA__', cta_text);
 html = html.replace('__HERO_TAGLINE__', tagline);
-html = html.replace('__HERO_LEARN__', pageContent?.hero_learn_more);
-html = html.replace('__HERO_EXPLORE__', pageContent?.hero_explore_fleet);
-html = html.replace('__FORM_NAME__', pageContent?.form_name);
-html = html.replace('__FORM_PHONE__', pageContent?.form_phone);
-html = html.replace('__FORM_PICKUP__', pageContent?.form_pickup);
-html = html.replace('__FORM_DATE__', pageContent?.form_date);
-html = html.replace('__FORM_SERVICE__', pageContent?.form_service);
-html = html.replace('__FORM_SUCCESS__', pageContent?.form_success);
-html = html.replace('__FORM_ERROR__', pageContent?.form_error);
+html = html.replace('__HERO_LEARN__', pageContent?.hero?.learn_more);
+html = html.replace('__HERO_EXPLORE__', pageContent?.hero?.explore_fleet);
+html = html.replace('__FORM_NAME__', pageContent?.form?.name);
+html = html.replace('__FORM_PHONE__', pageContent?.form?.phone);
+html = html.replace('__FORM_PICKUP__', pageContent?.form?.pickup);
+html = html.replace('__FORM_DATE__', pageContent?.form?.date);
+html = html.replace('__FORM_SERVICE__', pageContent?.form?.service);
+html = html.replace('__FORM_SUCCESS__', pageContent?.form?.success);
+html = html.replace('__FORM_ERROR__', pageContent?.form?.error);
 ---
 <Fragment set:html={html} />

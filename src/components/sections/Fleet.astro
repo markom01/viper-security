@@ -38,10 +38,10 @@ if (vehicles && vehicles.length > 0) {
   }).join('');
 }
 let html = `<section id="fleet" class="section home-fleet-section"><div class="content-wrapper"><div data-w-id="0835ba9a-bac8-f37a-bf39-2726e564b360" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="fleet-heading-wrapper"><div class="subheadline centered-subheadline">__FLEET_SUB__</div><h2 class="fleet-heading">__FLEET_HEADING__</h2></div><div data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d0" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="w-dyn-list"><div role="list" class="_3-column-collection w-dyn-items">${cardsHtml}</div></div></div></section>`;
-html = html.replace('__FLEET_SUB__', pageContent?.fleet_subheadline);
-html = html.replace('__FLEET_HEADING__', pageContent?.fleet_heading);
-html = html.replaceAll('__FLEET_YEAR_LABEL__', pageContent?.fleet_year);
-html = html.replaceAll('__FLEET_SEATS_LABEL__', pageContent?.fleet_seats);
-html = html.replaceAll('__FLEET_BAGGAGE_LABEL__', pageContent?.fleet_baggage);
+html = html.replace('__FLEET_SUB__', pageContent?.fleet?.subheadline);
+html = html.replace('__FLEET_HEADING__', pageContent?.fleet?.heading);
+html = html.replaceAll('__FLEET_YEAR_LABEL__', pageContent?.fleet?.year);
+html = html.replaceAll('__FLEET_SEATS_LABEL__', pageContent?.fleet?.seats);
+html = html.replaceAll('__FLEET_BAGGAGE_LABEL__', pageContent?.fleet?.baggage);
 ---
 <Fragment set:html={html} />
