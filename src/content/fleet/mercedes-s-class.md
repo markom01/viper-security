@@ -1,5 +1,6 @@
 ---
 name: "Mercedes-Benz S-Class 4MATIC AMG"
+image: "/template_files/67638c373afeefe064e05d8c_mercedes-s-class.png"
 type: "Luxury Sedan"
 year: "2024"
 seats: "3"

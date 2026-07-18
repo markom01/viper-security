@@ -10,6 +10,7 @@ const hero = defineCollection({
     cta_text: z.string().optional(),
     phone_italy: z.string().optional(),
     phone_spain: z.string().optional(),
+    hero_image: z.string().optional(),
   }),
 });
 
@@ -30,6 +31,7 @@ const services = defineCollection({
     services: z.array(z.object({
       title: z.string(),
       description: z.string(),
+      image: z.string().optional(),
     })),
   }),
 });
@@ -46,6 +48,7 @@ const fleet = defineCollection({
     capacity_suitcases: z.number().optional(),
     capacity_carryon: z.number().optional(),
     features: z.array(z.string()).optional(),
+    image: z.string().optional(),
   }),
 });
 
@@ -107,6 +110,7 @@ const pageContent = defineCollection({
       heading: z.string().optional(),
       text: z.string().optional(),
       button: z.string().optional(),
+      image: z.string().optional(),
     }).optional(),
     services: z.object({
       subheadline: z.string().optional(),
@@ -136,6 +140,7 @@ const pageContent = defineCollection({
       heading: z.string().optional(),
       text: z.string().optional(),
       button: z.string().optional(),
+      image: z.string().optional(),
     }).optional(),
     bottomcta: z.object({
       heading: z.string().optional(),
