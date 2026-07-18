@@ -1,0 +1,27 @@
+---
+const { pageContent } = Astro.props;
+const { hourly, airport } = Astro.props;
+let ratesHtml = '';
+let routesHtml = '';
+if (hourly?.rates) {
+  ratesHtml = hourly.rates.map((r, i) =>
+    `<div class="pricing-row${i === 0 ? ' pricing-row-first' : ''}">
+      <span class="pricing-service">${r.name}</span>
+      <span class="pricing-amount">${r.price}</span>
+    </div>`
+  ).join('');
+}
+if (airport?.routes) {
+  routesHtml = airport.routes.map((r, i) =>
+    `<div class="pricing-row${i === 0 ? ' pricing-row-first' : ''}">
+      <span class="pricing-service">${r.route}</span>
+      <span class="pricing-amount">${r.price}</span>
+    </div>`
+  ).join('');
+}
+let html = `<section class="section pricing-section"><div class="content-wrapper"><div class="steps-heading-wrapper"><div class="subheadline-wrapper"><div class="subheadline-line"></div><div class="subheadline">__PRICING_TITLE__</div></div></div><div class="pricing-grid"><div class="pricing-col"><div class="steps-heading-wrapper"><h2 class="steps-heading">__PRICING_HOURLY__</h2></div><div class="booking-form-wrapper pricing-card">${ratesHtml}</div></div><div class="pricing-col"><div class="steps-heading-wrapper"><h2 class="steps-heading">__PRICING_AIRPORT__</h2></div><div class="booking-form-wrapper pricing-card">${routesHtml}</div></div></div></div><style>.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}@media(max-width:991px){.pricing-grid{grid-template-columns:1fr;}}.pricing-col{display:flex;flex-direction:column;}.pricing-col .steps-heading-wrapper{margin-bottom:20px;}.pricing-section .pricing-card{display:flex;flex-direction:column;padding:0;}.pricing-row{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid rgba(0,0,0,0.06);}.pricing-row-first{padding-top:24px;}.pricing-row:last-child{border-bottom:none;padding-bottom:24px;}.pricing-service{font-family:var(--font-families--body-font);font-size:1rem;color:var(--colors--onyx);font-weight:400;}.pricing-amount{font-family:var(--font-families--accent-font);font-size:1.4rem;color:var(--colors--gold);font-weight:600;white-space:nowrap;margin-left:16px;}</style></section>`;
+html = html.replace('__PRICING_TITLE__', pageContent?.pricing_title);
+html = html.replace('__PRICING_HOURLY__', pageContent?.pricing_hourly_heading);
+html = html.replace('__PRICING_AIRPORT__', pageContent?.pricing_airport_heading);
+---
+<Fragment set:html={html} />

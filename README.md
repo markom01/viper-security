@@ -42,7 +42,6 @@ npm run preview    # Preview production build locally
 ### Content Validation
 
 ```bash
-node scripts/verify-cms.js   # Validates Decap CMS config matches Astro content schemas
 ```
 
 ### Deploy

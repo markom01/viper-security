@@ -1,0 +1,16 @@
+---
+const { pageContent } = Astro.props;
+let html = `<section class="section home-metrics-section"><div class="content-wrapper"><div data-w-id="9159b09b-ed20-7422-90a2-9ba7fa3cdfe8" style="opacity: 1;" class="metrics-content-wrapper"><div data-w-id="bdf55f7e-3564-37bc-e8e3-badd988c8d3e" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="metrics-heading-wrapper"><h2 class="metrics-heading">__STATS_HEADING__</h2><div class="metrics-subheading">__STATS_SUBHEADING__</div></div><div data-w-id="59677e2a-94e4-da62-6e68-f4287d612a86" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="metrics-button-wrapper"><a data-w-id="31b44076-9e9e-e074-a942-d52bc90dfd3a" href="/#contact" class="secondary-button w-inline-block"><div class="button-text" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">__STATS_BUTTON__</div><img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt="Right Arrow Icon" class="button-arrow" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"></a></div><div class="metrics-wrapper"><div data-w-id="084d6e1a-eba0-6e33-868e-ba35057a7696" style="opacity: 1;" class="metric-item"><div class="metric-number">__STATS_LABEL_1__</div><div class="metric-title">__STATS_TITLE_1__</div></div><div data-w-id="0537e068-e7c5-c22d-0e7c-cf0ad9a8843e" style="opacity: 1;" class="metric-item"><div class="metric-number">__STATS_LABEL_2__</div><div class="metric-title">__STATS_TITLE_2__</div></div><div data-w-id="1a525159-1d8c-d0ee-1e5a-37fcf20352c2" style="opacity: 1;" class="metric-item"><div class="metric-number">__STATS_LABEL_3__</div><div class="metric-title">__STATS_TITLE_3__</div></div><div data-w-id="a72a26f3-4f65-9baf-8ec2-9e3dd6757ee4" style="opacity: 1;" class="metric-item"><div class="metric-number">__STATS_LABEL_4__</div><div class="metric-title">__STATS_TITLE_4__</div></div></div></div></div></section>`;
+html = html.replace('__STATS_HEADING__', pageContent?.stats_heading);
+html = html.replace('__STATS_SUBHEADING__', pageContent?.stats_subheading);
+html = html.replace('__STATS_BUTTON__', pageContent?.stats_button);
+html = html.replace('__STATS_LABEL_1__', pageContent?.stats_label_1);
+html = html.replace('__STATS_TITLE_1__', pageContent?.stats_title_1);
+html = html.replace('__STATS_LABEL_2__', pageContent?.stats_label_2);
+html = html.replace('__STATS_TITLE_2__', pageContent?.stats_title_2);
+html = html.replace('__STATS_LABEL_3__', pageContent?.stats_label_3);
+html = html.replace('__STATS_TITLE_3__', pageContent?.stats_title_3);
+html = html.replace('__STATS_LABEL_4__', pageContent?.stats_label_4);
+html = html.replace('__STATS_TITLE_4__', pageContent?.stats_title_4);
+---
+<Fragment set:html={html} />
