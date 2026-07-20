@@ -41,7 +41,14 @@ const pageContent = pageContentEntry?.data || {};
 <BaseLayout>
   <Nav brandName={hero.brand_name} pageContent={pageContent} />
   <Hero subtitle={hero.subtitle} cta_text={hero.cta_text} tagline={hero.tagline} hero_image={hero.hero_image} pageContent={pageContent} />
-  <BookingForm client:load labels={{ location: pageContent?.form?.location || 'Location', service: pageContent?.form?.service || 'Service', destination: pageContent?.form?.destination || 'Destination' }} />
+  <BookingForm client:load labels={{
+    location: pageContent?.form?.location || 'Location',
+    service: pageContent?.form?.service || 'Service',
+    destination: pageContent?.form?.destination || 'Destination',
+    name: pageContent?.form?.name || 'Full Name',
+    phone: pageContent?.form?.phone || 'Phone',
+    date: pageContent?.form?.date || 'Date',
+  }} />
   <Marquee pageContent={pageContent} />
   <AboutSection pageContent={pageContent} />
   <Services services={marbellaServices.services} pageContent={pageContent} />
