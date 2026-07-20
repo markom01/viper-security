@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 import Nav from '../components/sections/Nav.astro';
 import Hero from '../components/sections/Hero.astro';
+import BookingForm from '../components/BookingForm.jsx';
 import Marquee from '../components/sections/Marquee.astro';
 import AboutSection from '../components/sections/AboutSection.astro';
 import Services from '../components/sections/Services.astro';
@@ -40,6 +41,7 @@ const pageContent = pageContentEntry?.data || {};
 <BaseLayout>
   <Nav brandName={hero.brand_name} pageContent={pageContent} />
   <Hero subtitle={hero.subtitle} cta_text={hero.cta_text} tagline={hero.tagline} hero_image={hero.hero_image} pageContent={pageContent} />
+  <BookingForm client:load labels={{ location: pageContent?.form?.location || 'Location', service: pageContent?.form?.service || 'Service', destination: pageContent?.form?.destination || 'Destination' }} />
   <Marquee pageContent={pageContent} />
   <AboutSection pageContent={pageContent} />
   <Services services={marbellaServices.services} pageContent={pageContent} />
@@ -52,3 +54,5 @@ const pageContent = pageContentEntry?.data || {};
   <BottomCta pageContent={pageContent} />
   <Footer brandName={hero.brand_name} tagline={hero.tagline} phoneItaly={hero.phone_italy} phoneSpain={hero.phone_spain} pageContent={pageContent} />
 </BaseLayout>
+
+

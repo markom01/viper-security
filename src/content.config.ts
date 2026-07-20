@@ -96,6 +96,7 @@ const pageContent = defineCollection({
       explore_fleet: z.string().optional(),
     }).optional(),
     form: z.object({
+      location: z.string().optional(),
       name: z.string().optional(),
       phone: z.string().optional(),
       destination: z.string().optional(),

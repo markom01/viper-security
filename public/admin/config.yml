@@ -184,6 +184,7 @@ collections:
             widget: object
             collapsed: true
             fields:
+              - { name: location, label: "Location Label", widget: string }
               - { name: name, label: "Full Name Label", widget: string }
               - { name: phone, label: "Phone Label", widget: string }
               - { name: destination, label: "Destination Label", widget: string }

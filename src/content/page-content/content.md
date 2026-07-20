@@ -13,6 +13,7 @@ hero:
   explore_fleet: "Explore Fleet"
 
 form:
+  location: "Location"
   name: "Full Name"
   phone: "Phone"
   destination: "Destination"
