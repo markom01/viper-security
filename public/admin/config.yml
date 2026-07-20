@@ -186,7 +186,7 @@ collections:
             fields:
               - { name: name, label: "Full Name Label", widget: string }
               - { name: phone, label: "Phone Label", widget: string }
-              - { name: pickup, label: "Pick Up At Label", widget: string }
+              - { name: destination, label: "Destination Label", widget: string }
               - { name: date, label: "Date Label", widget: string }
               - { name: service, label: "Service Label", widget: string }
               - { name: success, label: "Success Message", widget: text }

@@ -15,7 +15,7 @@ hero:
 form:
   name: "Full Name"
   phone: "Phone"
-  pickup: "Pick Up At"
+  destination: "Destination"
   date: "Date"
   service: "Service"
   success: "Thank you! Your submission has been received!"

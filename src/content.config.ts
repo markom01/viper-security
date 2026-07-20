@@ -98,7 +98,7 @@ const pageContent = defineCollection({
     form: z.object({
       name: z.string().optional(),
       phone: z.string().optional(),
-      pickup: z.string().optional(),
+      destination: z.string().optional(),
       date: z.string().optional(),
       service: z.string().optional(),
       success: z.string().optional(),
