@@ -162,8 +162,6 @@ const pageContent = defineCollection({
       contact: z.string().optional(),
       powered: z.string().optional(),
       designed: z.string().optional(),
-      webflow: z.string().optional(),
-      am_templates: z.string().optional(),
     }).optional(),
     pricing: z.object({
       title: z.string().optional(),

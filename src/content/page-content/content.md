@@ -88,8 +88,7 @@ footer:
   contact: "Contact"
   powered: "Powered by"
   designed: ", Designed by"
-  webflow: "Webflow"
-  am_templates: "AM Templates"
+
 
 pricing:
   title: "Pricing"
