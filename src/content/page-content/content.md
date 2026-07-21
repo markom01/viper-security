@@ -4,6 +4,75 @@ seo:
   description: "VIPER Security — luxury chauffeur, executive transport, airport transfers, and VIP travel in Marbella and Milano. Premium private driver services with a fleet of luxury vehicles."
   theme_color: "#000000"
 
+jsonld:
+  org_name: "VIPER Security"
+  org_url: "https://vipersecurity.com"
+  org_logo: "https://vipersecurity.com/template_files/678ba669a9998141bea0c6a9_logo.svg"
+  org_description: "Luxury chauffeur & VIP transport services in Marbella and Milano."
+  phoneSpain: "+34 670 038 541"
+  phoneItaly: "+39 349 663 8171"
+
+booking_data:
+  spain:
+    label: "Costa del Sol — Marbella"
+    short_label: "Marbella"
+    services:
+      - name: "Airport Transfer"
+        routes:
+          - { route: "Malaga Airport → Marbella", price: "€280" }
+          - { route: "Malaga Airport → Puerto Banus", price: "€300" }
+          - { route: "Malaga Airport → Estepona", price: "€350" }
+          - { route: "Malaga Airport → Sotogrande", price: "€380" }
+          - { route: "Malaga Airport → Gibraltar" }
+          - { route: "Gibraltar Airport → Marbella", price: "€400" }
+      - name: "Yacht Transfer"
+        routes:
+          - { route: "Puerto Banus Marina" }
+          - { route: "Marbella Marina" }
+          - { route: "Estepona Marina" }
+          - { route: "Sotogrande Marina" }
+      - name: "Villa Transfer"
+        routes:
+          - { route: "Marbella — Villa Transfer" }
+      - name: "Business Travel"
+        routes:
+          - { route: "Marbella — Corporate & Business" }
+      - name: "Nightlife & Events"
+        routes:
+          - { route: "Marbella — Nightlife & Events" }
+  italy:
+    label: "Northern Italy & Alps — Milano"
+    short_label: "Milano"
+    services:
+      - name: "Airport Transfer"
+        routes:
+          - { route: "Malpensa Airport → Milano", price: "€200" }
+          - { route: "Milano Airport → Lugano", price: "€300" }
+          - { route: "Bergamo Airport → St. Moritz", price: "€350" }
+          - { route: "Malpensa Airport → Monaco", price: "€500" }
+          - { route: "Milano Airport → Zurich", price: "€600" }
+      - name: "Yacht Transfer"
+        routes:
+          - { route: "Milano — Yacht Transfer" }
+      - name: "Villa Transfer"
+        routes:
+          - { route: "Milano — Villa Transfer" }
+      - name: "Business Travel"
+        routes:
+          - { route: "Milano — Corporate & Business" }
+      - name: "Nightlife & Events"
+        routes:
+          - { route: "Milano — Nightlife & Events" }
+
+skip_link: "Skip to content"
+
+not_found:
+  code: "404"
+  heading: "Page Not Found"
+  body: "The page you're looking for doesn't exist."
+  return_aria: "Return to home page"
+  return_link: "Return Home"
+
 nav:
   home: "Home"
   about: "About"
@@ -11,7 +80,6 @@ nav:
   services: "Services"
   how_it_works: "How It Works"
   pricing: "Pricing"
-  blog: "Blog"
   contact: "Contact Us"
   brand: "VIPER SECURITY"
 
@@ -33,14 +101,15 @@ form:
   phone_placeholder: "Your phone number"
   book_now: "Book Now"
   select_location: "Select location..."
-  option_spain: "Costa del Sol — Marbella"
-  option_italy: "Northern Italy & Alps — Milano"
   choose_location_first: "Choose location first"
   select_service: "Select service..."
   choose_service_first: "Choose location & service first"
   select_route: "Select route..."
 
 marquee_text: "Luxurious Service"
+marquee:
+  aria_label: "Trusted Luxury Service Provider"
+  sr_heading: "Trusted Luxury Service Provider"
 
 about:
   image: "/images/about-image.webp"
@@ -52,7 +121,6 @@ about:
 
 services:
   subheadline: "Our Services"
-  all: "All Services"
 
 fleet:
   subheadline: "Our Fleet"
@@ -60,6 +128,10 @@ fleet:
   year: "Year"
   seats: "Seats"
   baggage: "Baggage"
+  capacity_passengers: "Passengers"
+  capacity_suitcases: "Suitcases"
+  capacity_carryon: "Carry-on"
+  features_heading: "Features"
 
 stats:
   heading: "Why Choose Us?"
@@ -101,26 +173,18 @@ bottomcta:
 footer:
   button: "Discover More"
   pages: "Pages"
-  home: "Home"
-  about: "About"
-  fleet: "Fleet"
-  services: "Services"
-  how_it_works: "How It Works"
-  pricing: "Pricing"
-  contact: "Contact"
-  powered: "Powered by"
-  designed: ", Designed by"
   logo_alt: "VIPER Security home"
   social_x: "Follow us on X"
   social_tiktok: "Follow us on TikTok"
   social_instagram: "Follow us on Instagram"
   social_whatsapp: "Contact us on WhatsApp"
+  description_prefix: "VIPER Security "
+  phone_separator: " | "
 
 
 pricing:
   title: "Pricing"
   hourly_heading: "Hourly Chauffeur Rates"
-  airport_heading: "Airport Transfer Pricing"
 
 membership:
   title: "VIP Membership"

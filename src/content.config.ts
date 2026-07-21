@@ -17,9 +17,10 @@ const hero = defineCollection({
 const howItWorks = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/how-it-works" }),
   schema: z.object({
-    steps: z.array(z.object({
+      steps: z.array(z.object({
       title: z.string(),
       description: z.string(),
+      image: z.string().optional(),
     })),
   }),
 });
@@ -82,6 +83,46 @@ const membership = defineCollection({
 const pageContent = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/page-content" }),
   schema: z.object({
+    jsonld: z.object({
+      org_name: z.string().optional(),
+      org_url: z.string().optional(),
+      org_logo: z.string().optional(),
+      org_description: z.string().optional(),
+      phoneSpain: z.string().optional(),
+      phoneItaly: z.string().optional(),
+    }).optional(),
+    booking_data: z.object({
+      spain: z.object({
+        label: z.string(),
+        short_label: z.string().optional(),
+        services: z.array(z.object({
+          name: z.string(),
+          routes: z.array(z.object({
+            route: z.string(),
+            price: z.string().optional(),
+          })),
+        })),
+      }),
+      italy: z.object({
+        label: z.string(),
+        short_label: z.string().optional(),
+        services: z.array(z.object({
+          name: z.string(),
+          routes: z.array(z.object({
+            route: z.string(),
+            price: z.string().optional(),
+          })),
+        })),
+      }),
+    }).optional(),
+    skip_link: z.string().optional(),
+    not_found: z.object({
+      code: z.string().optional(),
+      heading: z.string().optional(),
+      body: z.string().optional(),
+      return_aria: z.string().optional(),
+      return_link: z.string().optional(),
+    }).optional(),
     seo: z.object({
       title: z.string().optional(),
       description: z.string().optional(),
@@ -94,7 +135,6 @@ const pageContent = defineCollection({
       services: z.string().optional(),
       how_it_works: z.string().optional(),
       pricing: z.string().optional(),
-      blog: z.string().optional(),
       contact: z.string().optional(),
       brand: z.string().optional(),
     }).optional(),
@@ -116,14 +156,16 @@ const pageContent = defineCollection({
       phone_placeholder: z.string().optional(),
       book_now: z.string().optional(),
       select_location: z.string().optional(),
-      option_spain: z.string().optional(),
-      option_italy: z.string().optional(),
       choose_location_first: z.string().optional(),
       select_service: z.string().optional(),
       choose_service_first: z.string().optional(),
       select_route: z.string().optional(),
     }).optional(),
     marquee_text: z.string().optional(),
+    marquee: z.object({
+      aria_label: z.string().optional(),
+      sr_heading: z.string().optional(),
+    }).optional(),
     about: z.object({
       subheadline: z.string().optional(),
       heading: z.string().optional(),
@@ -134,7 +176,6 @@ const pageContent = defineCollection({
     }).optional(),
     services: z.object({
       subheadline: z.string().optional(),
-      all: z.string().optional(),
     }).optional(),
     fleet: z.object({
       subheadline: z.string().optional(),
@@ -142,6 +183,10 @@ const pageContent = defineCollection({
       year: z.string().optional(),
       seats: z.string().optional(),
       baggage: z.string().optional(),
+      capacity_passengers: z.string().optional(),
+      capacity_suitcases: z.string().optional(),
+      capacity_carryon: z.string().optional(),
+      features_heading: z.string().optional(),
     }).optional(),
     stats: z.object({
       heading: z.string().optional(),
@@ -175,25 +220,18 @@ const pageContent = defineCollection({
     footer: z.object({
       button: z.string().optional(),
       pages: z.string().optional(),
-      home: z.string().optional(),
-      about: z.string().optional(),
-      fleet: z.string().optional(),
-      services: z.string().optional(),
-      how_it_works: z.string().optional(),
-      pricing: z.string().optional(),
-      contact: z.string().optional(),
-      powered: z.string().optional(),
-      designed: z.string().optional(),
       logo_alt: z.string().optional(),
       social_x: z.string().optional(),
       social_tiktok: z.string().optional(),
       social_instagram: z.string().optional(),
       social_whatsapp: z.string().optional(),
+      description_prefix: z.string().optional(),
+      phone_separator: z.string().optional(),
+      copyright: z.string().optional(),
     }).optional(),
     pricing: z.object({
       title: z.string().optional(),
       hourly_heading: z.string().optional(),
-      airport_heading: z.string().optional(),
     }).optional(),
     membership: z.object({
       title: z.string().optional(),

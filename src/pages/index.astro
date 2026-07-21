@@ -20,25 +20,36 @@ import { getCollection, getEntry } from 'astro:content';
 const [heroEntry] = await getCollection('hero');
 const [howItWorksEntry] = await getCollection('how-it-works');
 const [servicesEntry] = await getCollection('services');
-const allOfferings = servicesEntry?.data?.offerings || [];
-const marbellaOfferings = allOfferings.filter(o => o.region === 'Marbella');
-const milanoOfferings = allOfferings.filter(o => o.region === 'Milano');
 const fleetEntries = await getCollection('fleet');
 const [membershipEntry] = await getCollection('membership');
 const [pageContentEntry] = await getCollection('page-content');
 
+const pageContent = pageContentEntry?.data || {};
+const pcd = pageContent?.booking_data;
+const spainKey = pcd?.spain?.short_label || 'Marbella';
+const italyKey = pcd?.italy?.short_label || 'Milano';
+const allOfferings = servicesEntry?.data?.offerings || [];
+const marbellaOfferings = allOfferings.filter(o => o.region === spainKey);
+const milanoOfferings = allOfferings.filter(o => o.region === italyKey);
+
 const hourlyEntry = await getEntry('pricing', 'hourly');
-const airportEntry = await getEntry('pricing', 'airport-transfers');
 
 const hero = heroEntry?.data || {};
 const howItWorks = howItWorksEntry?.data || {};
 const marbellaServices = { services: marbellaOfferings };
 const milanoServices = { services: milanoOfferings };
 const fleetVehicles = fleetEntries;
+// Collect all features from all vehicles, deduplicate, format as sentence
+const allFleetFeatures = [...new Set(
+  fleetEntries.flatMap(e => e.data.features || [])
+)];
+const fleetFeaturesText = allFleetFeatures.length > 0
+  ? allFleetFeatures.length === 1
+    ? allFleetFeatures[0] + '.'
+    : allFleetFeatures.slice(0, -1).join(', ') + ', and ' + allFleetFeatures.slice(-1)[0] + '.'
+  : '';
 const hourly = hourlyEntry?.data || {};
-const airport = airportEntry?.data || {};
 const membership = membershipEntry?.data || {};
-const pageContent = pageContentEntry?.data || {};
 ---
 
 <BaseLayout pageContent={pageContent}>
@@ -47,10 +58,10 @@ const pageContent = pageContentEntry?.data || {};
   <Marquee pageContent={pageContent} />
   <AboutSection pageContent={pageContent} />
   <Services marbella={marbellaServices.services} milano={milanoServices.services} pageContent={pageContent} />
-  <Fleet vehicles={fleetVehicles} pageContent={pageContent} />
+  <Fleet vehicles={fleetVehicles} pageContent={pageContent} fleetFeatures={fleetFeaturesText} />
   <StatsSection pageContent={pageContent} />
   <HowItWorks steps={howItWorks.steps} pageContent={pageContent} />
-  <Pricing hourly={hourly} airport={airport} pageContent={pageContent} />
+  <Pricing hourly={hourly} pageContent={pageContent} />
   <Membership tiers={membership.tiers} pageContent={pageContent} />
   <CtaBanner pageContent={pageContent} />
   <BottomCta pageContent={pageContent} />

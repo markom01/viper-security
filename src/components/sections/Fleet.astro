@@ -1,53 +1,127 @@
 ---
-const { pageContent } = Astro.props;
+const { pageContent, fleetFeatures } = Astro.props;
 const { vehicles } = Astro.props;
 import STRINGS from '../../config/strings';
 const s = STRINGS;
 const f = pageContent?.fleet;
 ---
-<section id="fleet" class="section home-fleet-section">
+<section id="fleet" class="section home-about-section">
   <div class="content-wrapper">
-    <div data-w-id="0835ba9a-bac8-f37a-bf39-2726e564b360" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="fleet-heading-wrapper">
-      <div class="subheadline centered-subheadline">{f?.subheadline}</div>
-      <h2 class="fleet-heading">{f?.heading}</h2>
-    </div>
-    <div data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d0" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="w-dyn-list">
-      <div role="list" class="_3-column-collection w-dyn-items">
-        {vehicles?.map(v => {
-          const d = v.data || {};
-          return <div role="listitem" class="w-dyn-item">
-            <a data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d3" href={("/vehicles/" + v.id)} class="car-card w-inline-block" style="border-color: rgb(217, 217, 217);">
-              <div class="car-card-details">
-                <div class="car-listing-info-wrapper">
-                  <h3 class="car-listing-name">{d.name}</h3>
-                  <div class="car-listing-type">{d.type || ''}</div>
-                </div>
-                <div class="car-listing-image-wrapper">
-                  <img loading="lazy" src={d.image || ''} alt={d.name || s.fleet.vehicleAltFallback} class="car-listing-image" />
-                </div>
-                <div class="car-listing-details-wrapper">
-                  <div class="car-listing-detail">
-                    <div class="listing-label">{f?.year}</div>
-                    <div class="listing-detail">{d.year || ''}</div>
+    <div class="home-about-content">
+      <div data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d0" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="w-dyn-list">
+        <div role="list" class="_3-column-collection w-dyn-items">
+          {vehicles?.map(v => {
+            const d = v.data || {};
+            return <div role="listitem" class="w-dyn-item">
+              <a data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d3" href={("/vehicles/" + v.id)} class="car-card w-inline-block" style="border-color: var(--colors--cloud);">
+                <div class="car-card-details">
+                  <div class="car-card-left">
+                    <div class="car-listing-info-wrapper">
+                      <h3 class="car-listing-name">{d.name}</h3>
+                      <div class="car-listing-type">{d.type || ''}</div>
+                    </div>
+                    <div class="car-listing-image-wrapper">
+                      <img loading="lazy" src={d.image || ''} alt={d.name || s.fleet.vehicleAltFallback} class="car-listing-image" />
+                    </div>
                   </div>
-                  <div class="listing-detail-divider"></div>
-                  <div class="car-listing-detail">
-                    <div class="listing-label">{f?.seats}</div>
-                    <div class="listing-detail">{d.seats || ''}</div>
-                  </div>
-                  <div class="listing-detail-divider"></div>
-                  <div class="car-listing-detail">
-                    <div class="listing-label">{f?.baggage}</div>
-                    <div class="listing-detail">{d.baggage || ''}</div>
+                  <div class="car-card-data">
+                    <div class="car-listing-details-wrapper">
+                      <div class="car-listing-detail">
+                        <div class="listing-label">{f?.year}</div>
+                        <div class="listing-detail">{d.year || ''}</div>
+                      </div>
+                      <div class="listing-detail-divider"></div>
+                      <div class="car-listing-detail">
+                        <div class="listing-label">{f?.seats}</div>
+                        <div class="listing-detail">{d.seats || ''}</div>
+                      </div>
+                      <div class="listing-detail-divider"></div>
+                      <div class="car-listing-detail">
+                        <div class="listing-label">{f?.baggage}</div>
+                        <div class="listing-detail">{d.baggage || ''}</div>
+                      </div>
+                    </div>
+                    <div class="car-listing-details-wrapper">
+                      <div class="car-listing-detail">
+                        <div class="listing-label">{f?.capacity_passengers}</div>
+                        <div class="listing-detail">{d.capacity_passengers || ''}</div>
+                      </div>
+                      <div class="listing-detail-divider"></div>
+                      <div class="car-listing-detail">
+                        <div class="listing-label">{f?.capacity_suitcases}</div>
+                        <div class="listing-detail">{d.capacity_suitcases || ''}</div>
+                      </div>
+                      <div class="listing-detail-divider"></div>
+                      <div class="car-listing-detail">
+                        <div class="listing-label">{f?.capacity_carryon}</div>
+                        <div class="listing-detail">{d.capacity_carryon || ''}</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div style="opacity: 0;" class="car-card-hover-bg"></div>
-            </a>
-          </div>;
-        })}
+                <div style="opacity: 0;" class="car-card-hover-bg"></div>
+              </a>
+            </div>;
+          })}
+        </div>
+      </div>
+      <div data-w-id="0835ba9a-bac8-f37a-bf39-2726e564b360" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="home-about-text-wrapper">
+        <div class="about-heading">
+          <div class="subheadline-wrapper">
+            <div class="subheadline-line"></div>
+            <div class="subheadline">{f?.subheadline}</div>
+          </div>
+          <h2>{f?.heading}</h2>
+        </div>
+        {fleetFeatures && <p>{fleetFeatures}</p>}
       </div>
     </div>
   </div>
 </section>
-<style>@media(prefers-reduced-motion:reduce){.home-fleet-section [data-w-id]{transform:none!important;opacity:1!important;transition:none!important;}}</style>
+<style>
+  .fleet-features {
+    margin-top: 16px;
+    padding: 0 16px 16px;
+  }
+  .fleet-features-heading {
+    font-family: var(--font-families--labels-font);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--colors--cloud);
+    margin-bottom: 8px;
+  }
+  .fleet-features-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .fleet-features-item {
+    font-family: var(--font-families--body-font);
+    font-size: 0.875rem;
+    color: var(--colors--ivory);
+    padding: 4px 0;
+    position: relative;
+    padding-left: 14px;
+  }
+  .fleet-features-item::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--colors--gold);
+  }
+  @media(min-width:992px){
+    #fleet ._3-column-collection{grid-template-columns:1fr;}
+    #fleet .car-card-details{flex-direction:row;align-items:flex-start;}
+    #fleet .car-card-left{display:flex;flex-direction:column;width:50%;flex-shrink:0;}
+    #fleet .car-card-data{flex:1;}
+  }
+  .car-card-left{display:flex;flex-direction:column;}
+  .car-card-data{display:flex;flex-direction:column;gap:12px;}
+  @media(max-width:991px){
+    #fleet .home-about-content{flex-direction:column;}
+    #fleet .w-dyn-list{order:2;}
+    #fleet .home-about-text-wrapper{order:1;}
+  }
+  @media(prefers-reduced-motion:reduce){.home-about-section [data-w-id]{transform:none!important;opacity:1!important;transition:none!important;}}
+</style>
