@@ -1,8 +1,6 @@
 ---
 const { pageContent } = Astro.props;
-import STRINGS from '../../config/strings';
-const s = STRINGS;
-const imgAlt = pageContent?.cta?.image_alt || s.cta.imageAlt;
+const imgAlt = pageContent?.cta?.image_alt;
 ---
 <section id="contact" class="section marketing-section">
   <div class="content-wrapper">

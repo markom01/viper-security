@@ -1,10 +1,12 @@
 ---
 const { pageContent } = Astro.props;
 const { brandName, tagline, phoneItaly, phoneSpain } = Astro.props;
-import STRINGS from '../../config/strings';
-const s = STRINGS;
 const f = pageContent?.footer;
-const footerDesc = s.footer.descriptionPrefix + phoneItaly + s.footer.phoneSeparator + phoneSpain;
+const n = pageContent?.nav;
+const fp = f?.description_prefix || '';
+const ps = f?.phone_separator || '';
+const footerDesc = fp + phoneItaly + ps + phoneSpain;
+const copyrightText = f?.copyright;
 const thisYear = new Date().getFullYear();
 ---
 <footer class="footer" role="contentinfo">
@@ -24,20 +26,20 @@ const thisYear = new Date().getFullYear();
       <div data-w-id="d0f85d67-a980-65d6-511b-7dac5e2e60d8" class="footer-middle" style="opacity: 1;">
         <div class="footer-text-wrapper">
           <a href="/" class="logo-link w-nav-brand w--current">
-            <img src="/template_files/678ba669a9998141bea0c6a9_logo.svg" loading="eager" alt={f?.logo_alt || s.footer.logoAlt} class="brand-image" width="180" height="40" />
+            <img src="/template_files/678ba669a9998141bea0c6a9_logo.svg" loading="eager" alt={f?.logo_alt} class="brand-image" width="180" height="40" />
           </a>
           <p class="pure-text">{footerDesc}</p>
           <div class="social-links-wrapper">
-            <a href="https://x.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_x || s.footer.socialX}>
+            <a href="https://x.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_x}>
               <img src="/template_files/676146330671d1a905c5ac9f_x-logo.svg" width="20" height="20" loading="eager" alt="" aria-hidden="true" />
             </a>
-            <a href="https://www.tiktok.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_tiktok || s.footer.socialTikTok}>
+            <a href="https://www.tiktok.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_tiktok}>
               <img src="/template_files/67614633ba459e6dd33b9860_tiktok-logo.svg" loading="eager" alt="" aria-hidden="true" />
             </a>
-            <a href="https://www.instagram.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_instagram || s.footer.socialInstagram}>
+            <a href="https://www.instagram.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_instagram}>
               <img src="/template_files/67614633f5d71118f6761e3e_instagram-logo.svg" loading="eager" alt="" aria-hidden="true" />
             </a>
-            <a href="https://www.whatsapp.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_whatsapp || s.footer.socialWhatsApp}>
+            <a href="https://www.whatsapp.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_whatsapp}>
               <img src="/template_files/67614633863a65d541abc011_whatsapp-logo.svg" loading="eager" alt="" aria-hidden="true" />
             </a>
           </div>
@@ -46,20 +48,20 @@ const thisYear = new Date().getFullYear();
           <div class="footer-links-column">
             <div class="footer-links-heading">{f?.pages}</div>
             <div class="footer-links">
-              <a href="/" class="footer-link w--current">{f?.home}</a>
-              <a href="/#about" class="footer-link">{f?.about}</a>
-              <a href="/#services" class="footer-link">{f?.services}</a>
-              <a href="/#fleet" class="footer-link">{f?.fleet}</a>
-              <a href="/#how-it-works" class="footer-link">{f?.how_it_works}</a>
-              <a href="/#pricing" class="footer-link">{f?.pricing}</a>
-              <a href="/#contact" class="footer-link">{f?.contact}</a>
+              <a href="/" class="footer-link w--current">{n?.home || f?.home}</a>
+              <a href="/#about" class="footer-link">{n?.about || f?.about}</a>
+              <a href="/#services" class="footer-link">{n?.services || f?.services}</a>
+              <a href="/#fleet" class="footer-link">{n?.fleet || f?.fleet}</a>
+              <a href="/#how-it-works" class="footer-link">{n?.how_it_works || f?.how_it_works}</a>
+              <a href="/#pricing" class="footer-link">{n?.pricing || f?.pricing}</a>
+              <a href="/#contact" class="footer-link">{n?.contact || f?.contact}</a>
             </div>
           </div>
         </div>
       </div>
       <div data-w-id="6b3a195e-8f9a-3150-7a1b-0cbbe295f67f" class="footer-bottom" style="opacity: 1;">
         <div class="footer-legal">
-          <div>{s.footer.copyright}{thisYear} {brandName}</div>
+          <div>{copyrightText}{thisYear} {brandName}</div>
         </div>
       </div>
     </div>

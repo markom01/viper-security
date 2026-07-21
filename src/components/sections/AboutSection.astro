@@ -1,7 +1,5 @@
 ---
 const { pageContent } = Astro.props;
-import STRINGS from '../../config/strings';
-const s = STRINGS;
 const about = pageContent?.about;
 ---
 <section id="about" class="section home-about-section">
@@ -22,7 +20,7 @@ const about = pageContent?.about;
         </a>
       </div>
       <div data-w-id="25ce8ef5-d896-fe4e-15f4-21fb682ddf84" style="opacity: 1;" class="home-page-image-wrapper">
-        <img src={about?.image} loading="eager" alt={about?.image_alt || s.about.imageAlt} class="about-image" width="600" height="500" />
+        <img src={about?.image} loading="eager" alt={about?.image_alt } class="about-image" width="600" height="500" />
       </div>
     </div>
   </div>

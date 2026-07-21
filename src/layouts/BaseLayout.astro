@@ -3,10 +3,23 @@ import STRINGS from '../config/strings';
 const s = STRINGS;
 const { pageContent } = Astro.props;
 const seo = pageContent?.seo;
+const cmsJd = pageContent?.jsonld;
 const siteUrl = Astro.site || new URL('https://vipersecurity.com');
 const ogImageUrl = new URL('/images/hero-image.webp', siteUrl);
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
-const jd = s.jsonld;
+const bd = pageContent?.booking_data;
+const jd = {
+  orgName: cmsJd?.org_name,
+  orgUrl: cmsJd?.org_url,
+  orgLogo: cmsJd?.org_logo,
+  orgDescription: cmsJd?.org_description,
+  webSiteName: s.jsonld.webSiteName,
+  webSiteUrl: s.jsonld.webSiteUrl,
+  phoneItaly: cmsJd?.phoneItaly || s.jsonld.phoneItaly,
+  phoneSpain: cmsJd?.phoneSpain || s.jsonld.phoneSpain,
+  spainLocality: bd?.spain?.short_label || 'Marbella',
+  italyLocality: bd?.italy?.short_label || 'Milano',
+};
 const jsonLdOrg = `<script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -16,8 +29,8 @@ const jsonLdOrg = `<script type="application/ld+json">
   "logo": "${jd.orgLogo}",
   "description": "${jd.orgDescription}",
   "address": [
-    {"@type": "PostalAddress", "addressLocality": "Marbella", "addressCountry": "ES"},
-    {"@type": "PostalAddress", "addressLocality": "Milano", "addressCountry": "IT"}
+    {"@type": "PostalAddress", "addressLocality": "${jd.spainLocality}", "addressCountry": "ES"},
+    {"@type": "PostalAddress", "addressLocality": "${jd.italyLocality}", "addressCountry": "IT"}
   ],
   "telephone": ["${jd.phoneSpain}", "${jd.phoneItaly}"]
 }
@@ -37,26 +50,26 @@ const jsonLdWebSite = `<script type="application/ld+json">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <style>[tabindex="-1"]:focus-visible{outline:2px solid #C1A176;outline-offset:2px;}:focus-visible{outline:2px solid #C1A176;outline-offset:2px;}.skip-link{position:absolute;top:-100%;left:0;z-index:9999;padding:12px 24px;background:#000;color:#C1A176;font-family:'Work Sans',sans-serif;font-size:1rem;text-decoration:none;}.skip-link:focus{top:0;}</style>
+  <style>[tabindex="-1"]:focus-visible{outline:2px solid var(--colors--amber);outline-offset:2px;}:focus-visible{outline:2px solid var(--colors--amber);outline-offset:2px;}.skip-link{position:absolute;top:-100%;left:0;z-index:9999;padding:12px 24px;background:var(--colors--onyx);color:var(--colors--amber);font-family:var(--font-families--body-font);font-size:1rem;text-decoration:none;}.skip-link:focus{top:0;}</style>
   <link href="https://cdn.prod.website-files.com/" rel="preconnect" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&family=Noto+Serif:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   <link href="/template_files/chauffure.webflow.5728f95f4.min.css" rel="preload" as="style" onload="this.rel='stylesheet'"><noscript><link href="/template_files/chauffure.webflow.5728f95f4.min.css" rel="stylesheet"></noscript>
-  <title>{seo?.title || s.seo.title}</title>
+  <title>{seo?.title}</title>
   <link rel="canonical" href={canonicalUrl}>
-  <meta content={seo?.description || s.seo.description} name="description">
-  <meta content={seo?.title || s.seo.title} property="og:title">
-  <meta content={seo?.description || s.seo.description} property="og:description">
+  <meta content={seo?.description} name="description">
+  <meta content={seo?.title} property="og:title">
+  <meta content={seo?.description} property="og:description">
   <meta content={ogImageUrl} property="og:image">
   <meta property="og:url" content={canonicalUrl}>
-  <meta property="og:site_name" content={s.jsonld.orgName}>
+  <meta property="og:site_name" content={jd.orgName}>
   <meta property="og:locale" content={s.seo.ogLocale}>
-  <meta content={seo?.title || s.seo.title} name="twitter:title">
-  <meta content={seo?.description || s.seo.description} name="twitter:description">
+  <meta content={seo?.title} name="twitter:title">
+  <meta content={seo?.description} name="twitter:description">
   <meta content={ogImageUrl} name="twitter:image">
   <meta property="og:type" content={s.seo.ogType}>
   <meta content={s.seo.twitterCard} name="twitter:card">
   <meta content="width=device-width, initial-scale=1" name="viewport">
-  <meta name="theme-color" content={seo?.theme_color || s.seo.themeColor}>
+  <meta name="theme-color" content={seo?.theme_color}>
   <style>
     @media (min-width:992px) { html.w-mod-js:not(.w-mod-ix) [data-w-id="e05755dd-04a4-7cdb-2710-9516b4314eb0"] { width:0px; } }
     @media (max-width:991px) and (min-width:768px) { html.w-mod-js:not(.w-mod-ix) [data-w-id="e05755dd-04a4-7cdb-2710-9516b4314eb0"] { width:0px; } }
@@ -76,7 +89,7 @@ const jsonLdWebSite = `<script type="application/ld+json">
   <Fragment set:html={jsonLdWebSite} />
 </head>
 <body>
-  <a href="#main-content" class="skip-link">{s.skipLink}</a>
+  <a href="#main-content" class="skip-link">{pageContent?.skip_link || "Skip to content"}</a>
   <main id="main-content" class="page-wrapper">
     <slot />
   </main>

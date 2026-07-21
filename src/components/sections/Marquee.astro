@@ -2,11 +2,12 @@
 const { pageContent } = Astro.props;
 import STRINGS from '../../config/strings';
 const s = STRINGS;
+const mq = pageContent?.marquee;
 const mt = pageContent?.marquee_text;
 const items = Array.from({ length: 4 }, () => ({ text: mt }));
 ---
-<section id="marquee" class="marquee-section" aria-label={s.marquee.ariaLabel}>
-  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">{s.marquee.srHeading}</h2>
+<section id="marquee" class="marquee-section" aria-label={mq?.aria_label }>
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">{mq?.sr_heading }</h2>
   <div class="marquee-wrapper">
     <div class="marquee" style="transform: translate3d(-82.5344%, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; will-change: transform;">
       {items.map(() => <>

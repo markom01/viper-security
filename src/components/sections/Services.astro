@@ -1,7 +1,6 @@
 ---
 const { pageContent } = Astro.props;
 const { marbella, milano } = Astro.props;
-import STR from '../../config/strings';
 const merged = (marbella || []).map((s, i) => {
   const m = milano && milano[i];
   const descs = [];
@@ -10,7 +9,7 @@ const merged = (marbella || []).map((s, i) => {
   return {
     title: (s && s.title) || (m && m.title) || '',
     image: (s && s.image) || (m && m.image) || '',
-    hoverText: STR.services.availableIn + STR.services.regionMarbella + ' and ' + STR.services.regionMilano + '. ' + descs.join(' '),
+    hoverText: descs.join(' '),
   };
 });
 ---

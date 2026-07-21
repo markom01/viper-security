@@ -6,15 +6,14 @@ const s = STRINGS;
 const h = pageContent?.hero;
 const form = pageContent?.form;
 
+const bd = pageContent?.booking_data;
 const SCRIPT_DATA = {
-  spain: s.bookingData.spain,
-  italy: s.bookingData.italy,
-  B: s.hero.bookNow,
-  SL: s.hero.selectLocation,
-  SS: form?.select_service || s.hero.selectService,
-  SR: form?.select_route || s.hero.selectRoute,
-  CL: form?.choose_location_first || s.hero.chooseLocationFirst,
-  CS: form?.choose_service_first || s.hero.chooseServiceFirst,
+  spain: bd?.spain || { label: '', services: [] },
+  italy: bd?.italy || { label: '', services: [] },
+  SS: form?.select_service,
+  SR: form?.select_route,
+  CL: form?.choose_location_first,
+  CS: form?.choose_service_first,
 };
 ---
 <section class="section home-hero-section">
@@ -48,7 +47,7 @@ const SCRIPT_DATA = {
           </div>
         </div>
         <div data-w-id="41df484e-4b97-0be1-7e6f-f18e0a540a20" style="opacity: 1;" class="hero-image-wrapper">
-          <img src={hero_image} loading="eager" alt={h?.image_alt || s.hero.imageAlt} class="hero-image" width="700" height="800" />
+          <img src={hero_image} loading="eager" alt={h?.image_alt} class="hero-image" width="700" height="800" />
         </div>
         <div style="opacity:1;overflow:hidden;position:relative;border-top:none;" class="booking-form-wrapper">
           <div style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:24px 24px 0 0;"></div>
@@ -59,18 +58,18 @@ const SCRIPT_DATA = {
               <div class="left-side-fields">
                 <div class="booking-form-label-field">
                   <label class="booking-form-label">{form?.name}</label>
-                  <input class="booking-form-field w-input" name="Full-Name" placeholder={form?.name_placeholder || s.hero.namePlaceholder} type="text" required />
+                  <input class="booking-form-field w-input" name="Full-Name" placeholder={form?.name_placeholder} type="text" required />
                 </div>
                 <div class="booking-form-label-field">
                   <label class="booking-form-label">{form?.phone}</label>
-                  <input class="booking-form-field w-input" name="Phone" placeholder={form?.phone_placeholder || s.hero.phonePlaceholder} type="tel" required />
+                  <input class="booking-form-field w-input" name="Phone" placeholder={form?.phone_placeholder} type="tel" required />
                 </div>
                 <div class="booking-form-label-field">
                   <label class="booking-form-label">{form?.location}</label>
                   <select class="booking-form-field w-select" name="Location" id="form-location" required>
-                    <option value="">{form?.select_location || s.hero.selectLocation}</option>
-                    <option value="spain">{form?.option_spain || s.hero.optionSpain}</option>
-                    <option value="italy">{form?.option_italy || s.hero.optionItaly}</option>
+                    <option value="">{form?.select_location}</option>
+                    <option value="spain">{bd?.spain?.label}</option>
+                    <option value="italy">{bd?.italy?.label}</option>
                   </select>
                 </div>
               </div>
@@ -78,7 +77,7 @@ const SCRIPT_DATA = {
                 <div class="booking-form-label-field">
                   <label class="booking-form-label">{form?.service}</label>
                   <select class="booking-form-field w-select" name="Service" id="form-service" required disabled>
-                    <option value="">{form?.choose_location_first || s.hero.chooseLocationFirst}</option>
+                    <option value="">{form?.choose_location_first}</option>
                   </select>
                 </div>
                 <div class="booking-form-label-field">
@@ -88,16 +87,16 @@ const SCRIPT_DATA = {
                 <div class="booking-form-label-field">
                   <label class="booking-form-label">{form?.destination}</label>
                   <select class="booking-form-field w-select" name="Destination" id="form-destination" required disabled>
-                    <option value="">{form?.choose_service_first || s.hero.chooseServiceFirst}</option>
+                    <option value="">{form?.choose_service_first}</option>
                   </select>
                 </div>
                 <div class="booking-button-wrapper">
-                  <input type="submit" class="booking-form-button home-booking-form w-button" value={form?.book_now || s.hero.bookNow} />
+                  <input type="submit" class="booking-form-button home-booking-form w-button" value={form?.book_now} />
                 </div>
               </div>
             </form>
-            <div class="booking-form-success w-form-done" role="status" style="display:none"><div>{form?.success || s.hero.successMessage}</div></div>
-            <div class="form-error-message w-form-fail" role="alert" style="display:none"><div>{form?.error || s.hero.errorMessage}</div></div>
+            <div class="booking-form-success w-form-done" role="status" style="display:none"><div>{form?.success}</div></div>
+            <div class="form-error-message w-form-fail" role="alert" style="display:none"><div>{form?.error}</div></div>
           </div>
         </div>
       </div>
@@ -107,14 +106,14 @@ const SCRIPT_DATA = {
 <script define:vars={{ data: SCRIPT_DATA }}>
 (function(){
 var d=data;
-var R={spain:d.spain,italy:d.italy},B=d.B,SL=d.SL,SS=d.SS,SR=d.SR,CL=d.CL,CS=d.CS;
+var R={spain:d.spain,italy:d.italy},SS=d.SS,SR=d.SR,CL=d.CL,CS=d.CS;
 var L=document.getElementById('form-location'),S=document.getElementById('form-service'),D=document.getElementById('form-destination');
 if(!L)return;
 function uS(){var l=L.value,s=l&&R[l]?R[l].services:[];S.innerHTML='<option value="">'+(l?SS:CL)+'</option>';S.disabled=!l;
 for(var i=0;i<s.length;i++){var o=document.createElement('option');o.value=s[i].name;o.textContent=s[i].name;S.appendChild(o)}uD()}
 function uD(){var l=L.value,sn=S.value,rt=[];if(l&&sn&&R[l]){var sv=R[l].services;for(var i=0;i<sv.length;i++){if(sv[i].name===sn){rt=sv[i].routes;break}}}
 D.innerHTML='<option value="">'+(sn?SR:CS)+'</option>';D.disabled=!sn;
-for(var j=0;j<rt.length;j++){var o2=document.createElement('option');o2.value=rt[j];o2.textContent=rt[j];D.appendChild(o2)}}
+for(var j=0;j<rt.length;j++){var r2=rt[j].route??rt[j];var o2=document.createElement('option');o2.value=r2;o2.textContent=r2;D.appendChild(o2)}}
 L.addEventListener('change',uS);S.addEventListener('change',uD);
 document.querySelector('.booking-form').addEventListener('submit',function(e){if(e.target.checkValidity()){document.querySelector('.booking-form-success').style.display='block';document.querySelector('.booking-form').style.display='none';}});
 })();

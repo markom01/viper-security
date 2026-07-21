@@ -21,6 +21,8 @@ npm run dev
 
 Open [localhost:4321](http://localhost:4321) in your browser.
 
+> **Note**: After modifying content collections or their Zod schemas (`src/content.config.ts`), press `s` then `Enter` in the dev terminal to sync the content layer, or restart the dev server. Without this, the dev server may serve stale cached content.
+
 ## Installation
 
 **Prerequisites**: Node.js 22.12+, npm 10+
