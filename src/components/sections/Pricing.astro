@@ -1,27 +1,47 @@
 ---
 const { pageContent } = Astro.props;
 const { hourly, airport } = Astro.props;
-let ratesHtml = '';
-let routesHtml = '';
-if (hourly?.rates) {
-  ratesHtml = hourly.rates.map((r, i) =>
-    `<div class="pricing-row${i === 0 ? ' pricing-row-first' : ''}">
-      <span class="pricing-service">${r.name}</span>
-      <span class="pricing-amount">${r.price}</span>
-    </div>`
-  ).join('');
-}
-if (airport?.routes) {
-  routesHtml = airport.routes.map((r, i) =>
-    `<div class="pricing-row${i === 0 ? ' pricing-row-first' : ''}">
-      <span class="pricing-service">${r.route}</span>
-      <span class="pricing-amount">${r.price}</span>
-    </div>`
-  ).join('');
-}
-let html = `<section class="section pricing-section"><div class="content-wrapper"><div class="steps-heading-wrapper"><div class="subheadline-wrapper"><div class="subheadline-line"></div><div class="subheadline">__PRICING_TITLE__</div></div></div><div class="pricing-grid"><div class="pricing-col"><div class="steps-heading-wrapper"><h2 class="steps-heading">__PRICING_HOURLY__</h2></div><div class="booking-form-wrapper pricing-card">${ratesHtml}</div></div><div class="pricing-col"><div class="steps-heading-wrapper"><h2 class="steps-heading">__PRICING_AIRPORT__</h2></div><div class="booking-form-wrapper pricing-card">${routesHtml}</div></div></div></div><style>.pricing-section .booking-form-wrapper{overflow:hidden;position:relative;}.pricing-section .booking-form-wrapper::before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:24px 24px 0 0;}.pricing-section .booking-form-wrapper{border-top:none;}.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}@media(max-width:991px){.pricing-grid{grid-template-columns:1fr;}}.pricing-col{display:flex;flex-direction:column;}.pricing-col .steps-heading-wrapper{margin-bottom:20px;}.pricing-section .pricing-card{display:flex;flex-direction:column;padding:0;}.pricing-row{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid rgba(0,0,0,0.06);}.pricing-row-first{padding-top:24px;}.pricing-row:last-child{border-bottom:none;padding-bottom:24px;}.pricing-service{font-family:var(--font-families--body-font);font-size:1rem;color:var(--colors--onyx);font-weight:400;}.pricing-amount{font-family:var(--font-families--accent-font);font-size:1.4rem;color:var(--colors--gold);font-weight:600;white-space:nowrap;margin-left:16px;}</style></section>`;
-html = html.replace('__PRICING_TITLE__', pageContent?.pricing?.title);
-html = html.replace('__PRICING_HOURLY__', pageContent?.pricing?.hourly_heading);
-html = html.replace('__PRICING_AIRPORT__', pageContent?.pricing?.airport_heading);
+const p = pageContent?.pricing;
 ---
-<Fragment set:html={html} />
+<section id="pricing" class="section pricing-section">
+  <div class="content-wrapper">
+    <div data-scroll-reveal class="steps-heading-wrapper">
+      <div class="subheadline-wrapper">
+        <div class="subheadline-line"></div>
+        <div class="subheadline">{p?.title}</div>
+      </div>
+    </div>
+    <div data-scroll-reveal class="pricing-grid">
+      <div class="pricing-col">
+        <div class="steps-heading-wrapper"><h2 class="steps-heading">{p?.hourly_heading}</h2></div>
+        <div class="booking-form-wrapper pricing-card">
+          {hourly?.rates?.map((r, i) => (
+            <div class={"pricing-row" + (i === 0 ? " pricing-row-first" : "")}>
+              <span class="pricing-service">{r.name}</span>
+              <span class="pricing-amount">{r.price}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="pricing-col">
+        <div class="steps-heading-wrapper"><h2 class="steps-heading">{p?.airport_heading}</h2></div>
+        <div class="booking-form-wrapper pricing-card">
+          {airport?.routes?.map((r, i) => (
+            <div class={"pricing-row" + (i === 0 ? " pricing-row-first" : "")}>
+              <span class="pricing-service">{r.route}</span>
+              <span class="pricing-amount">{r.price}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+[data-scroll-reveal]{opacity:0;transform:translateY(40px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);}
+[data-scroll-reveal-visible]{opacity:1;transform:translateY(0);}
+@media(prefers-reduced-motion:reduce){[data-scroll-reveal]{opacity:1;transform:translateY(0);transition:none;}}
+.pricing-section .booking-form-wrapper{overflow:hidden;position:relative;}.pricing-section .booking-form-wrapper::before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:24px 24px 0 0;}.pricing-section .booking-form-wrapper{border-top:none;}.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}@media(max-width:991px){.pricing-grid{grid-template-columns:1fr;}}.pricing-col{display:flex;flex-direction:column;}.pricing-col .steps-heading-wrapper{margin-bottom:20px;}.pricing-section .pricing-card{display:flex;flex-direction:column;padding:0;}.pricing-row{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid rgba(0,0,0,0.06);}.pricing-row-first{padding-top:24px;}.pricing-row:last-child{border-bottom:none;padding-bottom:24px;}.pricing-service{font-family:var(--font-families--body-font);font-size:1rem;color:var(--colors--onyx);font-weight:400;}.pricing-amount{font-family:var(--font-families--accent-font);font-size:1.4rem;color:var(--colors--gold);font-weight:600;white-space:nowrap;margin-left:16px;}</style>
+<script is:inline>
+(function(){var e=document.querySelectorAll('[data-scroll-reveal]');if(!e.length)return;var o=new IntersectionObserver(function(n){n.forEach(function(n){n.isIntersecting&&(n.target.setAttribute('data-scroll-reveal-visible',''),o.unobserve(n.target))})},{threshold:.15,rootMargin:'0px 0px -50px 0px'});e.forEach(function(e){o.observe(e)})})();
+</script>

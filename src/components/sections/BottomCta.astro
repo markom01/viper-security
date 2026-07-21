@@ -1,14 +1,51 @@
 ---
 const { pageContent } = Astro.props;
-let html = `<section class="section banner-section"><div class="content-wrapper"><div class="home-banner-wrapper"><div data-w-id="c48acec1-55d9-22d5-c183-2b678ace263f" class="banner" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;"><div class="banner-heading-wrapper"><h2 class="banner-heading">__BOTTOMCTA_HEADING__</h2><div class="banner-buttons"><a data-w-id="fff9a0d3-8d2a-b162-0a70-29a4c1c45a72" href="/#services" class="primary-button w-inline-block"><div class="button-text">__BOTTOMCTA_BTN_SERVICES__</div><img src="/template_files/67596411f9729ddbe9caa4d1_right-arrow.svg" loading="eager" alt="Right Arrow Icon" class="button-arrow"></a><a data-w-id="fff9a0d3-8d2a-b162-0a70-29a4c1c45a72" href="/#fleet" class="primary-button w-inline-block"><div class="button-text">__BOTTOMCTA_BTN_FLEET__</div><img src="/template_files/67596411f9729ddbe9caa4d1_right-arrow.svg" loading="eager" alt="Right Arrow Icon" class="button-arrow"></a></div></div><div class="banner-divider"></div><div class="banner-values-wrapper"><div class="banner-value-item"><img src="/template_files/678adbb12377bfcff86ba861_check-mark.svg" width="16" height="16 width="16" height="16" loading="eager" alt="Check Mark"><div class="value-text-wrapper"><h3 class="value-heading">__BOTTOMCTA_VAL1_TITLE__</h3><p class="banner-value-text">__BOTTOMCTA_VAL1_TEXT__</p></div></div><div class="banner-value-item"><img src="/template_files/678adbb12377bfcff86ba861_check-mark.svg" width="16" height="16 loading="eager" alt="Check Mark"><div class="value-text-wrapper"><h3 class="value-heading">__BOTTOMCTA_VAL2_TITLE__</h3><p class="banner-value-text">__BOTTOMCTA_VAL2_TEXT__</p></div></div><div class="banner-value-item"><img src="/template_files/678adbb12377bfcff86ba861_check-mark.svg" width="16" height="16 loading="eager" alt="Check Mark"><div class="value-text-wrapper"><h3 class="value-heading">__BOTTOMCTA_VAL3_TITLE__</h3><p class="banner-value-text">__BOTTOMCTA_VAL3_TEXT__</p></div></div></div></div></div></div></section>`;
-html = html.replace('__BOTTOMCTA_HEADING__', pageContent?.bottomcta?.heading);
-html = html.replace('__BOTTOMCTA_BTN_SERVICES__', pageContent?.bottomcta?.button_services);
-html = html.replace('__BOTTOMCTA_BTN_FLEET__', pageContent?.bottomcta?.button_fleet);
-html = html.replace('__BOTTOMCTA_VAL1_TITLE__', pageContent?.bottomcta?.values?.[0]?.title);
-html = html.replace('__BOTTOMCTA_VAL1_TEXT__', pageContent?.bottomcta?.values?.[0]?.text);
-html = html.replace('__BOTTOMCTA_VAL2_TITLE__', pageContent?.bottomcta?.values?.[1]?.title);
-html = html.replace('__BOTTOMCTA_VAL2_TEXT__', pageContent?.bottomcta?.values?.[1]?.text);
-html = html.replace('__BOTTOMCTA_VAL3_TITLE__', pageContent?.bottomcta?.values?.[2]?.title);
-html = html.replace('__BOTTOMCTA_VAL3_TEXT__', pageContent?.bottomcta?.values?.[2]?.text);
+import STRINGS from '../../config/strings';
+const s = STRINGS;
+const v = pageContent?.bottomcta?.values;
 ---
-<Fragment set:html={html} />
+<section id="bottom-cta" class="section banner-section">
+  <div class="content-wrapper">
+    <div class="home-banner-wrapper">
+      <div data-w-id="c48acec1-55d9-22d5-c183-2b678ace263f" class="banner" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;">
+        <div class="banner-heading-wrapper">
+          <h2 class="banner-heading">{pageContent?.bottomcta?.heading}</h2>
+          <div class="banner-buttons">
+            <a data-w-id="fff9a0d3-8d2a-b162-0a70-29a4c1c45a72" href="/#services" class="primary-button w-inline-block">
+              <div class="button-text">{pageContent?.bottomcta?.button_services}</div>
+              <img src="/template_files/67596411f9729ddbe9caa4d1_right-arrow.svg" loading="eager" alt={s.icons.arrowAlt} class="button-arrow" />
+            </a>
+            <a data-w-id="fff9a0d3-8d2a-b162-0a70-29a4c1c45a72" href="/#fleet" class="primary-button w-inline-block">
+              <div class="button-text">{pageContent?.bottomcta?.button_fleet}</div>
+              <img src="/template_files/67596411f9729ddbe9caa4d1_right-arrow.svg" loading="eager" alt={s.icons.arrowAlt} class="button-arrow" />
+            </a>
+          </div>
+        </div>
+        <div class="banner-divider"></div>
+        <div class="banner-values-wrapper">
+          <div class="banner-value-item">
+            <img src="/template_files/678adbb12377bfcff86ba861_check-mark.svg" width="16" height="16" loading="eager" alt="" aria-hidden="true" />
+            <div class="value-text-wrapper">
+              <h3 class="value-heading">{v?.[0]?.title}</h3>
+              <p class="banner-value-text">{v?.[0]?.text}</p>
+            </div>
+          </div>
+          <div class="banner-value-item">
+            <img src="/template_files/678adbb12377bfcff86ba861_check-mark.svg" width="16" height="16" loading="eager" alt="" aria-hidden="true" />
+            <div class="value-text-wrapper">
+              <h3 class="value-heading">{v?.[1]?.title}</h3>
+              <p class="banner-value-text">{v?.[1]?.text}</p>
+            </div>
+          </div>
+          <div class="banner-value-item">
+            <img src="/template_files/678adbb12377bfcff86ba861_check-mark.svg" width="16" height="16" loading="eager" alt="" aria-hidden="true" />
+            <div class="value-text-wrapper">
+              <h3 class="value-heading">{v?.[2]?.title}</h3>
+              <p class="banner-value-text">{v?.[2]?.text}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,9 +1,16 @@
 ---
+seo:
+  title: "VIPER Security — Luxury Chauffeur & VIP Transport"
+  description: "VIPER Security — luxury chauffeur, executive transport, airport transfers, and VIP travel in Marbella and Milano. Premium private driver services with a fleet of luxury vehicles."
+  theme_color: "#000000"
+
 nav:
   home: "Home"
   about: "About"
   fleet: "Fleet"
   services: "Services"
+  how_it_works: "How It Works"
+  pricing: "Pricing"
   blog: "Blog"
   contact: "Contact Us"
   brand: "VIPER SECURITY"
@@ -11,6 +18,7 @@ nav:
 hero:
   learn_more: "Learn More"
   explore_fleet: "Explore Fleet"
+  image_alt: "VIPER Security luxury chauffeur fleet"
 
 form:
   location: "Location"
@@ -21,11 +29,22 @@ form:
   service: "Service"
   success: "Thank you! Your submission has been received!"
   error: "Oops! Something went wrong while submitting the form."
+  name_placeholder: "Your full name"
+  phone_placeholder: "Your phone number"
+  book_now: "Book Now"
+  select_location: "Select location..."
+  option_spain: "Costa del Sol — Marbella"
+  option_italy: "Northern Italy & Alps — Milano"
+  choose_location_first: "Choose location first"
+  select_service: "Select service..."
+  choose_service_first: "Choose location & service first"
+  select_route: "Select route..."
 
 marquee_text: "Luxurious Service"
 
 about:
   image: "/images/about-image.webp"
+  image_alt: "VIPER Security luxury chauffeur fleet"
   subheadline: "About Us"
   heading: "World-Class Luxury Chauffeur Services Meticulously Tailored to Perfection"
   text: "VIPER Security delivers premium chauffeur-driven travel across Marbella, Milano, and beyond. Our fleet of Mercedes-Benz vehicles and professional English-speaking drivers provide discreet, reliable transportation for airport transfers, business travel, VIP events, yacht transfers, and exclusive experiences. Every journey is tailored to your schedule with privacy, comfort, and punctuality at our core."
@@ -62,6 +81,7 @@ howitworks:
 
 cta:
   image: "/images/marketing.webp"
+  image_alt: "Luxury chauffeur vehicle service"
   heading: "Your First Chauffeur Experience Just Got Better – 50% Off"
   text: "Experience the difference of professional chauffeur service. Our Mercedes-Benz fleet and experienced drivers are ready to serve you across Marbella, Milano, and the French Riviera."
   button: "Book Now"
@@ -85,9 +105,16 @@ footer:
   about: "About"
   fleet: "Fleet"
   services: "Services"
+  how_it_works: "How It Works"
+  pricing: "Pricing"
   contact: "Contact"
   powered: "Powered by"
   designed: ", Designed by"
+  logo_alt: "VIPER Security home"
+  social_x: "Follow us on X"
+  social_tiktok: "Follow us on TikTok"
+  social_instagram: "Follow us on Instagram"
+  social_whatsapp: "Contact us on WhatsApp"
 
 
 pricing:

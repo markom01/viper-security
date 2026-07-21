@@ -1,16 +1,67 @@
 ---
 const { pageContent } = Astro.props;
 const { brandName, tagline, phoneItaly, phoneSpain } = Astro.props;
-let html = `<section class="footer"><div class="content-wrapper"><div class="footer-content-wrapper"><div data-w-id="d0f85d67-a980-65d6-511b-7dac5e2e60d0" class="footer-top" style="opacity: 1;"><div class="footer-heading-wrapper"><h2 class="footer-heading">__FOOTER_TAGLINE__</h2></div><div class="footer-button-wrapper"><a data-w-id="31b44076-9e9e-e074-a942-d52bc90dfd3a" href="/#about" class="secondary-button w-inline-block"><div class="button-text">__FOOTER_BUTTON__</div><img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt="Right Arrow Icon" class="button-arrow"></a></div></div><div data-w-id="d0f85d67-a980-65d6-511b-7dac5e2e60d8" class="footer-middle" style="opacity: 1;"><div class="footer-text-wrapper"><a href="/"  class="logo-link w-nav-brand w--current"><img src="/template_files/678ba669a9998141bea0c6a9_logo.svg" loading="eager" alt="Logo" class="brand-image" width="180" height="40"></a><p class="pure-text">__FOOTER_DESC__</p><div class="social-links-wrapper"><a href="https://x.com/" target="_blank" class="social-link w-inline-block"><img src="/template_files/676146330671d1a905c5ac9f_x-logo.svg" width="20" height="20" loading="eager" alt="X Logo"></a><a href="https://www.tiktok.com/" target="_blank" class="social-link w-inline-block"><img src="/template_files/67614633ba459e6dd33b9860_tiktok-logo.svg" loading="eager" alt="TikTok Logo"></a><a href="https://www.instagram.com/" target="_blank" class="social-link w-inline-block"><img src="/template_files/67614633f5d71118f6761e3e_instagram-logo.svg" loading="eager" alt="Instagram Logo"></a><a href="https://www.whatsapp.com/" target="_blank" class="social-link w-inline-block"><img src="/template_files/67614633863a65d541abc011_whatsapp-logo.svg" loading="eager" alt="WhatsApp Logo"></a></div></div><div class="footer-links-wrapper"><div class="footer-links-column"><div class="footer-links-heading">__FOOTER_PAGES__</div><div class="footer-links"><a href="/"  class="footer-link w--current">__FOOTER_HOME__</a><a href="/#about" class="footer-link">__FOOTER_ABOUT__</a><a href="/#fleet" class="footer-link">__FOOTER_FLEET__</a><a href="/#services" class="footer-link">__FOOTER_SERVICES__</a><a href="/#contact" class="footer-link">__FOOTER_CONTACT__</a></div></div></div></div></div><div data-w-id="6b3a195e-8f9a-3150-7a1b-0cbbe295f67f" class="footer-bottom" style="opacity: 1;"><div class="footer-legal"><div>Copyright © 2025 __FOOTER_BRAND__</div></div></div></div></div></section>`;
-html = html.replace('__FOOTER_TAGLINE__', tagline);
-html = html.replace('__FOOTER_DESC__', 'Premium chauffeur services across Marbella, Milano, and beyond. ' + phoneItaly + ' / ' + phoneSpain);
-html = html.replace('__FOOTER_BRAND__', brandName);
-html = html.replace('__FOOTER_BUTTON__', pageContent?.footer?.button);
-html = html.replace('__FOOTER_PAGES__', pageContent?.footer?.pages);
-html = html.replace('__FOOTER_HOME__', pageContent?.footer?.home);
-html = html.replace('__FOOTER_ABOUT__', pageContent?.footer?.about);
-html = html.replace('__FOOTER_FLEET__', pageContent?.footer?.fleet);
-html = html.replace('__FOOTER_SERVICES__', pageContent?.footer?.services);
-html = html.replace('__FOOTER_CONTACT__', pageContent?.footer?.contact);
+import STRINGS from '../../config/strings';
+const s = STRINGS;
+const f = pageContent?.footer;
+const footerDesc = s.footer.descriptionPrefix + phoneItaly + s.footer.phoneSeparator + phoneSpain;
+const thisYear = new Date().getFullYear();
 ---
-<Fragment set:html={html} />
+<footer class="footer" role="contentinfo">
+  <div class="content-wrapper">
+    <div class="footer-content-wrapper">
+      <div data-w-id="d0f85d67-a980-65d6-511b-7dac5e2e60d0" class="footer-top" style="opacity: 1;">
+        <div class="footer-heading-wrapper">
+          <h2 class="footer-heading">{tagline}</h2>
+        </div>
+        <div class="footer-button-wrapper">
+          <a data-w-id="31b44076-9e9e-e074-a942-d52bc90dfd3a" href="/#about" class="secondary-button w-inline-block">
+            <div class="button-text">{f?.button}</div>
+            <img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt="" aria-hidden="true" class="button-arrow" />
+          </a>
+        </div>
+      </div>
+      <div data-w-id="d0f85d67-a980-65d6-511b-7dac5e2e60d8" class="footer-middle" style="opacity: 1;">
+        <div class="footer-text-wrapper">
+          <a href="/" class="logo-link w-nav-brand w--current">
+            <img src="/template_files/678ba669a9998141bea0c6a9_logo.svg" loading="eager" alt={f?.logo_alt || s.footer.logoAlt} class="brand-image" width="180" height="40" />
+          </a>
+          <p class="pure-text">{footerDesc}</p>
+          <div class="social-links-wrapper">
+            <a href="https://x.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_x || s.footer.socialX}>
+              <img src="/template_files/676146330671d1a905c5ac9f_x-logo.svg" width="20" height="20" loading="eager" alt="" aria-hidden="true" />
+            </a>
+            <a href="https://www.tiktok.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_tiktok || s.footer.socialTikTok}>
+              <img src="/template_files/67614633ba459e6dd33b9860_tiktok-logo.svg" loading="eager" alt="" aria-hidden="true" />
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_instagram || s.footer.socialInstagram}>
+              <img src="/template_files/67614633f5d71118f6761e3e_instagram-logo.svg" loading="eager" alt="" aria-hidden="true" />
+            </a>
+            <a href="https://www.whatsapp.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_whatsapp || s.footer.socialWhatsApp}>
+              <img src="/template_files/67614633863a65d541abc011_whatsapp-logo.svg" loading="eager" alt="" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+        <div class="footer-links-wrapper">
+          <div class="footer-links-column">
+            <div class="footer-links-heading">{f?.pages}</div>
+            <div class="footer-links">
+              <a href="/" class="footer-link w--current">{f?.home}</a>
+              <a href="/#about" class="footer-link">{f?.about}</a>
+              <a href="/#services" class="footer-link">{f?.services}</a>
+              <a href="/#fleet" class="footer-link">{f?.fleet}</a>
+              <a href="/#how-it-works" class="footer-link">{f?.how_it_works}</a>
+              <a href="/#pricing" class="footer-link">{f?.pricing}</a>
+              <a href="/#contact" class="footer-link">{f?.contact}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-w-id="6b3a195e-8f9a-3150-7a1b-0cbbe295f67f" class="footer-bottom" style="opacity: 1;">
+        <div class="footer-legal">
+          <div>{s.footer.copyright}{thisYear} {brandName}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

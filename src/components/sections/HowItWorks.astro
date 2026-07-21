@@ -1,14 +1,43 @@
 ---
 const { pageContent } = Astro.props;
 const { steps } = Astro.props;
-let html = `<section class="section steps-section"><div class="content-wrapper"><div data-w-id="84c76297-e0d4-db70-129d-f43e48da6388" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="steps-heading-wrapper"><div class="subheadline-wrapper"><div class="subheadline-line"></div><div class="subheadline">__HOWITWORKS_SUB__</div></div><h2 class="steps-heading">__HOWITWORKS_HEADING__</h2></div><div class="steps-wrapper"><div data-w-id="1fb47841-e92d-768e-7f7b-1a59de566a90" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="step-item"><div class="step-number-wrapper"><div class="step-number">1</div></div><div class="step-details-wrapper"><h3 class="step-title">__STEP_TITLE_0__</h3><div class="step-description">__STEP_DESC_0__</div></div></div><div data-w-id="5ae87bae-b2a8-f914-4289-2454af771767" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="step-item"><div class="step-number-wrapper"><div class="step-number">2</div></div><div class="step-details-wrapper"><h3 class="step-title">__STEP_TITLE_1__</h3><div class="step-description">__STEP_DESC_1__</div></div></div><div data-w-id="1a7efc44-29bf-d73f-dc66-c6e6fd38f665" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="step-item"><div class="step-number-wrapper"><div class="step-number">3</div></div><div class="step-details-wrapper"><h3 class="step-title">__STEP_TITLE_2__</h3><div class="step-description">__STEP_DESC_2__</div></div></div><div data-w-id="e05755dd-04a4-7cdb-2710-9516b4314eb0" class="steps-line" style="height: 1px;"></div></div></div></section>`;
-html = html.replace('__STEP_DESC_0__', steps?.[0]?.description);
-html = html.replace('__STEP_DESC_1__', steps?.[1]?.description);
-html = html.replace('__STEP_DESC_2__', steps?.[2]?.description);
-html = html.replace('__STEP_TITLE_0__', steps?.[0]?.title);
-html = html.replace('__STEP_TITLE_1__', steps?.[1]?.title);
-html = html.replace('__STEP_TITLE_2__', steps?.[2]?.title);
-html = html.replace('__HOWITWORKS_SUB__', pageContent?.howitworks?.subheadline);
-html = html.replace('__HOWITWORKS_HEADING__', pageContent?.howitworks?.heading);
+import STRINGS from '../../config/strings';
+const s = STRINGS;
+const st = pageContent?.howitworks;
 ---
-<Fragment set:html={html} />
+<section id="how-it-works" class="section steps-section">
+  <div class="content-wrapper">
+    <div data-w-id="84c76297-e0d4-b70-129d-f43e48da6388" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="steps-heading-wrapper">
+      <div class="subheadline-wrapper">
+        <div class="subheadline-line"></div>
+        <div class="subheadline">{st?.subheadline}</div>
+      </div>
+      <h2 class="steps-heading">{st?.heading}</h2>
+    </div>
+    <div class="steps-wrapper">
+      <div data-w-id="1fb47841-e92d-768e-7f7b-1a59de566a90" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="step-item">
+        <div class="step-number-wrapper"><div class="step-number">{s.stepNumber[0]}</div></div>
+        <div class="step-details-wrapper">
+          <h3 class="step-title">{steps?.[0]?.title}</h3>
+          <div class="step-description">{steps?.[0]?.description}</div>
+        </div>
+      </div>
+      <div data-w-id="5ae87bae-b2a8-f914-4289-2454af771767" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="step-item">
+        <div class="step-number-wrapper"><div class="step-number">{s.stepNumber[1]}</div></div>
+        <div class="step-details-wrapper">
+          <h3 class="step-title">{steps?.[1]?.title}</h3>
+          <div class="step-description">{steps?.[1]?.description}</div>
+        </div>
+      </div>
+      <div data-w-id="1a7efc44-29bf-d73f-dc66-c6e6fd38f665" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="step-item">
+        <div class="step-number-wrapper"><div class="step-number">{s.stepNumber[2]}</div></div>
+        <div class="step-details-wrapper">
+          <h3 class="step-title">{steps?.[2]?.title}</h3>
+          <div class="step-description">{steps?.[2]?.description}</div>
+        </div>
+      </div>
+      <div data-w-id="e05755dd-04a4-7cdb-2710-9516b4314eb0" class="steps-line" style="height: 1px;"></div>
+    </div>
+  </div>
+</section>
+<style>@media(prefers-reduced-motion:reduce){.steps-section [data-w-id]{transform:none!important;opacity:1!important;transition:none!important;}}</style>

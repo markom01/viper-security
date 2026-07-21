@@ -1,5 +1,7 @@
 ---
 import PageNotFound from "../components/PageNotFound.jsx";
+import STRINGS from '../config/strings';
+const s = STRINGS;
 ---
 
 <!doctype html>
@@ -7,10 +9,12 @@ import PageNotFound from "../components/PageNotFound.jsx";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Page Not Found — VIPER Security</title>
-    <link href="/template_files/chauffure.webflow.5728f95f4.min.css" rel="stylesheet" type="text/css">
+    <title>{s.notFoundTitle}</title>
+    <link href="/favicon.svg" rel="shortcut icon" type="image/x-icon">
   </head>
   <body>
-    <PageNotFound client:load />
+    <div role="alert">
+      <PageNotFound client:load />
+    </div>
   </body>
 </html>

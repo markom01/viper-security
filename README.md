@@ -41,8 +41,7 @@ npm run preview    # Preview production build locally
 
 ### Content Validation
 
-```bash
-```
+Content is validated at build-time via Zod schemas in `src/content.config.ts`. No separate validation script required.
 
 ### Deploy
 
@@ -53,43 +52,42 @@ Push to `main` — Netlify auto-builds and deploys. No manual deploy steps.
 ```
 .
 ├── src/
-│   ├── components/        # 14 React .jsx components (13 section + 1 root)
-│   │   ├── PageRoot.jsx        # Root — receives all data, composes all sections
-│   │   ├── Nav.jsx             # Header navigation, scroll effects, mobile menu
-│   │   ├── Hero.jsx            # Full-viewport hero with staggered animations
-│   │   ├── HowItWorks.jsx      # Booking steps (3-step grid)
-│   │   ├── Services.jsx        # Two-region service grid (uses ServiceCard 10x)
-│   │   ├── ServiceCard.jsx     # Reusable glassmorphism card
-│   │   ├── Fleet.jsx           # Vehicle showcase with scroll-reveal
-│   │   ├── Pricing.jsx         # Hourly rates + airport transfer pricing
-│   │   ├── Membership.jsx      # 3-tier VIP membership cards
-│   │   ├── Faq.jsx             # FAQ accordion
-│   │   ├── Contact.jsx         # Contact section wrapper
-│   │   ├── ContactForm.jsx     # React 19 form with Netlify Forms + a11y
-│   │   ├── Footer.jsx          # Footer with shimmer animation
-│   │   └── MobileActionBar.jsx # Fixed bottom bar for mobile
-│   ├── content/            # 7 Zod-validated content collections
+│   ├── components/            # .astro section components, .jsx helpers
+│   │   ├── sections/          # 13 section .astro components
+│   │   │   ├── Nav.astro      # Header navigation, mobile menu
+│   │   │   ├── Hero.astro     # Hero section + embedded booking form
+│   │   │   ├── Marquee.astro  # Scrolling marquee ticker
+│   │   │   ├── AboutSection.astro
+│   │   │   ├── Services.astro # Marbella + Milano service grids
+│   │   │   ├── Fleet.astro    # Vehicle showcase with scroll-reveal
+│   │   │   ├── StatsSection.astro
+│   │   │   ├── HowItWorks.astro
+│   │   │   ├── Pricing.astro  # Hourly + airport transfer pricing
+│   │   │   ├── Membership.astro# 3-tier VIP membership cards
+│   │   │   ├── CtaBanner.astro
+│   │   │   ├── BottomCta.astro
+│   │   │   └── Footer.astro
+│   │   └── PageNotFound.jsx   # 404 page React component
+│   ├── content/               # 7 Zod-validated content collections
 │   │   ├── hero/
 │   │   ├── services/
 │   │   ├── fleet/
 │   │   ├── pricing/
 │   │   └── membership/
 │   ├── layouts/
-│   │   └── BaseLayout.jsx      # React HTML shell, SEO meta, JSON-LD schema
+│   │   └── BaseLayout.astro   # HTML shell, SEO meta, JSON-LD, fonts, security
 │   ├── pages/
-│   │   ├── index.astro         # Data-fetching wrapper for the React root
-│   │   └── 404.astro           # 404 page in React
-│   └── styles/
-│       └── global.css          # Tailwind v4 @theme, fluid typography, animations
+│   │   ├── index.astro        # Data-fetching hub, composes all sections
+│   │   ├── 404.astro          # 404 page using React
+│   │   └── admin.astro        # Decap CMS admin entry
+│   └── content.config.ts      # Zod content schemas
 ├── public/
-│   ├── admin/                  # Decap CMS configuration
-│   └── images/                 # CMS media uploads
-├── scripts/
-│   └── verify-cms.js           # CMS ↔ content schema validation
-├── AGENTS.md                   # Project knowledge base
-├── DESIGN.md                   # Design system specification
-├── netlify.toml                # Netlify build + redirect config
-└── README.md                   # This file
+│   ├── admin/                 # Decap CMS config.yml
+│   ├── images/                # Optimized WebP images
+│   └── template_files/        # Webflow template assets (SVG icons, legacy CSS/JS)
+├── netlify.toml               # Netlify build + redirect + cache config
+├── astro.config.mjs           # Astro configuration
+└── README.md                  # This file
 ```
 
 ## Configuration
@@ -111,8 +109,7 @@ Content is managed via Decap CMS at `/admin/`. Configuration lives in `public/ad
 | Collection | File(s) | Purpose |
 |------------|---------|---------|
 | `hero` | `src/content/hero/hero.md` | Hero banner copy |
-| `services-marbella` | `src/content/services/marbella.md` | Marbella service details |
-| `services-milano` | `src/content/services/milano.md` | Milano service details |
+| `services` | `src/content/services/services.md` | Both Marbella + Milano service details |
 | `fleet` | `src/content/fleet/*.md` | Vehicle fleet entries |
 | `pricing-hourly` | `src/content/pricing/hourly.md` | Hourly chauffeur rates |
 | `pricing-airport` | `src/content/pricing/airport-transfers.md` | Airport transfer pricing |
@@ -121,9 +118,8 @@ Content is managed via Decap CMS at `/admin/`. Configuration lives in `public/ad
 ## Architecture Decisions
 
 - **Single-page only** — no SSR, no routing, no Astro adapter.
-- **React-only rendering** — all components are React `.jsx`. `.astro` pages are thin data-fetching wrappers only.
-- **`client:load` on root** — `PageRoot.jsx` hydrates the entire page. No individual `client:*` directives.
-- **No Tailwind config file** — Tailwind v4 uses CSS-first configuration via `@theme` in `global.css`.
+- **Astro section components** — all sections are `.astro` files using Webflow template HTML injection with content placeholder replacement. React is used only for the 404 page (`PageNotFound.jsx`).
+- **No Tailwind config file** — Tailwind v4 uses CSS-first configuration via `@tailwindcss/vite` plugin.
 - **Static output** — no server-side rendering, edge functions, or API endpoints.
 - **Netlify Forms** handles contact submission — no backend API required.
 - **No JavaScript animation libraries** — all motion is CSS transitions, keyframes, and `IntersectionObserver`.
@@ -139,12 +135,7 @@ See [DESIGN.md](DESIGN.md) for the full Lamborghini-inspired design specificatio
 
 ## What's New (Recent Refactors)
 
-- **ServiceCard.astro** — extracted from 10x duplicated markup in `Services.astro` into a reusable, slot-based component
-- **Footer.astro** — empty frontmatter block removed (pure markup)
-- **Nav.astro** — added `aria-current="section"` tracking script for hash-based navigation
-- **ContactForm.jsx** — accessibility hardening: `aria-invalid` on error fields, `aria-describedby` linking errors to inputs, `aria-live="polite"` on success screen, `role="alert"` on error banner
-- **global.css** — fluid typography utilities (`text-fluid-*`), `text-body-readable` (65ch max-width), `text-light-on-dark` (improved line-height), global `prefers-reduced-motion` rule
-- **BaseLayout.astro** — injected `Organization` + `WebSite` JSON-LD structured data
+- **Pre-production audit fixes** — JSON-LD structured data, canonical URL, skip-to-content link, `<main>` landmark, `:focus-visible` styles, OG tags, Cache-Control headers, GDPR cookie consent placeholders, semantic HTML, `prefers-reduced-motion` support across all sections, alt text improvements, dead code removal, Milano services data fix, CSP hardening, favicon fix, stray file cleanup
 
 ## Contributing
 

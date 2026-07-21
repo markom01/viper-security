@@ -19,7 +19,10 @@ import { getCollection, getEntry } from 'astro:content';
 
 const [heroEntry] = await getCollection('hero');
 const [howItWorksEntry] = await getCollection('how-it-works');
-const [firstServicesEntry] = await getCollection('services');
+const [servicesEntry] = await getCollection('services');
+const allOfferings = servicesEntry?.data?.offerings || [];
+const marbellaOfferings = allOfferings.filter(o => o.region === 'Marbella');
+const milanoOfferings = allOfferings.filter(o => o.region === 'Milano');
 const fleetEntries = await getCollection('fleet');
 const [membershipEntry] = await getCollection('membership');
 const [pageContentEntry] = await getCollection('page-content');
@@ -29,7 +32,8 @@ const airportEntry = await getEntry('pricing', 'airport-transfers');
 
 const hero = heroEntry?.data || {};
 const howItWorks = howItWorksEntry?.data || {};
-const marbellaServices = firstServicesEntry?.data || {};
+const marbellaServices = { services: marbellaOfferings };
+const milanoServices = { services: milanoOfferings };
 const fleetVehicles = fleetEntries;
 const hourly = hourlyEntry?.data || {};
 const airport = airportEntry?.data || {};
@@ -37,12 +41,12 @@ const membership = membershipEntry?.data || {};
 const pageContent = pageContentEntry?.data || {};
 ---
 
-<BaseLayout>
+<BaseLayout pageContent={pageContent}>
   <Nav brandName={hero.brand_name} pageContent={pageContent} />
   <Hero subtitle={hero.subtitle} cta_text={hero.cta_text} tagline={hero.tagline} hero_image={hero.hero_image} pageContent={pageContent} />
   <Marquee pageContent={pageContent} />
   <AboutSection pageContent={pageContent} />
-  <Services services={marbellaServices.services} pageContent={pageContent} />
+  <Services marbella={marbellaServices.services} milano={milanoServices.services} pageContent={pageContent} />
   <Fleet vehicles={fleetVehicles} pageContent={pageContent} />
   <StatsSection pageContent={pageContent} />
   <HowItWorks steps={howItWorks.steps} pageContent={pageContent} />

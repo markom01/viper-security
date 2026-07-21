@@ -1,10 +1,29 @@
 ---
 const { pageContent } = Astro.props;
-let html = `<section id="about" class="section home-about-section"><div class="content-wrapper"><div class="home-about-content"><div data-w-id="bcebc079-4506-6fc9-30ca-f14c2c79d785" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="home-about-text-wrapper"><div class="about-heading"><div class="subheadline-wrapper"><div class="subheadline-line"></div><div class="subheadline">__ABOUT_SUB__</div></div><h2>__ABOUT_HEADING__</h2></div><p>__ABOUT_TEXT__ </p><a data-w-id="fff9a0d3-8d2a-b162-0a70-29a4c1c45a72" href="/#about" class="primary-button w-inline-block"><div class="button-text">__ABOUT_BUTTON__</div><img src="/template_files/67596411f9729ddbe9caa4d1_right-arrow.svg" loading="eager" alt="Right Arrow Icon" class="button-arrow"></a></div><div data-w-id="25ce8ef5-d896-fe4e-15f4-21fb682ddf84" style="opacity: 1;" class="home-page-image-wrapper"><img src="__ABOUT_IMAGE__" loading="eager" alt="About Image" class="about-image" width="600" height="500"></div></div></div></section>`;
-html = html.replace('__ABOUT_SUB__', pageContent?.about?.subheadline);
-html = html.replace('__ABOUT_HEADING__', pageContent?.about?.heading);
-html = html.replace('__ABOUT_TEXT__', pageContent?.about?.text);
-html = html.replace('__ABOUT_BUTTON__', pageContent?.about?.button);
-html = html.replace('__ABOUT_IMAGE__', pageContent?.about?.image);
+import STRINGS from '../../config/strings';
+const s = STRINGS;
+const about = pageContent?.about;
 ---
-<Fragment set:html={html} />
+<section id="about" class="section home-about-section">
+  <div class="content-wrapper">
+    <div class="home-about-content">
+      <div data-w-id="bcebc079-4506-6fc9-30ca-f14c2c79d785" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="home-about-text-wrapper">
+        <div class="about-heading">
+          <div class="subheadline-wrapper">
+            <div class="subheadline-line"></div>
+            <div class="subheadline">{about?.subheadline}</div>
+          </div>
+          <h2>{about?.heading}</h2>
+        </div>
+        <p>{about?.text}</p>
+        <a data-w-id="fff9a0d3-8d2a-b162-0a70-29a4c1c45a72" href="/#about" class="primary-button w-inline-block">
+          <div class="button-text">{about?.button}</div>
+          <img src="/template_files/67596411f9729ddbe9caa4d1_right-arrow.svg" loading="eager" alt="" aria-hidden="true" class="button-arrow" />
+        </a>
+      </div>
+      <div data-w-id="25ce8ef5-d896-fe4e-15f4-21fb682ddf84" style="opacity: 1;" class="home-page-image-wrapper">
+        <img src={about?.image} loading="eager" alt={about?.image_alt || s.about.imageAlt} class="about-image" width="600" height="500" />
+      </div>
+    </div>
+  </div>
+</section>

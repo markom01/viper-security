@@ -1,47 +1,53 @@
 ---
 const { pageContent } = Astro.props;
 const { vehicles } = Astro.props;
-let cardsHtml = '';
-if (vehicles && vehicles.length > 0) {
-  cardsHtml = vehicles.map((v) => {
-    const data = v.data || {};
-    return `<div role="listitem" class="w-dyn-item">
-      <a data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d3" href="/vehicles/${v.id}" class="car-card w-inline-block" style="border-color: rgb(217, 217, 217);">
-        <div class="car-card-details">
-          <div class="car-listing-info-wrapper">
-            <h3 class="car-listing-name">${data.name}</h3>
-            <div class="car-listing-type">${data.type || ''}</div>
-          </div>
-          <div class="car-listing-image-wrapper">
-            <img loading="eager" src="${data.image || ''}" alt="" class="car-listing-image" >
-          </div>
-          <div class="car-listing-details-wrapper">
-            <div class="car-listing-detail">
-              <div class="listing-label">__FLEET_YEAR_LABEL__</div>
-              <div class="listing-detail">${data.year || ''}</div>
-            </div>
-            <div class="listing-detail-divider"></div>
-            <div class="car-listing-detail">
-              <div class="listing-label">__FLEET_SEATS_LABEL__</div>
-              <div class="listing-detail">${data.seats || ''}</div>
-            </div>
-            <div class="listing-detail-divider"></div>
-            <div class="car-listing-detail">
-              <div class="listing-label">__FLEET_BAGGAGE_LABEL__</div>
-              <div class="listing-detail">${data.baggage || ''}</div>
-            </div>
-          </div>
-        </div>
-        <div style="opacity: 0;" class="car-card-hover-bg"></div>
-      </a>
-    </div>`;
-  }).join('');
-}
-let html = `<section id="fleet" class="section home-fleet-section"><div class="content-wrapper"><div data-w-id="0835ba9a-bac8-f37a-bf39-2726e564b360" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="fleet-heading-wrapper"><div class="subheadline centered-subheadline">__FLEET_SUB__</div><h2 class="fleet-heading">__FLEET_HEADING__</h2></div><div data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d0" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="w-dyn-list"><div role="list" class="_3-column-collection w-dyn-items">${cardsHtml}</div></div></div></section>`;
-html = html.replace('__FLEET_SUB__', pageContent?.fleet?.subheadline);
-html = html.replace('__FLEET_HEADING__', pageContent?.fleet?.heading);
-html = html.replaceAll('__FLEET_YEAR_LABEL__', pageContent?.fleet?.year);
-html = html.replaceAll('__FLEET_SEATS_LABEL__', pageContent?.fleet?.seats);
-html = html.replaceAll('__FLEET_BAGGAGE_LABEL__', pageContent?.fleet?.baggage);
+import STRINGS from '../../config/strings';
+const s = STRINGS;
+const f = pageContent?.fleet;
 ---
-<Fragment set:html={html} />
+<section id="fleet" class="section home-fleet-section">
+  <div class="content-wrapper">
+    <div data-w-id="0835ba9a-bac8-f37a-bf39-2726e564b360" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="fleet-heading-wrapper">
+      <div class="subheadline centered-subheadline">{f?.subheadline}</div>
+      <h2 class="fleet-heading">{f?.heading}</h2>
+    </div>
+    <div data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d0" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="w-dyn-list">
+      <div role="list" class="_3-column-collection w-dyn-items">
+        {vehicles?.map(v => {
+          const d = v.data || {};
+          return <div role="listitem" class="w-dyn-item">
+            <a data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d3" href={("/vehicles/" + v.id)} class="car-card w-inline-block" style="border-color: rgb(217, 217, 217);">
+              <div class="car-card-details">
+                <div class="car-listing-info-wrapper">
+                  <h3 class="car-listing-name">{d.name}</h3>
+                  <div class="car-listing-type">{d.type || ''}</div>
+                </div>
+                <div class="car-listing-image-wrapper">
+                  <img loading="lazy" src={d.image || ''} alt={d.name || s.fleet.vehicleAltFallback} class="car-listing-image" />
+                </div>
+                <div class="car-listing-details-wrapper">
+                  <div class="car-listing-detail">
+                    <div class="listing-label">{f?.year}</div>
+                    <div class="listing-detail">{d.year || ''}</div>
+                  </div>
+                  <div class="listing-detail-divider"></div>
+                  <div class="car-listing-detail">
+                    <div class="listing-label">{f?.seats}</div>
+                    <div class="listing-detail">{d.seats || ''}</div>
+                  </div>
+                  <div class="listing-detail-divider"></div>
+                  <div class="car-listing-detail">
+                    <div class="listing-label">{f?.baggage}</div>
+                    <div class="listing-detail">{d.baggage || ''}</div>
+                  </div>
+                </div>
+              </div>
+              <div style="opacity: 0;" class="car-card-hover-bg"></div>
+            </a>
+          </div>;
+        })}
+      </div>
+    </div>
+  </div>
+</section>
+<style>@media(prefers-reduced-motion:reduce){.home-fleet-section [data-w-id]{transform:none!important;opacity:1!important;transition:none!important;}}</style>

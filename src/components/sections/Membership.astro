@@ -1,31 +1,44 @@
 ---
 const { tiers, pageContent } = Astro.props;
-let cardsHtml = '';
-if (tiers) {
-  cardsHtml = tiers.map((t) => {
-    const badge = t.is_featured
-      ? '<div class="memb-badge">__MEMBERSHIP_BADGE__</div>'
-      : '';
-    const benefitsList = t.benefits.map(b =>
-      `<li class="memb-benefit-item">${b}</li>`
-    ).join('');
-    return `<div role="listitem" class="w-dyn-item" style="padding:8px;display:flex;">
-      <div class="booking-form-wrapper${t.is_featured ? ' memb-featured-card' : ''}" style="width:100%;display:flex;flex-direction:column;align-items:center;padding:0;">
-        ${badge}
-        <div class="memb-card-body">
-          <h3 class="booking-form-label" style="font-size:0.85rem;letter-spacing:2px;">${t.name}</h3>
-          <div class="memb-price">${t.price}</div>
-          <div class="memb-per-year">__MEMBERSHIP_PER_YEAR__</div>
-          <ul class="memb-benefits-list">${benefitsList}</ul>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-}
-let html = `<section class="section membership-section"><div class="content-wrapper"><div class="steps-heading-wrapper"><div class="subheadline-wrapper"><div class="subheadline-line"></div><div class="subheadline">__MEMBERSHIP_TITLE__</div></div><h2 class="steps-heading">__MEMBERSHIP_HEADING__</h2></div><div class="w-dyn-list"><div role="list" class="_3-column-collection w-dyn-items">${cardsHtml}</div></div></div><style>.membership-section .booking-form-wrapper{overflow:hidden;position:relative;}.membership-section .booking-form-wrapper::before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:24px 24px 0 0;}.membership-section .booking-form-wrapper{border-top:none;}.membership-section .booking-form-wrapper{height:100%;}.membership-section .memb-featured-card{border-top-color:var(--colors--gold);border-top-width:8px;}.membership-section .memb-badge{background:var(--colors--amber);color:#000;text-align:center;padding:10px 20px;font-size:0.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;width:100%;border-radius:0;margin-top:0;}.membership-section .memb-card-body{display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 24px 24px;width:100%;}.membership-section .memb-price{font-size:2rem;color:var(--colors--gold);font-family:var(--font-families--accent-font);font-weight:600;line-height:1.1;margin:8px 0 2px;}.membership-section .memb-per-year{font-size:0.8rem;color:var(--colors--slate);margin-bottom:8px;}.membership-section .memb-benefits-list{list-style:none;padding:0;margin:8px 0 0;text-align:left;font-size:0.8rem;width:100%;}.membership-section .memb-benefit-item{padding:8px 12px;border-bottom:1px solid rgba(0,0,0,0.06);line-height:1.5;color:var(--colors--onyx);}.membership-section .memb-benefit-item:last-child{border-bottom:none;}.membership-section .memb-benefit-item:before{content:"✓";color:var(--colors--gold);margin-right:10px;font-weight:700;}</style></section>`;
-html = html.replace('__MEMBERSHIP_TITLE__', pageContent?.membership?.title);
-html = html.replace('__MEMBERSHIP_HEADING__', pageContent?.membership?.heading);
-html = html.replace('__MEMBERSHIP_BADGE__', pageContent?.membership?.badge);
-html = html.replaceAll('__MEMBERSHIP_PER_YEAR__', pageContent?.membership?.per_year);
+const m = pageContent?.membership;
 ---
-<Fragment set:html={html} />
+<section id="membership" class="section membership-section">
+  <div class="content-wrapper">
+    <div data-scroll-reveal class="steps-heading-wrapper">
+      <div class="subheadline-wrapper">
+        <div class="subheadline-line"></div>
+        <div class="subheadline">{m?.title}</div>
+      </div>
+      <h2 class="steps-heading">{m?.heading}</h2>
+    </div>
+    <div data-scroll-reveal class="w-dyn-list">
+      <div role="list" class="_3-column-collection w-dyn-items">
+        {tiers?.map(t => (
+          <div role="listitem" class="w-dyn-item" style="padding:8px;display:flex;">
+            <div class={"booking-form-wrapper" + (t.is_featured ? " memb-featured-card" : "")} style="width:100%;display:flex;flex-direction:column;align-items:center;padding:0;">
+              {t.is_featured ? <div class="memb-badge">{m?.badge}</div> : null}
+              <div class="memb-card-body">
+                <h3 class="booking-form-label" style="font-size:0.85rem;letter-spacing:2px;">{t.name}</h3>
+                <div class="memb-price">{t.price}</div>
+                <div class="memb-per-year">{m?.per_year}</div>
+                <ul class="memb-benefits-list">
+                  {t.benefits?.map(b => (
+                    <li class="memb-benefit-item">{b}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+[data-scroll-reveal]{opacity:0;transform:translateY(40px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);}
+[data-scroll-reveal-visible]{opacity:1;transform:translateY(0);}
+@media(prefers-reduced-motion:reduce){[data-scroll-reveal]{opacity:1;transform:translateY(0);transition:none;}}
+.membership-section .booking-form-wrapper{overflow:hidden;position:relative;}.membership-section .booking-form-wrapper::before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:24px 24px 0 0;}.membership-section .booking-form-wrapper{border-top:none;}.membership-section .booking-form-wrapper{height:100%;}.membership-section .memb-featured-card{border-top-color:var(--colors--gold);border-top-width:8px;}.membership-section .memb-badge{background:var(--colors--amber);color:#000;text-align:center;padding:10px 20px;font-size:0.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;width:100%;border-radius:0;margin-top:0;}.membership-section .memb-card-body{display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 24px 24px;width:100%;}.membership-section .memb-price{font-size:2rem;color:var(--colors--gold);font-family:var(--font-families--accent-font);font-weight:600;line-height:1.1;margin:8px 0 2px;}.membership-section .memb-per-year{font-size:0.8rem;color:var(--colors--slate);margin-bottom:8px;}.membership-section .memb-benefits-list{list-style:none;padding:0;margin:8px 0 0;text-align:left;font-size:0.8rem;width:100%;}.membership-section .memb-benefit-item{padding:8px 12px;border-bottom:1px solid rgba(0,0,0,0.06);line-height:1.5;color:var(--colors--onyx);}.membership-section .memb-benefit-item:last-child{border-bottom:none;}.membership-section .memb-benefit-item:before{content:"✓";color:var(--colors--gold);margin-right:10px;font-weight:700;}</style>
+<script is:inline>
+(function(){var e=document.querySelectorAll('[data-scroll-reveal]');if(!e.length)return;var o=new IntersectionObserver(function(n){n.forEach(function(n){n.isIntersecting&&(n.target.setAttribute('data-scroll-reveal-visible',''),o.unobserve(n.target))})},{threshold:.15,rootMargin:'0px 0px -50px 0px'});e.forEach(function(e){o.observe(e)})})();
+</script>
