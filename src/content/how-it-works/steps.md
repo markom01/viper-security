@@ -1,9 +1,9 @@
 ---
 steps:
-  - title: "Choose a Vehicle"
-    description: "Select from our premium fleet of Mercedes-Benz vehicles tailored to your travel needs."
-  - title: "Select a Service"
-    description: "Choose the service that fits your itinerary - airport transfers, corporate travel, or VIP events."
-  - title: "Book Your Ride"
-    description: "Reserve your vehicle online or via phone and enjoy a seamless luxury experience."
+  - title: "Choose Location"
+    description: "Select your region — {location1_name} or {location2_name} — to see available services and routes."
+  - title: "Pick a Service"
+    description: "Choose from airport transfers, corporate travel, villa transfers, nightlife events, and more."
+  - title: "Select Destination"
+    description: "Pick your specific route and get an instant price estimate before booking your ride."
 ---

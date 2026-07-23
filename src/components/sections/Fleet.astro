@@ -1,6 +1,7 @@
 ---
 const { pageContent, fleetFeatures } = Astro.props;
 const { vehicles } = Astro.props;
+import type { FleetEntry } from '../../types';
 import STRINGS from '../../config/strings';
 const s = STRINGS;
 const f = pageContent?.fleet;
@@ -10,10 +11,10 @@ const f = pageContent?.fleet;
     <div class="home-about-content">
       <div data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d0" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="w-dyn-list">
         <div role="list" class="_3-column-collection w-dyn-items">
-          {vehicles?.map(v => {
+          {vehicles?.map((v: FleetEntry) => {
             const d = v.data || {};
             return <div role="listitem" class="w-dyn-item">
-              <a data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d3" href={("/vehicles/" + v.id)} class="car-card w-inline-block" style="border-color: var(--colors--cloud);">
+              <a data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d3" href="#fleet" class="car-card w-inline-block" style="border-color: var(--colors--cloud);">
                 <div class="car-card-details">
                   <div class="car-card-left">
                     <div class="car-listing-info-wrapper">
@@ -73,7 +74,6 @@ const f = pageContent?.fleet;
           </div>
           <h2>{f?.heading}</h2>
         </div>
-        <div class="fleet-features-heading">{s.fleet.featuresHeading}</div>
         {fleetFeatures && <p>{fleetFeatures}</p>}
       </div>
     </div>
@@ -86,7 +86,7 @@ const f = pageContent?.fleet;
   }
   .fleet-features-heading {
     font-family: var(--font-families--labels-font);
-    font-size: 0.75rem;
+    font-size: 1rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--colors--cloud);
@@ -99,7 +99,7 @@ const f = pageContent?.fleet;
   }
   .fleet-features-item {
     font-family: var(--font-families--body-font);
-    font-size: 0.875rem;
+    font-size: 1rem;
     color: var(--colors--ivory);
     padding: 4px 0;
     position: relative;

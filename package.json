@@ -9,6 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test": "npx playwright test",
+    "test:a11y": "npx playwright test e2e/a11y.spec.ts",
     "astro": "astro"
   },
   "dependencies": {
@@ -21,10 +23,12 @@
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.9",
     "@playwright/test": "^1.61.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "lighthouse": "^12.8.2",
+    "serve": "^14.2.6",
     "vitest": "^4.1.10",
     "yaml": "^2.9.0"
   }

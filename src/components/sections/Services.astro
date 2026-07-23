@@ -1,19 +1,11 @@
 ---
 const { pageContent } = Astro.props;
 const { marbella, milano } = Astro.props;
+import type { ServiceOffering } from '../../types';
 import STRINGS from '../../config/strings';
 const s = STRINGS;
-const merged = (marbella || []).map((svc, i) => {
-  const m = milano && milano[i];
-  const descs = [];
-  if (svc && svc.description) descs.push(svc.description);
-  if (m && m.description) descs.push(m.description);
-  return {
-    title: (svc && svc.title) || (m && m.title) || '',
-    image: (svc && svc.image) || (m && m.image) || '',
-    hoverText: descs.join(' '),
-  };
-});
+// Services are universal — both props carry the same data, pick whichever exists
+const services = marbella || milano || [];
 ---
 <section id="services" class="section services-section">
   <div class="content-wrapper">
@@ -27,15 +19,15 @@ const merged = (marbella || []).map((svc, i) => {
     </div>
     <div class="w-dyn-list">
       <div role="list" class="_4-column-collection w-dyn-items">
-        {merged.map(svc => (
+        {services.map((svc: ServiceOffering) => (
           <div role="listitem" class="service-collection-item w-dyn-item">
-            <a data-w-id="736c1110-fb53-c783-1703-f2034df85288" href="/#services" class="service-card w-inline-block">
+            <div data-w-id="736c1110-fb53-c783-1703-f2034df85288" class="service-card">
               <img src={svc.image} loading="lazy" alt={svc.title} class="service-listing-image" width="400" height="300" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;" />
               <div class="service-info-wrapper">
                 <h3 class="service-listing-name">{svc.title}</h3>
-                <div style="opacity: 0;" class="service-short-description">{svc.hoverText}</div>
+                <div style="opacity: 0;" class="service-short-description">{svc.description}</div>
               </div>
-            </a>
+            </div>
           </div>
         ))}
       </div>

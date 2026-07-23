@@ -4,12 +4,12 @@
  * This file contains only values that have no CMS path.
  */
 
-const SITE_NAME = 'VIPER Security';
+export const SITE_NAME = 'VIPER Security';
 const SITE_URL = 'https://vipersecurity.com';
 
 const STRINGS = {
   nav: {
-    homeAria: 'home',
+    homeAria: `${SITE_NAME} home`,
     menuAria: 'menu',
     cancelAlt: 'Close menu',
     home: 'Home',
@@ -30,10 +30,12 @@ const STRINGS = {
   jsonld: {
     webSiteName: SITE_NAME,
     webSiteUrl: SITE_URL,
+    phoneItaly: '',
+    phoneSpain: '',
   },
 
   admin: {
-    title: 'Viper Security — Admin',
+    title: `${SITE_NAME} — Admin`,
   },
 
   hero: {
@@ -41,7 +43,7 @@ const STRINGS = {
     bookingFormAria: 'Booking Form',
     learnMore: 'Learn More',
     exploreFleet: 'Explore Fleet',
-    imageAlt: 'VIPER Security luxury chauffeur fleet',
+    imageAlt: `${SITE_NAME} luxury chauffeur service`,
   },
 
   notFound: {
@@ -90,7 +92,7 @@ const STRINGS = {
   about: {
     subheadline: 'About Us',
     button: 'Discover More',
-    imageAlt: 'VIPER Security luxury chauffeur fleet',
+    imageAlt: `${SITE_NAME} luxury chauffeur service`,
   },
 
   services: {
@@ -100,7 +102,7 @@ const STRINGS = {
   },
 
   fleet: {
-    vehicleAltFallback: 'VIPER Security vehicle',
+    vehicleAltFallback: `${SITE_NAME} vehicle`,
     subheadline: 'Our Fleet',
     year: 'Year',
     seats: 'Seats',

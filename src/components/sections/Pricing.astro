@@ -1,6 +1,7 @@
 ---
 const { pageContent } = Astro.props;
 const { hourly } = Astro.props;
+import type { BookingService, PricingRate, PricingCard, PricingCardSection } from '../../types';
 import STRINGS from '../../config/strings';
 const s = STRINGS;
 const bd = pageContent?.booking_data;
@@ -8,16 +9,20 @@ const bd = pageContent?.booking_data;
 // Build 2 regional cards, each with service sections inside
 const regionCards = [];
 
-function buildRegionCard(services, regionLabel, regionShortLabel) {
+function buildRegionCard(
+  services: BookingService[] | undefined,
+  regionLabel: string,
+  regionShortLabel: string,
+): PricingCard | null {
   if (!services?.length) return null;
-  const sections = [];
+  const sections: PricingCardSection[] = [];
   // Each service type becomes a section
-  services.forEach(svc => {
+  services.forEach((svc) => {
     const routes = svc.routes || [];
     if (routes.length) {
       sections.push({
         title: svc.name,
-        routes: routes.map(r => ({
+        routes: routes.map((r) => ({
           label: r.route,
           price: r.price || '?',
         })),
@@ -28,7 +33,7 @@ function buildRegionCard(services, regionLabel, regionShortLabel) {
   if (hourly?.rates?.length) {
     sections.push({
       title: s.pricing.hourlyHeading,
-      routes: hourly.rates.map(r => ({ label: r.name, price: r.price })),
+      routes: hourly.rates.map((r: PricingRate) => ({ label: r.name, price: r.price })),
     });
   }
   if (sections.length) {
@@ -40,10 +45,10 @@ function buildRegionCard(services, regionLabel, regionShortLabel) {
 const spainLabel = bd?.spain?.short_label || 'Marbella';
 const italyLabel = bd?.italy?.short_label || 'Milano';
 
-const marbellaCard = buildRegionCard(bd?.spain?.services, `VIPER Security — ${spainLabel}`, spainLabel);
-const milanoCard = buildRegionCard(bd?.italy?.services, `VIPER Security — ${italyLabel}`, italyLabel);
+const marbellaCard = buildRegionCard(bd?.spain?.services, `${spainLabel}`, spainLabel);
+const milanoCard = buildRegionCard(bd?.italy?.services, `${italyLabel}`, italyLabel);
 
-const allCards = [marbellaCard, milanoCard].filter(Boolean);
+const allCards: PricingCard[] = [marbellaCard, milanoCard].filter((c): c is PricingCard => c != null);
 ---
 <section id="pricing" class="section pricing-section">
   <div class="content-wrapper">
@@ -76,3 +81,27 @@ const allCards = [marbellaCard, milanoCard].filter(Boolean);
     </div>
   </div>
 </section>
+<style>
+  [data-scroll-reveal]{opacity:0;transform:translateY(40px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);}
+  [data-scroll-reveal-visible]{opacity:1;transform:translateY(0);}
+  @media(prefers-reduced-motion:reduce){[data-scroll-reveal]{opacity:1;transform:translateY(0);transition:none;}}
+  .pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  @media(max-width:991px){.pricing-grid{grid-template-columns:1fr;}}
+  .pricing-card-wrapper{display:flex;flex-direction:column;}
+  .pricing-card-heading{font-family:var(--font-families--accent-font);font-size:1.1rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--colors--gold);margin-bottom:16px;}
+  .pricing-section .booking-form-wrapper{overflow:hidden;position:relative;}
+  .pricing-section .booking-form-wrapper::before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:24px 24px 0 0;}
+  .pricing-section .booking-form-wrapper{border-top:none;}
+  .pricing-section-wrap{margin-bottom:24px;}
+  .pricing-section-wrap:last-child{margin-bottom:0;}
+  .pricing-section-title{font-family:var(--font-families--labels-font);font-size:1rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--colors--slate);margin-bottom:4px;padding:14px; padding-bottom: 0px}
+  .pricing-section-divider{height:1px;background:rgba(0,0,0,0.06);margin:0 14px 20px;}
+  .pricing-row{display:flex;justify-content:space-between;align-items:center;padding:14px;border-bottom:1px solid rgba(0,0,0,0.06);}
+  .pricing-row-first{padding-top:20px;}
+  .pricing-row:last-child{border-bottom:none;padding-bottom:20px;}
+  .pricing-service{font-family:var(--font-families--body-font);font-size:1rem;color:var(--colors--onyx);font-weight:400;}
+  .pricing-amount{font-family:var(--font-families--accent-font);font-size:1.3rem;color:var(--colors--gold);font-weight:600;white-space:nowrap;margin-left:16px;}
+</style>
+<script is:inline>
+(function(){var e=document.querySelectorAll('[data-scroll-reveal]');if(!e.length)return;var o=new IntersectionObserver(function(n){n.forEach(function(n){n.isIntersecting&&(n.target.setAttribute('data-scroll-reveal-visible',''),o.unobserve(n.target))})},{threshold:.15,rootMargin:'0px 0px -50px 0px'});e.forEach(function(e){o.observe(e)})})();
+</script>

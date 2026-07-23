@@ -16,6 +16,7 @@ const SCRIPT_DATA = {
   SP: s.form.pricePlaceholder,
   PI: phoneItaly || '',
   PS: phoneSpain || '',
+  SN: pageContent?.jsonld?.org_name || 'VIPER Security',
 };
 ---
 <section class="section home-hero-section">
@@ -38,37 +39,37 @@ const SCRIPT_DATA = {
           <div class="hero-button-left">
             <a data-w-id="4fa73ed9-0885-2043-799f-7bb694c2513b" href="/#about" class="secondary-button small w-inline-block">
               <div class="button-text">{s.hero.learnMore}</div>
-              <img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt={s.icons.arrowAlt} class="button-arrow" />
+              <img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt="" aria-hidden="true" width="16" height="16" class="button-arrow" />
             </a>
           </div>
           <div class="hero-button-right">
             <a data-w-id="4fa73ed9-0885-2043-799f-7bb694c2513b" href="/#fleet" class="secondary-button small w-inline-block">
               <div class="button-text">{s.hero.exploreFleet}</div>
-              <img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt={s.icons.arrowAlt} class="button-arrow" />
+              <img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt="" aria-hidden="true" width="16" height="16" class="button-arrow" />
             </a>
           </div>
         </div>
         <div data-w-id="41df484e-4b97-0be1-7e6f-f18e0a540a20" style="opacity: 1;" class="hero-image-wrapper">
           <img src={hero_image} loading="eager" alt={s.hero.imageAlt} class="hero-image" width="700" height="800" />
         </div>
-        <div style="opacity:1;overflow:hidden;position:relative;border-top:none;" class="booking-form-wrapper">
+        <div id="contact" style="opacity:1;overflow:hidden;position:relative;border-top:none;" class="booking-form-wrapper">
           <div style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:24px 24px 0 0;"></div>
           <div class="booking-form-block">
             <form name={s.hero.formName} method="POST" data-netlify="true" class="booking-form" aria-label={s.hero.bookingFormAria}>
               <input type="hidden" name="form-name" value={s.hero.formName} />
-              <input name="bot-field" style="display:none" tabindex="-1" autocomplete="off" />
+              <input type="hidden" name="bot-field" autocomplete="off" />
               <div class="left-side-fields">
                 <div class="booking-form-label-field">
-                  <label class="booking-form-label">{s.form.name}</label>
-                  <input class="booking-form-field w-input" name="Full-Name" placeholder={s.form.namePlaceholder} type="text" required />
+                  <label class="booking-form-label" for="full-name">{s.form.name}</label>
+                  <input class="booking-form-field w-input" id="full-name" name="Full-Name" placeholder={s.form.namePlaceholder} type="text" required aria-label="Full Name" />
                 </div>
                 <div class="booking-form-label-field">
-                  <label class="booking-form-label">{s.form.phone}</label>
-                  <input class="booking-form-field w-input" name="Phone" placeholder={s.form.phonePlaceholder} type="tel" required />
+                  <label class="booking-form-label" for="phone">{s.form.phone}</label>
+                  <input class="booking-form-field w-input" id="phone" name="Phone" placeholder={s.form.phonePlaceholder} type="tel" required aria-label="Phone" />
                 </div>
                 <div class="booking-form-label-field">
-                  <label class="booking-form-label">{s.form.location}</label>
-                  <select class="booking-form-field w-select" name="Location" id="form-location" required>
+                  <label class="booking-form-label" for="form-location">{s.form.location}</label>
+                  <select class="booking-form-field w-select" name="Location" id="form-location" required aria-label="Location">
                     <option value="">{s.form.selectLocation}</option>
                     <option value="spain">{bd?.spain?.label}</option>
                     <option value="italy">{bd?.italy?.label}</option>
@@ -77,20 +78,20 @@ const SCRIPT_DATA = {
               </div>
               <div class="right-side-fields">
                 <div class="booking-form-label-field">
-                  <label class="booking-form-label">{s.form.service}</label>
-                  <select class="booking-form-field w-select" name="Service" id="form-service" required disabled>
+                  <label class="booking-form-label" for="form-service">{s.form.service}</label>
+                  <select class="booking-form-field w-select" name="Service" id="form-service" required disabled aria-label="Service">
                     <option value="">{s.form.chooseLocationFirst}</option>
                   </select>
                 </div>
                 <div class="booking-form-label-field">
-                  <label class="booking-form-label">{s.form.date}</label>
-                  <input class="booking-form-field w-input" name="Pick-Up-Date" type="date" required />
-                </div>
-                <div class="booking-form-label-field">
-                  <label class="booking-form-label">{s.form.destination}</label>
-                  <select class="booking-form-field w-select" name="Destination" id="form-destination" required disabled>
+                  <label class="booking-form-label" for="form-destination">{s.form.destination}</label>
+                  <select class="booking-form-field w-select" name="Destination" id="form-destination" required disabled aria-label="Destination">
                     <option value="">{s.form.chooseServiceFirst}</option>
                   </select>
+                </div>
+                <div class="booking-form-label-field">
+                  <label class="booking-form-label" for="pickup-date">{s.form.date}</label>
+                  <input class="booking-form-field w-input" id="pickup-date" name="Pick-Up-Date" type="date" required aria-label="Date" />
                 </div>
               </div>
               <div class="form-bottom-row">
@@ -171,22 +172,76 @@ const SCRIPT_DATA = {
       grid-template-columns: 1fr;
     }
   }
+  .booking-form-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 </style>
 <script define:vars={{ data: SCRIPT_DATA }}>
 (function(){
 var d=data;
   var R={spain:d.spain,italy:d.italy},SS=d.SS,SR=d.SR,CL=d.CL,CS=d.CS,PL=d.PL,SP=d.SP,PI=d.PI,PS=d.PS;
 var L=document.getElementById('form-location'),S=document.getElementById('form-service'),D=document.getElementById('form-destination'),PF=document.getElementById('form-price-field'),PV=document.getElementById('form-price-value');
+var form=document.querySelector('.booking-form'),btn=form&&form.querySelector('.booking-form-button');
 if(!L)return;
+
+// Set min date to today on the date input
+var pickUpDate=form.querySelector('[name="Pick-Up-Date"]');
+if(pickUpDate){var t=new Date();pickUpDate.min=t.getFullYear()+'-'+(t.getMonth()+1).toString().padStart(2,'0')+'-'+t.getDate().toString().padStart(2,'0');}
+
+// Validation helpers
+function validName(v){return v.trim().length>=2&&/^[\p{L}\s\-'.]+$/u.test(v);}
+function validPhone(v){var d=v.replace(/[\s\-\+\(\)]/g,'');return d.length>=7&&d.length<=15&&/^[\+\d\s\-\(\)]+$/.test(v);}
+function showErr(el,m){var mb=el.parentElement.querySelector('.field-error');if(!mb){mb=document.createElement('div');mb.className='field-error';mb.style.cssText='color:#e74c3c;font-size:1rem;margin-top:4px;font-family:var(--font-families--body-font);';el.parentElement.appendChild(mb);}mb.textContent=m;el.setAttribute('data-invalid','');}
+function clearErr(el){var mb=el.parentElement.querySelector('.field-error');if(mb)mb.textContent='';delete el.dataset.invalid;}
+
+// Validation listeners
+var nameIn=form&&form.querySelector('[name="Full-Name"]');
+var phoneIn=form&&form.querySelector('[name="Phone"]');
+[nameIn,phoneIn].forEach(function(inp){if(!inp)return;
+inp.addEventListener('input',function(){
+if(!inp.value){clearErr(inp);return;}
+var fn=inp===nameIn?validName:validPhone;
+if(fn(inp.value))clearErr(inp);
+else showErr(inp,inp===nameIn?'Please enter your full name (at least 2 characters)':'Please enter a valid phone number (+ and 7-15 digits)');
+updateBtn();});
+inp.addEventListener('blur',function(){
+if(!inp.value)showErr(inp,inp===nameIn?'Name is required':'Phone is required');
+else if(!(inp===nameIn?validName:validPhone)(inp.value))showErr(inp,inp===nameIn?'Please enter your full name (at least 2 characters)':'Please enter a valid phone number (+ and 7-15 digits)');
+updateBtn();});
+});
+
 function uS(){var l=L.value,s=l&&R[l]?R[l].services:[];S.innerHTML='<option value="">'+(l?SS:CL)+'</option>';S.disabled=!l;
 for(var i=0;i<s.length;i++){var o=document.createElement('option');o.value=s[i].name;o.textContent=s[i].name;S.appendChild(o)}uD()}
 function uD(){var l=L.value,sn=S.value,rt=[];if(l&&sn&&R[l]){var sv=R[l].services;for(var i=0;i<sv.length;i++){if(sv[i].name===sn){rt=sv[i].routes;break}}}
 D.innerHTML='<option value="">'+(sn?SR:CS)+'</option>';D.disabled=!sn;
 for(var j=0;j<rt.length;j++){var r2=rt[j].route??rt[j];var o2=document.createElement('option');o2.value=r2;o2.textContent=r2;D.appendChild(o2)}upP()}
   function upP(){var l=L.value,sn=S.value,dn=D.value;if(!l||!sn||!dn||!R[l]){PV.textContent=SP||'Fill information to estimate price';PV.dataset.state='placeholder';return}
-	  var sv=R[l].services;for(var i=0;i<sv.length;i++){if(sv[i].name===sn){var rt=sv[i].routes;for(var j=0;j<rt.length;j++){var r=rt[j],rn=r.route??r;if(rn===dn){PV.textContent=r.price||'?';delete PV.dataset.state;return}}}}
-	  PV.textContent=SP||'Fill information to estimate price';PV.dataset.state='placeholder'}
-L.addEventListener('change',uS);S.addEventListener('change',uD);if(D)D.addEventListener('change',upP);
-document.querySelector('.booking-form').addEventListener('submit',function(e){e.preventDefault();var f=e.target;if(!f.checkValidity())return;var n=f.querySelector('[name="Full-Name"]').value,p=f.querySelector('[name="Phone"]').value,le=f.querySelector('[name="Location"]'),lv=le.value,lt=le.options[le.selectedIndex].text,se=f.querySelector('[name="Service"]'),st=se.options[se.selectedIndex].text,dt=f.querySelector('[name="Pick-Up-Date"]').value,de=f.querySelector('[name="Destination"]'),dst=de.options[de.selectedIndex].value,pn=lv==='italy'?d.PI:d.PS,cn=pn.replace(/[\s+]/g,''),msg='Hi VIPER Security! I would like to book a ride.%0A%0A*Name:* '+encodeURIComponent(n)+'%0A*Phone:* '+encodeURIComponent(p)+'%0A*Location:* '+encodeURIComponent(lt)+'%0A*Service:* '+encodeURIComponent(st)+'%0A*Date:* '+encodeURIComponent(dt)+'%0A*Destination:* '+encodeURIComponent(dst);window.open('https://wa.me/'+cn+'?text='+msg,'_blank');});
+ 	  var sv=R[l].services;for(var i=0;i<sv.length;i++){if(sv[i].name===sn){var rt=sv[i].routes;for(var j=0;j<rt.length;j++){var r=rt[j],rn=r.route??r;if(rn===dn){PV.textContent=r.price||'?';delete PV.dataset.state;return}}}}
+ 	  PV.textContent=SP||'Fill information to estimate price';PV.dataset.state='placeholder'}
+
+function updateBtn(){
+	if(!btn)return;
+	var allFilled=nameIn&&nameIn.value.trim()&&validName(nameIn.value)
+		&&phoneIn&&phoneIn.value.trim()&&validPhone(phoneIn.value)
+		&&L&&L.value
+		&&S&&!S.disabled&&S.value
+		&&form.querySelector('[name="Pick-Up-Date"]')&&form.querySelector('[name="Pick-Up-Date"]').value
+		&&D&&!D.disabled&&D.value;
+	btn.disabled=!allFilled;
+	btn.style.opacity=allFilled?'1':'0.5';
+	btn.style.cursor=allFilled?'pointer':'not-allowed';
+}
+
+// Listen on all relevant fields
+L.addEventListener('change',function(){updateBtn();uS();});
+S.addEventListener('change',function(){updateBtn();uD();});
+if(D)D.addEventListener('change',updateBtn);
+form.querySelector('[name="Pick-Up-Date"]').addEventListener('change',updateBtn);
+
+// Init button state
+updateBtn();
+
+form.addEventListener('submit',function(e){e.preventDefault();if(!form.checkValidity()||btn.disabled)return;var n=nameIn.value,p=phoneIn.value,le=L,lv=le.value,lt=le.options[le.selectedIndex].text,se=S,st=se.options[se.selectedIndex].text,dt=form.querySelector('[name="Pick-Up-Date"]').value,de=D,dst=de.options[de.selectedIndex].value,pn=lv==='italy'?d.PI:d.PS,cn=pn.replace(/[\s+]/g,''),msg='Hi '+d.SN+'! I would like to book a ride.%0A%0A*Name:* '+encodeURIComponent(n)+'%0A*Phone:* '+encodeURIComponent(p)+'%0A*Location:* '+encodeURIComponent(lt)+'%0A*Service:* '+encodeURIComponent(st)+'%0A*Date:* '+encodeURIComponent(dt)+'%0A*Destination:* '+encodeURIComponent(dst);window.open('https://wa.me/'+cn+'?text='+msg,'_blank');});
 })();
 </script>

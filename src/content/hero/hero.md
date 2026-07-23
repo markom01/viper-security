@@ -1,10 +1,10 @@
 ---
 brand_name: VIPER SECURITY
 tagline: VIP CHAUFFEUR & LUXURY TRANSPORT SERVICES
-subtitle: Travel in comfort, style and complete privacy with our premium
-  chauffeur service. Our luxury fleet and professional drivers are available for
+subtitle: Travel in comfort, style and complete privacy in our
+  {vehicle}. Available for
   airport transfers, business travel, private events, VIP transportation, yacht
-  transfers, villa transfers and exclusive experiences across Marbella, Milano,
+  transfers, villa transfers and exclusive experiences across {location1}, {location2},
   and beyond.
 cta_text: BEST LUXURY SERVICE
 phone_italy: +39 349 663 8171

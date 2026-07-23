@@ -6,24 +6,12 @@ const s = STRINGS;
 const b = pageContent?.branding;
 const thisYear = new Date().getFullYear();
 
-const cleanPhone = (phone) => phone?.replace(/[\s+]/g, '') || '';
+const cleanPhone = (phone: string) => phone?.replace(/[\s+]/g, '') || '';
 const phoneSep = s.footer.phoneSeparator;
 ---
 <footer class="footer" role="contentinfo">
   <div class="content-wrapper">
     <div class="footer-content-wrapper">
-      <div data-w-id="d0f85d67-a980-65d6-511b-7dac5e2e60d0" class="footer-top" style="opacity: 1;">
-        <div class="footer-heading-wrapper">
-          <h2 class="footer-heading">{tagline}</h2>
-          {b?.luxury_without_limits && <p class="footer-luxury-tagline">{b?.luxury_without_limits}</p>}
-        </div>
-        <div class="footer-button-wrapper">
-          <a data-w-id="31b44076-9e9e-e074-a942-d52bc90dfd3a" href="/#about" class="secondary-button w-inline-block">
-            <div class="button-text">{s.footer.button}</div>
-            <img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt="" aria-hidden="true" class="button-arrow" />
-          </a>
-        </div>
-      </div>
       <div data-w-id="d0f85d67-a980-65d6-511b-7dac5e2e60d8" class="footer-middle" style="opacity: 1;">
         <div class="footer-text-wrapper">
           <a href="/" class="logo-link w-nav-brand w--current">
@@ -70,7 +58,7 @@ const phoneSep = s.footer.phoneSeparator;
 <style>
   .footer-luxury-tagline {
     font-family: var(--font-families--accent-font);
-    font-size: 0.8rem;
+    font-size: 1rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--colors--gold);
@@ -84,7 +72,7 @@ const phoneSep = s.footer.phoneSeparator;
     white-space: nowrap;
   }
   .footer-motto {
-    font-size: 0.75rem;
+    font-size: 1rem;
     letter-spacing: 0.08em;
     color: var(--colors--slate);
     margin-top: 4px;

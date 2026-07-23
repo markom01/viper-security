@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
 const hero = defineCollection({
@@ -83,6 +84,7 @@ const membership = defineCollection({
 const pageContent = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/page-content" }),
   schema: z.object({
+    vehicle_name: z.string().optional(),
     jsonld: z.object({
       org_name: z.string().optional(),
       org_url: z.string().optional(),
@@ -95,6 +97,7 @@ const pageContent = defineCollection({
       spain: z.object({
         label: z.string(),
         short_label: z.string().optional(),
+        region: z.string().optional(),
         services: z.array(z.object({
           name: z.string(),
           routes: z.array(z.object({
@@ -106,6 +109,7 @@ const pageContent = defineCollection({
       italy: z.object({
         label: z.string(),
         short_label: z.string().optional(),
+        region: z.string().optional(),
         services: z.array(z.object({
           name: z.string(),
           routes: z.array(z.object({

@@ -1,21 +1,23 @@
 ---
 seo:
-  title: "VIPER Security — Luxury Chauffeur & VIP Transport"
-  description: "VIPER Security — luxury chauffeur, executive transport, airport transfers, and VIP travel in Marbella and Milano. Premium private driver services with a fleet of luxury vehicles."
+  title: "{site_name} — Luxury Chauffeur & VIP Transport"
+  description: "{site_name} — luxury chauffeur, executive transport, airport transfers & VIP travel in {location1} and {location2}. Premium private chauffeur service."
   theme_color: "#000000"
 
 jsonld:
-  org_name: "VIPER Security"
+  org_name: "{site_name}"
   org_url: "https://vipersecurity.com"
   org_logo: "https://vipersecurity.com/template_files/678ba669a9998141bea0c6a9_logo.svg"
-  org_description: "Luxury chauffeur & VIP transport services in Marbella and Milano."
+  org_description: "Luxury chauffeur & VIP transport services in {location1} and {location2}."
   phoneSpain: "+34 670 038 541"
   phoneItaly: "+39 349 663 8171"
+  privacy_policy: "https://vipersecurity.com/privacy-policy"
 
 booking_data:
   spain:
     label: "Costa del Sol — Marbella"
     short_label: "Marbella"
+    region: "Costa del Sol"
     services:
       - name: "Airport Transfer"
         routes:
@@ -43,6 +45,7 @@ booking_data:
   italy:
     label: "Northern Italy & Alps — Milano"
     short_label: "Milano"
+    region: "Northern Italy & Alps"
     services:
       - name: "Airport Transfer"
         routes:
@@ -68,7 +71,7 @@ booking_data:
 
 about:
   heading: "World-Class Luxury Chauffeur Services Meticulously Tailored to Perfection"
-  text: "VIPER Security delivers premium chauffeur-driven travel across Marbella, Milano, and beyond. Our fleet of Mercedes-Benz vehicles and professional English-speaking drivers provide discreet, reliable transportation for airport transfers, business travel, VIP events, yacht transfers, and exclusive experiences. Every journey is tailored to your schedule with privacy, comfort, and punctuality at our core."
+  text: "{site_name} delivers premium chauffeur-driven travel across {location1}, {location2}, and beyond. Our {vehicle} and professional English-speaking chauffeur provide discreet, reliable transportation for airport transfers, business travel, VIP events, yacht transfers, and exclusive experiences. Every journey is tailored to your schedule with privacy, comfort, and punctuality at our core."
   image: "/images/about-image.webp"
 
 fleet:
@@ -77,12 +80,12 @@ fleet:
 stats:
   subheading: "From airport transfers to VIP events, we deliver a seamless luxury experience backed by years of industry expertise and a commitment to excellence."
   items:
-    - label: "99%"
-      title: "Client Satisfaction"
-    - label: "500+"
-      title: "Rides Per Month"
     - label: "15+"
-      title: "Years of Excellence"
+      title: "Years Driving Experience"
+    - label: "100+"
+      title: "Happy Clients"
+    - label: "1"
+      title: "Dedicated Chauffeur"
     - label: "24/7"
       title: "Availability"
 
@@ -90,19 +93,21 @@ howitworks:
   heading: "How We Simplify Your Experience"
 
 cta:
-  heading: "Your First Chauffeur Experience Just Got Better – 50% Off"
-  text: "Experience the difference of professional chauffeur service. Our Mercedes-Benz fleet and experienced drivers are ready to serve you across Marbella, Milano, and the French Riviera."
+  heading: "Your First Chauffeur Experience Just Got Better"
+  text: "Experience the difference of professional chauffeur service. Our {vehicle} and experienced chauffeur are ready to serve you across {location1}, {location2}, and the French Riviera."
   image: "/images/marketing.webp"
 
 bottomcta:
   heading: "Ready to Begin Your Journey with Us?"
   values:
     - title: "Luxury Comfort"
-      text: "Travel in the finest Mercedes-Benz vehicles with leather interiors, climate control, and privacy glass — every ride is first class."
+      text: "Travel in the finest {vehicle} with leather interior, climate control, and privacy glass — every ride is first class."
     - title: "Reliable Service"
-      text: "Professional English-speaking drivers, flight tracking for airport pickups, and 24/7 availability ensure you arrive on time, every time."
+      text: "A professional English-speaking chauffeur, flight tracking for airport pickups, and 24/7 availability ensure you arrive on time, every time."
     - title: "Personal Travel"
-      text: "From yacht transfers in Puerto Banús to corporate travel in Milano, every itinerary is customized to your schedule and preferences."
+      text: "From yacht transfers in Puerto Banús to corporate travel in {location2}, every itinerary is customized to your schedule and preferences."
+
+vehicle_name: "Mercedes-Benz S-Class"
 
 branding:
   luxury_without_limits: "LUXURY WITHOUT LIMITS"

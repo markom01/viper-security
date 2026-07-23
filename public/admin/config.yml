@@ -179,7 +179,7 @@ collections:
                           - { name: route, label: Route, widget: string }
                           - { name: price, label: "Price (optional)", widget: string, required: false }
 
-           - label: SEO
+          - label: SEO
             name: seo_labels
             widget: meta
           - name: seo
@@ -191,8 +191,7 @@ collections:
               - { name: description, label: Meta Description, widget: text }
               - { name: theme_color, label: Theme Color, widget: string }
 
-           - label: About Section
-           - label: About Section
+          - label: About Section
             name: about_labels
             widget: meta
           - name: about

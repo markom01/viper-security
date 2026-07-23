@@ -16,6 +16,8 @@ import BottomCta from '../components/sections/BottomCta.astro';
 import Footer from '../components/sections/Footer.astro';
 
 import { getCollection, getEntry } from 'astro:content';
+import { resolveTemplates } from '../config/templates';
+import { SITE_NAME } from '../config/strings';
 
 const [heroEntry] = await getCollection('hero');
 const [howItWorksEntry] = await getCollection('how-it-works');
@@ -25,19 +27,40 @@ const [membershipEntry] = await getCollection('membership');
 const [pageContentEntry] = await getCollection('page-content');
 
 const pageContent = pageContentEntry?.data || {};
-const pcd = pageContent?.booking_data;
-const spainKey = pcd?.spain?.short_label || 'Marbella';
-const italyKey = pcd?.italy?.short_label || 'Milano';
-const allOfferings = servicesEntry?.data?.offerings || [];
-const marbellaOfferings = allOfferings.filter(o => o.region === spainKey);
-const milanoOfferings = allOfferings.filter(o => o.region === italyKey);
+const bd = pageContent?.booking_data;
+const siteName = SITE_NAME;
+const vehicleName = pageContent?.vehicle_name || 'Mercedes-Benz S-Class';
+const allOfferings = (servicesEntry?.data?.offerings || []).map(o => ({
+  ...o,
+  description: resolveTemplates(o.description, bd, siteName, vehicleName),
+}));
 
 const hourlyEntry = await getEntry('pricing', 'hourly');
 
 const hero = heroEntry?.data || {};
+if (hero.subtitle) hero.subtitle = resolveTemplates(hero.subtitle, bd, siteName, vehicleName);
 const howItWorks = howItWorksEntry?.data || {};
-const marbellaServices = { services: marbellaOfferings };
-const milanoServices = { services: milanoOfferings };
+if (howItWorks.steps) {
+  howItWorks.steps = howItWorks.steps.map(s => ({
+    ...s,
+    description: resolveTemplates(s.description, bd, siteName, vehicleName),
+  }));
+}
+const universalServices = { services: allOfferings };
+
+// Resolve location templates in page-content prose fields
+if (pageContent.seo?.title) pageContent.seo.title = resolveTemplates(pageContent.seo.title, bd, siteName, vehicleName);
+if (pageContent.seo?.description) pageContent.seo.description = resolveTemplates(pageContent.seo.description, bd, siteName, vehicleName);
+if (pageContent.jsonld?.org_description) pageContent.jsonld.org_description = resolveTemplates(pageContent.jsonld.org_description, bd, siteName, vehicleName);
+if (pageContent.jsonld?.org_name) pageContent.jsonld.org_name = resolveTemplates(pageContent.jsonld.org_name, bd, siteName, vehicleName);
+if (pageContent.about?.text) pageContent.about.text = resolveTemplates(pageContent.about.text, bd, siteName, vehicleName);
+if (pageContent.cta?.text) pageContent.cta.text = resolveTemplates(pageContent.cta.text, bd, siteName, vehicleName);
+if (pageContent.bottomcta?.values) {
+  pageContent.bottomcta.values = pageContent.bottomcta.values.map(v => ({
+    ...v,
+    text: resolveTemplates(v.text, bd, siteName, vehicleName),
+  }));
+}
 const fleetVehicles = fleetEntries;
 // Collect all features from all vehicles, deduplicate, format as sentence
 const allFleetFeatures = [...new Set(
@@ -57,7 +80,7 @@ const membership = membershipEntry?.data || {};
   <Hero subtitle={hero.subtitle} cta_text={hero.cta_text} tagline={hero.tagline} hero_image={hero.hero_image} phoneItaly={hero.phone_italy} phoneSpain={hero.phone_spain} pageContent={pageContent} />
   <Marquee pageContent={pageContent} />
   <AboutSection pageContent={pageContent} />
-  <Services marbella={marbellaServices.services} milano={milanoServices.services} pageContent={pageContent} />
+  <Services marbella={universalServices.services} milano={universalServices.services} pageContent={pageContent} />
   <Fleet vehicles={fleetVehicles} pageContent={pageContent} fleetFeatures={fleetFeaturesText} />
   <StatsSection pageContent={pageContent} />
   <HowItWorks steps={howItWorks.steps} pageContent={pageContent} />
