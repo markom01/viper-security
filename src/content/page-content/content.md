@@ -51,6 +51,8 @@ booking_data:
           - { route: "Bergamo Airport → St. Moritz", price: "€350" }
           - { route: "Malpensa Airport → Monaco", price: "€500" }
           - { route: "Milano Airport → Zurich", price: "€600" }
+          - { route: "Milano Airport → Nice" }
+          - { route: "Milano Airport → Lago di Garda" }
       - name: "Yacht Transfer"
         routes:
           - { route: "Milano — Yacht Transfer" }
@@ -64,79 +66,16 @@ booking_data:
         routes:
           - { route: "Milano — Nightlife & Events" }
 
-skip_link: "Skip to content"
-
-not_found:
-  code: "404"
-  heading: "Page Not Found"
-  body: "The page you're looking for doesn't exist."
-  return_aria: "Return to home page"
-  return_link: "Return Home"
-
-nav:
-  home: "Home"
-  about: "About"
-  fleet: "Fleet"
-  services: "Services"
-  how_it_works: "How It Works"
-  pricing: "Pricing"
-  contact: "Contact Us"
-  brand: "VIPER SECURITY"
-
-hero:
-  learn_more: "Learn More"
-  explore_fleet: "Explore Fleet"
-  image_alt: "VIPER Security luxury chauffeur fleet"
-
-form:
-  location: "Location"
-  name: "Full Name"
-  phone: "Phone"
-  destination: "Destination"
-  date: "Date"
-  service: "Service"
-  success: "Thank you! Your submission has been received!"
-  error: "Oops! Something went wrong while submitting the form."
-  name_placeholder: "Your full name"
-  phone_placeholder: "Your phone number"
-  book_now: "Book Now"
-  select_location: "Select location..."
-  choose_location_first: "Choose location first"
-  select_service: "Select service..."
-  choose_service_first: "Choose location & service first"
-  select_route: "Select route..."
-
-marquee_text: "Luxurious Service"
-marquee:
-  aria_label: "Trusted Luxury Service Provider"
-  sr_heading: "Trusted Luxury Service Provider"
-
 about:
-  image: "/images/about-image.webp"
-  image_alt: "VIPER Security luxury chauffeur fleet"
-  subheadline: "About Us"
   heading: "World-Class Luxury Chauffeur Services Meticulously Tailored to Perfection"
   text: "VIPER Security delivers premium chauffeur-driven travel across Marbella, Milano, and beyond. Our fleet of Mercedes-Benz vehicles and professional English-speaking drivers provide discreet, reliable transportation for airport transfers, business travel, VIP events, yacht transfers, and exclusive experiences. Every journey is tailored to your schedule with privacy, comfort, and punctuality at our core."
-  button: "Discover More"
-
-services:
-  subheadline: "Our Services"
+  image: "/images/about-image.webp"
 
 fleet:
-  subheadline: "Our Fleet"
   heading: "Ride Luxury, Every Time"
-  year: "Year"
-  seats: "Seats"
-  baggage: "Baggage"
-  capacity_passengers: "Passengers"
-  capacity_suitcases: "Suitcases"
-  capacity_carryon: "Carry-on"
-  features_heading: "Features"
 
 stats:
-  heading: "Why Choose Us?"
   subheading: "From airport transfers to VIP events, we deliver a seamless luxury experience backed by years of industry expertise and a commitment to excellence."
-  button: "Book Your Ride"
   items:
     - label: "99%"
       title: "Client Satisfaction"
@@ -148,20 +87,15 @@ stats:
       title: "Availability"
 
 howitworks:
-  subheadline: "How it Works"
   heading: "How We Simplify Your Experience"
 
 cta:
-  image: "/images/marketing.webp"
-  image_alt: "Luxury chauffeur vehicle service"
   heading: "Your First Chauffeur Experience Just Got Better – 50% Off"
   text: "Experience the difference of professional chauffeur service. Our Mercedes-Benz fleet and experienced drivers are ready to serve you across Marbella, Milano, and the French Riviera."
-  button: "Book Now"
+  image: "/images/marketing.webp"
 
 bottomcta:
   heading: "Ready to Begin Your Journey with Us?"
-  button_services: "Our services"
-  button_fleet: "Browse Fleet"
   values:
     - title: "Luxury Comfort"
       text: "Travel in the finest Mercedes-Benz vehicles with leather interiors, climate control, and privacy glass — every ride is first class."
@@ -170,26 +104,8 @@ bottomcta:
     - title: "Personal Travel"
       text: "From yacht transfers in Puerto Banús to corporate travel in Milano, every itinerary is customized to your schedule and preferences."
 
-footer:
-  button: "Discover More"
-  pages: "Pages"
-  logo_alt: "VIPER Security home"
-  social_x: "Follow us on X"
-  social_tiktok: "Follow us on TikTok"
-  social_instagram: "Follow us on Instagram"
-  social_whatsapp: "Contact us on WhatsApp"
-  description_prefix: "VIPER Security "
-  phone_separator: " | "
-
-
-pricing:
-  title: "Pricing"
-  hourly_heading: "Hourly Chauffeur Rates"
-
-membership:
-  title: "VIP Membership"
-  heading: "Exclusive VIP Tiers"
-  badge: "BEST VALUE"
-  per_year: "/ year"
+branding:
+  luxury_without_limits: "LUXURY WITHOUT LIMITS"
+  professional_discreet_reliable: "Professional • Discreet • Reliable"
 
 ---

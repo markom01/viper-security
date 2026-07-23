@@ -1,11 +1,7 @@
 ---
 import PageNotFound from "../components/PageNotFound.jsx";
-import { getCollection } from 'astro:content';
 import STRINGS from '../config/strings';
 const s = STRINGS;
-const [pageContentEntry] = await getCollection('page-content');
-const pageContent = pageContentEntry?.data || {};
-const nf = pageContent?.not_found;
 ---
 
 <!doctype html>
@@ -13,12 +9,12 @@ const nf = pageContent?.not_found;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{nf?.heading || "Page Not Found"} — VIPER Security</title>
+    <title>{s.notFound.heading} — VIPER Security</title>
     <link href="/favicon.svg" rel="shortcut icon" type="image/x-icon">
   </head>
   <body>
     <div role="alert">
-      <PageNotFound client:load notFound={nf} strings={s} />
+      <PageNotFound client:load notFound={s.notFound} />
     </div>
   </body>
 </html>

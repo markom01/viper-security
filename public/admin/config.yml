@@ -178,21 +178,8 @@ collections:
                         fields:
                           - { name: route, label: Route, widget: string }
                           - { name: price, label: "Price (optional)", widget: string, required: false }
-          - label: Not Found
-            name: not_found_labels
-            widget: meta
-          - name: not_found
-            label: 404 Page
-            widget: object
-            collapsed: true
-            fields:
-              - { name: code, label: Error Code, widget: string }
-              - { name: heading, label: Heading, widget: string }
-              - { name: body, label: Body Text, widget: text }
-              - { name: return_aria, label: Return Link ARIA, widget: string }
-              - { name: return_link, label: Return Link Text, widget: string }
-          - { name: skip_link, label: Skip to Content Link Text, widget: string }
-          - label: SEO
+
+           - label: SEO
             name: seo_labels
             widget: meta
           - name: seo
@@ -203,66 +190,9 @@ collections:
               - { name: title, label: Page Title, widget: string }
               - { name: description, label: Meta Description, widget: text }
               - { name: theme_color, label: Theme Color, widget: string }
-          - label: Nav
-            name: nav_labels
-            widget: meta
-          - name: nav
-            label: Nav
-            widget: object
-            collapsed: true
-            fields:
-              - { name: home, label: Home, widget: string }
-              - { name: about, label: About, widget: string }
-              - { name: fleet, label: Fleet, widget: string }
-              - { name: services, label: Services, widget: string }
-              - { name: how_it_works, label: How It Works, widget: string }
-              - { name: pricing, label: Pricing, widget: string }
-              - { name: contact, label: Contact Us, widget: string }
-              - { name: brand, label: Brand Name, widget: string }
-          - label: Hero
-            name: hero_labels
-            widget: meta
-          - name: hero
-            label: Hero
-            widget: object
-            collapsed: true
-            fields:
-              - { name: learn_more, label: Learn More Button, widget: string }
-              - { name: explore_fleet, label: Explore Fleet Button, widget: string }
-              - { name: image_alt, label: Hero Image Alt Text, widget: string }
-          - name: form
-            label: Booking Form
-            widget: object
-            collapsed: true
-            fields:
-              - { name: location, label: Location Label, widget: string }
-              - { name: name, label: Full Name Label, widget: string }
-              - { name: phone, label: Phone Label, widget: string }
-              - { name: destination, label: Destination Label, widget: string }
-              - { name: date, label: Date Label, widget: string }
-              - { name: service, label: Service Label, widget: string }
-              - { name: success, label: Success Message, widget: text }
-              - { name: error, label: Error Message, widget: text }
-              - { name: name_placeholder, label: Name Placeholder, widget: string }
-              - { name: phone_placeholder, label: Phone Placeholder, widget: string }
-              - { name: book_now, label: Book Now Button, widget: string }
-              - { name: select_location, label: Select Location Text, widget: string }
-              - { name: choose_location_first, label: Choose Location First, widget: string }
-              - { name: select_service, label: Select Service Text, widget: string }
-              - { name: choose_service_first, label: Choose Service First, widget: string }
-              - { name: select_route, label: Select Route Text, widget: string }
-          - { name: marquee_text, label: Marquee Text, widget: string }
-          - label: Marquee
-            name: marquee_labels
-            widget: meta
-          - name: marquee
-            label: Marquee
-            widget: object
-            collapsed: true
-            fields:
-              - { name: aria_label, label: ARIA Label, widget: string }
-              - { name: sr_heading, label: Screen Reader Heading, widget: string }
-          - label: About Section
+
+           - label: About Section
+           - label: About Section
             name: about_labels
             widget: meta
           - name: about
@@ -270,21 +200,9 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { name: subheadline, label: Subheadline, widget: string }
               - { name: heading, label: Heading, widget: string }
               - { name: text, label: Body Text, widget: text }
-              - { name: button, label: Button Text, widget: string }
               - { name: image, label: About Image, widget: image, required: false }
-              - { name: image_alt, label: About Image Alt Text, widget: string }
-          - label: Services Section
-            name: services_labels
-            widget: meta
-          - name: services
-            label: Services
-            widget: object
-            collapsed: true
-            fields:
-              - { name: subheadline, label: Subheadline, widget: string }
           - label: Fleet Section
             name: fleet_labels
             widget: meta
@@ -293,11 +211,7 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { name: subheadline, label: Subheadline, widget: string }
               - { name: heading, label: Heading, widget: string }
-              - { name: year, label: Year Label, widget: string }
-              - { name: seats, label: Seats Label, widget: string }
-              - { name: baggage, label: Baggage Label, widget: string }
           - label: Stats Section
             name: stats_labels
             widget: meta
@@ -306,9 +220,7 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { name: heading, label: Heading, widget: string }
               - { name: subheading, label: Subheading, widget: text }
-              - { name: button, label: Button Text, widget: string }
               - label: Items
                 name: items
                 widget: list
@@ -323,7 +235,6 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { name: subheadline, label: Subheadline, widget: string }
               - { name: heading, label: Heading, widget: string }
           - label: CTA Banner
             name: cta_labels
@@ -335,8 +246,7 @@ collections:
             fields:
               - { name: heading, label: Heading, widget: string }
               - { name: text, label: Body Text, widget: text }
-              - { name: button, label: Button Text, widget: string }
-              - { name: image_alt, label: CTA Image Alt Text, widget: string }
+              - { name: image, label: CTA Image, widget: image, required: false }
           - label: Bottom CTA
             name: bottomcta_labels
             widget: meta
@@ -346,51 +256,19 @@ collections:
             collapsed: true
             fields:
               - { name: heading, label: Heading, widget: string }
-              - { name: button_services, label: Services Button, widget: string }
-              - { name: button_fleet, label: Fleet Button, widget: string }
               - label: Values
                 name: values
                 widget: list
                 fields:
                   - { name: title, label: Title, widget: string }
                   - { name: text, label: Text, widget: text }
-          - label: Footer
-            name: footer_labels
+          - label: Branding
+            name: branding_labels
             widget: meta
-          - name: footer
-            label: Footer
+          - name: branding
+            label: Branding
             widget: object
             collapsed: true
             fields:
-              - { name: button, label: Button Text, widget: string }
-              - { name: pages, label: Pages Heading, widget: string }
-              - { name: logo_alt, label: Footer Logo Alt Text, widget: string }
-              - { name: social_x, label: X/Twitter Label, widget: string }
-              - { name: social_tiktok, label: TikTok Label, widget: string }
-              - { name: social_instagram, label: Instagram Label, widget: string }
-              - { name: social_whatsapp, label: WhatsApp Label, widget: string }
-              - { name: description_prefix, label: Description Prefix, widget: string }
-              - { name: phone_separator, label: Phone Separator, widget: string }
-              - { name: copyright, label: Copyright Text, widget: string }
-          - label: Pricing Section
-            name: pricing_labels
-            widget: meta
-          - name: pricing
-            label: Pricing
-            widget: object
-            collapsed: true
-            fields:
-              - { name: title, label: Subheadline, widget: string }
-              - { name: hourly_heading, label: Hourly Heading, widget: string }
-          - label: Membership Section
-            name: membership_labels
-            widget: meta
-          - name: membership
-            label: VIP Membership
-            widget: object
-            collapsed: true
-            fields:
-              - { name: title, label: Subheadline, widget: string }
-              - { name: heading, label: Heading, widget: string }
-              - { name: badge, label: Best Value Badge, widget: string }
-              - { name: per_year, label: Per Year Label, widget: string }
+              - { name: luxury_without_limits, label: Luxury Without Limits Text, widget: string }
+              - { name: professional_discreet_reliable, label: Professional Discreet Reliable Text, widget: string }

@@ -15,7 +15,7 @@ offerings:
   - region: Marbella
     title: Nightlife & Events
     image: /images/security-chauffeur.webp
-    description: Exclusive transportation to restaurants, beach clubs, nightclubs, and private events.
+    description: Exclusive transportation to restaurants, beach clubs, nightclubs, and private events. Available with waiting service.
   - region: Milano
     title: Airport Transfers
     image: /images/airport-transfer.webp
@@ -31,5 +31,5 @@ offerings:
   - region: Milano
     title: Nightlife & Events
     image: /images/security-chauffeur.webp
-    description: Exclusive transportation to restaurants, clubs, and private events in Milano.
+    description: Exclusive transportation to restaurants, clubs, and private events in Milano. Available with waiting service.
 ---

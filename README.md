@@ -114,7 +114,6 @@ Content is managed via Decap CMS at `/admin/`. Configuration lives in `public/ad
 | `services` | `src/content/services/services.md` | Both Marbella + Milano service details |
 | `fleet` | `src/content/fleet/*.md` | Vehicle fleet entries |
 | `pricing-hourly` | `src/content/pricing/hourly.md` | Hourly chauffeur rates |
-| `pricing-airport` | `src/content/pricing/airport-transfers.md` | Airport transfer pricing |
 | `membership` | `src/content/membership/tiers.md` | VIP membership tiers |
 
 ## Architecture Decisions

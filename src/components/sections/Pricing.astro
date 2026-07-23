@@ -1,82 +1,78 @@
 ---
 const { pageContent } = Astro.props;
 const { hourly } = Astro.props;
-const p = pageContent?.pricing;
+import STRINGS from '../../config/strings';
+const s = STRINGS;
 const bd = pageContent?.booking_data;
 
-// Collect priced routes grouped by service type
-const serviceGroups = [];
-if (bd?.spain?.services) {
-  bd.spain.services.forEach(svc => {
-    const priced = (svc.routes || []).filter(r => r.price);
-    if (priced.length) {
-      let group = serviceGroups.find(g => g.name === svc.name);
-      if (!group) {
-        group = { name: svc.name, routes: [] };
-        serviceGroups.push(group);
-      }
-      priced.forEach(r => group.routes.push(r));
+// Build 2 regional cards, each with service sections inside
+const regionCards = [];
+
+function buildRegionCard(services, regionLabel, regionShortLabel) {
+  if (!services?.length) return null;
+  const sections = [];
+  // Each service type becomes a section
+  services.forEach(svc => {
+    const routes = svc.routes || [];
+    if (routes.length) {
+      sections.push({
+        title: svc.name,
+        routes: routes.map(r => ({
+          label: r.route,
+          price: r.price || '?',
+        })),
+      });
     }
   });
+  // Add hourly rates as a section
+  if (hourly?.rates?.length) {
+    sections.push({
+      title: s.pricing.hourlyHeading,
+      routes: hourly.rates.map(r => ({ label: r.name, price: r.price })),
+    });
+  }
+  if (sections.length) {
+    return { name: regionLabel, shortLabel: regionShortLabel, sections };
+  }
+  return null;
 }
-if (bd?.italy?.services) {
-  bd.italy.services.forEach(svc => {
-    const priced = (svc.routes || []).filter(r => r.price);
-    if (priced.length) {
-      let group = serviceGroups.find(g => g.name === svc.name);
-      if (!group) {
-        group = { name: svc.name, routes: [] };
-        serviceGroups.push(group);
-      }
-      priced.forEach(r => group.routes.push(r));
-    }
-  });
-}
+
+const spainLabel = bd?.spain?.short_label || 'Marbella';
+const italyLabel = bd?.italy?.short_label || 'Milano';
+
+const marbellaCard = buildRegionCard(bd?.spain?.services, `VIPER Security — ${spainLabel}`, spainLabel);
+const milanoCard = buildRegionCard(bd?.italy?.services, `VIPER Security — ${italyLabel}`, italyLabel);
+
+const allCards = [marbellaCard, milanoCard].filter(Boolean);
 ---
 <section id="pricing" class="section pricing-section">
   <div class="content-wrapper">
     <div data-scroll-reveal class="steps-heading-wrapper">
       <div class="subheadline-wrapper">
         <div class="subheadline-line"></div>
-        <div class="subheadline">{p?.title}</div>
+        <div class="subheadline">{s.pricing.title}</div>
       </div>
     </div>
     <div data-scroll-reveal class="pricing-grid">
-      <div class="pricing-col">
-        <div class="steps-heading-wrapper"><h2 class="steps-heading">{p?.hourly_heading}</h2></div>
-        <div class="booking-form-wrapper pricing-card">
-          {hourly?.rates?.map((r, i) => (
-            <div class={"pricing-row" + (i === 0 ? " pricing-row-first" : "")}>
-              <span class="pricing-service">{r.name}</span>
-              <span class="pricing-amount">{r.price}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div class="pricing-col">
-        {serviceGroups.map((group, gi) => (
-          <div class="pricing-group">
-            <div class="steps-heading-wrapper"><h2 class="steps-heading">{group.name} Pricing</h2></div>
-            <div class="booking-form-wrapper pricing-card">
-              {group.routes.map((r, i) => (
-                <div class={"pricing-row" + (i === 0 ? " pricing-row-first" : "")}>
-                  <span class="pricing-service">{r.route}</span>
-                  <span class="pricing-amount">{r.price}</span>
-                </div>
-              ))}
-            </div>
+      {allCards.map(card => (
+        <div class="pricing-card-wrapper">
+          <h2 class="pricing-card-heading">{card.name}</h2>
+          <div class="booking-form-wrapper pricing-card">
+            {card.sections.map((section, si) => (
+              <div class="pricing-section-wrap">
+                {si > 0 && <div class="pricing-section-divider"></div>}
+                <h3 class="pricing-section-title">{section.title}</h3>
+                {section.routes.map((item, ri) => (
+                  <div class={"pricing-row" + (ri === 0 && si === 0 ? " pricing-row-first" : "")}>
+                    <span class="pricing-service">{item.label}</span>
+                    <span class="pricing-amount">{item.price}</span>
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   </div>
 </section>
-<style>
-[data-scroll-reveal]{opacity:0;transform:translateY(40px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);}
-[data-scroll-reveal-visible]{opacity:1;transform:translateY(0);}
-@media(prefers-reduced-motion:reduce){[data-scroll-reveal]{opacity:1;transform:translateY(0);transition:none;}}
-.pricing-section .booking-form-wrapper{overflow:hidden;position:relative;}.pricing-section .booking-form-wrapper::before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:24px 24px 0 0;}.pricing-section .booking-form-wrapper{border-top:none;}.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}@media(max-width:991px){.pricing-grid{grid-template-columns:1fr;}}.pricing-col{display:flex;flex-direction:column;gap:32px;}.pricing-col .steps-heading-wrapper{margin-bottom:20px;}.pricing-row{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;border-bottom:1px solid rgba(0,0,0,0.06);}.pricing-row:first-child{padding-top:28px;}.pricing-row:last-child{border-bottom:none;padding-bottom:28px;}.pricing-service{font-family:var(--font-families--body-font);font-size:1rem;color:var(--colors--onyx);font-weight:400;}.pricing-amount{font-family:var(--font-families--accent-font);font-size:1.4rem;color:var(--colors--gold);font-weight:600;white-space:nowrap;margin-left:16px;}
-.pricing-group{margin-bottom:32px;}.pricing-group:last-child{margin-bottom:0;}</style>
-<script is:inline>
-(function(){var e=document.querySelectorAll('[data-scroll-reveal]');if(!e.length)return;var o=new IntersectionObserver(function(n){n.forEach(function(n){n.isIntersecting&&(n.target.setAttribute('data-scroll-reveal-visible',''),o.unobserve(n.target))})},{threshold:.15,rootMargin:'0px 0px -50px 0px'});e.forEach(function(e){o.observe(e)})})();
-</script>

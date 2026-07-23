@@ -27,33 +27,33 @@ const f = pageContent?.fleet;
                   <div class="car-card-data">
                     <div class="car-listing-details-wrapper">
                       <div class="car-listing-detail">
-                        <div class="listing-label">{f?.year}</div>
+                        <div class="listing-label">{s.fleet.year}</div>
                         <div class="listing-detail">{d.year || ''}</div>
                       </div>
                       <div class="listing-detail-divider"></div>
                       <div class="car-listing-detail">
-                        <div class="listing-label">{f?.seats}</div>
+                        <div class="listing-label">{s.fleet.seats}</div>
                         <div class="listing-detail">{d.seats || ''}</div>
                       </div>
                       <div class="listing-detail-divider"></div>
                       <div class="car-listing-detail">
-                        <div class="listing-label">{f?.baggage}</div>
+                        <div class="listing-label">{s.fleet.baggage}</div>
                         <div class="listing-detail">{d.baggage || ''}</div>
                       </div>
                     </div>
                     <div class="car-listing-details-wrapper">
                       <div class="car-listing-detail">
-                        <div class="listing-label">{f?.capacity_passengers}</div>
+                        <div class="listing-label">{s.fleet.capacityPassengers}</div>
                         <div class="listing-detail">{d.capacity_passengers || ''}</div>
                       </div>
                       <div class="listing-detail-divider"></div>
                       <div class="car-listing-detail">
-                        <div class="listing-label">{f?.capacity_suitcases}</div>
+                        <div class="listing-label">{s.fleet.capacitySuitcases}</div>
                         <div class="listing-detail">{d.capacity_suitcases || ''}</div>
                       </div>
                       <div class="listing-detail-divider"></div>
                       <div class="car-listing-detail">
-                        <div class="listing-label">{f?.capacity_carryon}</div>
+                        <div class="listing-label">{s.fleet.capacityCarryon}</div>
                         <div class="listing-detail">{d.capacity_carryon || ''}</div>
                       </div>
                     </div>
@@ -69,10 +69,11 @@ const f = pageContent?.fleet;
         <div class="about-heading">
           <div class="subheadline-wrapper">
             <div class="subheadline-line"></div>
-            <div class="subheadline">{f?.subheadline}</div>
+            <div class="subheadline">{s.fleet.subheadline}</div>
           </div>
           <h2>{f?.heading}</h2>
         </div>
+        <div class="fleet-features-heading">{s.fleet.featuresHeading}</div>
         {fleetFeatures && <p>{fleetFeatures}</p>}
       </div>
     </div>
@@ -105,7 +106,7 @@ const f = pageContent?.fleet;
     padding-left: 14px;
   }
   .fleet-features-item::before {
-    content: "—";
+    content: "\2014";
     position: absolute;
     left: 0;
     color: var(--colors--gold);

@@ -1,5 +1,7 @@
 ---
 const { pageContent } = Astro.props;
+import STRINGS from '../../config/strings';
+const s = STRINGS;
 const stats = pageContent?.stats;
 const items = stats?.items;
 ---
@@ -7,12 +9,12 @@ const items = stats?.items;
   <div class="content-wrapper">
     <div data-w-id="9159b09b-ed20-7422-90a2-9ba7fa3cdfe8" style="opacity: 1;" class="metrics-content-wrapper">
       <div data-w-id="bdf55f7e-3564-37bc-e8e3-badd988c8d3e" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="metrics-heading-wrapper">
-        <h2 class="metrics-heading">{stats?.heading}</h2>
+        <h2 class="metrics-heading">{s.stats.heading}</h2>
         <div class="metrics-subheading">{stats?.subheading}</div>
       </div>
       <div data-w-id="59677e2a-94e4-da62-6e68-f4287d612a86" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="metrics-button-wrapper">
         <a data-w-id="31b44076-9e9e-e074-a942-d52bc90dfd3a" href="/#contact" class="secondary-button w-inline-block">
-          <div class="button-text" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">{stats?.button}</div>
+          <div class="button-text" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">{s.stats.button}</div>
           <img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt="" aria-hidden="true" class="button-arrow" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;" />
         </a>
       </div>

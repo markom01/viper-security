@@ -89,7 +89,7 @@ const jsonLdWebSite = `<script type="application/ld+json">
   <Fragment set:html={jsonLdWebSite} />
 </head>
 <body>
-  <a href="#main-content" class="skip-link">{pageContent?.skip_link || "Skip to content"}</a>
+  <a href="#main-content" class="skip-link">{s.accessibility.skipLink}</a>
   <main id="main-content" class="page-wrapper">
     <slot />
   </main>
