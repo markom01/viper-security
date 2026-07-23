@@ -1,13 +1,13 @@
 ---
 const { pageContent } = Astro.props;
 const { brandName, tagline, phoneItaly, phoneSpain } = Astro.props;
-const f = pageContent?.footer;
-const n = pageContent?.nav;
-const fp = f?.description_prefix || '';
-const ps = f?.phone_separator || '';
-const footerDesc = fp + phoneItaly + ps + phoneSpain;
-const copyrightText = f?.copyright;
+import STRINGS from '../../config/strings';
+const s = STRINGS;
+const b = pageContent?.branding;
 const thisYear = new Date().getFullYear();
+
+const cleanPhone = (phone) => phone?.replace(/[\s+]/g, '') || '';
+const phoneSep = s.footer.phoneSeparator;
 ---
 <footer class="footer" role="contentinfo">
   <div class="content-wrapper">
@@ -15,10 +15,11 @@ const thisYear = new Date().getFullYear();
       <div data-w-id="d0f85d67-a980-65d6-511b-7dac5e2e60d0" class="footer-top" style="opacity: 1;">
         <div class="footer-heading-wrapper">
           <h2 class="footer-heading">{tagline}</h2>
+          {b?.luxury_without_limits && <p class="footer-luxury-tagline">{b?.luxury_without_limits}</p>}
         </div>
         <div class="footer-button-wrapper">
           <a data-w-id="31b44076-9e9e-e074-a942-d52bc90dfd3a" href="/#about" class="secondary-button w-inline-block">
-            <div class="button-text">{f?.button}</div>
+            <div class="button-text">{s.footer.button}</div>
             <img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt="" aria-hidden="true" class="button-arrow" />
           </a>
         </div>
@@ -26,44 +27,76 @@ const thisYear = new Date().getFullYear();
       <div data-w-id="d0f85d67-a980-65d6-511b-7dac5e2e60d8" class="footer-middle" style="opacity: 1;">
         <div class="footer-text-wrapper">
           <a href="/" class="logo-link w-nav-brand w--current">
-            <img src="/template_files/678ba669a9998141bea0c6a9_logo.svg" loading="eager" alt={f?.logo_alt} class="brand-image" width="180" height="40" />
+            <span class="brand-text">{brandName}</span>
           </a>
-          <p class="pure-text">{footerDesc}</p>
-          <div class="social-links-wrapper">
-            <a href="https://x.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_x}>
+          <p class="pure-text">
+            <a href={`https://wa.me/${cleanPhone(phoneItaly)}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp ${phoneItaly}`} class="phone-wa-link">{phoneItaly}</a>
+            {phoneSep}
+            <a href={`https://wa.me/${cleanPhone(phoneSpain)}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp ${phoneSpain}`} class="phone-wa-link">{phoneSpain}</a>
+          </p>
+          <!-- <div class="social-links-wrapper">
+            <a href="https://x.com/" target="_blank" class="social-link w-inline-block" aria-label={s.footer.socialX}>
               <img src="/template_files/676146330671d1a905c5ac9f_x-logo.svg" width="20" height="20" loading="eager" alt="" aria-hidden="true" />
             </a>
-            <a href="https://www.tiktok.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_tiktok}>
+            <a href="https://www.tiktok.com/" target="_blank" class="social-link w-inline-block" aria-label={s.footer.socialTiktok}>
               <img src="/template_files/67614633ba459e6dd33b9860_tiktok-logo.svg" loading="eager" alt="" aria-hidden="true" />
             </a>
-            <a href="https://www.instagram.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_instagram}>
+            <a href="https://www.instagram.com/" target="_blank" class="social-link w-inline-block" aria-label={s.footer.socialInstagram}>
               <img src="/template_files/67614633f5d71118f6761e3e_instagram-logo.svg" loading="eager" alt="" aria-hidden="true" />
             </a>
-            <a href="https://www.whatsapp.com/" target="_blank" class="social-link w-inline-block" aria-label={f?.social_whatsapp}>
+            <a href="https://www.whatsapp.com/" target="_blank" class="social-link w-inline-block" aria-label={s.footer.socialWhatsapp}>
               <img src="/template_files/67614633863a65d541abc011_whatsapp-logo.svg" loading="eager" alt="" aria-hidden="true" />
             </a>
-          </div>
+          </div> -->
         </div>
         <div class="footer-links-wrapper">
           <div class="footer-links-column">
-            <div class="footer-links-heading">{f?.pages}</div>
+            <div class="footer-links-heading">{s.footer.pagesHeading}</div>
             <div class="footer-links">
-              <a href="/" class="footer-link w--current">{n?.home || f?.home}</a>
-              <a href="/#about" class="footer-link">{n?.about || f?.about}</a>
-              <a href="/#services" class="footer-link">{n?.services || f?.services}</a>
-              <a href="/#fleet" class="footer-link">{n?.fleet || f?.fleet}</a>
-              <a href="/#how-it-works" class="footer-link">{n?.how_it_works || f?.how_it_works}</a>
-              <a href="/#pricing" class="footer-link">{n?.pricing || f?.pricing}</a>
-              <a href="/#contact" class="footer-link">{n?.contact || f?.contact}</a>
+              <a href="/" class="footer-link w--current">{s.nav.home}</a>
+              <a href="/#about" class="footer-link">{s.nav.about}</a>
+              <a href="/#services" class="footer-link">{s.nav.services}</a>
+              <a href="/#fleet" class="footer-link">{s.nav.fleet}</a>
+              <a href="/#how-it-works" class="footer-link">{s.nav.howItWorks}</a>
+              <a href="/#pricing" class="footer-link">{s.nav.pricing}</a>
+              <a href="/#contact" class="footer-link">{s.nav.contact}</a>
             </div>
           </div>
-        </div>
-      </div>
-      <div data-w-id="6b3a195e-8f9a-3150-7a1b-0cbbe295f67f" class="footer-bottom" style="opacity: 1;">
-        <div class="footer-legal">
-          <div>{copyrightText}{thisYear} {brandName}</div>
         </div>
       </div>
     </div>
   </div>
 </footer>
+<style>
+  .footer-luxury-tagline {
+    font-family: var(--font-families--accent-font);
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--colors--gold);
+    margin-top: 6px;
+  }
+  .brand-text {
+    font-family: var(--font-families--accent-font);
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: var(--colors--gold);
+    white-space: nowrap;
+  }
+  .footer-motto {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--colors--slate);
+    margin-top: 4px;
+  }
+  .phone-wa-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .phone-wa-link:hover,
+  .phone-wa-link:focus-visible {
+    color: var(--colors--gold);
+    text-decoration: underline;
+  }
+</style>
