@@ -48,6 +48,7 @@ collections:
     slug: "{{name}}"
     fields:
       - { name: name, label: Vehicle Name, widget: string }
+      - { name: image, label: "Vehicle Image", widget: image, required: false }
       - { name: type, label: Vehicle Type, widget: string, required: false }
       - { name: year, label: Year, widget: string, required: false }
       - { name: seats, label: Seats, widget: string, required: false }
