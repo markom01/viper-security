@@ -72,7 +72,7 @@ booking_data:
 about:
   heading: "World-Class Luxury Chauffeur Services Meticulously Tailored to Perfection"
   text: "{site_name} delivers premium chauffeur-driven travel across {location1}, {location2}, and beyond. Our {vehicle} and professional English-speaking chauffeur provide discreet, reliable transportation for airport transfers, business travel, VIP events, yacht transfers, and exclusive experiences. Every journey is tailored to your schedule with privacy, comfort, and punctuality at our core."
-  image: "/images/about-image.webp"
+  image: "/images/about-image-v2.webp"
 
 fleet:
   heading: "Ride Luxury, Every Time"
