@@ -29,7 +29,7 @@ booking_data:
       - name: Yacht Transfer
         routes:
           - route: Puerto Banus Marina
-            price: €200
+            price: ""
           - route: Marbella Marina
           - route: Estepona Marina
           - route: Sotogrande Marina
