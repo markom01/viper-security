@@ -95,7 +95,7 @@ howitworks:
 cta:
   heading: "Your First Chauffeur Experience Just Got Better"
   text: "Experience the difference of professional chauffeur service. Our {vehicle} and experienced chauffeur are ready to serve you across {location1}, {location2}, and the French Riviera."
-  image: "/images/marketing.webp"
+  image: "/images/marketing-v2.webp"
 
 bottomcta:
   heading: "Ready to Begin Your Journey with Us?"
