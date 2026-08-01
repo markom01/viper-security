@@ -1,5 +1,6 @@
 ---
 const { pageContent } = Astro.props;
+import { ICONS } from '../../config/icons';
 import STRINGS from '../../config/strings';
 const s = STRINGS;
 const v = pageContent?.bottomcta?.values;
@@ -7,38 +8,38 @@ const v = pageContent?.bottomcta?.values;
 <section id="bottom-cta" class="section banner-section">
   <div class="content-wrapper">
     <div class="home-banner-wrapper">
-      <div data-w-id="c48acec1-55d9-22d5-c183-2b678ace263f" class="banner" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;">
+      <div data-scroll-reveal class="banner">
         <div class="banner-heading-wrapper">
           <h2 class="banner-heading">{pageContent?.bottomcta?.heading}</h2>
           <div class="banner-buttons">
-            <a data-w-id="fff9a0d3-8d2a-b162-0a70-29a4c1c45a72" href="/#services" class="primary-button w-inline-block">
+            <a href="/#services" class="primary-button">
               <div class="button-text">{s.bottomCta.buttonServices}</div>
-              <img src="/template_files/67596411f9729ddbe9caa4d1_right-arrow.svg" width="16" height="16" loading="eager" alt="" aria-hidden="true" class="button-arrow" />
+              <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrow} />
             </a>
-            <a data-w-id="fff9a0d3-8d2a-b162-0a70-29a4c1c45a72" href="/#fleet" class="primary-button w-inline-block">
+            <a href="/#fleet" class="primary-button">
               <div class="button-text">{s.bottomCta.buttonFleet}</div>
-              <img src="/template_files/67596411f9729ddbe9caa4d1_right-arrow.svg" width="16" height="16" loading="eager" alt="" aria-hidden="true" class="button-arrow" />
+              <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrow} />
             </a>
           </div>
         </div>
         <div class="banner-divider"></div>
         <div class="banner-values-wrapper">
           <div class="banner-value-item">
-            <img src="/template_files/678adbb12377bfcff86ba861_check-mark.svg" width="16" height="16" loading="eager" alt="" aria-hidden="true" />
+            <span aria-hidden="true" set:html={ICONS.checkMark} />
             <div class="value-text-wrapper">
               <h3 class="value-heading">{v?.[0]?.title}</h3>
               <p class="banner-value-text">{v?.[0]?.text}</p>
             </div>
           </div>
           <div class="banner-value-item">
-            <img src="/template_files/678adbb12377bfcff86ba861_check-mark.svg" width="16" height="16" loading="eager" alt="" aria-hidden="true" />
+            <span aria-hidden="true" set:html={ICONS.checkMark} />
             <div class="value-text-wrapper">
               <h3 class="value-heading">{v?.[1]?.title}</h3>
               <p class="banner-value-text">{v?.[1]?.text}</p>
             </div>
           </div>
           <div class="banner-value-item">
-            <img src="/template_files/678adbb12377bfcff86ba861_check-mark.svg" width="16" height="16" loading="eager" alt="" aria-hidden="true" />
+            <span aria-hidden="true" set:html={ICONS.checkMark} />
             <div class="value-text-wrapper">
               <h3 class="value-heading">{v?.[2]?.title}</h3>
               <p class="banner-value-text">{v?.[2]?.text}</p>

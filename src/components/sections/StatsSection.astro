@@ -1,37 +1,38 @@
 ---
 const { pageContent } = Astro.props;
 import STRINGS from '../../config/strings';
+import { ICONS } from '../../config/icons';
 const s = STRINGS;
 const stats = pageContent?.stats;
 const items = stats?.items;
 ---
 <section id="stats" class="section home-metrics-section">
   <div class="content-wrapper">
-    <div data-w-id="9159b09b-ed20-7422-90a2-9ba7fa3cdfe8" style="opacity: 1;" class="metrics-content-wrapper">
-      <div data-w-id="bdf55f7e-3564-37bc-e8e3-badd988c8d3e" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="metrics-heading-wrapper">
+    <div class="metrics-content-wrapper">
+      <div data-scroll-reveal class="metrics-heading-wrapper">
         <h2 class="metrics-heading">{s.stats.heading}</h2>
         <div class="metrics-subheading">{stats?.subheading}</div>
       </div>
-      <div data-w-id="59677e2a-94e4-da62-6e68-f4287d612a86" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="metrics-button-wrapper">
-        <a data-w-id="31b44076-9e9e-e074-a942-d52bc90dfd3a" href="/#contact" class="secondary-button w-inline-block">
-          <div class="button-text" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">{s.stats.button}</div>
-          <img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt="" aria-hidden="true" width="16" height="16" class="button-arrow" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;" />
+      <div data-scroll-reveal class="metrics-button-wrapper">
+        <a href="/#contact" class="secondary-button">
+          <div class="button-text">{s.stats.button}</div>
+          <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrowPure} />
         </a>
       </div>
       <div class="metrics-wrapper">
-        <div data-w-id="084d6e1a-eba0-6e33-868e-ba35057a7696" style="opacity: 1;" class="metric-item">
+        <div data-scroll-reveal class="metric-item">
           <div class="metric-number">{items?.[0]?.label}</div>
           <div class="metric-title">{items?.[0]?.title}</div>
         </div>
-        <div data-w-id="0537e068-e7c5-c22d-0e7c-cf0ad9a8843e" style="opacity: 1;" class="metric-item">
+        <div data-scroll-reveal class="metric-item">
           <div class="metric-number">{items?.[1]?.label}</div>
           <div class="metric-title">{items?.[1]?.title}</div>
         </div>
-        <div data-w-id="1a525159-1d8c-d0ee-1e5a-37fcf20352c2" style="opacity: 1;" class="metric-item">
+        <div data-scroll-reveal class="metric-item">
           <div class="metric-number">{items?.[2]?.label}</div>
           <div class="metric-title">{items?.[2]?.title}</div>
         </div>
-        <div data-w-id="a72a26f3-4f65-9baf-8ec2-9e3dd6757ee4" style="opacity: 1;" class="metric-item">
+        <div data-scroll-reveal class="metric-item">
           <div class="metric-number">{items?.[3]?.label}</div>
           <div class="metric-title">{items?.[3]?.title}</div>
         </div>

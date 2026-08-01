@@ -2,6 +2,7 @@
 const { pageContent } = Astro.props;
 const { subtitle, cta_text, tagline, hero_image, phoneItaly, phoneSpain } = Astro.props;
 import STRINGS from '../../config/strings';
+import { ICONS } from '../../config/icons';
 const s = STRINGS;
 
 const bd = pageContent?.booking_data;
@@ -22,11 +23,11 @@ const SCRIPT_DATA = {
 <section class="section home-hero-section">
   <div class="content-wrapper">
     <div class="hero-container">
-      <div class="hero-text-wrapper">
-        <div data-w-id="f361aa22-3d08-e663-a2af-349cf6e0b616" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="hero-heading-wrapper">
-          <h1 data-w-id="45d5705e-344f-13e7-4f65-4cf866f6096c">{tagline}</h1>
+      <div data-scroll-reveal class="hero-text-wrapper">
+        <div class="hero-heading-wrapper">
+          <h1>{tagline}</h1>
         </div>
-        <div data-w-id="18de8ef4-ecd4-7b4a-9536-a17067e5b87a" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="hero-text-details">
+        <div class="hero-text-details">
           <p>{subtitle}</p>
           <div class="subheadline-wrapper">
             <div class="subheadline-line"></div>
@@ -34,22 +35,22 @@ const SCRIPT_DATA = {
           </div>
         </div>
       </div>
-      <div data-w-id="92ed9f6f-c07a-52da-5245-ca6dc0a61ac3" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="hero-content-wrapper">
-        <div data-w-id="fc082705-03df-5327-1491-641af90188cc" style="opacity: 1;" class="hero-buttons-wrapper">
+      <div data-scroll-reveal class="hero-content-wrapper">
+        <div class="hero-buttons-wrapper">
           <div class="hero-button-left">
-            <a data-w-id="4fa73ed9-0885-2043-799f-7bb694c2513b" href="/#about" class="secondary-button small w-inline-block">
+            <a href="/#about" class="secondary-button small">
               <div class="button-text">{s.hero.learnMore}</div>
-              <img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt="" aria-hidden="true" width="16" height="16" class="button-arrow" />
+              <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrowPure} />
             </a>
           </div>
           <div class="hero-button-right">
-            <a data-w-id="4fa73ed9-0885-2043-799f-7bb694c2513b" href="/#fleet" class="secondary-button small w-inline-block">
+            <a href="/#fleet" class="secondary-button small">
               <div class="button-text">{s.hero.exploreFleet}</div>
-              <img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt="" aria-hidden="true" width="16" height="16" class="button-arrow" />
+              <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrowPure} />
             </a>
           </div>
         </div>
-        <div data-w-id="41df484e-4b97-0be1-7e6f-f18e0a540a20" style="opacity: 1;" class="hero-image-wrapper">
+        <div class="hero-image-wrapper">
           <img src={hero_image} loading="eager" alt={s.hero.imageAlt} class="hero-image" width="700" height="800" />
         </div>
         <div id="contact" style="opacity:1;overflow:hidden;position:relative;border-top:none;" class="booking-form-wrapper">
@@ -61,15 +62,15 @@ const SCRIPT_DATA = {
               <div class="left-side-fields">
                 <div class="booking-form-label-field">
                   <label class="booking-form-label" for="full-name">{s.form.name}</label>
-                  <input class="booking-form-field w-input" id="full-name" name="Full-Name" placeholder={s.form.namePlaceholder} type="text" required aria-label="Full Name" />
+                  <input class="booking-form-field" id="full-name" name="Full-Name" placeholder={s.form.namePlaceholder} type="text" required aria-label="Full Name" />
                 </div>
                 <div class="booking-form-label-field">
                   <label class="booking-form-label" for="phone">{s.form.phone}</label>
-                  <input class="booking-form-field w-input" id="phone" name="Phone" placeholder={s.form.phonePlaceholder} type="tel" required aria-label="Phone" />
+                  <input class="booking-form-field" id="phone" name="Phone" placeholder={s.form.phonePlaceholder} type="tel" required aria-label="Phone" />
                 </div>
                 <div class="booking-form-label-field">
                   <label class="booking-form-label" for="form-location">{s.form.location}</label>
-                  <select class="booking-form-field w-select" name="Location" id="form-location" required aria-label="Location">
+                  <select class="booking-form-field" name="Location" id="form-location" required aria-label="Location">
                     <option value="">{s.form.selectLocation}</option>
                     <option value="spain">{bd?.spain?.label}</option>
                     <option value="italy">{bd?.italy?.label}</option>
@@ -79,19 +80,19 @@ const SCRIPT_DATA = {
               <div class="right-side-fields">
                 <div class="booking-form-label-field">
                   <label class="booking-form-label" for="form-service">{s.form.service}</label>
-                  <select class="booking-form-field w-select" name="Service" id="form-service" required disabled aria-label="Service">
+                  <select class="booking-form-field" name="Service" id="form-service" required disabled aria-label="Service">
                     <option value="">{s.form.chooseLocationFirst}</option>
                   </select>
                 </div>
                 <div class="booking-form-label-field">
                   <label class="booking-form-label" for="form-destination">{s.form.destination}</label>
-                  <select class="booking-form-field w-select" name="Destination" id="form-destination" required disabled aria-label="Destination">
+                  <select class="booking-form-field" name="Destination" id="form-destination" required disabled aria-label="Destination">
                     <option value="">{s.form.chooseServiceFirst}</option>
                   </select>
                 </div>
                 <div class="booking-form-label-field">
                   <label class="booking-form-label" for="pickup-date">{s.form.date}</label>
-                  <input class="booking-form-field w-input" id="pickup-date" name="Pick-Up-Date" type="date" required aria-label="Date" />
+                  <input class="booking-form-field" id="pickup-date" name="Pick-Up-Date" type="date" required aria-label="Date" />
                 </div>
               </div>
               <div class="form-bottom-row">
@@ -100,12 +101,12 @@ const SCRIPT_DATA = {
                   <div class="booking-form-price" id="form-price-value" data-state="placeholder">{s.form.pricePlaceholder}</div>
                 </div>
                 <div class="booking-button-wrapper">
-                  <input type="submit" class="booking-form-button home-booking-form w-button" value={s.form.bookNow} />
+                  <input type="submit" class="booking-form-button home-booking-form" value={s.form.bookNow} />
                 </div>
               </div>
             </form>
-            <div class="booking-form-success w-form-done" role="status" style="display:none"><div>{s.form.success}</div></div>
-            <div class="form-error-message w-form-fail" role="alert" style="display:none"><div>{s.form.error}</div></div>
+            <div class="booking-form-success" role="status" style="display:none"><div>{s.form.success}</div></div>
+            <div class="form-error-message" role="alert" style="display:none"><div>{s.form.error}</div></div>
           </div>
         </div>
       </div>
@@ -147,6 +148,12 @@ const SCRIPT_DATA = {
   .right-side-fields {
     margin-left: 0 !important;
   }
+  .booking-form-label-field {
+    min-width: 0;
+  }
+  .booking-form-field {
+    width: 100%;
+  }
   @media(min-width:992px) {
     .left-side-fields, .right-side-fields {
       width: calc(50% - 22px) !important;
@@ -163,13 +170,26 @@ const SCRIPT_DATA = {
     grid-column: auto;
   }
   @media(max-width:991px) {
-    .left-side-fields {
-      margin-bottom: 0;
+    .booking-form {
+      flex-direction: row;
+    }
+    .left-side-fields, .right-side-fields {
+      width: calc(50% - 22px);
+      grid-template-columns: 1fr;
+      grid-column-gap: 0;
     }
   }
   @media(max-width:767px) {
+    .booking-form {
+      flex-direction: column;
+    }
     .form-bottom-row {
       grid-template-columns: 1fr;
+    }
+    .left-side-fields, .right-side-fields {
+      width: 100%;
+      grid-template-columns: 1fr;
+      grid-column-gap: 0;
     }
   }
   .booking-form-button:disabled {

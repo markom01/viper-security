@@ -1,13 +1,14 @@
 ---
 const { pageContent } = Astro.props;
 import STRINGS from '../../config/strings';
+import { ICONS } from '../../config/icons';
 const s = STRINGS;
 const about = pageContent?.about;
 ---
 <section id="about" class="section home-about-section">
   <div class="content-wrapper">
     <div class="home-about-content">
-      <div data-w-id="bcebc079-4506-6fc9-30ca-f14c2c79d785" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="home-about-text-wrapper">
+      <div data-scroll-reveal class="home-about-text-wrapper">
         <div class="about-heading">
           <div class="subheadline-wrapper">
             <div class="subheadline-line"></div>
@@ -16,12 +17,12 @@ const about = pageContent?.about;
           <h2>{about?.heading}</h2>
         </div>
         <p>{about?.text}</p>
-        <a data-w-id="fff9a0d3-8d2a-b162-0a70-29a4c1c45a72" href="/#about" class="primary-button w-inline-block">
+        <a href="/#about" class="primary-button">
           <div class="button-text">{s.about.button}</div>
-          <img src="/template_files/67596411f9729ddbe9caa4d1_right-arrow.svg" loading="eager" alt="" aria-hidden="true" width="16" height="16" class="button-arrow" />
+          <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrow} />
         </a>
       </div>
-      <div data-w-id="25ce8ef5-d896-fe4e-15f4-21fb682ddf84" style="opacity: 1;" class="home-page-image-wrapper">
+      <div data-scroll-reveal class="home-page-image-wrapper">
         <img src={about?.image} loading="eager" alt={s.about.imageAlt} class="about-image" width="600" height="500" />
       </div>
     </div>

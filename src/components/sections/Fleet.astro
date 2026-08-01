@@ -9,12 +9,12 @@ const f = pageContent?.fleet;
 <section id="fleet" class="section home-about-section">
   <div class="content-wrapper">
     <div class="home-about-content">
-      <div data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d0" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="w-dyn-list">
-        <div role="list" class="_3-column-collection w-dyn-items">
+      <div data-scroll-reveal>
+        <div role="list" class="_3-column-collection">
           {vehicles?.map((v: FleetEntry) => {
             const d = v.data || {};
-            return <div role="listitem" class="w-dyn-item">
-              <a data-w-id="8647ce34-1444-7fef-ad1a-b4edb37bd4d3" href="#fleet" class="car-card w-inline-block" style="border-color: var(--colors--cloud);">
+            return <div role="listitem">
+              <a href="#fleet" class="car-card" style="border-color: var(--colors--cloud);">
                 <div class="car-card-details">
                   <div class="car-card-left">
                     <div class="car-listing-info-wrapper">
@@ -66,7 +66,7 @@ const f = pageContent?.fleet;
           })}
         </div>
       </div>
-      <div data-w-id="0835ba9a-bac8-f37a-bf39-2726e564b360" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;" class="home-about-text-wrapper">
+      <div data-scroll-reveal class="home-about-text-wrapper">
         <div class="about-heading">
           <div class="subheadline-wrapper">
             <div class="subheadline-line"></div>
@@ -111,7 +111,7 @@ const f = pageContent?.fleet;
     left: 0;
     color: var(--colors--gold);
   }
-  @media(min-width:992px){
+  @media(min-width:768px){
     #fleet ._3-column-collection{grid-template-columns:1fr;}
     #fleet .car-card-details{flex-direction:row;align-items:flex-start;}
     #fleet .car-card-left{display:flex;flex-direction:column;width:50%;flex-shrink:0;}
@@ -121,8 +121,10 @@ const f = pageContent?.fleet;
   .car-card-data{display:flex;flex-direction:column;gap:12px;}
   @media(max-width:991px){
     #fleet .home-about-content{flex-direction:column;}
-    #fleet .w-dyn-list{order:2;}
+    #fleet .home-about-content>:first-child{order:2;}
     #fleet .home-about-text-wrapper{order:1;}
   }
-  @media(prefers-reduced-motion:reduce){.home-about-section [data-w-id]{transform:none!important;opacity:1!important;transition:none!important;}}
+  .car-card:hover .car-card-hover-bg{opacity:1!important}
+  .car-card-hover-bg{transition:opacity 0.3s ease;pointer-events:none;border-radius:24px;background-color:rgba(0,0,0,0.03);position:absolute;inset:0%}
+  @media(prefers-reduced-motion:reduce){.home-about-section .home-about-content>*,.home-about-section .car-card{transform:none!important;opacity:1!important;transition:none!important;}}
 </style>

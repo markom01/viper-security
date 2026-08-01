@@ -1,54 +1,55 @@
 ---
 const { brandName } = Astro.props;
 import STRINGS from '../../config/strings';
+import { ICONS } from '../../config/icons';
 const s = STRINGS;
 ---
-<div data-w-id="4c909013-ef6c-e80a-a8e9-5aa3de1b3bf1" data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
+<div role="banner" class="navbar">
   <div class="content-wrapper">
-    <div data-w-id="4c909013-ef6c-e80a-a8e9-5aa3de1b3bf3" class="navbar-wrapper" style="opacity: 1;">
-      <a href="/" class="logo-link w-nav-brand w--current" aria-label={s.nav.homeAria}>
+    <div class="navbar-wrapper">
+      <a href="/" class="logo-link" aria-label={s.nav.homeAria}>
         <span class="brand-text">{brandName}</span>
       </a>
-      <nav role="navigation" class="nav-menu-wrapper w-nav-menu">
-        <ul role="list" class="nav-menu-list w-list-unstyled">
+      <nav role="navigation" class="nav-menu-wrapper">
+        <ul role="list" class="nav-menu-list">
           <li class="nav-list-item nav-list-brand">
-            <a href="/" class="logo-link w-nav-brand w--current" aria-label={s.nav.homeAria}>
+            <a href="/" class="logo-link" aria-label={s.nav.homeAria}>
               <span class="brand-text">{brandName}</span>
             </a>
           </li>
-          <li class="nav-list-item"><a href="/" class="nav-link w--current">{s.nav.home}</a></li>
+          <li class="nav-list-item"><a href="/" class="nav-link">{s.nav.home}</a></li>
           <li class="nav-list-item"><a href="/#about" class="nav-link">{s.nav.about}</a></li>
           <li class="nav-list-item"><a href="/#services" class="nav-link">{s.nav.services}</a></li>
           <li class="nav-list-item"><a href="/#fleet" class="nav-link">{s.nav.fleet}</a></li>
           <li class="nav-list-item"><a href="/#how-it-works" class="nav-link">{s.nav.howItWorks}</a></li>
           <li class="nav-list-item"><a href="/#pricing" class="nav-link">{s.nav.pricing}</a></li>
           <li class="nav-list-item desktop-button">
-            <a data-w-id="77fa09e7-63ce-cf39-8649-db69baef8b84" href="/#contact" class="primary-button small w-inline-block">
+            <a href="/#contact" class="primary-button small">
               <div class="button-text">{s.nav.contact}</div>
-<img src="/template_files/67596411f9729ddbe9caa4d1_right-arrow.svg" loading="eager" alt="" aria-hidden="true" width="16" height="16" class="button-arrow" />
+              <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrow} />
             </a>
           </li>
           <li class="nav-list-item tablet-mobile-button">
-            <a data-w-id="31b44076-9e9e-e074-a942-d52bc90dfd3a" href="/#contact" class="secondary-button w-inline-block">
+            <a href="/#contact" class="secondary-button">
               <div class="button-text">{s.nav.contact}</div>
-              <img src="/template_files/6759814e92ecf4abb58bb0a7_right-arrow-pure.svg" loading="eager" alt="" aria-hidden="true" width="16" height="16" class="button-arrow" />
+              <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrowPure} />
             </a>
           </li>
         </ul>
-        <div class="close-menu-button w-nav-button" style="-webkit-user-select: text;" aria-label={s.nav.menuAria} role="button" tabindex="0" aria-controls="w-nav-overlay-0" aria-haspopup="menu" aria-expanded="false">
+        <div class="close-menu-button" style="-webkit-user-select: text;" aria-label={s.nav.menuAria} role="button" tabindex="0" aria-haspopup="menu" aria-expanded="false">
           <div class="nav-close">
-            <img src="/template_files/675987d262108fe13600ca80_cancel.svg" loading="eager" alt={s.nav.cancelAlt} width="16" height="16" />
+            <span aria-hidden="true" set:html={ICONS.cancel} />
           </div>
         </div>
       </nav>
       <div class="nav-buttons-wrapper">
         <div class="tablet-button">
-          <a data-w-id="77fa09e7-63ce-cf39-8649-db69baef8b84" href="/#contact" class="primary-button small w-inline-block">
+          <a href="/#contact" class="primary-button small">
             <div class="button-text">{s.nav.contact}</div>
-            <img src="/template_files/67596411f9729ddbe9caa4d1_right-arrow.svg" loading="eager" alt="" aria-hidden="true" width="16" height="16" class="button-arrow" />
+            <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrow} />
           </a>
         </div>
-        <div class="open-menu-button w-nav-button" style="-webkit-user-select: text;" aria-label={s.nav.menuAria} role="button" tabindex="0" aria-controls="w-nav-overlay-0" aria-haspopup="menu" aria-expanded="false">
+        <div class="open-menu-button" style="-webkit-user-select: text;" aria-label={s.nav.menuAria} role="button" tabindex="0" aria-haspopup="menu" aria-expanded="false">
           <div class="nav-open">
             <div class="menu-line"></div><div class="menu-line"></div><div class="menu-line"></div>
           </div>
@@ -56,7 +57,6 @@ const s = STRINGS;
       </div>
     </div>
   </div>
-  <div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div>
 </div>
 <style>
   .brand-text {
@@ -66,4 +66,62 @@ const s = STRINGS;
     color: var(--colors--gold);
     white-space: nowrap;
   }
+  .nav-menu-list {
+    list-style: none;
+  }
+  /* Mobile: nav overlay hidden by default */
+  @media (max-width: 991px) {
+    .nav-menu-wrapper {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .navbar[data-nav-open] .nav-menu-wrapper {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+  /* Desktop: nav inline, not overlay */
+  @media (min-width: 992px) {
+    .nav-menu-wrapper {
+      position: static;
+      min-width: auto;
+      min-height: auto;
+      background: transparent;
+      padding: 0;
+      overflow: visible;
+      inset: auto;
+      display: flex;
+      align-items: center;
+    }
+    .nav-menu-list {
+      flex-direction: row;
+    }
+    .nav-list-brand,
+    .close-menu-button,
+    .tablet-mobile-button {
+      display: none !important;
+    }
+    .open-menu-button {
+      display: none !important;
+    }
+  }
 </style>
+<script is:inline>
+(function() {
+  var navbar = document.querySelector('.navbar');
+  if (!navbar) return;
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.open-menu-button')) {
+      navbar.setAttribute('data-nav-open', '');
+    }
+    if (e.target.closest('.close-menu-button')) {
+      navbar.removeAttribute('data-nav-open');
+    }
+    // Close menu when a nav link is tapped
+    if (e.target.closest('.nav-link')) {
+      navbar.removeAttribute('data-nav-open');
+    }
+  });
+})();
+</script>

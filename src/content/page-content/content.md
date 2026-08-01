@@ -2,7 +2,7 @@
 jsonld:
   org_name: "{site_name}"
   org_url: https://vipersecurity.com
-  org_logo: https://vipersecurity.com/template_files/678ba669a9998141bea0c6a9_logo.svg
+  org_logo: https://vipersecurity.com/images/logo.svg
   org_description: Luxury chauffeur & VIP transport services in {location1} and {location2}.
   phoneSpain: +34 670 038 541
   phoneItaly: +39 349 663 8171

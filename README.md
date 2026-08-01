@@ -86,7 +86,6 @@ Push to `main` — Netlify auto-builds and deploys. No manual deploy steps.
 ├── public/
 │   ├── admin/                 # Decap CMS config.yml
 │   ├── images/                # Optimized WebP images
-│   └── template_files/        # Webflow template assets (SVG icons, legacy CSS/JS)
 ├── netlify.toml               # Netlify build + redirect + cache config
 ├── astro.config.mjs           # Astro configuration
 └── README.md                  # This file

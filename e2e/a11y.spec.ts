@@ -9,7 +9,7 @@ test.describe('Accessibility Regression Tests', () => {
 
   test('logo-link has brand-identifying aria-label', async ({ page }) => {
     await page.goto('/');
-    const logoLink = page.locator('a.logo-link.w-nav-brand').first();
+    const logoLink = page.locator('a.logo-link').first();
     await expect(logoLink).toHaveAttribute('aria-label', /VIPER Security/i);
   });
 
@@ -37,20 +37,13 @@ test.describe('Accessibility Regression Tests', () => {
     await expect(destination).toHaveAttribute('aria-label', 'Destination');
   });
 
-  test('decorative arrow SVGs have aria-hidden and explicit dimensions', async ({ page }) => {
+  test('decorative arrow SVGs have aria-hidden', async ({ page }) => {
     await page.goto('/');
-    const arrowSvgs = page.locator('img.button-arrow');
+    const arrowSvgs = page.locator('span.button-arrow');
     const count = await arrowSvgs.count();
     expect(count).toBeGreaterThan(3);
-
     for (let i = 0; i < count; i++) {
-      const svg = arrowSvgs.nth(i);
-      await expect(svg).toHaveAttribute('aria-hidden', 'true');
-      await expect(svg).toHaveAttribute('alt', '');
-      const width = await svg.getAttribute('width');
-      const height = await svg.getAttribute('height');
-      expect(Number(width)).toBeGreaterThan(0);
-      expect(Number(height)).toBeGreaterThan(0);
+      await expect(arrowSvgs.nth(i)).toHaveAttribute('aria-hidden', 'true');
     }
   });
 
