@@ -1,0 +1,18 @@
+{
+  "name": "@garage/shared",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "exports": {
+    "./layouts/*": "./src/layouts/*",
+    "./sections/*": "./src/components/sections/*",
+    "./config/*": "./src/config/*",
+    "./types": "./src/types.ts"
+  },
+  "peerDependencies": {
+    "astro": "^7.0.9"
+  },
+  "devDependencies": {
+    "astro": "^7.0.9"
+  }
+}

@@ -4,15 +4,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
+Monorepo (npm workspaces). This repo hosts two independent Astro sites + a shared package:
+
+- `sites/viper` — VIPER Security (live: https://viper-security.netlify.app)
+- `sites/dbc` — DB Custom Garage (live: https://dbcustomgarage.netlify.app)
+- `packages/shared` — `@garage/shared`: layout, sections, config defaults (strings/labels/icons/templates), types
+
+Run per workspace from root, or `cd` into a site dir:
+
 ```bash
-npm run dev          # Dev server → localhost:4321
-npm run build        # Production build → dist/
-npm run preview      # Preview production build locally
-npm run test:a11y    # Playwright a11y tests (serves dist/ on :4322, needs build first)
-npx astro check      # Type-check .astro files (uses @astrojs/check)
+# VIPER
+npm run dev -w @garage/viper            # or cd sites/viper && npm run dev  → :4321
+npm run build -w @garage/viper          # → sites/viper/dist
+npm run test:a11y -w @garage/viper      # Playwright (serves sites/viper/dist)
+(cd sites/viper && npx astro check)     # type-check
+
+# DB Custom Garage
+npm run dev -w @garage/dbc              # or cd sites/dbc && npm run dev   → :4322
+npm run build -w @garage/dbc            # → sites/dbc/dist-dbc
+(cd sites/dbc && npx astro check)
 ```
 
-No lint script. Tests are Playwright-only (`e2e/a11y.spec.ts`); vitest is installed but has no test script. Build before `npm run test:a11y` — the webServer in `playwright.config.js` serves `dist/`.
+No lint script. Tests are Playwright-only (`sites/viper/e2e/a11y.spec.ts`); vitest is installed but has no test script. Build before `npm run test:a11y` — the webServer in `sites/viper/playwright.config.js` serves `dist/`.
 
 ## Architecture
 
