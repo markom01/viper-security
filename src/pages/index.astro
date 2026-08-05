@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-import Nav from '../components/sections/Nav.astro';
 import Hero from '../components/sections/Hero.astro';
 import Marquee from '../components/sections/Marquee.astro';
 import AboutSection from '../components/sections/AboutSection.astro';
@@ -13,7 +12,6 @@ import Pricing from '../components/sections/Pricing.astro';
 import Membership from '../components/sections/Membership.astro';
 import CtaBanner from '../components/sections/CtaBanner.astro';
 import BottomCta from '../components/sections/BottomCta.astro';
-import Footer from '../components/sections/Footer.astro';
 
 import { getCollection, getEntry } from 'astro:content';
 import { resolveTemplates } from '../config/templates';
@@ -75,8 +73,7 @@ const hourly = hourlyEntry?.data || {};
 const membership = membershipEntry?.data || {};
 ---
 
-<BaseLayout pageContent={pageContent}>
-  <Nav brandName={hero.brand_name} pageContent={pageContent} />
+<BaseLayout pageContent={pageContent} brandName={hero.brand_name}>
   <Hero subtitle={hero.subtitle} cta_text={hero.cta_text} tagline={hero.tagline} hero_image={hero.hero_image} phoneItaly={hero.phone_italy} phoneSpain={hero.phone_spain} pageContent={pageContent} />
   <Marquee pageContent={pageContent} />
   <AboutSection pageContent={pageContent} />
@@ -88,5 +85,4 @@ const membership = membershipEntry?.data || {};
   <Membership tiers={membership.tiers} pageContent={pageContent} />
   <CtaBanner pageContent={pageContent} />
   <BottomCta pageContent={pageContent} />
-  <Footer brandName={hero.brand_name} tagline={hero.tagline} phoneItaly={hero.phone_italy} phoneSpain={hero.phone_spain} pageContent={pageContent} />
 </BaseLayout>

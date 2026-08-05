@@ -3,7 +3,8 @@ const { pageContent } = Astro.props;
 const { marbella, milano } = Astro.props;
 import type { ServiceOffering } from '../../types';
 import STRINGS from '../../config/strings';
-const s = STRINGS;
+import { resolveLabels } from '../../config/labels';
+const s = resolveLabels(pageContent, STRINGS);
 // Services are universal — both props carry the same data, pick whichever exists
 const services = marbella || milano || [];
 ---

@@ -3,7 +3,8 @@ const { pageContent } = Astro.props;
 const { hourly } = Astro.props;
 import type { BookingService, PricingRate, PricingCard, PricingCardSection } from '../../types';
 import STRINGS from '../../config/strings';
-const s = STRINGS;
+import { resolveLabels } from '../../config/labels';
+const s = resolveLabels(pageContent, STRINGS);
 const bd = pageContent?.booking_data;
 
 // Build 2 regional cards, each with service sections inside

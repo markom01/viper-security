@@ -1,10 +1,23 @@
 ---
-const { pageContent } = Astro.props;
+const { pageContent, footerItems } = Astro.props;
 const { brandName, tagline, phoneItaly, phoneSpain } = Astro.props;
 import STRINGS from '../../config/strings';
-const s = STRINGS;
+import { resolveLabels } from '../../config/labels';
+const s = resolveLabels(pageContent, STRINGS);
 const b = pageContent?.branding;
 const thisYear = new Date().getFullYear();
+// Footer links as data. Default = VIPER menu. A site passes its own via footerItems.
+const links = footerItems ?? [
+  { label: s.nav.chauffeur, href: '/' },
+  { label: s.nav.luxuryCars, href: '/luxury-cars' },
+  { label: s.nav.armouredVehicles, href: '/armoured-vehicles' },
+  { label: s.nav.about, href: '/#about' },
+  { label: s.nav.services, href: '/#services' },
+  { label: s.nav.fleet, href: '/#fleet' },
+  { label: s.nav.howItWorks, href: '/#how-it-works' },
+  { label: s.nav.pricing, href: '/#pricing' },
+  { label: s.nav.contact, href: '/#contact' },
+];
 
 const cleanPhone = (phone: string) => phone?.replace(/[\s+]/g, '') || '';
 const phoneSep = s.footer.phoneSeparator;
@@ -41,13 +54,7 @@ const phoneSep = s.footer.phoneSeparator;
           <div class="footer-links-column">
             <div class="footer-links-heading">{s.footer.pagesHeading}</div>
             <div class="footer-links">
-              <a href="/" class="footer-link">{s.nav.home}</a>
-              <a href="/#about" class="footer-link">{s.nav.about}</a>
-              <a href="/#services" class="footer-link">{s.nav.services}</a>
-              <a href="/#fleet" class="footer-link">{s.nav.fleet}</a>
-              <a href="/#how-it-works" class="footer-link">{s.nav.howItWorks}</a>
-              <a href="/#pricing" class="footer-link">{s.nav.pricing}</a>
-              <a href="/#contact" class="footer-link">{s.nav.contact}</a>
+              {links.map((l) => <a href={l.href} class="footer-link">{l.label}</a>)}
             </div>
           </div>
         </div>
@@ -56,7 +63,6 @@ const phoneSep = s.footer.phoneSeparator;
   </div>
 </footer>
 <style>
-  :root{--colors--gold-bright:#c8a04c}
   .footer-luxury-tagline {
     font-family: var(--font-families--accent-font);
     font-size: 1rem;

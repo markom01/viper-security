@@ -3,7 +3,8 @@ const { pageContent, fleetFeatures } = Astro.props;
 const { vehicles } = Astro.props;
 import type { FleetEntry } from '../../types';
 import STRINGS from '../../config/strings';
-const s = STRINGS;
+import { resolveLabels } from '../../config/labels';
+const s = resolveLabels(pageContent, STRINGS);
 const f = pageContent?.fleet;
 ---
 <section id="fleet" class="section home-about-section">
@@ -124,7 +125,8 @@ const f = pageContent?.fleet;
     #fleet .home-about-content>:first-child{order:2;}
     #fleet .home-about-text-wrapper{order:1;}
   }
+  .car-card{border:1px solid var(--colors--cloud);border-radius:12px;display:block;}
   .car-card:hover .car-card-hover-bg{opacity:1!important}
-  .car-card-hover-bg{transition:opacity 0.3s ease;pointer-events:none;border-radius:24px;background-color:rgba(0,0,0,0.03);position:absolute;inset:0%}
+  .car-card-hover-bg{transition:opacity 0.3s ease;pointer-events:none;border-radius:12px;background-color:rgba(0,0,0,0.03);position:absolute;inset:0%}
   @media(prefers-reduced-motion:reduce){.home-about-section .home-about-content>*,.home-about-section .car-card{transform:none!important;opacity:1!important;transition:none!important;}}
 </style>

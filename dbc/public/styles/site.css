@@ -1,0 +1,5 @@
+/* DB Custom Garage — site-specific layout residue.
+   Design system + tokens + shared section styles come from global.css and
+   the shared @sections components. Nothing brand-hardcoded here. */
+main { padding: 48px 0; }
+.tc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }

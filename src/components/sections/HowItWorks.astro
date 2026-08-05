@@ -2,7 +2,8 @@
 const { pageContent } = Astro.props;
 const { steps } = Astro.props;
 import STRINGS from '../../config/strings';
-const s = STRINGS;
+import { resolveLabels } from '../../config/labels';
+const s = resolveLabels(pageContent, STRINGS);
 const st = pageContent?.howitworks;
 ---
 <section id="how-it-works" class="section steps-section">

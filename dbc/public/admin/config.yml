@@ -1,0 +1,143 @@
+backend:
+  name: git-gateway
+  repo: markom01/viper-security
+  branch: main
+
+media_folder: dbc/public/images
+public_folder: /images
+
+collections:
+  - name: hero
+    label: Hero Section
+    description: Homepage hero banner content
+    files:
+      - name: hero
+        label: Hero Banner
+        file: dbc/src/content/hero/hero.md
+        fields:
+          - { name: brand_name, label: Brand Name, widget: string }
+          - { name: tagline, label: Tagline, widget: string }
+          - { name: subtitle, label: Subtitle, widget: text }
+          - { name: cta_text, label: CTA Button Text, widget: string }
+          - { name: hero_image, label: "Hero Background Image", widget: image, required: false }
+
+  - name: services
+    label: Services
+    description: Garage services
+    files:
+      - name: services
+        label: All Services
+        file: dbc/src/content/services/services.md
+        fields:
+          - label: Services
+            name: offerings
+            widget: list
+            fields:
+              - { name: title, label: Service Title, widget: string }
+              - { name: description, label: Description, widget: text }
+              - { name: image, label: "Service Image", widget: image, required: false }
+
+  - name: how-it-works
+    label: How It Works
+    description: How the build process works
+    files:
+      - name: steps
+        label: Steps
+        file: dbc/src/content/how-it-works/garage-steps.md
+        fields:
+          - label: Steps
+            name: steps
+            widget: list
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: description, label: Description, widget: text }
+              - { name: image, label: "Service Image", widget: image, required: false }
+
+  - name: page-content
+    label: Page Content
+    description: Page labels, headings, and UI text
+    files:
+      - name: content
+        label: All Page Text
+        file: dbc/src/content/page-content/content.md
+        fields:
+          - name: jsonld
+            label: JSON-LD / Structured Data
+            widget: object
+            collapsed: true
+            fields:
+              - { name: org_name, label: Organization Name, widget: string }
+              - { name: org_url, label: Organization URL, widget: string }
+              - { name: org_logo, label: Logo URL, widget: string }
+              - { name: org_description, label: Description, widget: text }
+              - { name: phoneSpain, label: "Phone (Spain)", widget: string }
+              - { name: phoneItaly, label: "Phone (Italy)", widget: string }
+          - name: seo
+            label: SEO / Meta
+            widget: object
+            collapsed: true
+            fields:
+              - { name: title, label: Page Title, widget: string }
+              - { name: description, label: Meta Description, widget: text }
+              - { name: theme_color, label: Theme Color, widget: string }
+          - name: stats
+            label: Stats Section
+            widget: object
+            collapsed: true
+            fields:
+              - { name: subheading, label: Subheading, widget: text }
+              - label: Items
+                name: items
+                widget: list
+                fields:
+                  - { name: label, label: Label (e.g. 15+), widget: string }
+                  - { name: title, label: Title (e.g. Years Experience), widget: string }
+          - name: cta
+            label: CTA Banner
+            widget: object
+            collapsed: true
+            fields:
+              - { name: heading, label: Heading, widget: string }
+              - { name: text, label: Body Text, widget: text }
+              - { name: image, label: CTA Image, widget: image, required: false }
+          - name: bottomcta
+            label: Bottom CTA
+            widget: object
+            collapsed: true
+            fields:
+              - { name: heading, label: Heading, widget: string }
+              - label: Values
+                name: values
+                widget: list
+                fields:
+                  - { name: title, label: Title, widget: string }
+                  - { name: text, label: Text, widget: text }
+          - name: branding
+            label: Branding
+            widget: object
+            collapsed: true
+            fields:
+              - { name: luxury_without_limits, label: Tagline Text, widget: string }
+              - { name: professional_discreet_reliable, label: Sub Tagline Text, widget: string }
+          - name: labels
+            label: UI Labels
+            widget: object
+            collapsed: true
+            fields:
+              - { name: "fleet.subheadline", label: "Builds Section Label", widget: string }
+              - { name: "stats.heading", label: "Stats Heading", widget: string }
+              - { name: "stats.button", label: "Stats Button", widget: string }
+              - { name: "cta.button", label: "CTA Button", widget: string }
+              - { name: "bottomCta.buttonServices", label: "Bottom CTA Services Button", widget: string }
+              - { name: "bottomCta.buttonFleet", label: "Bottom CTA Builds Button", widget: string }
+              - { name: "hero.learnMore", label: "Hero Learn More", widget: string }
+              - { name: "hero.exploreFleet", label: "Hero View Builds", widget: string }
+              - { name: "hero.formName", label: "Hero Form Title", widget: string }
+              - { name: "form.bookNow", label: "Form Submit Button", widget: string }
+              - { name: "marquee.text", label: "Marquee Text", widget: string }
+              - { name: "nav.contact", label: "Nav Contact CTA", widget: string }
+              - { name: "nav.fleet", label: "Nav Fleet Label", widget: string }
+              - { name: "nav.homeAria", label: "Nav Logo Aria Label", widget: string }
+              - { name: "hero.imageAlt", label: "Hero Image Alt Text", widget: string }
+              - { name: "hero.bookingFormAria", label: "Hero Form Aria Label", widget: string }
+              - { name: "fleet.vehicleAltFallback", label: "Build Image Alt Fallback", widget: string }

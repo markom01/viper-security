@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+import Hero from '@sections/Hero.astro';
+import StatsSection from '@sections/StatsSection.astro';
+import HowItWorks from '@sections/HowItWorks.astro';
+import CtaBanner from '@sections/CtaBanner.astro';
+import BottomCta from '@sections/BottomCta.astro';
+
+const [heroEntry] = await getCollection('hero');
+const [pageContentEntry] = await getCollection('page-content');
+const [howItWorksEntry] = await getCollection('how-it-works');
+
+const hero = heroEntry?.data || {};
+const pageContent = pageContentEntry?.data || {};
+
+// Garage nav/foot as data — labels from dbc CMS with literal fallback.
+const labels = pageContent?.labels ?? {};
+const navItems = [
+  { label: labels['nav.home'] || 'Home', href: '/' },
+  { label: labels['nav.about'] || 'About', href: '/#about' },
+  { label: labels['nav.services'] || 'Services', href: '/#services' },
+  { label: labels['nav.howItWorks'] || 'How It Works', href: '/#how-it-works' },
+];
+const ctaLabel = labels['nav.contact'] || 'Get A Quote';
+
+const howItWorks = howItWorksEntry?.data || {};
+---
+<BaseLayout pageContent={pageContent} brandName={hero.brand_name} navItems={navItems} footerItems={navItems} ctaLabel={ctaLabel}>
+  <Hero
+    subtitle={hero.subtitle}
+    cta_text={hero.cta_text}
+    tagline={hero.tagline}
+    hero_image={hero.hero_image}
+    pageContent={pageContent}
+  />
+  <StatsSection pageContent={pageContent} />
+  <HowItWorks steps={howItWorks.steps} pageContent={pageContent} />
+  <CtaBanner pageContent={pageContent} />
+  <BottomCta pageContent={pageContent} />
+</BaseLayout>

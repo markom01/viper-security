@@ -158,6 +158,12 @@ const pageContent = defineCollection({
       luxury_without_limits: z.string().optional(),
       professional_discreet_reliable: z.string().optional(),
     }).optional(),
+    /**
+     * CMS-editable UI labels. Flat map of dot-path keys -> string, e.g.
+     * "fleet.subheadline": "Our Builds". Sections resolve overrides via
+     * resolveLabels(pageContent, STRINGS); keys absent here keep STRINGS.
+     */
+    labels: z.record(z.string(), z.string()).optional(),
   }),
 });
 

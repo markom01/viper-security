@@ -1,8 +1,23 @@
 ---
-const { brandName } = Astro.props;
+const { brandName, pageContent, navItems, ctaLabel } = Astro.props;
 import STRINGS from '../../config/strings';
+import { resolveLabels } from '../../config/labels';
 import { ICONS } from '../../config/icons';
-const s = STRINGS;
+const s = resolveLabels(pageContent, STRINGS);
+const cta = ctaLabel || s.nav.contact;
+// Nav items as data. Each: { label, href, children?: [{label,href}] }.
+// Default = VIPER chauffeur menu. A site passes its own via the navItems prop.
+const items = navItems ?? [
+  { label: s.nav.chauffeur, href: '/', children: [
+    { label: s.nav.about, href: '/#about' },
+    { label: s.nav.services, href: '/#services' },
+    { label: s.nav.fleet, href: '/#fleet' },
+    { label: s.nav.howItWorks, href: '/#how-it-works' },
+    { label: s.nav.pricing, href: '/#pricing' },
+  ]},
+  { label: s.nav.luxuryCars, href: '/luxury-cars' },
+  { label: s.nav.armouredVehicles, href: '/armoured-vehicles' },
+];
 ---
 <div role="banner" class="navbar">
   <div class="content-wrapper">
@@ -17,21 +32,30 @@ const s = STRINGS;
               <span class="brand-text">{brandName}</span>
             </a>
           </li>
-          <li class="nav-list-item"><a href="/" class="nav-link">{s.nav.home}</a></li>
-          <li class="nav-list-item"><a href="/#about" class="nav-link">{s.nav.about}</a></li>
-          <li class="nav-list-item"><a href="/#services" class="nav-link">{s.nav.services}</a></li>
-          <li class="nav-list-item"><a href="/#fleet" class="nav-link">{s.nav.fleet}</a></li>
-          <li class="nav-list-item"><a href="/#how-it-works" class="nav-link">{s.nav.howItWorks}</a></li>
-          <li class="nav-list-item"><a href="/#pricing" class="nav-link">{s.nav.pricing}</a></li>
+          {items.map((item) => item.children ? (
+            <li class="nav-list-item has-dropdown">
+              <a href={item.href} class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                {item.label}
+                <span aria-hidden="true" class="caret" set:html={ICONS.caretDown} />
+              </a>
+              <ul role="menu" class="chauffeur-dropdown">
+                {item.children.map((child) => (
+                  <li role="none"><a role="menuitem" href={child.href} class="nav-link">{child.label}</a></li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li class="nav-list-item"><a href={item.href} class="nav-link">{item.label}</a></li>
+          ))}
           <li class="nav-list-item desktop-button">
             <a href="/#contact" class="primary-button small">
-              <div class="button-text">{s.nav.contact}</div>
+              <div class="button-text">{cta}</div>
               <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrow} />
             </a>
           </li>
           <li class="nav-list-item tablet-mobile-button">
             <a href="/#contact" class="secondary-button">
-              <div class="button-text">{s.nav.contact}</div>
+              <div class="button-text">{cta}</div>
               <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrowPure} />
             </a>
           </li>
@@ -45,7 +69,7 @@ const s = STRINGS;
       <div class="nav-buttons-wrapper">
         <div class="tablet-button">
           <a href="/#contact" class="primary-button small">
-            <div class="button-text">{s.nav.contact}</div>
+            <div class="button-text">{cta}</div>
             <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrow} />
           </a>
         </div>
@@ -69,7 +93,21 @@ const s = STRINGS;
   .nav-menu-list {
     list-style: none;
   }
-  /* Mobile: nav overlay hidden by default */
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .caret {
+    display: inline-flex;
+    transition: transform 0.2s ease;
+  }
+  .chauffeur-dropdown {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  /* Mobile: dropdown items shown inline (full-screen menu), no hover panel */
   @media (max-width: 991px) {
     .nav-menu-wrapper {
       visibility: hidden;
@@ -80,8 +118,15 @@ const s = STRINGS;
       visibility: visible;
       opacity: 1;
     }
+    .chauffeur-dropdown {
+      padding: 8px 0 0 12px;
+    }
+    .chauffeur-dropdown .nav-link {
+      padding: 6px 0;
+      opacity: 0.85;
+    }
   }
-  /* Desktop: nav inline, not overlay */
+  /* Desktop: nav inline, not overlay; Chauffeur hover dropdown */
   @media (min-width: 992px) {
     .nav-menu-wrapper {
       position: static;
@@ -96,6 +141,38 @@ const s = STRINGS;
     }
     .nav-menu-list {
       flex-direction: row;
+    }
+    .has-dropdown {
+      position: relative;
+    }
+    .chauffeur-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 200px;
+      background: var(--colors--pure);
+      border: 1px solid var(--colors--cloud);
+      border-radius: 12px;
+      padding: 8px 0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    }
+    .has-dropdown:hover .chauffeur-dropdown,
+    .has-dropdown:focus-within .chauffeur-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .has-dropdown:hover .caret,
+    .has-dropdown:focus-within .caret {
+      transform: rotate(180deg);
+    }
+    .chauffeur-dropdown .nav-link {
+      padding: 8px 20px;
+      white-space: nowrap;
     }
     .nav-list-brand,
     .close-menu-button,

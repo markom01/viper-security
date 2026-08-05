@@ -8,3 +8,16 @@ screenshots/
 # Local Netlify folder
 .netlify
 .sisyphus/
+
+# OS
+.DS_Store
+
+# Nested / second site (dbc)
+**/node_modules/
+dist-dbc/
+**/dist/
+
+# Tool state (regenerable / not source)
+.serena/
+graphify-out/
+.codegraph/

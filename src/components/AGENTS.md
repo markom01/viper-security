@@ -1,64 +1,58 @@
 # COMPONENTS — VIPER SECURITY
 
-**14 React `.jsx` components (13 section + 1 reusable card) + 1 `contact-types.js` contract file.**
+**13 `.astro` section components + 1 React `.jsx` 404 page.**
 
 ## WHERE TO LOOK
 
 | Component | File | Key Patterns |
 |-----------|------|--------------|
-| Page Root | `PageRoot.jsx` | **Root component** — receives all content collection data as props from `index.astro`, composes all sections inside `BaseLayout` |
-| Layout Shell | `../layouts/BaseLayout.jsx` | Full HTML shell (`<html>`, `<head>`, `<body>`), SEO meta, JSON-LD schema, Google Fonts |
-| Navigation | `Nav.jsx` | `useState` for mobile menu open/close + body scroll lock, `useEffect` for scroll-based header background, `aria-current="section"` tracking on hash-based links |
-| Hero | `Hero.jsx` | Accepts `data` prop (`HeroData`), staggered CSS `@keyframes` fade-in-up, nth-child animation delays |
-| How It Works | `HowItWorks.jsx` | Accepts `data` prop, maps over `steps` array |
-| Services | `Services.jsx` | Accepts `marbella` and `milano` props, uses `ServiceCard.jsx` (10x), two-column regional grid |
-| Service Card | `ServiceCard.jsx` | Reusable card: `icon` (HTML via `dangerouslySetInnerHTML`) + `title` props, renders `children` |
-| Fleet | `Fleet.jsx` | `useRef` + `useEffect` with `IntersectionObserver` scroll-reveal, `useState`-free (class toggling via ref) |
-| Pricing | `Pricing.jsx` | `useRef` + `IntersectionObserver` for staggered rate card entrance, `hourly.body` from Astro content |
-| Membership | `Membership.jsx` | `useRef` + `IntersectionObserver`, conditional "BEST VALUE" badge, outline vs. filled CTA |
-| FAQ | `Faq.jsx` | Native `<details>` / `<summary>` elements (no React state needed) |
-| Contact | `Contact.jsx` | Two-column layout (info + form), phone/WhatsApp section, renders `ContactForm.jsx` |
-| Contact Form | `ContactForm.jsx` | React 19, `useState` validation, Netlify Forms POST, GDPR consent, success/error states |
-| Footer | `Footer.jsx` | Gold accent top border (CSS shimmer animation), nav links, service badges, copyright |
-| Mobile Action Bar | `MobileActionBar.jsx` | Fixed bottom bar visible on mobile only (`lg:hidden`) |
-| 404 Page | `PageNotFound.jsx` | Full-page 404, wraps `BaseLayout` |
+| Page Root | `src/pages/index.astro` | **Data-fetching hub** — loads all content collections, resolves templates, composes all sections inside `BaseLayout` |
+| Layout Shell | `src/layouts/BaseLayout.astro` | HTML shell (`<head>`/`<body>`), SEO meta, JSON-LD, Google Fonts, scroll-reveal IntersectionObserver |
+| Nav | `Nav.astro` | Mobile menu toggle, `aria-current="section"` on hash links, inline `is:inline` script |
+| Hero | `Hero.astro` | Embedded booking form — client JS in `define:vars` `SCRIPT_DATA` populates selects from `booking_data`, WhatsApp submit |
+| Marquee | `Marquee.astro` | Scrolling ticker |
+| About | `AboutSection.astro` | Static copy from `page-content` |
+| Services | `Services.astro` | Marbella + Milano service grids (same `services` data rendered twice) |
+| Fleet | `Fleet.astro` | `_3-column-collection` car cards, mixed string/number capacity fields, `fleetFeatures` sentence prop |
+| Stats | `StatsSection.astro` | `page-content` stats items |
+| How It Works | `HowItWorks.astro` | Maps `steps` array from `how-it-works` |
+| Pricing | `Pricing.astro` | Two regional cards from `booking_data` + hourly rates from `pricing`/`hourly` entry |
+| Membership | `Membership.astro` | 3-tier cards, `is_featured` badge |
+| CTA | `CtaBanner.astro` + `BottomCta.astro` | Static copy from `page-content` |
+| Footer | `Footer.astro` | Gold accent border, nav links, phones |
+| 404 Page | `PageNotFound.jsx` | React 19 component, inline styles, used by `pages/404.astro` |
 
 ## DATA FLOW
 
 ```
-index.astro (Astro page — document shell + data fetching)
-  ├── BaseHead.astro (SEO meta, fonts, JSON-LD in <head>)
-  └── PageRoot.jsx (React root — receives all data as props, client:load)
-       └── BaseLayout.jsx (React — renders <body> content: skip link, Nav, <main>, Footer)
-            ├── Nav.jsx
-            ├── Hero.jsx ← hero prop
-            ├── HowItWorks.jsx ← howItWorks prop
-            ├── Services.jsx ← marbella, milano props
-            ├── Fleet.jsx ← fleet prop
-            ├── Pricing.jsx ← hourly, airport props
-            ├── Membership.jsx ← membership prop
-            ├── Faq.jsx ← faq prop
-            ├── Contact.jsx
-            │    └── ContactForm.jsx
-            ├── Footer.jsx
-            └── MobileActionBar.jsx
+src/pages/index.astro (Astro page — frontmatter fetches all collections, resolves templates)
+  └── BaseLayout.astro
+       ├── Nav.astro ← brandName, pageContent
+       ├── Hero.astro ← hero fields, pageContent (booking_data)
+       ├── Marquee / About / Services / Fleet / Stats / HowItWorks / Pricing / Membership
+       │      ← collection data + pageContent props
+       ├── CtaBanner / BottomCta / Footer
 ```
+
+Sections are stateless `.astro` templates — no client JS except Nav menu + Hero booking form (both `is:inline` / `define:vars`). Animations are CSS + the global `[data-scroll-reveal]` IntersectionObserver in `BaseLayout`.
 
 ## CONVENTIONS
 
-- **All components** are React `.jsx` — no `.astro` template files (pages remain `.astro` only for content collection data fetching).
-- **Single-file components** — no extracted CSS modules. `<style>` tags co-located in JSX.
-- **Tailwind classes** everywhere — no inline `style` objects except for dynamic values (SVG data URIs, transition delays).
-- **Aria labels** on all interactive sections, `aria-hidden="true"` on decorative elements, `role="status"`, `role="alert"` on dynamic regions.
-- **React hooks** for state/effects: `useState` for UI state, `useEffect` for DOM observers and subscriptions, `useRef` for DOM references.
-- **Inline `<style>` tags** for component-scoped animations (scoped by class names, no `is:global` equivalent needed).
-- **Content collection data** is fetched exclusively in `.astro` page frontmatter and passed as props to React components.
+- **All sections** are `.astro` files in `src/components/sections/`. Only `PageNotFound.jsx` is React (used by `pages/404.astro`).
+- **Content collection data is fetched only in `.astro` page frontmatter**, passed as props to sections. Sections never call `getCollection`.
+- **All copy from CMS collections** — no hardcoded business text in components. Non-CMS technical strings go in `src/config/strings.js`, inline SVGs in `src/config/icons.js`.
+- **Template placeholders** (`{location1}`, `{site_name}`, `{vehicle}`) are resolved in `index.astro` via `resolveTemplates`, not inside sections.
+- **CSS**: Tailwind v4 utilities + class hooks into `public/styles/global.css` design tokens (`--colors--*`, `--font-families--*`). No CSS modules, no CSS-in-JS.
+- **Aria labels** on interactive sections, `aria-hidden="true"` on decorative, `role="list"`/`role="listitem"` for collection grids.
+- **Motion**: CSS transitions/keyframes + `[data-scroll-reveal]` attribute — `BaseLayout` observes, adds `data-scroll-reveal-visible` when in view. Respect `prefers-reduced-motion`.
 
 ## ANTI-PATTERNS
 
-- **Do NOT** add `.astro` components — all new sections must be `.jsx`.
-- **Do NOT** use external CSS-in-JS — Tailwind utilities + `<style>` tags only.
-- **Do NOT** use `any` types or `@ts-ignore` in React components.
-- **Do NOT** use `dangerouslySetInnerHTML` except for HTML entity icons (ServiceCard).
-- **Do NOT** add `client:*` directives to individual section components — `client:load` is set once on `PageRoot` in the Astro page.
-- **Do NOT** import `global.css` in React components — import it in `.astro` pages only (ensures SSR availability).
+- **Do NOT** fetch content inside `.astro` sections — data comes from `index.astro` props only.
+- **Do NOT** hardcode business copy in components — goes in a collection file, CMS-editable.
+- **Do NOT** add CSS-in-JS or new CSS files — utilities + `global.css` tokens.
+- **Do NOT** add React components unless extending `PageNotFound.jsx` scope.
+- **Do NOT** edit `public/admin/config.yml` without mirroring `src/content.config.ts` Zod schemas.
+- **Do NOT** trust old README claims about a React architecture — this is Astro; the old JSX tree was deleted.
+
+> Historical note: this file previously documented a React 19 `.jsx` section architecture (PageRoot.jsx, ServiceCard.jsx, BaseLayout.jsx) that no longer exists. All sections were rebuilt as Astro components; conventions above reflect current code.

@@ -1,7 +1,9 @@
 ---
+const { pageContent } = Astro.props;
 import STRINGS from '../../config/strings';
 import { ICONS } from '../../config/icons';
-const s = STRINGS;
+import { resolveLabels } from '../../config/labels';
+const s = resolveLabels(pageContent, STRINGS);
 const items = Array.from({ length: 4 }, () => ({ text: s.marquee.text }));
 ---
 <section id="marquee" class="marquee-section" aria-label={s.marquee.ariaLabel}>

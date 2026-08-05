@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import STRINGS, { SITE_NAME } from '../config/strings';
+const s = STRINGS;
+
+const pageContent = {
+  seo: {
+    title: `${SITE_NAME} — Luxury Cars`,
+    description: 'VIPER Security luxury cars.',
+  },
+};
+---
+<BaseLayout pageContent={pageContent} brandName={SITE_NAME}>
+  <section class="placeholder-section">
+    <div class="content-wrapper">
+      <h1>{s.nav.luxuryCars}</h1>
+      <p>Coming soon.</p>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .placeholder-section {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    color: var(--colors--ivory);
+  }
+</style>

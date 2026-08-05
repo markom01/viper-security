@@ -1,8 +1,9 @@
 ---
 const { pageContent } = Astro.props;
 import STRINGS from '../../config/strings';
+import { resolveLabels } from '../../config/labels';
 import { ICONS } from '../../config/icons';
-const s = STRINGS;
+const s = resolveLabels(pageContent, STRINGS);
 const stats = pageContent?.stats;
 const items = stats?.items;
 ---

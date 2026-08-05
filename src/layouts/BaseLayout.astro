@@ -1,42 +1,53 @@
 ---
 import STRINGS from '../config/strings';
 const s = STRINGS;
-const { pageContent } = Astro.props;
+import Nav from '../components/sections/Nav.astro';
+import Footer from '../components/sections/Footer.astro';
+
+const {
+  pageContent,
+  brandName,
+  subtitle,
+  navItems,
+  footerItems,
+  ctaLabel,
+} = Astro.props;
 const seo = pageContent?.seo;
 const cmsJd = pageContent?.jsonld;
 const siteUrl = Astro.site || new URL('https://vipersecurity.com');
-const ogImageUrl = new URL('/images/hero-image.webp', siteUrl);
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
 const bd = pageContent?.booking_data;
+const ogImage = seo?.image || '/images/hero-image_upscaled.webp';
+const ogImageUrl = seo?.image ? (seo.image.startsWith('http') ? seo.image : new URL(seo.image, siteUrl)) : null;
 const jd = {
   orgName: cmsJd?.org_name,
   orgUrl: cmsJd?.org_url,
   orgLogo: cmsJd?.org_logo,
   orgDescription: cmsJd?.org_description,
-  webSiteName: s.jsonld.webSiteName,
-  webSiteUrl: s.jsonld.webSiteUrl,
+  webSiteName: cmsJd?.webSiteName || s.jsonld.webSiteName,
+  webSiteUrl: cmsJd?.webSiteUrl || s.jsonld.webSiteUrl,
   phoneItaly: cmsJd?.phoneItaly || s.jsonld.phoneItaly,
   phoneSpain: cmsJd?.phoneSpain || s.jsonld.phoneSpain,
-  privacyPolicy: cmsJd?.privacy_policy,
   spainLocality: bd?.spain?.short_label || 'Marbella',
   italyLocality: bd?.italy?.short_label || 'Milano',
+  hasAddress: !!(bd?.spain?.short_label || bd?.italy?.short_label || false),
 };
-const jsonLdOrg = `<script type="application/ld+json">
+const addressJson = jd.hasAddress ? `,
+  "address": [
+    {"@type": "PostalAddress", "addressLocality": "${jd.spainLocality}", "addressCountry": "ES"},
+    {"@type": "PostalAddress", "addressLocality": "${jd.italyLocality}", "addressCountry": "IT"}
+  ]` : '';
+const jsonLdOrg = cmsJd?.org_name ? `<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "${jd.orgName}",
   "url": "${jd.orgUrl}",
   "logo": "${jd.orgLogo}",
-  "description": "${jd.orgDescription}",
-  "address": [
-    {"@type": "PostalAddress", "addressLocality": "${jd.spainLocality}", "addressCountry": "ES"},
-    {"@type": "PostalAddress", "addressLocality": "${jd.italyLocality}", "addressCountry": "IT"}
-  ],
-  "telephone": ["${jd.phoneSpain}", "${jd.phoneItaly}"],
-  "privacyPolicy": "${jd.privacyPolicy}"
+  "description": "${jd.orgDescription}"${addressJson},
+  "telephone": ["${jd.phoneSpain}", "${jd.phoneItaly}"]
 }
-<\/script>`;
+<\/script>` : '';
 const jsonLdWebSite = `<script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -46,7 +57,6 @@ const jsonLdWebSite = `<script type="application/ld+json">
 }
 <\/script>`;
 ---
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -60,17 +70,17 @@ const jsonLdWebSite = `<script type="application/ld+json">
   <meta content={seo?.description} name="description">
   <meta content={seo?.title} property="og:title">
   <meta content={seo?.description} property="og:description">
-  <meta content={ogImageUrl} property="og:image">
+  {ogImageUrl && <meta content={ogImageUrl} property="og:image">}
   <meta property="og:url" content={canonicalUrl}>
   <meta property="og:site_name" content={jd.orgName}>
   <meta property="og:locale" content={s.seo.ogLocale}>
   <meta content={seo?.title} name="twitter:title">
   <meta content={seo?.description} name="twitter:description">
-  <meta content={ogImageUrl} name="twitter:image">
+  {ogImageUrl && <meta content={ogImageUrl} name="twitter:image">}
   <meta property="og:type" content={s.seo.ogType}>
   <meta content={s.seo.twitterCard} name="twitter:card">
   <meta content="width=device-width, initial-scale=1" name="viewport">
-  <meta name="theme-color" content={seo?.theme_color}>
+  {seo?.theme_color && <meta name="theme-color" content={seo?.theme_color}>}
   <style>:root{--colors--gold-bright:#c8a04c;}</style>
   <style>
     @font-face { font-family: "Fallback"; size-adjust: 100%; }
@@ -79,14 +89,16 @@ const jsonLdWebSite = `<script type="application/ld+json">
   <link href="https://fonts.googleapis.com/" rel="preconnect">
   <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin="anonymous">
   <link href="/favicon.svg" rel="shortcut icon" type="image/x-icon">
-  <Fragment set:html={jsonLdOrg} />
+  {jsonLdOrg && <Fragment set:html={jsonLdOrg} />}
   <Fragment set:html={jsonLdWebSite} />
 </head>
 <body>
+  <Nav brandName={brandName ?? jd.orgName ?? s.jsonld.webSiteName} pageContent={pageContent} navItems={navItems} ctaLabel={ctaLabel} />
   <a href="#main-content" class="skip-link">{s.accessibility.skipLink}</a>
   <main id="main-content" class="page-wrapper" aria-label="Main content">
     <slot />
   </main>
+  <Footer brandName={brandName ?? jd.orgName ?? s.jsonld.webSiteName} pageContent={pageContent} footerItems={footerItems} />
   <script is:inline>
 (function() {
   var els = document.querySelectorAll('[data-scroll-reveal]');

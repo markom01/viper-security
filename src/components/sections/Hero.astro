@@ -2,8 +2,9 @@
 const { pageContent } = Astro.props;
 const { subtitle, cta_text, tagline, hero_image, phoneItaly, phoneSpain } = Astro.props;
 import STRINGS from '../../config/strings';
+import { resolveLabels } from '../../config/labels';
 import { ICONS } from '../../config/icons';
-const s = STRINGS;
+const s = resolveLabels(pageContent, STRINGS);
 
 const bd = pageContent?.booking_data;
 const SCRIPT_DATA = {
