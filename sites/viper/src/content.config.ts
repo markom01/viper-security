@@ -93,6 +93,7 @@ const pageContent = defineCollection({
       phoneSpain: z.string().optional(),
       phoneItaly: z.string().optional(),
     }).optional(),
+    map_embed_url: z.string().optional(),
     booking_data: z.object({
       spain: z.object({
         label: z.string(),
@@ -134,6 +135,7 @@ const pageContent = defineCollection({
     }).optional(),
     stats: z.object({
       subheading: z.string().optional(),
+      image: z.string(),
       items: z.array(z.object({
         label: z.string(),
         title: z.string(),

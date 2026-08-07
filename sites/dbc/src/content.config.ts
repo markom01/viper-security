@@ -60,8 +60,14 @@ const pageContent = defineCollection({
     fleet: z.object({
       heading: z.string().optional(),
     }).optional(),
+    about: z.object({
+      heading: z.string().optional(),
+      text: z.string().optional(),
+      image: z.string().optional(),
+    }).optional(),
     stats: z.object({
       subheading: z.string().optional(),
+      image: z.string(),
       items: z.array(z.object({
         label: z.string(),
         title: z.string(),
@@ -83,6 +89,7 @@ const pageContent = defineCollection({
       luxury_without_limits: z.string().optional(),
       professional_discreet_reliable: z.string().optional(),
     }).optional(),
+    map_embed_url: z.string().optional(),
     labels: z.record(z.string(), z.string()).optional(),
   }),
 });

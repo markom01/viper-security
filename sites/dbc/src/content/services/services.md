@@ -1,15 +1,15 @@
 ---
 offerings:
   - region: Garage
-    title: Full Restoration
-    description: Complete strip-down, bodywork, and rebuild to factory-plus condition.
+    title: Supercar Transport
+    description: Enclosed, insured and fully tracked transport for supercars, exotics and one-offs, anywhere in Europe.
   - region: Garage
-    title: Performance Tuning
-    description: Engine tunes, turbo kits, and drivetrain upgrades for real power gains.
+    title: Import & Export
+    description: Full-service vehicle import and export — paperwork, customs, shipping and delivery handled end to end.
   - region: Garage
-    title: Custom Fabrication
-    description: One-off body kits, brackets, and show-ready metalwork built in-house.
+    title: Classic Cars & Motorcycles Sale & Auction
+    description: Consignment sale and live auction of classic cars and motorcycles, matched with the right buyers.
   - region: Garage
-    title: Interior Upgrades
-    description: Bespoke leather, stitching, and electronics tailored to your taste.
+    title: Automotive Customizing & Design Projects
+    description: Bespoke design and build projects — restomod, widebody, interior and show-grade finishing.
 ---

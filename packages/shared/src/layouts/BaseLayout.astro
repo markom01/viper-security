@@ -3,6 +3,8 @@ import STRINGS from '../config/strings';
 const s = STRINGS;
 import Nav from '../components/sections/Nav.astro';
 import Footer from '../components/sections/Footer.astro';
+import '../styles/global.css';
+import 'lenis/dist/lenis.css';
 
 const {
   pageContent,
@@ -11,7 +13,9 @@ const {
   navItems,
   footerItems,
   ctaLabel,
+  fontLink,
 } = Astro.props;
+const FONT_LINK = fontLink || 'https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&family=Noto+Serif:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap';
 const seo = pageContent?.seo;
 const cmsJd = pageContent?.jsonld;
 const siteUrl = Astro.site || new URL('https://vipersecurity.com');
@@ -63,8 +67,8 @@ const jsonLdWebSite = `<script type="application/ld+json">
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <style>[tabindex="-1"]:focus-visible{outline:2px solid var(--colors--amber);outline-offset:2px;}:focus-visible{outline:2px solid var(--colors--amber);outline-offset:2px;}.skip-link{position:absolute;top:-100%;left:0;z-index:9999;padding:12px 24px;background:var(--colors--onyx);color:var(--colors--amber);font-family:var(--font-families--body-font);font-size:1rem;text-decoration:none;}.skip-link:focus{top:0;}</style>
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&family=Noto+Serif:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-  <link href="/styles/global.css" rel="stylesheet">
+  <link href={FONT_LINK} rel="stylesheet">
+  <link href="/styles/theme.css" rel="stylesheet">
   <title>{seo?.title}</title>
   <link rel="canonical" href={canonicalUrl}>
   <meta content={seo?.description} name="description">
@@ -81,7 +85,6 @@ const jsonLdWebSite = `<script type="application/ld+json">
   <meta content={s.seo.twitterCard} name="twitter:card">
   <meta content="width=device-width, initial-scale=1" name="viewport">
   {seo?.theme_color && <meta name="theme-color" content={seo?.theme_color}>}
-  <style>:root{--colors--gold-bright:#c8a04c;}</style>
   <style>
     @font-face { font-family: "Fallback"; size-adjust: 100%; }
     body { font-display: swap !important; }
@@ -99,6 +102,16 @@ const jsonLdWebSite = `<script type="application/ld+json">
     <slot />
   </main>
   <Footer brandName={brandName ?? jd.orgName ?? s.jsonld.webSiteName} pageContent={pageContent} footerItems={footerItems} />
+  <script>
+import Lenis from 'lenis';
+// Smooth scroll.
+new Lenis({
+  autoRaf: true,
+  autoToggle: true,
+  anchors: { offset: 80 },
+  allowNestedScroll: true,
+});
+</script>
   <script is:inline>
 (function() {
   var els = document.querySelectorAll('[data-scroll-reveal]');

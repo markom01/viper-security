@@ -7,6 +7,7 @@ jsonld:
   phoneSpain: +34 670 038 541
   phoneItaly: +39 349 663 8171
   privacy_policy: https://vipersecurity.com/privacy-policy
+map_embed_url: "https://www.google.com/maps?q=Costa+del+Sol,+Marbella,+Spain&output=embed"
 booking_data:
   spain:
     label: Costa del Sol — Marbella
@@ -94,6 +95,7 @@ stats:
   subheading: From airport transfers to VIP events, we deliver a seamless luxury
     experience backed by years of industry expertise and a commitment to
     excellence.
+  image: https://cdn.prod.website-files.com/674324efa61b92a6f6b76bbb/675ed6b1b0486ab0bfad3bc8_metrics-bg-image.jpg
   items:
     - label: 15+
       title: Years Driving Experience

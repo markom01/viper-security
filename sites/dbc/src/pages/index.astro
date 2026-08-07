@@ -4,30 +4,34 @@ import BaseLayout from '@garage/shared/layouts/BaseLayout.astro';
 
 import Hero from '@garage/shared/sections/Hero.astro';
 import StatsSection from '@garage/shared/sections/StatsSection.astro';
+import AboutSection from '@garage/shared/sections/AboutSection.astro';
+import Services from '@garage/shared/sections/Services.astro';
 import HowItWorks from '@garage/shared/sections/HowItWorks.astro';
 import CtaBanner from '@garage/shared/sections/CtaBanner.astro';
 import BottomCta from '@garage/shared/sections/BottomCta.astro';
+import { buildNav } from '../data/nav';
 
 const [heroEntry] = await getCollection('hero');
 const [pageContentEntry] = await getCollection('page-content');
 const [howItWorksEntry] = await getCollection('how-it-works');
+const [servicesEntry] = await getCollection('services');
 
 const hero = heroEntry?.data || {};
 const pageContent = pageContentEntry?.data || {};
 
-// Garage nav/foot as data — labels from dbc CMS with literal fallback.
-const labels = pageContent?.labels ?? {};
-const navItems = [
-  { label: labels['nav.home'] || 'Home', href: '/' },
-  { label: labels['nav.about'] || 'About', href: '/#about' },
-  { label: labels['nav.services'] || 'Services', href: '/#services' },
-  { label: labels['nav.howItWorks'] || 'How It Works', href: '/#how-it-works' },
-];
+// Sveltia CMS rejects dotted field names — CMS saves underscore keys,
+// normalize to dot-path so resolveLabels/nav dot lookups work unchanged.
+const labels = Object.fromEntries(
+  Object.entries(pageContent?.labels ?? {}).map(([k, v]) => [k.replace(/_/g, '.'), v])
+);
+const navItems = buildNav(labels);
 const ctaLabel = labels['nav.contact'] || 'Get A Quote';
 
 const howItWorks = howItWorksEntry?.data || {};
+const services = servicesEntry?.data?.offerings || [];
 ---
-<BaseLayout pageContent={pageContent} brandName={hero.brand_name} navItems={navItems} footerItems={navItems} ctaLabel={ctaLabel}>
+<BaseLayout pageContent={pageContent} brandName={hero.brand_name} navItems={navItems} footerItems={navItems} ctaLabel={ctaLabel}
+  fontLink="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
   <Hero
     subtitle={hero.subtitle}
     cta_text={hero.cta_text}
@@ -35,6 +39,8 @@ const howItWorks = howItWorksEntry?.data || {};
     hero_image={hero.hero_image}
     pageContent={pageContent}
   />
+  <AboutSection pageContent={pageContent} />
+  <Services pageContent={pageContent} marbella={services} milano={services} />
   <StatsSection pageContent={pageContent} />
   <HowItWorks steps={howItWorks.steps} pageContent={pageContent} />
   <CtaBanner pageContent={pageContent} />

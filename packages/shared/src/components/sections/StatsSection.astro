@@ -7,7 +7,7 @@ const s = resolveLabels(pageContent, STRINGS);
 const stats = pageContent?.stats;
 const items = stats?.items;
 ---
-<section id="stats" class="section home-metrics-section">
+<section id="stats" class="section home-metrics-section" style={`--metrics-bg: url(${stats?.image})`}>
   <div class="content-wrapper">
     <div class="metrics-content-wrapper">
       <div data-scroll-reveal class="metrics-heading-wrapper">
@@ -41,4 +41,4 @@ const items = stats?.items;
     </div>
   </div>
 </section>
-<style>:root{--colors--gold-bright:#c8a04c}.metric-number{color:var(--colors--gold-bright)}</style>
+<style>.metric-number{color:var(--colors--gold-bright)}</style>

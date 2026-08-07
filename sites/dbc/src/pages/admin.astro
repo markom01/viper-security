@@ -10,19 +10,6 @@ const ADMIN_TITLE = 'DB Custom Garage — Admin';
   <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
 </head>
 <body>
-  <script is:inline src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script>
-    const ni = window.netlifyIdentity;
-    if (ni) {
-      ni.on("init", function(user) {
-        if (!user) {
-          ni.on("login", function() {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
-  </script>
+  <script is:inline src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
 </body>
 </html>

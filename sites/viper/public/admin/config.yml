@@ -1,5 +1,5 @@
 backend:
-  name: git-gateway
+  name: github
   repo: markom01/viper-security
   branch: main
 
@@ -123,9 +123,6 @@ collections:
         label: All Page Text
         file: sites/viper/src/content/page-content/content.md
         fields:
-          - label: JSON-LD
-            name: jsonld_labels
-            widget: meta
           - name: jsonld
             label: JSON-LD / Structured Data
             widget: object
@@ -135,11 +132,9 @@ collections:
               - { name: org_url, label: Organization URL, widget: string }
               - { name: org_logo, label: Logo URL, widget: string }
               - { name: org_description, label: Description, widget: text }
-              - { name: phoneSpain, label: "Phone (Spain)", widget: string }
-              - { name: phoneItaly, label: "Phone (Italy)", widget: string }
-          - label: Booking Routes
-            name: booking_data_labels
-            widget: meta
+              - { name: phoneSpain, label: "Phone (Spain)", widget: string, required: false }
+              - { name: phoneItaly, label: "Phone (Italy)", widget: string, required: false }
+          - { name: map_embed_url, label: "Map Embed URL (Google Maps iframe src)", widget: string, required: false }
           - name: booking_data
             label: Booking Routes
             widget: object
@@ -180,9 +175,6 @@ collections:
                           - { name: route, label: Route, widget: string }
                           - { name: price, label: "Price (optional)", widget: string, required: false }
 
-          - label: SEO
-            name: seo_labels
-            widget: meta
           - name: seo
             label: SEO / Meta
             widget: object
@@ -192,9 +184,6 @@ collections:
               - { name: description, label: Meta Description, widget: text }
               - { name: theme_color, label: Theme Color, widget: string }
 
-          - label: About Section
-            name: about_labels
-            widget: meta
           - name: about
             label: About
             widget: object
@@ -203,18 +192,12 @@ collections:
               - { name: heading, label: Heading, widget: string }
               - { name: text, label: Body Text, widget: text }
               - { name: image, label: About Image, widget: image, required: false }
-          - label: Fleet Section
-            name: fleet_labels
-            widget: meta
           - name: fleet
             label: Fleet
             widget: object
             collapsed: true
             fields:
               - { name: heading, label: Heading, widget: string }
-          - label: Stats Section
-            name: stats_labels
-            widget: meta
           - name: stats
             label: Stats
             widget: object
@@ -227,18 +210,12 @@ collections:
                 fields:
                   - { name: label, label: Label (e.g. 99%), widget: string }
                   - { name: title, label: Title (e.g. Client Satisfaction), widget: string }
-          - label: How It Works
-            name: howitworks_labels
-            widget: meta
           - name: howitworks
             label: How It Works
             widget: object
             collapsed: true
             fields:
               - { name: heading, label: Heading, widget: string }
-          - label: CTA Banner
-            name: cta_labels
-            widget: meta
           - name: cta
             label: CTA Banner
             widget: object
@@ -247,9 +224,6 @@ collections:
               - { name: heading, label: Heading, widget: string }
               - { name: text, label: Body Text, widget: text }
               - { name: image, label: CTA Image, widget: image, required: false }
-          - label: Bottom CTA
-            name: bottomcta_labels
-            widget: meta
           - name: bottomcta
             label: Bottom CTA
             widget: object
@@ -262,9 +236,6 @@ collections:
                 fields:
                   - { name: title, label: Title, widget: string }
                   - { name: text, label: Text, widget: text }
-          - label: Branding
-            name: branding_labels
-            widget: meta
           - name: branding
             label: Branding
             widget: object

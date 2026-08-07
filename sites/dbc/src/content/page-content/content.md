@@ -16,6 +16,7 @@ fleet:
   heading: Our Builds
 stats:
   subheading: Why Choose DB Custom Garage?
+  image: /images/stats-bg.webp
   items:
     - label: 15+
       title: Years of Build Experience
@@ -36,27 +37,33 @@ bottomcta:
 branding:
   luxury_without_limits: Custom Builds, No Limits
   professional_discreet_reliable: Professional • Discreet • Reliable
+about:
+  heading: About DB Custom Garage
+  text: From elite supercar transport to full import/export logistics, classic car and motorcycle auctions, and one-off customizing and design projects, DB Custom Garage handles the vehicles the rest of the industry won\'t touch. We move, sell, and build exceptional cars and motorcycles across Europe.
 # CMS-editable UI labels — override the shared STRINGS chrome with garage wording.
 labels:
-  fleet.subheadline: Our Builds
-  stats.heading: Why Choose DB Custom Garage?
-  stats.button: Book Your Build
-  cta.button: Start A Build
-  bottomCta.buttonServices: Our services
-  bottomCta.buttonFleet: View Builds
-  howItWorks.subheadline: How It Works
-  hero.learnMore: Learn More
-  hero.exploreFleet: View Our Builds
-  hero.formName: Get A Quote
-  form.bookNow: Send Enquiry
-  marquee.text: Custom Builds
-  marquee.ariaLabel: Trusted Custom Car Builder
-  marquee.srHeading: Trusted Custom Car Builder
-  nav.contact: Get A Quote
-  nav.fleet: Our Builds
-  nav.homeAria: DB Custom Garage home
-  hero.imageAlt: DB Custom Garage custom build
-  hero.bookingFormAria: Get A Quote Form
-  fleet.vehicleAltFallback: DB Custom Garage build
-  footer.pagesHeading: Links
+  fleet_subheadline: Our Builds
+  stats_heading: Why Choose DB Custom Garage?
+  stats_button: Book Your Build
+  cta_button: Start A Build
+  bottomCta_buttonServices: Our services
+  bottomCta_buttonFleet: View Builds
+  howItWorks_subheadline: How It Works
+  hero_learnMore: Learn More
+  hero_exploreFleet: View Our Builds
+  hero_formName: Get A Quote
+  form_bookNow: Send Enquiry
+  marquee_text: Custom Builds
+  nav_contact: Get A Quote
+  nav_fleet: Our Builds
+  nav_gallery: Gallery
+  nav_home: Home
+  nav_about: About
+  nav_services: Services
+  nav_howItWorks: How It Works
+  nav_homeAria: DB Custom Garage home
+  hero_imageAlt: DB Custom Garage custom build
+  hero_bookingFormAria: Get A Quote Form
+  fleet_vehicleAltFallback: DB Custom Garage build
+  footer_pagesHeading: Links
 ---

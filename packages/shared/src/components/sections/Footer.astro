@@ -21,6 +21,7 @@ const links = footerItems ?? [
 
 const cleanPhone = (phone: string) => phone?.replace(/[\s+]/g, '') || '';
 const phoneSep = s.footer.phoneSeparator;
+const mapEmbedUrl = pageContent?.map_embed_url;
 ---
 <footer class="footer" role="contentinfo">
   <div class="content-wrapper">
@@ -58,6 +59,20 @@ const phoneSep = s.footer.phoneSeparator;
             </div>
           </div>
         </div>
+        {mapEmbedUrl && (
+          <div class="footer-map-wrapper">
+            <iframe
+              src={mapEmbedUrl}
+              width="100%"
+              height="220"
+              style="border:0"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Location map"
+              allowfullscreen
+            ></iframe>
+          </div>
+        )}
       </div>
     </div>
   </div>

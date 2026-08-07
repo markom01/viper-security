@@ -1,5 +1,5 @@
 backend:
-  name: git-gateway
+  name: github
   repo: markom01/viper-security
   branch: main
 
@@ -70,8 +70,9 @@ collections:
               - { name: org_url, label: Organization URL, widget: string }
               - { name: org_logo, label: Logo URL, widget: string }
               - { name: org_description, label: Description, widget: text }
-              - { name: phoneSpain, label: "Phone (Spain)", widget: string }
-              - { name: phoneItaly, label: "Phone (Italy)", widget: string }
+              - { name: phoneSpain, label: "Phone (Spain)", widget: string, required: false }
+              - { name: phoneItaly, label: "Phone (Italy)", widget: string, required: false }
+          - { name: map_embed_url, label: "Map Embed URL (Google Maps iframe src)", widget: string, required: false }
           - name: seo
             label: SEO / Meta
             widget: object
@@ -86,6 +87,7 @@ collections:
             collapsed: true
             fields:
               - { name: subheading, label: Subheading, widget: text }
+              - { name: image, label: Background Image, widget: image }
               - label: Items
                 name: items
                 widget: list
@@ -112,6 +114,14 @@ collections:
                 fields:
                   - { name: title, label: Title, widget: string }
                   - { name: text, label: Text, widget: text }
+          - name: about
+            label: About Section
+            widget: object
+            collapsed: true
+            fields:
+              - { name: heading, label: Heading, widget: string }
+              - { name: text, label: Body Text, widget: text }
+              - { name: image, label: About Image, widget: image, required: false }
           - name: branding
             label: Branding
             widget: object
@@ -124,20 +134,25 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { name: "fleet.subheadline", label: "Builds Section Label", widget: string }
-              - { name: "stats.heading", label: "Stats Heading", widget: string }
-              - { name: "stats.button", label: "Stats Button", widget: string }
-              - { name: "cta.button", label: "CTA Button", widget: string }
-              - { name: "bottomCta.buttonServices", label: "Bottom CTA Services Button", widget: string }
-              - { name: "bottomCta.buttonFleet", label: "Bottom CTA Builds Button", widget: string }
-              - { name: "hero.learnMore", label: "Hero Learn More", widget: string }
-              - { name: "hero.exploreFleet", label: "Hero View Builds", widget: string }
-              - { name: "hero.formName", label: "Hero Form Title", widget: string }
-              - { name: "form.bookNow", label: "Form Submit Button", widget: string }
-              - { name: "marquee.text", label: "Marquee Text", widget: string }
-              - { name: "nav.contact", label: "Nav Contact CTA", widget: string }
-              - { name: "nav.fleet", label: "Nav Fleet Label", widget: string }
-              - { name: "nav.homeAria", label: "Nav Logo Aria Label", widget: string }
-              - { name: "hero.imageAlt", label: "Hero Image Alt Text", widget: string }
-              - { name: "hero.bookingFormAria", label: "Hero Form Aria Label", widget: string }
-              - { name: "fleet.vehicleAltFallback", label: "Build Image Alt Fallback", widget: string }
+              - { name: fleet_subheadline, label: "Builds Section Label", widget: string }
+              - { name: stats_heading, label: "Stats Heading", widget: string }
+              - { name: stats_button, label: "Stats Button", widget: string }
+              - { name: cta_button, label: "CTA Button", widget: string }
+              - { name: bottomCta_buttonServices, label: "Bottom CTA Services Button", widget: string }
+              - { name: bottomCta_buttonFleet, label: "Bottom CTA Builds Button", widget: string }
+              - { name: hero_learnMore, label: "Hero Learn More", widget: string }
+              - { name: hero_exploreFleet, label: "Hero View Builds", widget: string }
+              - { name: hero_formName, label: "Hero Form Title", widget: string }
+              - { name: form_bookNow, label: "Form Submit Button", widget: string }
+              - { name: marquee_text, label: "Marquee Text", widget: string }
+              - { name: nav_contact, label: "Nav Contact CTA", widget: string }
+              - { name: nav_home, label: "Nav Home Label", widget: string }
+              - { name: nav_about, label: "Nav About Label", widget: string }
+              - { name: nav_services, label: "Nav Services Label", widget: string }
+              - { name: nav_howItWorks, label: "Nav How It Works Label", widget: string }
+              - { name: nav_fleet, label: "Nav Fleet Label", widget: string }
+              - { name: nav_gallery, label: "Nav Gallery Label", widget: string }
+              - { name: nav_homeAria, label: "Nav Logo Aria Label", widget: string }
+              - { name: hero_imageAlt, label: "Hero Image Alt Text", widget: string }
+              - { name: hero_bookingFormAria, label: "Hero Form Aria Label", widget: string }
+              - { name: fleet_vehicleAltFallback, label: "Build Image Alt Fallback", widget: string }

@@ -1,0 +1,11 @@
+/* VIPER Security — brand theme. Loaded after shared global.css via BaseLayout.
+   Fonts: Work Sans body, Noto Serif title, Playfair accent.
+   Palette: onyx + gold. */
+:root {
+  --font-families--body-font: "Work Sans", sans-serif;
+  --font-families--title-font: "Noto Serif", sans-serif;
+  --font-families--accent-font: "Playfair Display", sans-serif;
+  --colors--gold: #917148;
+  --colors--gold-bright: #c8a04c;
+  --colors--amber: #c1a176;
+}
