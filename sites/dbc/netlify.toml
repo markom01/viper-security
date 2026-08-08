@@ -2,6 +2,22 @@
   command = "rm -rf .astro node_modules/.astro && npm run build --workspace=@garage/dbc"
   publish = "sites/dbc/dist-dbc"
 
+# Runs Lighthouse on every deploy (push + API-triggered).
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
+# PWA web manifest correct MIME type.
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+
+# Service worker must never be CDN-cached long — SW updates need fresh fetch.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache, must-revalidate"
+
 [[headers]]
   for = "/images/*"
   [headers.values]
