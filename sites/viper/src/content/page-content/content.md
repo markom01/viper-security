@@ -1,12 +1,12 @@
 ---
 jsonld:
   org_name: "{site_name}"
-  org_url: https://vipersecurity.com
-  org_logo: https://vipersecurity.com/images/logo.svg
+  org_url: https://viper-security.netlify.app
+  org_logo: https://viper-security.netlify.app/images/logo.svg
   org_description: Luxury chauffeur & VIP transport services in {location1} and {location2}.
   phoneSpain: +34 670 038 541
   phoneItaly: +39 349 663 8171
-  privacy_policy: https://vipersecurity.com/privacy-policy
+  privacy_policy: https://viper-security.netlify.app/privacy-policy
 map_embed_url: "https://www.google.com/maps?q=Costa+del+Sol,+Marbella,+Spain&output=embed"
 booking_data:
   spain:

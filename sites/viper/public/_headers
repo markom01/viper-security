@@ -4,7 +4,3 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; connect-src 'self'; frame-src https://www.google.com; upgrade-insecure-requests
-
-/admin/*
-  Content-Security-Policy: default-src 'self'; style-src 'unsafe-inline' 'self' https://unpkg.com https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; connect-src 'self' blob: https://unpkg.com https://github.com https://*.github.com https://*.githubusercontent.com https://api.github.com https://*.netlify.app https://*.netlify.com; font-src 'self' https://unpkg.com; frame-src 'none'; object-src 'none'

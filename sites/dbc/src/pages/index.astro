@@ -29,11 +29,12 @@ const services = servicesEntry?.data?.offerings || [];
     tagline={hero.tagline}
     hero_image={hero.hero_image}
     pageContent={pageContent}
+    fleetHref="/gallery"
   />
   <AboutSection pageContent={pageContent} />
   <Services pageContent={pageContent} marbella={services} milano={services} />
   <StatsSection pageContent={pageContent} />
   <HowItWorks steps={howItWorks.steps} pageContent={pageContent} />
   <CtaBanner pageContent={pageContent} />
-  <BottomCta pageContent={pageContent} />
+  <BottomCta pageContent={pageContent} fleetHref="/gallery" />
 </SiteLayout>

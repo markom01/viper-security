@@ -102,6 +102,8 @@ export interface PageContent {
     title?: string;
     description?: string;
     theme_color?: string;
+    /** Absolute or site-root-relative og:image URL. */
+    image?: string;
   };
   jsonld?: {
     org_name?: string;
@@ -112,6 +114,7 @@ export interface PageContent {
     phoneItaly?: string;
     webSiteName?: string;
     webSiteUrl?: string;
+    privacy_policy?: string;
   };
   fleet?: { heading?: string };
   about?: { heading?: string; text?: string; image?: ImageMetadata };

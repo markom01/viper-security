@@ -1,5 +1,9 @@
 ---
-const { pageContent } = Astro.props;
+import type { PageContent } from "../../types";
+const { pageContent, fleetHref = "/#fleet" } = Astro.props as {
+  pageContent?: PageContent;
+  fleetHref?: string;
+};
 import { ICONS } from "../../config/icons";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
@@ -22,7 +26,7 @@ const v = pageContent?.bottomcta?.values;
                 set:html={ICONS.rightArrow}
               />
             </a>
-            <a href="/#fleet" class="primary-button">
+            <a href={fleetHref} class="primary-button">
               <div class="button-text">{s.bottomCta.buttonFleet}</div>
               <span
                 aria-hidden="true"

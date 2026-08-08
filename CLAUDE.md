@@ -50,7 +50,7 @@ Astro 7 static site (no SSR, no adapter, no routing beyond `/`, `/404`, `/admin`
 - **`getCollection('page-content')` is destructured as `[pageContentEntry]`** — exactly one `content.md` allowed; a second file breaks the destructure.
 - **After editing `src/content.config.ts` schemas or collection files**: dev server may serve stale content. Press `s` then Enter in the dev terminal to re-sync the content layer (README-documented).
 - **Fleet capacity fields are mixed types**: `seats`/`baggage`/`year` are strings from CMS ("3"), `capacity_passengers`/`capacity_suitcases`/`capacity_carryon` are numbers. Both rendered in Fleet.astro.
-- `public/_headers` and `netlify.toml` both define security headers — Netlify merges them; change both when editing CSP.
+- CSP is defined only in `netlify.toml` (sole source of truth) — `public/_headers` carries non-CSP headers only. Edit CSP in `netlify.toml` only.
 
 ## graphify
 

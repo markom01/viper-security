@@ -5,7 +5,7 @@
  */
 
 export const SITE_NAME = "VIPER Security";
-const SITE_URL = "https://vipersecurity.com";
+const SITE_URL = "https://viper-security.netlify.app";
 
 const STRINGS = {
   nav: {

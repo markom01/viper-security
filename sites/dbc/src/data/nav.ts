@@ -9,6 +9,7 @@ export function buildNav(labels: Record<string, string>): NavLink[] {
     { label: labels["nav.about"] || "About", href: "/#about" },
     { label: labels["nav.services"] || "Services", href: "/#services" },
     { label: labels["nav.gallery"] || "Gallery", href: "/gallery" },
+    { label: labels["nav.fleet"] || "Builds", href: "/gallery" },
     {
       label: labels["nav.howItWorks"] || "How It Works",
       href: "/#how-it-works",
