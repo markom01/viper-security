@@ -2,6 +2,10 @@
   command = "rm -rf .astro node_modules/.astro && npm run build --workspace=@garage/viper"
   publish = "sites/viper/dist"
 
+# Runs Lighthouse on every deploy (push + API-triggered). Replaces the UI-only plugin.
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
 [[headers]]
   for = "/images/*"
   [headers.values]
