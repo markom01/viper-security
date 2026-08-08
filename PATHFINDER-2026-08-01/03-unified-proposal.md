@@ -9,6 +9,7 @@ For each duplication from `02-duplication-report.md`. Anti-patterns rejected: no
 **Consolidate into:** `src/config/phones.js` — `export const cleanPhone = (phone) => phone?.replace(/[\s+]/g, '') || ''`
 
 **Old call sites:**
+
 - `Footer.astro:9` local `cleanPhone` → import from config
 - `Hero.astro:261` inline `cn=pn.replace(/[\s+]/g,'')` → use helper inside the script (via `define:vars` or a pre-computed field)
 
@@ -19,11 +20,13 @@ For each duplication from `02-duplication-report.md`. Anti-patterns rejected: no
 ## U2. Region defaults → single constant
 
 **Consolidate into:** `src/config/strings.js` — add
+
 ```js
 regionDefaults: { spain: 'Marbella', italy: 'Milano' }
 ```
 
 **Old call sites:**
+
 - `BaseLayout.astro:21-22` → `jd.spainLocality = bd?.spain?.short_label || s.regionDefaults.spain` (and italy)
 - `Pricing.astro:45-46` → same via `s.regionDefaults`
 
@@ -34,11 +37,13 @@ regionDefaults: { spain: 'Marbella', italy: 'Milano' }
 ## U3. Gold-bright token → single definition in global.css
 
 **Consolidate into:** `public/styles/global.css` `:root` block (line ~219 where other `--colors--*` live)
+
 ```css
 --colors--gold-bright: #c8a04c;
 ```
 
 **Old call sites:** remove the `:root{--colors--gold-bright:#c8a04c}` override from:
+
 - `BaseLayout.astro:74`
 - `StatsSection.astro:43`
 - `HowItWorks.astro:43`
@@ -55,6 +60,7 @@ regionDefaults: { spain: 'Marbella', italy: 'Milano' }
 **Consolidate into:** `Services.astro` accepts single `services` prop.
 
 **Old call sites:**
+
 - `index.astro:83` → `<Services services={universalServices.services} .../>`
 - `Services.astro:8` → `const { services } = Astro.props` (drop `marbella`/`milano`)
 

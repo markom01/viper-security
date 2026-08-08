@@ -1,9 +1,10 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "skipLibCheck": true
+    "allowJs": true,
+    "checkJs": false,
+    "skipLibCheck": true,
+    "plugins": [{ "name": "@astrojs/ts-plugin" }]
   },
   "include": ["src/**/*"]
 }

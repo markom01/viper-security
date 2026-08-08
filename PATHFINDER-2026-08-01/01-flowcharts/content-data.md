@@ -14,6 +14,7 @@ flowchart TD
 ```
 
 **Placeholder map (templates.js:28-37):**
+
 - `{location1}` → spain.short_label, `{location2}` → italy.short_label
 - `{location1_full}` → spain.label, `{location2_full}` → italy.label
 - `{location1_name}` → spain.region, `{location2_name}` → italy.region

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro check && astro build",
     "preview": "astro preview",
     "test": "npx playwright test",
     "test:a11y": "npx playwright test e2e/a11y.spec.ts",
@@ -16,20 +16,15 @@
     "check": "astro check"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "@garage/shared": "*",
-    "@astrojs/react": "^6.0.1",
-    "@tailwindcss/vite": "^4.3.2",
     "astro": "^7.0.9",
     "masonry-layout": "^4.2.2",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
-    "tailwindcss": "^4.3.2"
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@playwright/test": "^1.61.1",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
     "lighthouse": "^12.8.2",
     "serve": "^14.2.6",
     "vitest": "^4.1.10",

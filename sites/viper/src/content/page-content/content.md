@@ -82,20 +82,21 @@ seo:
   theme_color: "#000000"
 about:
   heading: World-Class Luxury Chauffeur Services Meticulously Tailored to Perfection
-  text: "{site_name} delivers premium chauffeur-driven travel across {location1},
+  text:
+    "{site_name} delivers premium chauffeur-driven travel across {location1},
     {location2}, and beyond. Our {vehicle} and professional English-speaking
     chauffeur provide discreet, reliable transportation for airport transfers,
     business travel, VIP events, yacht transfers, and exclusive experiences.
     Every journey is tailored to your schedule with privacy, comfort, and
     punctuality at our core."
-  image: /images/about-image-v2.webp
+  image: ../../assets/images/about-image-v2.webp
 fleet:
   heading: Ride Luxury, Every Time
 stats:
   subheading: From airport transfers to VIP events, we deliver a seamless luxury
     experience backed by years of industry expertise and a commitment to
     excellence.
-  image: https://cdn.prod.website-files.com/674324efa61b92a6f6b76bbb/675ed6b1b0486ab0bfad3bc8_metrics-bg-image.jpg
+  image: ../../assets/images/stats-bg.jpg
   items:
     - label: 15+
       title: Years Driving Experience
@@ -109,21 +110,25 @@ howitworks:
   heading: How We Simplify Your Experience
 cta:
   heading: Your First Chauffeur Experience Just Got Better
-  text: Experience the difference of professional chauffeur service. Our {vehicle}
+  text:
+    Experience the difference of professional chauffeur service. Our {vehicle}
     and experienced chauffeur are ready to serve you across {location1},
     {location2}, and the French Riviera.
-  image: /images/marketing-v2.webp
+  image: ../../assets/images/marketing-v2.webp
 bottomcta:
   heading: Ready to Begin Your Journey with Us?
   values:
     - title: Luxury Comfort
-      text: Travel in the finest {vehicle} with leather interior, climate control, and
+      text:
+        Travel in the finest {vehicle} with leather interior, climate control, and
         privacy glass — every ride is first class.
     - title: Reliable Service
-      text: A professional English-speaking chauffeur, flight tracking for airport
+      text:
+        A professional English-speaking chauffeur, flight tracking for airport
         pickups, and 24/7 availability ensure you arrive on time, every time.
     - title: Personal Travel
-      text: From yacht transfers in Puerto Banús to corporate travel in {location2},
+      text:
+        From yacht transfers in Puerto Banús to corporate travel in {location2},
         every itinerary is customized to your schedule and preferences.
 branding:
   luxury_without_limits: LUXURY WITHOUT LIMITS

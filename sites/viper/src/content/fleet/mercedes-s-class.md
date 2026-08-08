@@ -1,6 +1,6 @@
 ---
 name: Mercedes-Benz S-Class 4MATIC AMG
-image: /images/mercedes-s-class-v2.webp
+image: ../../assets/images/mercedes-s-class-v2.webp
 type: Luxury Sedan
 year: "2024"
 seats: "3"

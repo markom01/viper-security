@@ -1,11 +1,15 @@
 /* DB Custom Garage — brand theme. Loaded after shared global.css via BaseLayout.
-   Fonts: Montserrat body/title/accent.
+   Fonts: Montserrat body/title/accent (self-hosted via Astro fonts;
+   --font-families--* values are emitted by <Font> in BaseLayout).
    Palette: onyx + orange. gold-bright = orange-400 for dark bg (footer brand, hover). */
 :root {
-  --font-families--body-font: "Montserrat", sans-serif;
-  --font-families--title-font: "Montserrat", sans-serif;
-  --font-families--accent-font: "Montserrat", sans-serif;
   --colors--gold: #ea580c;
   --colors--gold-bright: #fb923c;
   --colors--amber: #f97416b3;
+}
+
+/* Subheadline renders on white hero bg — #ea580c fails WCAG AA (3.55:1).
+   Darker orange (orange-700) = 5.18:1. Keeps brand family, passes contrast. */
+.hero-text-details .subheadline {
+  color: #c2410c;
 }

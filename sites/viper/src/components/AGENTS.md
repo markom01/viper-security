@@ -4,23 +4,23 @@
 
 ## WHERE TO LOOK
 
-| Component | File | Key Patterns |
-|-----------|------|--------------|
-| Page Root | `src/pages/index.astro` | **Data-fetching hub** — loads all content collections, resolves templates, composes all sections inside `BaseLayout` |
-| Layout Shell | `src/layouts/BaseLayout.astro` | HTML shell (`<head>`/`<body>`), SEO meta, JSON-LD, Google Fonts, scroll-reveal IntersectionObserver |
-| Nav | `Nav.astro` | Mobile menu toggle, `aria-current="section"` on hash links, inline `is:inline` script |
-| Hero | `Hero.astro` | Embedded booking form — client JS in `define:vars` `SCRIPT_DATA` populates selects from `booking_data`, WhatsApp submit |
-| Marquee | `Marquee.astro` | Scrolling ticker |
-| About | `AboutSection.astro` | Static copy from `page-content` |
-| Services | `Services.astro` | Marbella + Milano service grids (same `services` data rendered twice) |
-| Fleet | `Fleet.astro` | `_3-column-collection` car cards, mixed string/number capacity fields, `fleetFeatures` sentence prop |
-| Stats | `StatsSection.astro` | `page-content` stats items |
-| How It Works | `HowItWorks.astro` | Maps `steps` array from `how-it-works` |
-| Pricing | `Pricing.astro` | Two regional cards from `booking_data` + hourly rates from `pricing`/`hourly` entry |
-| Membership | `Membership.astro` | 3-tier cards, `is_featured` badge |
-| CTA | `CtaBanner.astro` + `BottomCta.astro` | Static copy from `page-content` |
-| Footer | `Footer.astro` | Gold accent border, nav links, phones |
-| 404 Page | `PageNotFound.jsx` | React 19 component, inline styles, used by `pages/404.astro` |
+| Component    | File                                  | Key Patterns                                                                                                            |
+| ------------ | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Page Root    | `src/pages/index.astro`               | **Data-fetching hub** — loads all content collections, resolves templates, composes all sections inside `BaseLayout`    |
+| Layout Shell | `src/layouts/BaseLayout.astro`        | HTML shell (`<head>`/`<body>`), SEO meta, JSON-LD, Google Fonts, scroll-reveal IntersectionObserver                     |
+| Nav          | `Nav.astro`                           | Mobile menu toggle, `aria-current="section"` on hash links, inline `is:inline` script                                   |
+| Hero         | `Hero.astro`                          | Embedded booking form — client JS in `define:vars` `SCRIPT_DATA` populates selects from `booking_data`, WhatsApp submit |
+| Marquee      | `Marquee.astro`                       | Scrolling ticker                                                                                                        |
+| About        | `AboutSection.astro`                  | Static copy from `page-content`                                                                                         |
+| Services     | `Services.astro`                      | Marbella + Milano service grids (same `services` data rendered twice)                                                   |
+| Fleet        | `Fleet.astro`                         | `_3-column-collection` car cards, mixed string/number capacity fields, `fleetFeatures` sentence prop                    |
+| Stats        | `StatsSection.astro`                  | `page-content` stats items                                                                                              |
+| How It Works | `HowItWorks.astro`                    | Maps `steps` array from `how-it-works`                                                                                  |
+| Pricing      | `Pricing.astro`                       | Two regional cards from `booking_data` + hourly rates from `pricing`/`hourly` entry                                     |
+| Membership   | `Membership.astro`                    | 3-tier cards, `is_featured` badge                                                                                       |
+| CTA          | `CtaBanner.astro` + `BottomCta.astro` | Static copy from `page-content`                                                                                         |
+| Footer       | `Footer.astro`                        | Gold accent border, nav links, phones                                                                                   |
+| 404 Page     | `PageNotFound.jsx`                    | React 19 component, inline styles, used by `pages/404.astro`                                                            |
 
 ## DATA FLOW
 

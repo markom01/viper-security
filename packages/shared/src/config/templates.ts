@@ -14,26 +14,32 @@
  *
  * Vehicle name:
  *   {vehicle}       → vehicleName parameter (e.g. "Mercedes-Benz S-Class")
- *
- * @param {string} str - String containing placeholders
- * @param {object|undefined} bd - booking_data object from page-content (may be undefined)
- * @param {string} [siteName] - Site/brand name for {site_name} placeholder
- * @param {string} [vehicleName] - Vehicle name for {vehicle} placeholder
- * @returns {string} Resolved string
  */
-export function resolveTemplates(str, bd, siteName, vehicleName) {
-  if (!str) return '';
+
+export interface BookingData {
+  spain?: { short_label?: string; label?: string; region?: string };
+  italy?: { short_label?: string; label?: string; region?: string };
+}
+
+/** Resolve {placeholder} tokens in `str` from booking_data + name params. */
+export function resolveTemplates(
+  str: string,
+  bd: BookingData | undefined,
+  siteName?: string,
+  vehicleName?: string,
+): string {
+  if (!str) return "";
   const s = bd?.spain || {};
   const i = bd?.italy || {};
-  const map = {
-    '{location1}': s.short_label || '',
-    '{location2}': i.short_label || '',
-    '{location1_full}': s.label || '',
-    '{location2_full}': i.label || '',
-    '{location1_name}': s.region || '',
-    '{location2_name}': i.region || '',
-    '{site_name}': siteName || '',
-    '{vehicle}': vehicleName || '',
+  const map: Record<string, string> = {
+    "{location1}": s.short_label || "",
+    "{location2}": i.short_label || "",
+    "{location1_full}": s.label || "",
+    "{location2_full}": i.label || "",
+    "{location1_name}": s.region || "",
+    "{location2_name}": i.region || "",
+    "{site_name}": siteName || "",
+    "{vehicle}": vehicleName || "",
   };
   let result = str;
   for (const [key, value] of Object.entries(map)) {

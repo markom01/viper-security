@@ -1,45 +1,46 @@
 ---
-import BaseLayout from '@garage/shared/layouts/BaseLayout.astro';
+import BaseLayout from "@garage/shared/layouts/BaseLayout.astro";
 
-import Hero from '@garage/shared/sections/Hero.astro';
-import Marquee from '@garage/shared/sections/Marquee.astro';
-import AboutSection from '@garage/shared/sections/AboutSection.astro';
-import Services from '@garage/shared/sections/Services.astro';
-import Fleet from '@garage/shared/sections/Fleet.astro';
-import StatsSection from '@garage/shared/sections/StatsSection.astro';
-import HowItWorks from '@garage/shared/sections/HowItWorks.astro';
-import Pricing from '@garage/shared/sections/Pricing.astro';
-import Membership from '@garage/shared/sections/Membership.astro';
-import CtaBanner from '@garage/shared/sections/CtaBanner.astro';
-import BottomCta from '@garage/shared/sections/BottomCta.astro';
+import Hero from "@garage/shared/sections/Hero.astro";
+import Marquee from "@garage/shared/sections/Marquee.astro";
+import AboutSection from "@garage/shared/sections/AboutSection.astro";
+import Services from "@garage/shared/sections/Services.astro";
+import Fleet from "@garage/shared/sections/Fleet.astro";
+import StatsSection from "@garage/shared/sections/StatsSection.astro";
+import HowItWorks from "@garage/shared/sections/HowItWorks.astro";
+import Pricing from "@garage/shared/sections/Pricing.astro";
+import Membership from "@garage/shared/sections/Membership.astro";
+import CtaBanner from "@garage/shared/sections/CtaBanner.astro";
+import BottomCta from "@garage/shared/sections/BottomCta.astro";
 
-import { getCollection, getEntry } from 'astro:content';
-import { resolveTemplates } from '@garage/shared/config/templates';
-import { SITE_NAME } from '@garage/shared/config/strings';
+import { getCollection, getEntry } from "astro:content";
+import { resolveTemplates } from "@garage/shared/config/templates";
+import { SITE_NAME } from "@garage/shared/config/strings";
 
-const [heroEntry] = await getCollection('hero');
-const [howItWorksEntry] = await getCollection('how-it-works');
-const [servicesEntry] = await getCollection('services');
-const fleetEntries = await getCollection('fleet');
-const [membershipEntry] = await getCollection('membership');
-const [pageContentEntry] = await getCollection('page-content');
+const [heroEntry] = await getCollection("hero");
+const [howItWorksEntry] = await getCollection("how-it-works");
+const [servicesEntry] = await getCollection("services");
+const fleetEntries = await getCollection("fleet");
+const [membershipEntry] = await getCollection("membership");
+const [pageContentEntry] = await getCollection("page-content");
 
 const pageContent = pageContentEntry?.data || {};
 const bd = pageContent?.booking_data;
 const siteName = SITE_NAME;
-const vehicleName = pageContent?.vehicle_name || 'Mercedes-Benz S-Class';
-const allOfferings = (servicesEntry?.data?.offerings || []).map(o => ({
+const vehicleName = pageContent?.vehicle_name || "Mercedes-Benz S-Class";
+const allOfferings = (servicesEntry?.data?.offerings || []).map((o) => ({
   ...o,
   description: resolveTemplates(o.description, bd, siteName, vehicleName),
 }));
 
-const hourlyEntry = await getEntry('pricing', 'hourly');
+const hourlyEntry = await getEntry("pricing", "hourly");
 
 const hero = heroEntry?.data || {};
-if (hero.subtitle) hero.subtitle = resolveTemplates(hero.subtitle, bd, siteName, vehicleName);
+if (hero.subtitle)
+  hero.subtitle = resolveTemplates(hero.subtitle, bd, siteName, vehicleName);
 const howItWorks = howItWorksEntry?.data || {};
 if (howItWorks.steps) {
-  howItWorks.steps = howItWorks.steps.map(s => ({
+  howItWorks.steps = howItWorks.steps.map((s) => ({
     ...s,
     description: resolveTemplates(s.description, bd, siteName, vehicleName),
   }));
@@ -47,38 +48,94 @@ if (howItWorks.steps) {
 const universalServices = { services: allOfferings };
 
 // Resolve location templates in page-content prose fields
-if (pageContent.seo?.title) pageContent.seo.title = resolveTemplates(pageContent.seo.title, bd, siteName, vehicleName);
-if (pageContent.seo?.description) pageContent.seo.description = resolveTemplates(pageContent.seo.description, bd, siteName, vehicleName);
-if (pageContent.jsonld?.org_description) pageContent.jsonld.org_description = resolveTemplates(pageContent.jsonld.org_description, bd, siteName, vehicleName);
-if (pageContent.jsonld?.org_name) pageContent.jsonld.org_name = resolveTemplates(pageContent.jsonld.org_name, bd, siteName, vehicleName);
-if (pageContent.about?.text) pageContent.about.text = resolveTemplates(pageContent.about.text, bd, siteName, vehicleName);
-if (pageContent.cta?.text) pageContent.cta.text = resolveTemplates(pageContent.cta.text, bd, siteName, vehicleName);
+if (pageContent.seo?.title)
+  pageContent.seo.title = resolveTemplates(
+    pageContent.seo.title,
+    bd,
+    siteName,
+    vehicleName,
+  );
+if (pageContent.seo?.description)
+  pageContent.seo.description = resolveTemplates(
+    pageContent.seo.description,
+    bd,
+    siteName,
+    vehicleName,
+  );
+if (pageContent.jsonld?.org_description)
+  pageContent.jsonld.org_description = resolveTemplates(
+    pageContent.jsonld.org_description,
+    bd,
+    siteName,
+    vehicleName,
+  );
+if (pageContent.jsonld?.org_name)
+  pageContent.jsonld.org_name = resolveTemplates(
+    pageContent.jsonld.org_name,
+    bd,
+    siteName,
+    vehicleName,
+  );
+if (pageContent.about?.text)
+  pageContent.about.text = resolveTemplates(
+    pageContent.about.text,
+    bd,
+    siteName,
+    vehicleName,
+  );
+if (pageContent.cta?.text)
+  pageContent.cta.text = resolveTemplates(
+    pageContent.cta.text,
+    bd,
+    siteName,
+    vehicleName,
+  );
 if (pageContent.bottomcta?.values) {
-  pageContent.bottomcta.values = pageContent.bottomcta.values.map(v => ({
+  pageContent.bottomcta.values = pageContent.bottomcta.values.map((v) => ({
     ...v,
     text: resolveTemplates(v.text, bd, siteName, vehicleName),
   }));
 }
 const fleetVehicles = fleetEntries;
 // Collect all features from all vehicles, deduplicate, format as sentence
-const allFleetFeatures = [...new Set(
-  fleetEntries.flatMap(e => e.data.features || [])
-)];
-const fleetFeaturesText = allFleetFeatures.length > 0
-  ? allFleetFeatures.length === 1
-    ? allFleetFeatures[0] + '.'
-    : allFleetFeatures.slice(0, -1).join(', ') + ', and ' + allFleetFeatures.slice(-1)[0] + '.'
-  : '';
+const allFleetFeatures = [
+  ...new Set(fleetEntries.flatMap((e) => e.data.features || [])),
+];
+const fleetFeaturesText =
+  allFleetFeatures.length > 0
+    ? allFleetFeatures.length === 1
+      ? allFleetFeatures[0] + "."
+      : allFleetFeatures.slice(0, -1).join(", ") +
+        ", and " +
+        allFleetFeatures.slice(-1)[0] +
+        "."
+    : "";
 const hourly = hourlyEntry?.data || {};
 const membership = membershipEntry?.data || {};
 ---
 
 <BaseLayout pageContent={pageContent} brandName={hero.brand_name}>
-  <Hero subtitle={hero.subtitle} cta_text={hero.cta_text} tagline={hero.tagline} hero_image={hero.hero_image} phoneItaly={hero.phone_italy} phoneSpain={hero.phone_spain} pageContent={pageContent} />
+  <Hero
+    subtitle={hero.subtitle}
+    cta_text={hero.cta_text}
+    tagline={hero.tagline}
+    hero_image={hero.hero_image}
+    phoneItaly={hero.phone_italy}
+    phoneSpain={hero.phone_spain}
+    pageContent={pageContent}
+  />
   <Marquee pageContent={pageContent} />
   <AboutSection pageContent={pageContent} />
-  <Services marbella={universalServices.services} milano={universalServices.services} pageContent={pageContent} />
-  <Fleet vehicles={fleetVehicles} pageContent={pageContent} fleetFeatures={fleetFeaturesText} />
+  <Services
+    marbella={universalServices.services}
+    milano={universalServices.services}
+    pageContent={pageContent}
+  />
+  <Fleet
+    vehicles={fleetVehicles}
+    pageContent={pageContent}
+    fleetFeatures={fleetFeaturesText}
+  />
   <StatsSection pageContent={pageContent} />
   <HowItWorks steps={howItWorks.steps} pageContent={pageContent} />
   <Pricing hourly={hourly} pageContent={pageContent} />

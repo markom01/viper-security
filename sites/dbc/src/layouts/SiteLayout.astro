@@ -1,0 +1,43 @@
+---
+// DB Custom Garage per-site layout — wraps the shared BaseLayout.
+// Centralizes the DBC chrome (brandName, navItems, footerItems, ctaLabel)
+// so pages only pass `pageContent` + slot content.
+import BaseLayout from "@garage/shared/layouts/BaseLayout.astro";
+import type { PageContent } from "@garage/shared/types";
+import { buildNav } from "../data/nav";
+
+interface Props {
+  /** page-content collection entry data (seo, jsonld, labels, booking_data, ...). */
+  pageContent: PageContent;
+}
+
+const { pageContent } = Astro.props;
+
+// Sveltia CMS rejects dotted field names — CMS saves underscore keys,
+// normalize to dot-path so buildNav AND shared-section resolveLabels lookups
+// (which split on ".") both work unchanged.
+const normalizeKey = (k: string) => k.replace(/_/g, ".");
+const labels: Record<string, string> = Object.fromEntries(
+  Object.entries(pageContent?.labels ?? {}).map(([k, v]) => [
+    normalizeKey(k),
+    String(v),
+  ]),
+);
+
+const normalizedContent: PageContent = {
+  ...pageContent,
+  labels,
+};
+
+const navItems = buildNav(labels);
+const ctaLabel = labels["nav.contact"] || "Get A Quote";
+---
+
+<BaseLayout
+  pageContent={normalizedContent}
+  navItems={navItems}
+  footerItems={navItems}
+  ctaLabel={ctaLabel}
+>
+  <slot />
+</BaseLayout>

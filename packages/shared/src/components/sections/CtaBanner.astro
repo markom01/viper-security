@@ -1,10 +1,12 @@
 ---
+import { Image } from "astro:assets";
 const { pageContent } = Astro.props;
-import { ICONS } from '../../config/icons';
-import STRINGS from '../../config/strings';
-import { resolveLabels } from '../../config/labels';
+import { ICONS } from "../../config/icons";
+import STRINGS from "../../config/strings";
+import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
 ---
+
 <section class="section marketing-section">
   <div class="content-wrapper">
     <div class="marketing-content-wrapper">
@@ -15,11 +17,26 @@ const s = resolveLabels(pageContent, STRINGS);
         </div>
         <a href="/#contact" class="secondary-button">
           <div class="button-text">{s.cta.button}</div>
-          <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrowPure} />
+          <span
+            aria-hidden="true"
+            class="button-arrow"
+            set:html={ICONS.rightArrowPure}
+          />
         </a>
       </div>
       <div data-scroll-reveal class="marketing-image-wrapper">
-        <img src={pageContent?.cta?.image} loading="eager" alt={s.cta.imageAlt} class="marketing-image" width="600" height="500" />
+        {
+          pageContent?.cta?.image && (
+            <Image
+              src={pageContent.cta.image}
+              loading="eager"
+              alt={s.cta.imageAlt}
+              class="marketing-image"
+              width="600"
+              height="500"
+            />
+          )
+        }
       </div>
     </div>
   </div>

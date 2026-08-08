@@ -1,11 +1,12 @@
 ---
 const { pageContent } = Astro.props;
-import { ICONS } from '../../config/icons';
-import STRINGS from '../../config/strings';
-import { resolveLabels } from '../../config/labels';
+import { ICONS } from "../../config/icons";
+import STRINGS from "../../config/strings";
+import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
 const v = pageContent?.bottomcta?.values;
 ---
+
 <section id="bottom-cta" class="section banner-section">
   <div class="content-wrapper">
     <div class="home-banner-wrapper">
@@ -15,37 +16,33 @@ const v = pageContent?.bottomcta?.values;
           <div class="banner-buttons">
             <a href="/#services" class="primary-button">
               <div class="button-text">{s.bottomCta.buttonServices}</div>
-              <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrow} />
+              <span
+                aria-hidden="true"
+                class="button-arrow"
+                set:html={ICONS.rightArrow}
+              />
             </a>
             <a href="/#fleet" class="primary-button">
               <div class="button-text">{s.bottomCta.buttonFleet}</div>
-              <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrow} />
+              <span
+                aria-hidden="true"
+                class="button-arrow"
+                set:html={ICONS.rightArrow}
+              />
             </a>
           </div>
         </div>
         <div class="banner-divider"></div>
         <div class="banner-values-wrapper">
-          <div class="banner-value-item">
-            <span aria-hidden="true" set:html={ICONS.checkMark} />
-            <div class="value-text-wrapper">
-              <h3 class="value-heading">{v?.[0]?.title}</h3>
-              <p class="banner-value-text">{v?.[0]?.text}</p>
+          {v?.map((item) => (
+            <div class="banner-value-item">
+              <span aria-hidden="true" set:html={ICONS.checkMark} />
+              <div class="value-text-wrapper">
+                <h3 class="value-heading">{item.title}</h3>
+                <p class="banner-value-text">{item.text}</p>
+              </div>
             </div>
-          </div>
-          <div class="banner-value-item">
-            <span aria-hidden="true" set:html={ICONS.checkMark} />
-            <div class="value-text-wrapper">
-              <h3 class="value-heading">{v?.[1]?.title}</h3>
-              <p class="banner-value-text">{v?.[1]?.text}</p>
-            </div>
-          </div>
-          <div class="banner-value-item">
-            <span aria-hidden="true" set:html={ICONS.checkMark} />
-            <div class="value-text-wrapper">
-              <h3 class="value-heading">{v?.[2]?.title}</h3>
-              <p class="banner-value-text">{v?.[2]?.text}</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

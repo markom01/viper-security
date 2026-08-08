@@ -3,8 +3,8 @@ backend:
   repo: markom01/viper-security
   branch: main
 
-media_folder: sites/viper/public/images
-public_folder: /images
+media_folder: sites/viper/src/assets/images
+public_folder: ../../assets/images
 
 collections:
   - name: hero
@@ -19,9 +19,24 @@ collections:
           - { name: tagline, label: Tagline, widget: string }
           - { name: subtitle, label: Subtitle, widget: text }
           - { name: cta_text, label: CTA Button Text, widget: string }
-          - { name: phone_italy, label: Phone (Italy), widget: string, required: false }
-          - { name: hero_image, label: "Hero Background Image", widget: image, required: false }
-          - { name: phone_spain, label: Phone (Spain), widget: string, required: false }
+          - {
+              name: phone_italy,
+              label: Phone (Italy),
+              widget: string,
+              required: false,
+            }
+          - {
+              name: hero_image,
+              label: "Hero Background Image",
+              widget: image,
+              required: false,
+            }
+          - {
+              name: phone_spain,
+              label: Phone (Spain),
+              widget: string,
+              required: false,
+            }
 
   - name: services
     label: Services
@@ -35,10 +50,19 @@ collections:
             name: offerings
             widget: list
             fields:
-              - { name: region, label: "Region (Marbella or Milano)", widget: string }
+              - {
+                  name: region,
+                  label: "Region (Marbella or Milano)",
+                  widget: string,
+                }
               - { name: title, label: Service Title, widget: string }
               - { name: description, label: Description, widget: text }
-              - { name: image, label: "Service Image", widget: image, required: false }
+              - {
+                  name: image,
+                  label: "Service Image",
+                  widget: image,
+                  required: false,
+                }
 
   - name: fleet
     label: Fleet
@@ -52,10 +76,33 @@ collections:
       - { name: type, label: Vehicle Type, widget: string, required: false }
       - { name: year, label: Year, widget: string, required: false }
       - { name: seats, label: Seats, widget: string, required: false }
-      - { name: baggage, label: Baggage Capacity, widget: string, required: false }
-      - { name: capacity_passengers, label: Max Passengers, widget: number, value_type: int, required: false }
-      - { name: capacity_suitcases, label: Max Suitcases, widget: number, value_type: int, required: false }
-      - { name: capacity_carryon, label: Max Carry-On Bags, widget: number, value_type: int, required: false }
+      - {
+          name: baggage,
+          label: Baggage Capacity,
+          widget: string,
+          required: false,
+        }
+      - {
+          name: capacity_passengers,
+          label: Max Passengers,
+          widget: number,
+          value_type: int,
+          required: false,
+        }
+      - {
+          name: capacity_suitcases,
+          label: Max Suitcases,
+          widget: number,
+          value_type: int,
+          required: false,
+        }
+      - {
+          name: capacity_carryon,
+          label: Max Carry-On Bags,
+          widget: number,
+          value_type: int,
+          required: false,
+        }
       - label: Features
         name: features
         widget: list
@@ -78,7 +125,6 @@ collections:
               - { name: name, label: Duration, widget: string }
               - { name: price, label: Price, widget: string }
 
-
   - name: how-it-works
     label: How It Works
     description: How booking works steps
@@ -93,7 +139,12 @@ collections:
             fields:
               - { name: title, label: Title, widget: string }
               - { name: description, label: Description, widget: text }
-              - { name: image, label: "Service Image", widget: image, required: false }
+              - {
+                  name: image,
+                  label: "Service Image",
+                  widget: image,
+                  required: false,
+                }
 
   - name: membership
     label: VIP Membership
@@ -113,7 +164,12 @@ collections:
                 name: benefits
                 widget: list
                 field: { label: Benefit, name: benefit, widget: string }
-              - { name: is_featured, label: Featured Tier, widget: boolean, default: false }
+              - {
+                  name: is_featured,
+                  label: Featured Tier,
+                  widget: boolean,
+                  default: false,
+                }
 
   - name: page-content
     label: Page Content
@@ -132,9 +188,24 @@ collections:
               - { name: org_url, label: Organization URL, widget: string }
               - { name: org_logo, label: Logo URL, widget: string }
               - { name: org_description, label: Description, widget: text }
-              - { name: phoneSpain, label: "Phone (Spain)", widget: string, required: false }
-              - { name: phoneItaly, label: "Phone (Italy)", widget: string, required: false }
-          - { name: map_embed_url, label: "Map Embed URL (Google Maps iframe src)", widget: string, required: false }
+              - {
+                  name: phoneSpain,
+                  label: "Phone (Spain)",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: phoneItaly,
+                  label: "Phone (Italy)",
+                  widget: string,
+                  required: false,
+                }
+          - {
+              name: map_embed_url,
+              label: "Map Embed URL (Google Maps iframe src)",
+              widget: string,
+              required: false,
+            }
           - name: booking_data
             label: Booking Routes
             widget: object
@@ -145,7 +216,11 @@ collections:
                 widget: object
                 fields:
                   - { name: label, label: "Region Label", widget: string }
-                  - { name: short_label, label: "Short Region Name", widget: string }
+                  - {
+                      name: short_label,
+                      label: "Short Region Name",
+                      widget: string,
+                    }
                   - label: Services
                     name: services
                     widget: list
@@ -156,13 +231,22 @@ collections:
                         widget: list
                         fields:
                           - { name: route, label: Route, widget: string }
-                          - { name: price, label: "Price (optional)", widget: string, required: false }
+                          - {
+                              name: price,
+                              label: "Price (optional)",
+                              widget: string,
+                              required: false,
+                            }
               - label: Italy
                 name: italy
                 widget: object
                 fields:
                   - { name: label, label: "Region Label", widget: string }
-                  - { name: short_label, label: "Short Region Name", widget: string }
+                  - {
+                      name: short_label,
+                      label: "Short Region Name",
+                      widget: string,
+                    }
                   - label: Services
                     name: services
                     widget: list
@@ -173,7 +257,12 @@ collections:
                         widget: list
                         fields:
                           - { name: route, label: Route, widget: string }
-                          - { name: price, label: "Price (optional)", widget: string, required: false }
+                          - {
+                              name: price,
+                              label: "Price (optional)",
+                              widget: string,
+                              required: false,
+                            }
 
           - name: seo
             label: SEO / Meta
@@ -191,7 +280,12 @@ collections:
             fields:
               - { name: heading, label: Heading, widget: string }
               - { name: text, label: Body Text, widget: text }
-              - { name: image, label: About Image, widget: image, required: false }
+              - {
+                  name: image,
+                  label: About Image,
+                  widget: image,
+                  required: false,
+                }
           - name: fleet
             label: Fleet
             widget: object
@@ -209,7 +303,11 @@ collections:
                 widget: list
                 fields:
                   - { name: label, label: Label (e.g. 99%), widget: string }
-                  - { name: title, label: Title (e.g. Client Satisfaction), widget: string }
+                  - {
+                      name: title,
+                      label: Title (e.g. Client Satisfaction),
+                      widget: string,
+                    }
           - name: howitworks
             label: How It Works
             widget: object
@@ -223,7 +321,12 @@ collections:
             fields:
               - { name: heading, label: Heading, widget: string }
               - { name: text, label: Body Text, widget: text }
-              - { name: image, label: CTA Image, widget: image, required: false }
+              - {
+                  name: image,
+                  label: CTA Image,
+                  widget: image,
+                  required: false,
+                }
           - name: bottomcta
             label: Bottom CTA
             widget: object
@@ -241,5 +344,13 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { name: luxury_without_limits, label: Luxury Without Limits Text, widget: string }
-              - { name: professional_discreet_reliable, label: Professional Discreet Reliable Text, widget: string }
+              - {
+                  name: luxury_without_limits,
+                  label: Luxury Without Limits Text,
+                  widget: string,
+                }
+              - {
+                  name: professional_discreet_reliable,
+                  label: Professional Discreet Reliable Text,
+                  widget: string,
+                }

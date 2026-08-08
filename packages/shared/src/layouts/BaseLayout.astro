@@ -1,28 +1,34 @@
 ---
-import STRINGS from '../config/strings';
+import type { PageContent, NavLink } from "../types";
+import STRINGS from "../config/strings";
 const s = STRINGS;
-import Nav from '../components/sections/Nav.astro';
-import Footer from '../components/sections/Footer.astro';
-import '../styles/global.css';
-import 'lenis/dist/lenis.css';
+import Nav from "../components/sections/Nav.astro";
+import Footer from "../components/sections/Footer.astro";
+import Font from "astro/components/Font.astro";
+import "../styles/global.css";
+import "lenis/dist/lenis.css";
 
-const {
-  pageContent,
-  brandName,
-  subtitle,
-  navItems,
-  footerItems,
-  ctaLabel,
-  fontLink,
-} = Astro.props;
-const FONT_LINK = fontLink || 'https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&family=Noto+Serif:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap';
+interface Props {
+  pageContent?: PageContent;
+  brandName?: string;
+  subtitle?: string;
+  navItems?: NavLink[];
+  footerItems?: NavLink[];
+  ctaLabel?: string;
+}
+
+const { pageContent, brandName, subtitle, navItems, footerItems, ctaLabel } =
+  Astro.props as Props;
 const seo = pageContent?.seo;
 const cmsJd = pageContent?.jsonld;
-const siteUrl = Astro.site || new URL('https://vipersecurity.com');
+const siteUrl = Astro.site || new URL("https://vipersecurity.com");
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
 const bd = pageContent?.booking_data;
-const ogImage = seo?.image || '/images/hero-image_upscaled.webp';
-const ogImageUrl = seo?.image ? (seo.image.startsWith('http') ? seo.image : new URL(seo.image, siteUrl)) : null;
+const ogImageUrl = seo?.image
+  ? seo.image.startsWith("http")
+    ? seo.image
+    : new URL(seo.image, siteUrl)
+  : null;
 const jd = {
   orgName: cmsJd?.org_name,
   orgUrl: cmsJd?.org_url,
@@ -30,102 +36,165 @@ const jd = {
   orgDescription: cmsJd?.org_description,
   webSiteName: cmsJd?.webSiteName || s.jsonld.webSiteName,
   webSiteUrl: cmsJd?.webSiteUrl || s.jsonld.webSiteUrl,
+  privacyPolicy: cmsJd?.privacy_policy,
   phoneItaly: cmsJd?.phoneItaly || s.jsonld.phoneItaly,
   phoneSpain: cmsJd?.phoneSpain || s.jsonld.phoneSpain,
-  spainLocality: bd?.spain?.short_label || 'Marbella',
-  italyLocality: bd?.italy?.short_label || 'Milano',
+  spainLocality: bd?.spain?.short_label || "Marbella",
+  italyLocality: bd?.italy?.short_label || "Milano",
   hasAddress: !!(bd?.spain?.short_label || bd?.italy?.short_label || false),
 };
-const addressJson = jd.hasAddress ? `,
-  "address": [
-    {"@type": "PostalAddress", "addressLocality": "${jd.spainLocality}", "addressCountry": "ES"},
-    {"@type": "PostalAddress", "addressLocality": "${jd.italyLocality}", "addressCountry": "IT"}
-  ]` : '';
-const jsonLdOrg = cmsJd?.org_name ? `<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "${jd.orgName}",
-  "url": "${jd.orgUrl}",
-  "logo": "${jd.orgLogo}",
-  "description": "${jd.orgDescription}"${addressJson},
-  "telephone": ["${jd.phoneSpain}", "${jd.phoneItaly}"]
-}
-<\/script>` : '';
-const jsonLdWebSite = `<script type="application/ld+json">
-{
+// Build JSON-LD from plain objects + JSON.stringify, which escapes `<` as
+// < and prevents a `</script>` breakout when CMS content is interpolated
+// (CMS values are untrusted input; set:html + script-src 'unsafe-inline' means
+// a raw interpolation is stored XSS on every page).
+const addressJson = jd.hasAddress
+  ? [
+      {
+        "@type": "PostalAddress",
+        addressLocality: jd.spainLocality,
+        addressCountry: "ES",
+      },
+      {
+        "@type": "PostalAddress",
+        addressLocality: jd.italyLocality,
+        addressCountry: "IT",
+      },
+    ]
+  : undefined;
+const jsonLdOrg = cmsJd?.org_name
+  ? JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: jd.orgName,
+      url: jd.orgUrl,
+      logo: jd.orgLogo,
+      description: jd.orgDescription,
+      ...(addressJson ? { address: addressJson } : {}),
+      ...(jd.privacyPolicy ? { privacyPolicy: jd.privacyPolicy } : {}),
+      telephone: [jd.phoneSpain, jd.phoneItaly],
+    })
+  : null;
+const jsonLdWebSite = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "${jd.webSiteName}",
-  "url": "${jd.webSiteUrl}"
-}
-<\/script>`;
+  name: jd.webSiteName,
+  url: jd.webSiteUrl,
+  ...(jd.privacyPolicy ? { privacyPolicy: jd.privacyPolicy } : {}),
+});
 ---
+
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <style>[tabindex="-1"]:focus-visible{outline:2px solid var(--colors--amber);outline-offset:2px;}:focus-visible{outline:2px solid var(--colors--amber);outline-offset:2px;}.skip-link{position:absolute;top:-100%;left:0;z-index:9999;padding:12px 24px;background:var(--colors--onyx);color:var(--colors--amber);font-family:var(--font-families--body-font);font-size:1rem;text-decoration:none;}.skip-link:focus{top:0;}</style>
-  <link href={FONT_LINK} rel="stylesheet">
-  <link href="/styles/theme.css" rel="stylesheet">
-  <title>{seo?.title}</title>
-  <link rel="canonical" href={canonicalUrl}>
-  <meta content={seo?.description} name="description">
-  <meta content={seo?.title} property="og:title">
-  <meta content={seo?.description} property="og:description">
-  {ogImageUrl && <meta content={ogImageUrl} property="og:image">}
-  <meta property="og:url" content={canonicalUrl}>
-  <meta property="og:site_name" content={jd.orgName}>
-  <meta property="og:locale" content={s.seo.ogLocale}>
-  <meta content={seo?.title} name="twitter:title">
-  <meta content={seo?.description} name="twitter:description">
-  {ogImageUrl && <meta content={ogImageUrl} name="twitter:image">}
-  <meta property="og:type" content={s.seo.ogType}>
-  <meta content={s.seo.twitterCard} name="twitter:card">
-  <meta content="width=device-width, initial-scale=1" name="viewport">
-  {seo?.theme_color && <meta name="theme-color" content={seo?.theme_color}>}
-  <style>
-    @font-face { font-family: "Fallback"; size-adjust: 100%; }
-    body { font-display: swap !important; }
-  </style>
-  <link href="https://fonts.googleapis.com/" rel="preconnect">
-  <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin="anonymous">
-  <link href="/favicon.svg" rel="shortcut icon" type="image/x-icon">
-  {jsonLdOrg && <Fragment set:html={jsonLdOrg} />}
-  <Fragment set:html={jsonLdWebSite} />
-</head>
-<body>
-  <Nav brandName={brandName ?? jd.orgName ?? s.jsonld.webSiteName} pageContent={pageContent} navItems={navItems} ctaLabel={ctaLabel} />
-  <a href="#main-content" class="skip-link">{s.accessibility.skipLink}</a>
-  <main id="main-content" class="page-wrapper" aria-label="Main content">
-    <slot />
-  </main>
-  <Footer brandName={brandName ?? jd.orgName ?? s.jsonld.webSiteName} pageContent={pageContent} footerItems={footerItems} />
-  <script>
-import Lenis from 'lenis';
-// Smooth scroll.
-new Lenis({
-  autoRaf: true,
-  autoToggle: true,
-  anchors: { offset: 80 },
-  allowNestedScroll: true,
-});
-</script>
-  <script is:inline>
-(function() {
-  var els = document.querySelectorAll('[data-scroll-reveal]');
-  if (!els.length) return;
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.setAttribute('data-scroll-reveal-visible', '');
-        obs.unobserve(entry.target);
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      [tabindex="-1"]:focus-visible {
+        outline: 2px solid var(--colors--amber);
+        outline-offset: 2px;
       }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-  els.forEach(function(el) { obs.observe(el); });
-})();
-</script>
+      :focus-visible {
+        outline: 2px solid var(--colors--amber);
+        outline-offset: 2px;
+      }
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 0;
+        z-index: 9999;
+        padding: 12px 24px;
+        background: var(--colors--onyx);
+        color: var(--colors--amber);
+        font-family: var(--font-families--body-font);
+        font-size: 1rem;
+        text-decoration: none;
+      }
+      .skip-link:focus {
+        top: 0;
+      }
+    </style>
+    <Font cssVariable="--font-families--body-font" />
+    <Font cssVariable="--font-families--title-font" />
+    <Font cssVariable="--font-families--accent-font" />
+    <link href="/styles/theme.css" rel="stylesheet" />
+    <title>{seo?.title}</title>
+    <link rel="canonical" href={canonicalUrl} />
+    <meta content={seo?.description} name="description" />
+    <meta content={seo?.title} property="og:title" />
+    <meta content={seo?.description} property="og:description" />
+    {ogImageUrl && <meta content={ogImageUrl} property="og:image" />}
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={jd.orgName} />
+    <meta property="og:locale" content={s.seo.ogLocale} />
+    <meta content={seo?.title} name="twitter:title" />
+    <meta content={seo?.description} name="twitter:description" />
+    {ogImageUrl && <meta content={ogImageUrl} name="twitter:image" />}
+    <meta property="og:type" content={s.seo.ogType} />
+    <meta content={s.seo.twitterCard} name="twitter:card" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    {seo?.theme_color && <meta name="theme-color" content={seo?.theme_color} />}
+    <style>
+      @font-face {
+        font-family: "Fallback";
+        size-adjust: 100%;
+      }
+      body {
+        font-display: swap !important;
+      }
+    </style>
+    <link href="/favicon.svg" rel="shortcut icon" type="image/x-icon" />
+    {jsonLdOrg && (
+      <script type="application/ld+json" set:html={jsonLdOrg} />
+    )}
+    <script type="application/ld+json" set:html={jsonLdWebSite} />
+  </head>
+  <body>
+    <Nav
+      brandName={brandName ?? jd.orgName ?? s.jsonld.webSiteName}
+      pageContent={pageContent}
+      navItems={navItems}
+      ctaLabel={ctaLabel}
+    />
+    <a href="#main-content" class="skip-link">{s.accessibility.skipLink}</a>
+    <main id="main-content" class="page-wrapper" aria-label="Main content">
+      <slot />
+    </main>
+    <Footer
+      brandName={brandName ?? jd.orgName ?? s.jsonld.webSiteName}
+      pageContent={pageContent}
+      footerItems={footerItems}
+      phoneItaly={jd.phoneItaly}
+      phoneSpain={jd.phoneSpain}
+    />
+    <script>
+      import Lenis from "lenis";
+      // Smooth scroll.
+      new Lenis({
+        autoRaf: true,
+        autoToggle: true,
+        anchors: { offset: 80 },
+        allowNestedScroll: true,
+      });
+    </script>
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll("[data-scroll-reveal]");
+        if (!els.length) return;
+        var obs = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.setAttribute("data-scroll-reveal-visible", "");
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -50px 0px" },
+        );
+        els.forEach(function (el) {
+          obs.observe(el);
+        });
+      })();
+    </script>
   </body>
 </html>

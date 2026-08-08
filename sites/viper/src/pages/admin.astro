@@ -1,16 +1,18 @@
 ---
-import STRINGS from '@garage/shared/config/strings';
+import STRINGS from "@garage/shared/config/strings";
 const s = STRINGS;
 ---
+
 <!doctype html>
 <html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{s.admin.title}</title>
-  <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
-</head>
-<body>
-  <script is:inline src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{s.admin.title}</title>
+    <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+  </head>
+  <body>
+    <script is:inline src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"
+    ></script>
+  </body>
 </html>

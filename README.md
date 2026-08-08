@@ -99,21 +99,21 @@ Content is managed via Decap CMS at `/admin/`. Configuration lives in `public/ad
 
 ### Environment Variables
 
-| Variable | Purpose |
-|----------|---------|
+| Variable   | Purpose                                                       |
+| ---------- | ------------------------------------------------------------- |
 | `PUBLIC_*` | Any variable prefixed with `PUBLIC_` is exposed to the client |
 
-*Only 2 documented environment variables currently exist.*
+_Only 2 documented environment variables currently exist._
 
 ### Content Collections
 
-| Collection | File(s) | Purpose |
-|------------|---------|---------|
-| `hero` | `src/content/hero/hero.md` | Hero banner copy |
-| `services` | `src/content/services/services.md` | Both Marbella + Milano service details |
-| `fleet` | `src/content/fleet/*.md` | Vehicle fleet entries |
-| `pricing-hourly` | `src/content/pricing/hourly.md` | Hourly chauffeur rates |
-| `membership` | `src/content/membership/tiers.md` | VIP membership tiers |
+| Collection       | File(s)                            | Purpose                                |
+| ---------------- | ---------------------------------- | -------------------------------------- |
+| `hero`           | `src/content/hero/hero.md`         | Hero banner copy                       |
+| `services`       | `src/content/services/services.md` | Both Marbella + Milano service details |
+| `fleet`          | `src/content/fleet/*.md`           | Vehicle fleet entries                  |
+| `pricing-hourly` | `src/content/pricing/hourly.md`    | Hourly chauffeur rates                 |
+| `membership`     | `src/content/membership/tiers.md`  | VIP membership tiers                   |
 
 ## Architecture Decisions
 

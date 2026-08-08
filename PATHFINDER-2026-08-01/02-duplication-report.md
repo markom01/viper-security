@@ -8,10 +8,10 @@ Verified from full source read. Each claim cites ≥2 locations. Divergence clas
 
 **Concern:** WhatsApp phone normalization strips spaces/`+` from E.164 numbers.
 
-| Location | Code |
-|----------|------|
-| `Footer.astro:9` | `const cleanPhone = (phone) => phone?.replace(/[\s+]/g, '') \|\| ''` |
-| `Hero.astro:261` (inline) | `cn=pn.replace(/[\s+]/g,'')` |
+| Location                  | Code                                                                 |
+| ------------------------- | -------------------------------------------------------------------- |
+| `Footer.astro:9`          | `const cleanPhone = (phone) => phone?.replace(/[\s+]/g, '') \|\| ''` |
+| `Hero.astro:261` (inline) | `cn=pn.replace(/[\s+]/g,'')`                                         |
 
 **Divergence:** Footer has `?.` + `\|\| ''` guard, Hero doesn't (relies on phone being non-empty). Same regex otherwise.
 
@@ -23,12 +23,12 @@ Verified from full source read. Each claim cites ≥2 locations. Divergence clas
 
 **Concern:** Default region name when `booking_data` lacks a region.
 
-| Location | Code |
-|----------|------|
-| `BaseLayout.astro:21` | `spainLocality: bd?.spain?.short_label \|\| 'Marbella'` |
-| `BaseLayout.astro:22` | `italyLocality: bd?.italy?.short_label \|\| 'Milano'` |
-| `Pricing.astro:45` | `const spainLabel = bd?.spain?.short_label \|\| 'Marbella'` |
-| `Pricing.astro:46` | `const italyLabel = bd?.italy?.short_label \|\| 'Milano'` |
+| Location              | Code                                                        |
+| --------------------- | ----------------------------------------------------------- |
+| `BaseLayout.astro:21` | `spainLocality: bd?.spain?.short_label \|\| 'Marbella'`     |
+| `BaseLayout.astro:22` | `italyLocality: bd?.italy?.short_label \|\| 'Milano'`       |
+| `Pricing.astro:45`    | `const spainLabel = bd?.spain?.short_label \|\| 'Marbella'` |
+| `Pricing.astro:46`    | `const italyLabel = bd?.italy?.short_label \|\| 'Milano'`   |
 
 **Divergence:** identical fallback values, duplicated in 2 components.
 
@@ -40,14 +40,14 @@ Verified from full source read. Each claim cites ≥2 locations. Divergence clas
 
 **Concern:** Section-local bright-gold token override. Same literal value, 6 places.
 
-| Location | Code |
-|----------|------|
-| `BaseLayout.astro:74` | `<style>:root{--colors--gold-bright:#c8a04c;}</style>` |
-| `StatsSection.astro:43` | `:root{--colors--gold-bright:#c8a04c}` |
-| `HowItWorks.astro:43` | `:root{--colors--gold-bright:#c8a04c}` |
-| `Pricing.astro:85` | `:root{--colors--gold-bright:#c8a04c}` |
-| `Membership.astro:40` | `:root{--colors--gold-bright:#c8a04c}` |
-| `Footer.astro:59` | `:root{--colors--gold-bright:#c8a04c}` |
+| Location                | Code                                                   |
+| ----------------------- | ------------------------------------------------------ |
+| `BaseLayout.astro:74`   | `<style>:root{--colors--gold-bright:#c8a04c;}</style>` |
+| `StatsSection.astro:43` | `:root{--colors--gold-bright:#c8a04c}`                 |
+| `HowItWorks.astro:43`   | `:root{--colors--gold-bright:#c8a04c}`                 |
+| `Pricing.astro:85`      | `:root{--colors--gold-bright:#c8a04c}`                 |
+| `Membership.astro:40`   | `:root{--colors--gold-bright:#c8a04c}`                 |
+| `Footer.astro:59`       | `:root{--colors--gold-bright:#c8a04c}`                 |
 
 **Divergence:** none — byte-identical. `global.css` already defines base tokens (`--colors--gold:#917148`, `--colors--amber:#c1a176`) at `public/styles/global.css:219-267` but lacks `gold-bright`.
 
@@ -59,12 +59,12 @@ Verified from full source read. Each claim cites ≥2 locations. Divergence clas
 
 **Concern:** `Services.astro` receives `marbella` + `milano` props, but data is universal.
 
-| Location | Code |
-|----------|------|
-| `index.astro:83` | `<Services marbella={universalServices.services} milano={universalServices.services} .../>` |
-| `index.astro:49` | `const universalServices = { services: allOfferings }` |
-| `Services.astro:8` | `const services = marbella \|\| milano \|\| []` |
-| `content.md:2` (services) | `region: Universal` for all 4 offerings |
+| Location                  | Code                                                                                        |
+| ------------------------- | ------------------------------------------------------------------------------------------- |
+| `index.astro:83`          | `<Services marbella={universalServices.services} milano={universalServices.services} .../>` |
+| `index.astro:49`          | `const universalServices = { services: allOfferings }`                                      |
+| `Services.astro:8`        | `const services = marbella \|\| milano \|\| []`                                             |
+| `content.md:2` (services) | `region: Universal` for all 4 offerings                                                     |
 
 **Divergence:** `services.md` marks every offering `region: Universal`; both props carry identical array; component picks one and ignores the other. Dual-prop is dead weight — a leftover from the pre-universal two-region design.
 
@@ -76,10 +76,10 @@ Verified from full source read. Each claim cites ≥2 locations. Divergence clas
 
 **Concern:** Both build `wa.me` URLs, different shapes.
 
-| Location | Code |
-|----------|------|
-| `Footer.astro:21-23` | `https://wa.me/${cleanPhone(phoneItaly)}` (plain link, `target=_blank`) |
-| `Hero.astro:261` | `https://wa.me/${cn}?text=${msg}` (popup with pre-filled booking message) |
+| Location             | Code                                                                      |
+| -------------------- | ------------------------------------------------------------------------- |
+| `Footer.astro:21-23` | `https://wa.me/${cleanPhone(phoneItaly)}` (plain link, `target=_blank`)   |
+| `Hero.astro:261`     | `https://wa.me/${cn}?text=${msg}` (popup with pre-filled booking message) |
 
 **Divergence:** Footer = bare contact link; Hero = prefilled booking text. Different purpose.
 

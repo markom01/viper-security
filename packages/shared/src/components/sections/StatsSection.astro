@@ -1,13 +1,22 @@
 ---
 const { pageContent } = Astro.props;
-import STRINGS from '../../config/strings';
-import { resolveLabels } from '../../config/labels';
-import { ICONS } from '../../config/icons';
+import { getImage } from "astro:assets";
+import STRINGS from "../../config/strings";
+import { resolveLabels } from "../../config/labels";
+import { ICONS } from "../../config/icons";
 const s = resolveLabels(pageContent, STRINGS);
 const stats = pageContent?.stats;
 const items = stats?.items;
+// Optimize the stats background via the asset pipeline, then keep feeding it
+// into the CSS var so the existing section styles stay untouched.
+const statsBg = stats?.image ? await getImage({ src: stats.image }) : null;
 ---
-<section id="stats" class="section home-metrics-section" style={`--metrics-bg: url(${stats?.image})`}>
+
+<section
+  id="stats"
+  class="section home-metrics-section"
+  style={`--metrics-bg: url(${statsBg?.src})`}
+>
   <div class="content-wrapper">
     <div class="metrics-content-wrapper">
       <div data-scroll-reveal class="metrics-heading-wrapper">
@@ -17,28 +26,26 @@ const items = stats?.items;
       <div data-scroll-reveal class="metrics-button-wrapper">
         <a href="/#contact" class="secondary-button">
           <div class="button-text">{s.stats.button}</div>
-          <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrowPure} />
+          <span
+            aria-hidden="true"
+            class="button-arrow"
+            set:html={ICONS.rightArrowPure}
+          />
         </a>
       </div>
       <div class="metrics-wrapper">
-        <div data-scroll-reveal class="metric-item">
-          <div class="metric-number">{items?.[0]?.label}</div>
-          <div class="metric-title">{items?.[0]?.title}</div>
-        </div>
-        <div data-scroll-reveal class="metric-item">
-          <div class="metric-number">{items?.[1]?.label}</div>
-          <div class="metric-title">{items?.[1]?.title}</div>
-        </div>
-        <div data-scroll-reveal class="metric-item">
-          <div class="metric-number">{items?.[2]?.label}</div>
-          <div class="metric-title">{items?.[2]?.title}</div>
-        </div>
-        <div data-scroll-reveal class="metric-item">
-          <div class="metric-number">{items?.[3]?.label}</div>
-          <div class="metric-title">{items?.[3]?.title}</div>
-        </div>
+        {items?.map((item) => (
+          <div data-scroll-reveal class="metric-item">
+            <div class="metric-number">{item.label}</div>
+            <div class="metric-title">{item.title}</div>
+          </div>
+        ))}
       </div>
     </div>
   </div>
 </section>
-<style>.metric-number{color:var(--colors--gold-bright)}</style>
+<style>
+  .metric-number {
+    color: var(--colors--gold-bright);
+  }
+</style>

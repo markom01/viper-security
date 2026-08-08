@@ -1,15 +1,16 @@
 ---
-import BaseLayout from '@garage/shared/layouts/BaseLayout.astro';
-import STRINGS, { SITE_NAME } from '@garage/shared/config/strings';
+import BaseLayout from "@garage/shared/layouts/BaseLayout.astro";
+import STRINGS, { SITE_NAME } from "@garage/shared/config/strings";
 const s = STRINGS;
 
 const pageContent = {
   seo: {
     title: `${SITE_NAME} — Armoured Vehicles`,
-    description: 'VIPER Security armoured vehicles.',
+    description: "VIPER Security armoured vehicles.",
   },
 };
 ---
+
 <BaseLayout pageContent={pageContent} brandName={SITE_NAME}>
   <section class="placeholder-section">
     <div class="content-wrapper">

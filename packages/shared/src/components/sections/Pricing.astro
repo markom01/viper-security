@@ -1,9 +1,14 @@
 ---
 const { pageContent } = Astro.props;
 const { hourly } = Astro.props;
-import type { BookingService, PricingRate, PricingCard, PricingCardSection } from '../../types';
-import STRINGS from '../../config/strings';
-import { resolveLabels } from '../../config/labels';
+import type {
+  BookingService,
+  PricingRate,
+  PricingCard,
+  PricingCardSection,
+} from "../../types";
+import STRINGS from "../../config/strings";
+import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
 const bd = pageContent?.booking_data;
 
@@ -25,7 +30,7 @@ function buildRegionCard(
         title: svc.name,
         routes: routes.map((r) => ({
           label: r.route,
-          price: r.price || '?',
+          price: r.price || "?",
         })),
       });
     }
@@ -34,7 +39,10 @@ function buildRegionCard(
   if (hourly?.rates?.length) {
     sections.push({
       title: s.pricing.hourlyHeading,
-      routes: hourly.rates.map((r: PricingRate) => ({ label: r.name, price: r.price })),
+      routes: hourly.rates.map((r: PricingRate) => ({
+        label: r.name,
+        price: r.price,
+      })),
     });
   }
   if (sections.length) {
@@ -43,14 +51,25 @@ function buildRegionCard(
   return null;
 }
 
-const spainLabel = bd?.spain?.short_label || 'Marbella';
-const italyLabel = bd?.italy?.short_label || 'Milano';
+const spainLabel = bd?.spain?.short_label || "Marbella";
+const italyLabel = bd?.italy?.short_label || "Milano";
 
-const marbellaCard = buildRegionCard(bd?.spain?.services, `${spainLabel}`, spainLabel);
-const milanoCard = buildRegionCard(bd?.italy?.services, `${italyLabel}`, italyLabel);
+const marbellaCard = buildRegionCard(
+  bd?.spain?.services,
+  `${spainLabel}`,
+  spainLabel,
+);
+const milanoCard = buildRegionCard(
+  bd?.italy?.services,
+  `${italyLabel}`,
+  italyLabel,
+);
 
-const allCards: PricingCard[] = [marbellaCard, milanoCard].filter((c): c is PricingCard => c != null);
+const allCards: PricingCard[] = [marbellaCard, milanoCard].filter(
+  (c): c is PricingCard => c != null,
+);
 ---
+
 <section id="pricing" class="section pricing-section">
   <div class="content-wrapper">
     <div data-scroll-reveal class="steps-heading-wrapper">
@@ -60,46 +79,130 @@ const allCards: PricingCard[] = [marbellaCard, milanoCard].filter((c): c is Pric
       </div>
     </div>
     <div data-scroll-reveal class="pricing-grid">
-      {allCards.map(card => (
-        <div class="pricing-card-wrapper">
-          <h2 class="pricing-card-heading">{card.name}</h2>
-          <div class="booking-form-wrapper pricing-card">
-            {card.sections.map((section, si) => (
-              <div class="pricing-section-wrap">
-                {si > 0 && <div class="pricing-section-divider"></div>}
-                <h3 class="pricing-section-title">{section.title}</h3>
-                {section.routes.map((item, ri) => (
-                  <div class={"pricing-row" + (ri === 0 && si === 0 ? " pricing-row-first" : "")}>
-                    <span class="pricing-service">{item.label}</span>
-                    <span class="pricing-amount">{item.price}</span>
-                  </div>
-                ))}
-              </div>
-            ))}
+      {
+        allCards.map((card) => (
+          <div class="pricing-card-wrapper">
+            <h2 class="pricing-card-heading">{card.name}</h2>
+            <div class="booking-form-wrapper pricing-card">
+              {card.sections.map((section, si) => (
+                <div class="pricing-section-wrap">
+                  {si > 0 && <div class="pricing-section-divider" />}
+                  <h3 class="pricing-section-title">{section.title}</h3>
+                  {section.routes.map((item, ri) => (
+                    <div
+                      class={
+                        "pricing-row" +
+                        (ri === 0 && si === 0 ? " pricing-row-first" : "")
+                      }
+                    >
+                      <span class="pricing-service">{item.label}</span>
+                      <span class="pricing-amount">{item.price}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>
 <style>
-  .pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
-  @media(max-width:991px){.pricing-grid{grid-template-columns:1fr;}}
-  .pricing-card-wrapper{display:flex;flex-direction:column;}
-  .pricing-card-heading{font-family:var(--font-families--accent-font);font-size:1.1rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--colors--gold-bright);margin-bottom:16px;}
-  .pricing-section .booking-form-wrapper{overflow:hidden;position:relative;}
-  .pricing-section .booking-form-wrapper::before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:24px 24px 0 0;}
-  .pricing-section .booking-form-wrapper{border-top:none;}
-  .pricing-section-wrap{margin-bottom:24px;}
-  .pricing-section-wrap:last-child{margin-bottom:0;}
-  .pricing-section-title{font-family:var(--font-families--labels-font);font-size:1rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--colors--slate);margin-bottom:4px;padding:14px; padding-bottom: 0px}
-  .pricing-section-divider{height:1px;background:rgba(0,0,0,0.06);margin:0 14px 20px;}
-  .pricing-row{display:flex;justify-content:space-between;align-items:center;padding:14px;border-bottom:1px solid rgba(0,0,0,0.06);}
-  .pricing-row-first{padding-top:20px;}
-  .pricing-row:last-child{border-bottom:none;padding-bottom:20px;}
-  .pricing-service{font-family:var(--font-families--body-font);font-size:1rem;color:var(--colors--onyx);font-weight:400;}
-  .pricing-amount{font-family:var(--font-families--accent-font);font-size:1.3rem;color:var(--colors--gold);font-weight:600;white-space:nowrap;margin-left:16px;}
-  .pricing-section .subheadline{color:var(--colors--gold-bright)}
-  .pricing-section .subheadline-line{background-color:var(--colors--gold-bright)}
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (max-width: 991px) {
+    .pricing-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .pricing-card-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .pricing-card-heading {
+    font-family: var(--font-families--accent-font);
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--colors--gold-bright);
+    margin-bottom: 16px;
+  }
+  .pricing-section .booking-form-wrapper {
+    overflow: hidden;
+    position: relative;
+  }
+  .pricing-section .booking-form-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: var(--colors--amber);
+    z-index: 1;
+    border-radius: 24px 24px 0 0;
+  }
+  .pricing-section .booking-form-wrapper {
+    border-top: none;
+  }
+  .pricing-section-wrap {
+    margin-bottom: 24px;
+  }
+  .pricing-section-wrap:last-child {
+    margin-bottom: 0;
+  }
+  .pricing-section-title {
+    font-family: var(--font-families--labels-font);
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--colors--slate);
+    margin-bottom: 4px;
+    padding: 14px;
+    padding-bottom: 0px;
+  }
+  .pricing-section-divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.06);
+    margin: 0 14px 20px;
+  }
+  .pricing-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .pricing-row-first {
+    padding-top: 20px;
+  }
+  .pricing-row:last-child {
+    border-bottom: none;
+    padding-bottom: 20px;
+  }
+  .pricing-service {
+    font-family: var(--font-families--body-font);
+    font-size: 1rem;
+    color: var(--colors--onyx);
+    font-weight: 400;
+  }
+  .pricing-amount {
+    font-family: var(--font-families--accent-font);
+    font-size: 1.3rem;
+    color: var(--colors--gold);
+    font-weight: 600;
+    white-space: nowrap;
+    margin-left: 16px;
+  }
+  .pricing-section .subheadline {
+    color: var(--colors--gold-bright);
+  }
+  .pricing-section .subheadline-line {
+    background-color: var(--colors--gold-bright);
+  }
 </style>
-

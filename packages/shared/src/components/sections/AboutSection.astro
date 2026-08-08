@@ -1,11 +1,13 @@
 ---
+import { Image } from "astro:assets";
 const { pageContent } = Astro.props;
-import STRINGS from '../../config/strings';
-import { resolveLabels } from '../../config/labels';
-import { ICONS } from '../../config/icons';
+import STRINGS from "../../config/strings";
+import { resolveLabels } from "../../config/labels";
+import { ICONS } from "../../config/icons";
 const s = resolveLabels(pageContent, STRINGS);
 const about = pageContent?.about;
 ---
+
 <section id="about" class="section home-about-section">
   <div class="content-wrapper">
     <div class="home-about-content">
@@ -20,12 +22,27 @@ const about = pageContent?.about;
         <p>{about?.text}</p>
         <a href="/#about" class="primary-button">
           <div class="button-text">{s.about.button}</div>
-          <span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrow} />
+          <span
+            aria-hidden="true"
+            class="button-arrow"
+            set:html={ICONS.rightArrow}
+          />
         </a>
       </div>
-      <div data-scroll-reveal class="home-page-image-wrapper">
-        <img src={about?.image} loading="eager" alt={s.about.imageAlt} class="about-image" width="600" height="500" />
-      </div>
+      {
+        about?.image && (
+          <div data-scroll-reveal class="home-page-image-wrapper">
+            <Image
+              src={about.image}
+              loading="eager"
+              alt={s.about.imageAlt}
+              class="about-image"
+              width={about.image.width}
+              height={about.image.height}
+            />
+          </div>
+        )
+      }
     </div>
   </div>
 </section>

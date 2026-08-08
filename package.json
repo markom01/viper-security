@@ -12,6 +12,13 @@
     "build": "npm run build --workspaces",
     "dev:viper": "npm run dev -w @garage/viper",
     "dev:dbc": "npm run dev -w @garage/dbc",
-    "check": "npm run check --workspaces"
+    "check": "npm run check --workspaces",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write ."
+  },
+  "devDependencies": {
+    "@astrojs/ts-plugin": "^1.10.10",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1"
   }
 }

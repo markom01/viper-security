@@ -266,8 +266,28 @@ button,
   --colors--ivory: #ececec;
   --line-height-sizes--small: 120%;
   --colors--granite: #767676;
+
+  /* Native scrollbars + widgets follow the dark theme & gold accent */
+  color-scheme: dark;
+  scrollbar-color: var(--colors--gold) var(--colors--onyx);
+  scrollbar-width: thin;
 }
+
+/* Typography wrapping: balance dangling display lines, avoid orphans */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+
 body {
+  overscroll-behavior-y: none;
   background-color: var(--colors--onyx);
   font-family: var(--font-families--body-font);
   color: var(--colors--onyx);
@@ -701,7 +721,7 @@ blockquote {
   grid-column-gap: 60px;
   grid-row-gap: 60px;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: center;
   display: flex;
 }
 .home-about-text-wrapper {
@@ -720,9 +740,9 @@ blockquote {
   display: flex;
 }
 .about-image {
-  object-fit: cover;
   width: 100%;
-  height: 100%;
+  height: auto;
+  display: block;
 }
 .home-page-image-wrapper {
   border-radius: 20px;
@@ -740,7 +760,10 @@ blockquote {
   grid-column-gap: 20px;
   grid-row-gap: 40px;
   grid-template-rows: auto;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(
+      0,
+      1fr
+    );
   grid-auto-columns: minmax(0, 1fr);
   display: grid;
 }
@@ -1106,6 +1129,7 @@ blockquote {
 }
 .car-listing-image {
   width: 100%;
+  height: auto;
 }
 .car-listing-info-wrapper {
   grid-column-gap: 6px;
@@ -1794,4 +1818,8 @@ blockquote {
     transform: translateY(0);
     transition: none;
   }
+}
+
+@view-transition {
+  navigation: auto;
 }

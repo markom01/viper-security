@@ -1,35 +1,66 @@
 ---
 const { pageContent } = Astro.props;
-import STRINGS from '../../config/strings';
-import { ICONS } from '../../config/icons';
-import { resolveLabels } from '../../config/labels';
+import STRINGS from "../../config/strings";
+import { ICONS } from "../../config/icons";
+import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
 const items = Array.from({ length: 4 }, () => ({ text: s.marquee.text }));
 ---
+
 <section id="marquee" class="marquee-section" aria-label={s.marquee.ariaLabel}>
-  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">{s.marquee.srHeading}</h2>
+  <h2
+    class="sr-only"
+    style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;"
+  >
+    {s.marquee.srHeading}
+  </h2>
   <div class="marquee-wrapper">
     <div class="marquee">
-      {items.map(() => <>
-        <div class="marquee-text">{s.marquee.text}</div>
-        <span aria-hidden="true" class="marquee-icon" set:html={ICONS.marqueeIcon} />
-      </>)}
+      {
+        items.map(() => (
+          <>
+            <div class="marquee-text">{s.marquee.text}</div>
+            <span
+              aria-hidden="true"
+              class="marquee-icon"
+              set:html={ICONS.marqueeIcon}
+            />
+          </>
+        ))
+      }
     </div>
     <div class="marquee">
-      {items.map(() => <>
-        <div class="marquee-text">{s.marquee.text}</div>
-        <span aria-hidden="true" class="marquee-icon" set:html={ICONS.marqueeIcon} />
-      </>)}
+      {
+        items.map(() => (
+          <>
+            <div class="marquee-text">{s.marquee.text}</div>
+            <span
+              aria-hidden="true"
+              class="marquee-icon"
+              set:html={ICONS.marqueeIcon}
+            />
+          </>
+        ))
+      }
     </div>
   </div>
 </section>
 <style>
   @keyframes marquee-scroll {
-    0% { transform: translate3d(0, 0, 0); }
-    100% { transform: translate3d(-82.5344%, 0, 0); }
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-82.5344%, 0, 0);
+    }
   }
-  .marquee { animation: marquee-scroll 30s linear infinite; }
-  @media(prefers-reduced-motion:reduce) {
-    .marquee { animation: none !important; transform: translate3d(0,0,0) !important; }
+  .marquee {
+    animation: marquee-scroll 30s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee {
+      animation: none !important;
+      transform: translate3d(0, 0, 0) !important;
+    }
   }
 </style>

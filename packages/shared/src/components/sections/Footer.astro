@@ -1,28 +1,40 @@
 ---
-const { pageContent, footerItems } = Astro.props;
-const { brandName, tagline, phoneItaly, phoneSpain } = Astro.props;
-import STRINGS from '../../config/strings';
-import { resolveLabels } from '../../config/labels';
+import type { NavLink, PageContent } from "../../types";
+
+interface Props {
+  pageContent?: PageContent;
+  footerItems?: NavLink[];
+  brandName?: string;
+  tagline?: string;
+  phoneItaly?: string;
+  phoneSpain?: string;
+}
+
+const { pageContent, footerItems } = Astro.props as Props;
+const { brandName, tagline, phoneItaly, phoneSpain } = Astro.props as Props;
+import STRINGS from "../../config/strings";
+import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
 const b = pageContent?.branding;
 const thisYear = new Date().getFullYear();
 // Footer links as data. Default = VIPER menu. A site passes its own via footerItems.
 const links = footerItems ?? [
-  { label: s.nav.chauffeur, href: '/' },
-  { label: s.nav.luxuryCars, href: '/luxury-cars' },
-  { label: s.nav.armouredVehicles, href: '/armoured-vehicles' },
-  { label: s.nav.about, href: '/#about' },
-  { label: s.nav.services, href: '/#services' },
-  { label: s.nav.fleet, href: '/#fleet' },
-  { label: s.nav.howItWorks, href: '/#how-it-works' },
-  { label: s.nav.pricing, href: '/#pricing' },
-  { label: s.nav.contact, href: '/#contact' },
+  { label: s.nav.chauffeur, href: "/" },
+  { label: s.nav.luxuryCars, href: "/luxury-cars" },
+  { label: s.nav.armouredVehicles, href: "/armoured-vehicles" },
+  { label: s.nav.about, href: "/#about" },
+  { label: s.nav.services, href: "/#services" },
+  { label: s.nav.fleet, href: "/#fleet" },
+  { label: s.nav.howItWorks, href: "/#how-it-works" },
+  { label: s.nav.pricing, href: "/#pricing" },
+  { label: s.nav.contact, href: "/#contact" },
 ];
 
-const cleanPhone = (phone: string) => phone?.replace(/[\s+]/g, '') || '';
+const cleanPhone = (phone: string) => phone?.replace(/[\s+]/g, "") || "";
 const phoneSep = s.footer.phoneSeparator;
 const mapEmbedUrl = pageContent?.map_embed_url;
 ---
+
 <footer class="footer" role="contentinfo">
   <div class="content-wrapper">
     <div class="footer-content-wrapper">
@@ -32,9 +44,29 @@ const mapEmbedUrl = pageContent?.map_embed_url;
             <span class="brand-text">{brandName}</span>
           </a>
           <p class="pure-text">
-            <a href={`https://wa.me/${cleanPhone(phoneItaly)}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp ${phoneItaly}`} class="phone-wa-link">{phoneItaly}</a>
-            {phoneSep}
-            <a href={`https://wa.me/${cleanPhone(phoneSpain)}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp ${phoneSpain}`} class="phone-wa-link">{phoneSpain}</a>
+            {
+              phoneItaly && (
+                <a
+                  href={`https://wa.me/${cleanPhone(phoneItaly)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`WhatsApp ${phoneItaly}`}
+                  class="phone-wa-link">{phoneItaly}</a
+                >
+              )
+            }
+            {phoneItaly && phoneSpain ? phoneSep : null}
+            {
+              phoneSpain && (
+                <a
+                  href={`https://wa.me/${cleanPhone(phoneSpain)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`WhatsApp ${phoneSpain}`}
+                  class="phone-wa-link">{phoneSpain}</a
+                >
+              )
+            }
           </p>
           <!-- <div class="social-links-wrapper">
             <a href="https://x.com/" target="_blank" class="social-link" aria-label={s.footer.socialX}>
@@ -55,24 +87,32 @@ const mapEmbedUrl = pageContent?.map_embed_url;
           <div class="footer-links-column">
             <div class="footer-links-heading">{s.footer.pagesHeading}</div>
             <div class="footer-links">
-              {links.map((l) => <a href={l.href} class="footer-link">{l.label}</a>)}
+              {
+                links.map((l) => (
+                  <a href={l.href} class="footer-link">
+                    {l.label}
+                  </a>
+                ))
+              }
             </div>
           </div>
         </div>
-        {mapEmbedUrl && (
-          <div class="footer-map-wrapper">
-            <iframe
-              src={mapEmbedUrl}
-              width="100%"
-              height="220"
-              style="border:0"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              title="Location map"
-              allowfullscreen
-            ></iframe>
-          </div>
-        )}
+        {
+          mapEmbedUrl && (
+            <div class="footer-map-wrapper">
+              <iframe
+                src={mapEmbedUrl}
+                width="100%"
+                height="220"
+                style="border:0"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Location map"
+                allowfullscreen
+              />
+            </div>
+          )
+        }
       </div>
     </div>
   </div>
@@ -109,5 +149,7 @@ const mapEmbedUrl = pageContent?.map_embed_url;
     color: var(--colors--gold-bright);
     text-decoration: underline;
   }
-  .footer-link:hover{color:var(--colors--gold-bright)}
+  .footer-link:hover {
+    color: var(--colors--gold-bright);
+  }
 </style>

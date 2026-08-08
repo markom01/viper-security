@@ -1,21 +1,14 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [
-    ".astro/types.d.ts",
-    "**/*"
-  ],
-  "exclude": [
-    "dist",
-    "public",
-    "node_modules"
-  ],
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", "public", "node_modules"],
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
+    "allowJs": true,
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@garage/shared/*": ["../packages/shared/src/*"]
-    }
+      "@garage/shared/*": ["../../packages/shared/src/*"]
+    },
+    "plugins": [{ "name": "@astrojs/ts-plugin" }]
   }
 }

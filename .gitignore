@@ -21,3 +21,7 @@ dist-dbc/
 .serena/
 graphify-out/
 .codegraph/
+
+# Playwright output (can contain PII in traces/snapshots)
+test-results/
+**/test-results/

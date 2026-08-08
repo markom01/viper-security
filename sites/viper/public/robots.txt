@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://vipersecurity.com/sitemap.xml
+Sitemap: https://viper-security.netlify.app/sitemap-index.xml

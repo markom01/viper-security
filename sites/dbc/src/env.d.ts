@@ -1,1 +1,1 @@
-declare module 'masonry-layout';
+declare module "masonry-layout";

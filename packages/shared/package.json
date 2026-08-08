@@ -3,6 +3,9 @@
   "private": true,
   "type": "module",
   "version": "0.0.1",
+  "scripts": {
+    "build": "echo 'shared has no build step; source is consumed directly from src/ via exports map.'"
+  },
   "exports": {
     "./layouts/*": "./src/layouts/*",
     "./sections/*": "./src/components/sections/*",

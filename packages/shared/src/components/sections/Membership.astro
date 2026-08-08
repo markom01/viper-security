@@ -1,10 +1,11 @@
 ---
 const { tiers, pageContent } = Astro.props;
-import type { MembershipTier } from '../../types';
-import STRINGS from '../../config/strings';
-import { resolveLabels } from '../../config/labels';
+import type { MembershipTier } from "../../types";
+import STRINGS from "../../config/strings";
+import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
 ---
+
 <section id="membership" class="section membership-section">
   <div class="content-wrapper">
     <div data-scroll-reveal class="steps-heading-wrapper">
@@ -16,30 +17,135 @@ const s = resolveLabels(pageContent, STRINGS);
     </div>
     <div data-scroll-reveal>
       <div role="list" class="_3-column-collection">
-        {tiers?.map((t: MembershipTier) => (
-          <div role="listitem" style="padding:8px;display:flex;">
-            <div class={"booking-form-wrapper" + (t.is_featured ? " memb-featured-card" : "")} style="width:100%;display:flex;flex-direction:column;align-items:center;padding:0;">
-              {t.is_featured ? <div class="memb-badge">{s.membership.badge}</div> : <div class="memb-badge-spacer"></div>}
-              <div class="memb-card-body">
-                <h3 class="booking-form-label" style="font-size:1rem;letter-spacing:2px;">{t.name}</h3>
-                <div class="memb-price">{t.price}</div>
-                <div class="memb-per-year">{s.membership.perYear}</div>
-                <ul class="memb-benefits-list">
-                  {t.benefits?.map((b: string) => (
-                    <li class="memb-benefit-item">{b}</li>
-                  ))}
-                </ul>
+        {
+          tiers?.map((t: MembershipTier) => (
+            <div role="listitem" style="padding:8px;display:flex;">
+              <div
+                class={
+                  "booking-form-wrapper" +
+                  (t.is_featured ? " memb-featured-card" : "")
+                }
+                style="width:100%;display:flex;flex-direction:column;align-items:center;padding:0;"
+              >
+                {t.is_featured ? (
+                  <div class="memb-badge">{s.membership.badge}</div>
+                ) : (
+                  <div class="memb-badge-spacer" />
+                )}
+                <div class="memb-card-body">
+                  <h3
+                    class="booking-form-label"
+                    style="font-size:1rem;letter-spacing:2px;"
+                  >
+                    {t.name}
+                  </h3>
+                  <div class="memb-price">{t.price}</div>
+                  <div class="memb-per-year">{s.membership.perYear}</div>
+                  <ul class="memb-benefits-list">
+                    {t.benefits?.map((b: string) => (
+                      <li class="memb-benefit-item">{b}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   </div>
 </section>
 <style>
-  .membership-section .booking-form-wrapper{overflow:hidden;position:relative;}.membership-section .booking-form-wrapper::before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:24px 24px 0 0;}.membership-section .booking-form-wrapper{border-top:none;}.membership-section .booking-form-wrapper{height:100%;}.membership-section .memb-featured-card{border-top-color:var(--colors--gold-bright);border-top-width:8px;}.membership-section .memb-badge{background:var(--colors--amber);color:#000;text-align:center;padding:10px 20px;font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;width:100%;border-radius:0;margin-top:0;}.membership-section .memb-badge-spacer{height:38px;width:100%;}.membership-section .memb-card-body{display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 24px 24px;width:100%;}.membership-section .memb-price{font-size:2rem;color:var(--colors--gold);font-family:var(--font-families--accent-font);font-weight:600;line-height:1.1;margin:8px 0 2px;}.membership-section .memb-per-year{font-size:1rem;color:var(--colors--slate);margin-bottom:8px;}.membership-section .memb-benefits-list{list-style:none;padding:0;margin:8px 0 0;text-align:left;font-size:1rem;width:100%;}.membership-section .memb-benefit-item{padding:8px 12px;border-bottom:1px solid rgba(0,0,0,0.06);line-height:1.5;color:var(--colors--onyx);}.membership-section .memb-benefit-item:last-child{border-bottom:none;}.membership-section .memb-benefit-item:before{content:"✓";color:var(--colors--gold);margin-right:10px;font-weight:700;}
-.membership-section .subheadline{color:var(--colors--gold-bright)}
-.membership-section .subheadline-line{background-color:var(--colors--gold-bright)}
+  .membership-section .booking-form-wrapper {
+    overflow: hidden;
+    position: relative;
+  }
+  .membership-section .booking-form-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: var(--colors--amber);
+    z-index: 1;
+    border-radius: 24px 24px 0 0;
+  }
+  .membership-section .booking-form-wrapper {
+    border-top: none;
+  }
+  .membership-section .booking-form-wrapper {
+    height: 100%;
+  }
+  .membership-section .memb-featured-card {
+    border-top-color: var(--colors--gold-bright);
+    border-top-width: 8px;
+  }
+  .membership-section .memb-badge {
+    background: var(--colors--amber);
+    color: #000;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    width: 100%;
+    border-radius: 0;
+    margin-top: 0;
+  }
+  .membership-section .memb-badge-spacer {
+    height: 38px;
+    width: 100%;
+  }
+  .membership-section .memb-card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 24px 24px;
+    width: 100%;
+  }
+  .membership-section .memb-price {
+    font-size: 2rem;
+    color: var(--colors--gold);
+    font-family: var(--font-families--accent-font);
+    font-weight: 600;
+    line-height: 1.1;
+    margin: 8px 0 2px;
+  }
+  .membership-section .memb-per-year {
+    font-size: 1rem;
+    color: var(--colors--slate);
+    margin-bottom: 8px;
+  }
+  .membership-section .memb-benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    text-align: left;
+    font-size: 1rem;
+    width: 100%;
+  }
+  .membership-section .memb-benefit-item {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    line-height: 1.5;
+    color: var(--colors--onyx);
+  }
+  .membership-section .memb-benefit-item:last-child {
+    border-bottom: none;
+  }
+  .membership-section .memb-benefit-item:before {
+    content: "✓";
+    color: var(--colors--gold);
+    margin-right: 10px;
+    font-weight: 700;
+  }
+  .membership-section .subheadline {
+    color: var(--colors--gold-bright);
+  }
+  .membership-section .subheadline-line {
+    background-color: var(--colors--gold-bright);
+  }
 </style>
-

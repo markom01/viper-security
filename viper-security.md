@@ -14,20 +14,20 @@ Our luxury fleet and professional drivers are available for airport transfers, b
 
 Features:
 
-* Luxury leather interior
-* Rear executive seating
-* Climate control
-* Privacy glass
-* Wi-Fi available upon request
-* Complimentary bottled water
-* Phone charging facilities
-* Professional English-speaking driver
+- Luxury leather interior
+- Rear executive seating
+- Climate control
+- Privacy glass
+- Wi-Fi available upon request
+- Complimentary bottled water
+- Phone charging facilities
+- Professional English-speaking driver
 
 Capacity:
 
-* Up to 3 passengers
-* 3 large suitcases
-* 2 carry-on bags
+- Up to 3 passengers
+- 3 large suitcases
+- 2 carry-on bags
 
 ---
 
@@ -37,11 +37,11 @@ Capacity:
 
 ### Airport Transfers
 
-* Málaga Airport → Marbella
-* Málaga Airport → Puerto Banús
-* Málaga Airport → Estepona
-* Málaga Airport → Sotogrande
-* Málaga Airport → Gibraltar
+- Málaga Airport → Marbella
+- Málaga Airport → Puerto Banús
+- Málaga Airport → Estepona
+- Málaga Airport → Sotogrande
+- Málaga Airport → Gibraltar
 
 ### VIP Villa Transfers
 
@@ -51,28 +51,28 @@ Luxury transportation between villas, hotels, beach clubs and restaurants.
 
 Private transportation to and from:
 
-* Puerto Banús
-* Marbella Marina
-* Estepona Marina
-* Sotogrande Marina
+- Puerto Banús
+- Marbella Marina
+- Estepona Marina
+- Sotogrande Marina
 
 ### Business & Corporate Travel
 
 Professional chauffeur services for:
 
-* Meetings
-* Conferences
-* Corporate events
-* Business delegations
+- Meetings
+- Conferences
+- Corporate events
+- Business delegations
 
 ### Nightlife & VIP Club Transfers
 
 Exclusive transportation to:
 
-* Restaurants
-* Beach clubs
-* Nightclubs
-* Private events
+- Restaurants
+- Beach clubs
+- Nightclubs
+- Private events
 
 Available with waiting service.
 
@@ -82,11 +82,11 @@ Available with waiting service.
 
 ### Airport Transfers
 
-* Milano Linate / Malpensa / Bergamo Airport → Swiss
-* Lugano, St. Moritz, Zurich
-* Monte Carlo — Monaco
-* France — Nice
-* Italy — Milano, Lago di Garda
+- Milano Linate / Malpensa / Bergamo Airport → Swiss
+- Lugano, St. Moritz, Zurich
+- Monte Carlo — Monaco
+- France — Nice
+- Italy — Milano, Lago di Garda
 
 ### VIP Villa Transfers
 
@@ -100,19 +100,19 @@ Private transportation.
 
 Professional chauffeur services for:
 
-* Meetings
-* Conferences
-* Corporate events
-* Business delegations
+- Meetings
+- Conferences
+- Corporate events
+- Business delegations
 
 ### Nightlife & VIP Club Transfers
 
 Exclusive transportation to:
 
-* Restaurants
-* Beach clubs
-* Nightclubs
-* Private events
+- Restaurants
+- Beach clubs
+- Nightclubs
+- Private events
 
 Available with waiting service.
 
@@ -200,9 +200,9 @@ From € 600
 
 Included:
 
-* 15 chauffeur hours annually
-* Priority booking
-* Preferred member rates
+- 15 chauffeur hours annually
+- Priority booking
+- Preferred member rates
 
 ---
 
@@ -212,10 +212,10 @@ Included:
 
 Included:
 
-* 40 chauffeur hours annually
-* Priority booking
-* 10% discount on additional services
-* Complimentary airport transfers (2 per year)
+- 40 chauffeur hours annually
+- Priority booking
+- 10% discount on additional services
+- Complimentary airport transfers (2 per year)
 
 ---
 
@@ -225,11 +225,11 @@ Included:
 
 Included:
 
-* 80 chauffeur hours annually
-* Highest booking priority
-* 15% discount on additional services
-* Complimentary airport transfers (6 per year)
-* VIP concierge assistance
+- 80 chauffeur hours annually
+- Highest booking priority
+- 15% discount on additional services
+- Complimentary airport transfers (6 per year)
+- VIP concierge assistance
 
 ---
 

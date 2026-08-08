@@ -16,7 +16,7 @@ fleet:
   heading: Our Builds
 stats:
   subheading: Why Choose DB Custom Garage?
-  image: /images/stats-bg.webp
+  image: ../../assets/images/stats-bg.webp
   items:
     - label: 15+
       title: Years of Build Experience
