@@ -10,6 +10,7 @@
     "./layouts/*": "./src/layouts/*",
     "./sections/*": "./src/components/sections/*",
     "./config/*": "./src/config/*",
+   "./pwa": "./src/config/pwa.ts",
     "./types": "./src/types.ts"
   },
   "peerDependencies": {

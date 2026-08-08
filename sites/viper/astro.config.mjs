@@ -1,5 +1,7 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
+import AstroPWA from "@vite-pwa/astro";
+import { pwaPluginOptions } from "@garage/shared/pwa";
 
 import sitemap from "@astrojs/sitemap";
 
@@ -34,5 +36,15 @@ export default defineConfig({
     sitemap({
       filter: (page) => !page.includes("/admin/"),
     }),
+    AstroPWA(
+      pwaPluginOptions({
+        name: "VIPER Security — Luxury Chauffeur & VIP Transport",
+        shortName: "VIPER",
+        description:
+          "VIPER Security — luxury chauffeur, executive transport, airport transfers & VIP travel in Spain and Italy.",
+        themeColor: "#B08D45",
+        bgColor: "#000000",
+      }),
+    ),
   ],
 });

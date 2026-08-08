@@ -7,6 +7,7 @@ import Footer from "../components/sections/Footer.astro";
 import Font from "astro/components/Font.astro";
 import "../styles/global.css";
 import "lenis/dist/lenis.css";
+import { pwaInfo } from "virtual:pwa-info";
 
 interface Props {
   pageContent?: PageContent;
@@ -133,6 +134,13 @@ const jsonLdWebSite = JSON.stringify({
     <meta content={s.seo.twitterCard} name="twitter:card" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     {seo?.theme_color && <meta name="theme-color" content={seo?.theme_color} />}
+    {pwaInfo?.webManifest?.linkTag && (
+      <Fragment set:html={pwaInfo.webManifest.linkTag} />
+    )}
+    <script>
+      import { registerSW } from "virtual:pwa-register";
+      registerSW({ immediate: true });
+    </script>
     <style>
       @font-face {
         font-family: "Fallback";

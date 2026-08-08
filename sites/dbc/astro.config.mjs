@@ -1,9 +1,11 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
 import { fileURLToPath } from "node:url";
+import AstroPWA from "@vite-pwa/astro";
+import { pwaPluginOptions } from "@garage/shared/pwa";
 import sitemap from "@astrojs/sitemap";
 
-// DB Custom Garage (https://dbcustomgarage.netlify.app) — reuses @garage/shared
+// DB custom Garage (https://dbcustomgarage.netlify.app) — reuses @garage/shared
 // layout + sections. Own content collections + orange theme tokens.
 export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),
@@ -37,5 +39,15 @@ export default defineConfig({
     sitemap({
       filter: (page) => !page.includes("/admin/"),
     }),
+    AstroPWA(
+      pwaPluginOptions({
+        name: "DB Custom Garage",
+        shortName: "DB Garage",
+        description:
+          "DB Custom Garage — bespoke custom car builds, restorations, and performance tuning.",
+        themeColor: "#ea580c",
+        bgColor: "#000000",
+      }),
+    ),
   ],
 });
