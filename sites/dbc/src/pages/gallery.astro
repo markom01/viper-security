@@ -5,7 +5,12 @@ import { Image } from "astro:assets";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { site } from "../config/site";
 
+// Full CMS page-content (jsonld, labels, booking_data) so Nav/Footer/JSON-LD
+// carry dbc identity — NOT the shared VIPER fallbacks. Gallery-specific SEO
+// overrides the CMS title/description for this page.
+const [pageContentEntry] = await getCollection("page-content");
 const pageContent = {
+  ...(pageContentEntry?.data || {}),
   seo: {
     title: "DB Custom Garage — Gallery",
     description:
