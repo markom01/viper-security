@@ -705,12 +705,12 @@ blockquote {
   background-image: linear-gradient(
     90deg,
     var(--colors--pure),
-    #c1a17680 15%,
-    #c1a17680 30%,
-    #c1a17680 45%,
-    #c1a17680 60%,
-    #c1a17680 75%,
-    #c1a17680 90%,
+    color-mix(in srgb, var(--colors--gold) 50%, transparent) 15%,
+    color-mix(in srgb, var(--colors--gold) 50%, transparent) 30%,
+    color-mix(in srgb, var(--colors--gold) 50%, transparent) 45%,
+    color-mix(in srgb, var(--colors--gold) 50%, transparent) 60%,
+    color-mix(in srgb, var(--colors--gold) 50%, transparent) 75%,
+    color-mix(in srgb, var(--colors--gold) 50%, transparent) 90%,
     var(--colors--pure)
   );
   padding-top: 20px;
@@ -773,7 +773,7 @@ blockquote {
   height: 100%;
 }
 .service-info-wrapper {
-  background-color: #01010199;
+  background-color: color-mix(in srgb, var(--colors--onyx) 60%, transparent);
   flex-flow: column;
   justify-content: space-between;
   width: 100%;
@@ -802,7 +802,14 @@ blockquote {
 .metrics-content-wrapper {
   border: 1px solid var(--colors--slate);
   background-image:
-    linear-gradient(#fff0, #c1a17640), linear-gradient(#000000bf, #000000bf),
+    linear-gradient(
+      transparent,
+      color-mix(in srgb, var(--colors--gold) 25%, transparent)
+    ),
+    linear-gradient(
+      color-mix(in srgb, var(--colors--onyx) 75%, transparent),
+      color-mix(in srgb, var(--colors--onyx) 75%, transparent)
+    ),
     var(--metrics-bg);
   background-position:
     0 0,
@@ -1177,7 +1184,10 @@ blockquote {
 }
 .car-card-hover-bg {
   opacity: 0;
-  background-image: linear-gradient(#fff0, #c1a17633);
+  background-image: linear-gradient(
+    transparent,
+    color-mix(in srgb, var(--colors--gold) 20%, transparent)
+  );
   border-radius: 12px;
   width: 100%;
   height: 100%;

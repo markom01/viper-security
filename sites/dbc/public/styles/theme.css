@@ -6,10 +6,11 @@
   --colors--gold: #ea580c;
   --colors--gold-bright: #fb923c;
   --colors--amber: #f97416b3;
+  /* Subheadline renders on white hero bg — #ea580c fails WCAG AA (3.55:1).
+     Darker orange (orange-700) = 5.18:1. Keeps brand family, passes contrast. */
+  --colors--gold-on-light: #c2410c;
 }
 
-/* Subheadline renders on white hero bg — #ea580c fails WCAG AA (3.55:1).
-   Darker orange (orange-700) = 5.18:1. Keeps brand family, passes contrast. */
 .hero-text-details .subheadline {
-  color: #c2410c;
+  color: var(--colors--gold-on-light);
 }
