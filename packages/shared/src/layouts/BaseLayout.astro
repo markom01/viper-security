@@ -22,7 +22,8 @@ const { pageContent, brandName, subtitle, navItems, footerItems, ctaLabel } =
   Astro.props as Props;
 const seo = pageContent?.seo;
 const cmsJd = pageContent?.jsonld;
-const siteUrl = Astro.site || new URL("https://vipersecurity.com");
+// Astro.site is always configured in both astro.configs (`site: site.url`).
+const siteUrl = Astro.site!;
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
 const bd = pageContent?.booking_data;
 const ogImageUrl = seo?.image

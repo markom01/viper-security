@@ -3,13 +3,14 @@ import { getCollection } from "astro:content";
 import { getImage } from "astro:assets";
 import { Image } from "astro:assets";
 import SiteLayout from "../layouts/SiteLayout.astro";
+import { site } from "../config/site";
 
 const pageContent = {
   seo: {
     title: "DB Custom Garage — Gallery",
     description:
       "Browse our latest custom builds, restorations, and performance projects.",
-    theme_color: "#ea580c",
+    theme_color: site.themeColor,
   },
 };
 
