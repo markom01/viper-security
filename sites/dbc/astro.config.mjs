@@ -3,13 +3,14 @@ import { defineConfig, fontProviders } from "astro/config";
 import { fileURLToPath } from "node:url";
 import AstroPWA from "@vite-pwa/astro";
 import { pwaPluginOptions } from "@garage/shared/pwa";
+import { site } from "./src/config/site";
 import sitemap from "@astrojs/sitemap";
 
-// DB custom Garage (https://dbcustomgarage.netlify.app) — reuses @garage/shared
-// layout + sections. Own content collections + orange theme tokens.
+// DB custom garage (https://dbcustomgarage.netlify.app) — reuses @garage/shared
+// layout + sections. Own content collections + single-source site config.
 export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),
-  site: "https://dbcustomgarage.netlify.app",
+  site: site.url,
   prefetch: true,
   outDir: "./dist-dbc",
   fonts: [
@@ -41,12 +42,11 @@ export default defineConfig({
     }),
     AstroPWA(
       pwaPluginOptions({
-        name: "DB Custom Garage",
-        shortName: "DB Garage",
-        description:
-          "DB Custom Garage — bespoke custom car builds, restorations, and performance tuning.",
-        themeColor: "#ea580c",
-        bgColor: "#000000",
+        name: site.name,
+        shortName: site.shortName,
+        description: site.description,
+        themeColor: site.themeColor,
+        bgColor: site.bgColor,
       }),
     ),
   ],

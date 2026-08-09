@@ -2,12 +2,13 @@
 import { defineConfig, fontProviders } from "astro/config";
 import AstroPWA from "@vite-pwa/astro";
 import { pwaPluginOptions } from "@garage/shared/pwa";
+import { site } from "./src/config/site";
 
 import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://viper-security.netlify.app",
+  site: site.url,
   prefetch: true,
   fonts: [
     {
@@ -38,12 +39,11 @@ export default defineConfig({
     }),
     AstroPWA(
       pwaPluginOptions({
-        name: "VIPER Security — Luxury Chauffeur & VIP Transport",
-        shortName: "VIPER",
-        description:
-          "VIPER Security — luxury chauffeur, executive transport, airport transfers & VIP travel in Spain and Italy.",
-        themeColor: "#B08D45",
-        bgColor: "#000000",
+        name: site.name,
+        shortName: site.shortName,
+        description: site.description,
+        themeColor: site.themeColor,
+        bgColor: site.bgColor,
       }),
     ),
   ],
