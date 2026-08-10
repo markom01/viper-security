@@ -28,14 +28,14 @@ const f = pageContent?.fleet;
                       <div class="car-card-left">
                         <div class="car-listing-info-wrapper">
                           <h3 class="car-listing-name">{d.name}</h3>
-                          <div class="car-listing-type">{d.type || ""}</div>
+                          <div class="car-listing-type">{d.type}</div>
                         </div>
                         <div class="car-listing-image-wrapper">
                           {d.image && (
                             <Image
                               loading="lazy"
                               src={d.image}
-                              alt={d.name || s.fleet.vehicleAltFallback}
+                              alt={d.name}
                               class="car-listing-image"
                             />
                           )}
@@ -45,17 +45,17 @@ const f = pageContent?.fleet;
                         <div class="car-listing-details-wrapper">
                           <div class="car-listing-detail">
                             <div class="listing-label">{s.fleet.year}</div>
-                            <div class="listing-detail">{d.year || ""}</div>
+                            <div class="listing-detail">{d.year}</div>
                           </div>
                           <div class="listing-detail-divider" />
                           <div class="car-listing-detail">
                             <div class="listing-label">{s.fleet.seats}</div>
-                            <div class="listing-detail">{d.seats || ""}</div>
+                            <div class="listing-detail">{d.seats}</div>
                           </div>
                           <div class="listing-detail-divider" />
                           <div class="car-listing-detail">
                             <div class="listing-label">{s.fleet.baggage}</div>
-                            <div class="listing-detail">{d.baggage || ""}</div>
+                            <div class="listing-detail">{d.baggage}</div>
                           </div>
                         </div>
                         <div class="car-listing-details-wrapper">
@@ -64,7 +64,7 @@ const f = pageContent?.fleet;
                               {s.fleet.capacityPassengers}
                             </div>
                             <div class="listing-detail">
-                              {d.capacity_passengers || ""}
+                              {d.capacity_passengers}
                             </div>
                           </div>
                           <div class="listing-detail-divider" />
@@ -73,7 +73,7 @@ const f = pageContent?.fleet;
                               {s.fleet.capacitySuitcases}
                             </div>
                             <div class="listing-detail">
-                              {d.capacity_suitcases || ""}
+                              {d.capacity_suitcases}
                             </div>
                           </div>
                           <div class="listing-detail-divider" />
@@ -82,7 +82,7 @@ const f = pageContent?.fleet;
                               {s.fleet.capacityCarryon}
                             </div>
                             <div class="listing-detail">
-                              {d.capacity_carryon || ""}
+                              {d.capacity_carryon}
                             </div>
                           </div>
                         </div>

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import SiteLayout from "../layouts/SiteLayout.astro";
+import { site } from "../config/site";
 
 import Hero from "@garage/shared/sections/Hero.astro";
 import StatsSection from "@garage/shared/sections/StatsSection.astro";
@@ -30,6 +31,8 @@ const services = servicesEntry?.data?.offerings || [];
     hero_image={hero.hero_image}
     pageContent={pageContent}
     fleetHref="/gallery"
+    phoneSpain={site.whatsappNumber}
+    services={services}
   />
   <AboutSection pageContent={pageContent} />
   <Services pageContent={pageContent} marbella={services} milano={services} />

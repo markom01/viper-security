@@ -12,9 +12,6 @@ import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
 const bd = pageContent?.booking_data;
 
-// Build 2 regional cards, each with service sections inside
-const regionCards = [];
-
 function buildRegionCard(
   services: BookingService[] | undefined,
   regionLabel: string,
@@ -30,7 +27,7 @@ function buildRegionCard(
         title: svc.name,
         routes: routes.map((r) => ({
           label: r.route,
-          price: r.price || "?",
+          price: r.price,
         })),
       });
     }
@@ -51,8 +48,8 @@ function buildRegionCard(
   return null;
 }
 
-const spainLabel = bd?.spain?.short_label || "Marbella";
-const italyLabel = bd?.italy?.short_label || "Milano";
+const spainLabel = bd?.spain?.short_label;
+const italyLabel = bd?.italy?.short_label;
 
 const marbellaCard = buildRegionCard(
   bd?.spain?.services,

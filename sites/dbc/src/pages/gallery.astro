@@ -28,7 +28,7 @@ const galleryItems = await Promise.all(
     const optimized = await getImage({ src: meta });
     return {
       id: item.id,
-      alt: item.data.alt || item.data.name || "",
+      alt: item.data.alt || item.data.name,
       width: meta.width,
       height: meta.height,
       href: optimized.src,
@@ -63,6 +63,8 @@ const galleryItems = await Promise.all(
                   height={item.height}
                   loading="lazy"
                   decoding="async"
+                  widths={[480, 768, 1080]}
+                  sizes="(min-width: 991px) 33vw, (min-width: 640px) 50vw, 100vw"
                 />
               </a>
             </div>

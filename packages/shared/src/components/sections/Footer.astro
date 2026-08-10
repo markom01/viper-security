@@ -30,7 +30,7 @@ const links = footerItems ?? [
   { label: s.nav.contact, href: "/#contact" },
 ];
 
-const cleanPhone = (phone: string) => phone?.replace(/[\s+]/g, "") || "";
+const cleanPhone = (phone?: string) => phone?.replace(/[\s+]/g, "") || "";
 const phoneSep = s.footer.phoneSeparator;
 const mapEmbedUrl = pageContent?.map_embed_url;
 ---

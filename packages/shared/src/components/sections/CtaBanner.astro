@@ -1,6 +1,9 @@
 ---
 import { Image } from "astro:assets";
-const { pageContent } = Astro.props;
+const { pageContent, ctaHref = "/#contact" } = Astro.props as {
+  pageContent?: any;
+  ctaHref?: string;
+};
 import { ICONS } from "../../config/icons";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
@@ -15,7 +18,7 @@ const s = resolveLabels(pageContent, STRINGS);
           <h2 class="marketing-heading">{pageContent?.cta?.heading}</h2>
           <p class="pure-text">{pageContent?.cta?.text}</p>
         </div>
-        <a href="/#contact" class="secondary-button">
+        <a href={ctaHref} class="secondary-button">
           <div class="button-text">{s.cta.button}</div>
           <span
             aria-hidden="true"

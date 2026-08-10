@@ -29,6 +29,9 @@ export function resolveTemplates(
   vehicleName?: string,
 ): string {
   if (!str) return "";
+  // No placeholder present — skip the replaceAll loop entirely (avoids 8
+  // string allocations per field for plain prose).
+  if (!str.includes("{")) return str;
   const s = bd?.spain || {};
   const i = bd?.italy || {};
   const map: Record<string, string> = {

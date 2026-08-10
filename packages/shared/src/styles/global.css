@@ -266,6 +266,9 @@ button,
   --colors--ivory: #ececec;
   --line-height-sizes--small: 120%;
   --colors--granite: #767676;
+  /* Dark bronze for text on light sections — passes 4.5:1 on white
+     (gold #917148 on white is only ~3.3:1). */
+  --colors--bronze: #6f5230;
 
   /* Native scrollbars + widgets follow the dark theme & gold accent */
   color-scheme: dark;
@@ -1196,7 +1199,9 @@ blockquote {
 }
 .subheadline {
   font-family: var(--font-families--title-font);
-  color: var(--colors--gold);
+  /* Darker bronze than --colors--gold for 4.5:1 contrast on light sections
+     (gold #917148 on white is only ~3.3:1 — WCAG AA failure). */
+  color: var(--colors--bronze);
   text-transform: uppercase;
   font-weight: 600;
 }

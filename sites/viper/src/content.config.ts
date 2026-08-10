@@ -112,6 +112,8 @@ const pageContent = defineCollection({
           phoneSpain: z.string().optional(),
           phoneItaly: z.string().optional(),
           privacy_policy: z.string().optional(),
+          webSiteName: z.string().optional(),
+          webSiteUrl: z.string().optional(),
         })
         .optional(),
       map_embed_url: z.string().optional(),
@@ -156,6 +158,7 @@ const pageContent = defineCollection({
           title: z.string().optional(),
           description: z.string().optional(),
           theme_color: z.string().optional(),
+          image: z.string().optional(),
         })
         .optional(),
       about: z

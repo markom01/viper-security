@@ -1,6 +1,7 @@
 ---
 import type { PageContent, NavLink } from "../types";
 import STRINGS from "../config/strings";
+import { jsonEscape } from "../config/json-escape";
 const s = STRINGS;
 import Nav from "../components/sections/Nav.astro";
 import Footer from "../components/sections/Footer.astro";
@@ -18,8 +19,13 @@ interface Props {
   ctaLabel?: string;
 }
 
-const { pageContent, brandName, subtitle, navItems, footerItems, ctaLabel } =
+const { pageContent, brandName, subtitle, navItems, footerItems } =
   Astro.props as Props;
+// Explicit CMS labels take precedence; the layout never injects a hardcoded
+// default button label. Site layouts pass ctaLabel explicitly (DBC: Get A
+// Quote); VIPER reads its CMS `nav_contact` label here.
+const ctaLabel =
+  (Astro.props as Props).ctaLabel ?? pageContent?.labels?.["nav_contact"] ?? "";
 const seo = pageContent?.seo;
 const cmsJd = pageContent?.jsonld;
 // Astro.site is always configured in both astro.configs (`site: site.url`).
@@ -36,19 +42,20 @@ const jd = {
   orgUrl: cmsJd?.org_url,
   orgLogo: cmsJd?.org_logo,
   orgDescription: cmsJd?.org_description,
-  webSiteName: cmsJd?.webSiteName || s.jsonld.webSiteName,
-  webSiteUrl: cmsJd?.webSiteUrl || s.jsonld.webSiteUrl,
+  webSiteName: cmsJd?.webSiteName,
+  webSiteUrl: cmsJd?.webSiteUrl,
   privacyPolicy: cmsJd?.privacy_policy,
-  phoneItaly: cmsJd?.phoneItaly || s.jsonld.phoneItaly,
-  phoneSpain: cmsJd?.phoneSpain || s.jsonld.phoneSpain,
-  spainLocality: bd?.spain?.short_label || "Marbella",
-  italyLocality: bd?.italy?.short_label || "Milano",
+  phoneItaly: cmsJd?.phoneItaly,
+  phoneSpain: cmsJd?.phoneSpain,
+  spainLocality: bd?.spain?.short_label,
+  italyLocality: bd?.italy?.short_label,
   hasAddress: !!(bd?.spain?.short_label || bd?.italy?.short_label || false),
 };
-// Build JSON-LD from plain objects + JSON.stringify, which escapes `<` as
-// < and prevents a `</script>` breakout when CMS content is interpolated
-// (CMS values are untrusted input; set:html + script-src 'unsafe-inline' means
-// a raw interpolation is stored XSS on every page).
+// JSON.stringify alone does NOT escape `<`, so a CMS-authored `</script>`
+// would break out of the <script> element. `set:html` writes the value
+// verbatim (no escaping). jsonEscape converts `<`, `>`, `&` and U+2028/U+2029
+// to Unicode escapes that decode back to identical JSON — closing the raw-text
+// `<script>` boundary while the strict CSP keeps script-src 'self'.
 const addressJson = jd.hasAddress
   ? [
       {
@@ -64,25 +71,29 @@ const addressJson = jd.hasAddress
     ]
   : undefined;
 const jsonLdOrg = cmsJd?.org_name
-  ? JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: jd.orgName,
-      url: jd.orgUrl,
-      logo: jd.orgLogo,
-      description: jd.orgDescription,
-      ...(addressJson ? { address: addressJson } : {}),
-      ...(jd.privacyPolicy ? { privacyPolicy: jd.privacyPolicy } : {}),
-      telephone: [jd.phoneSpain, jd.phoneItaly],
-    })
+  ? jsonEscape(
+      JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: jd.orgName,
+        url: jd.orgUrl,
+        logo: jd.orgLogo,
+        description: jd.orgDescription,
+        ...(addressJson ? { address: addressJson } : {}),
+        ...(jd.privacyPolicy ? { privacyPolicy: jd.privacyPolicy } : {}),
+        telephone: [jd.phoneSpain, jd.phoneItaly],
+      }),
+    )
   : null;
-const jsonLdWebSite = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: jd.webSiteName,
-  url: jd.webSiteUrl,
-  ...(jd.privacyPolicy ? { privacyPolicy: jd.privacyPolicy } : {}),
-});
+const jsonLdWebSite = jsonEscape(
+  JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: jd.webSiteName,
+    url: jd.webSiteUrl,
+    ...(jd.privacyPolicy ? { privacyPolicy: jd.privacyPolicy } : {}),
+  }),
+);
 ---
 
 <!doctype html>
@@ -135,9 +146,11 @@ const jsonLdWebSite = JSON.stringify({
     <meta content={s.seo.twitterCard} name="twitter:card" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     {seo?.theme_color && <meta name="theme-color" content={seo?.theme_color} />}
-    {pwaInfo?.webManifest?.linkTag && (
-      <Fragment set:html={pwaInfo.webManifest.linkTag} />
-    )}
+    {
+      pwaInfo?.webManifest?.linkTag && (
+        <Fragment set:html={pwaInfo.webManifest.linkTag} />
+      )
+    }
     <script>
       import { registerSW } from "virtual:pwa-register";
       registerSW({ immediate: true });
@@ -152,14 +165,12 @@ const jsonLdWebSite = JSON.stringify({
       }
     </style>
     <link href="/favicon.svg" rel="shortcut icon" type="image/x-icon" />
-    {jsonLdOrg && (
-      <script type="application/ld+json" set:html={jsonLdOrg} />
-    )}
+    {jsonLdOrg && <script type="application/ld+json" set:html={jsonLdOrg} />}
     <script type="application/ld+json" set:html={jsonLdWebSite} />
   </head>
   <body>
     <Nav
-      brandName={brandName ?? jd.orgName ?? s.jsonld.webSiteName}
+      brandName={brandName ?? jd.orgName}
       pageContent={pageContent}
       navItems={navItems}
       ctaLabel={ctaLabel}
@@ -169,7 +180,7 @@ const jsonLdWebSite = JSON.stringify({
       <slot />
     </main>
     <Footer
-      brandName={brandName ?? jd.orgName ?? s.jsonld.webSiteName}
+      brandName={brandName ?? jd.orgName}
       pageContent={pageContent}
       footerItems={footerItems}
       phoneItaly={jd.phoneItaly}
@@ -185,25 +196,11 @@ const jsonLdWebSite = JSON.stringify({
         allowNestedScroll: true,
       });
     </script>
-    <script is:inline>
-      (function () {
-        var els = document.querySelectorAll("[data-scroll-reveal]");
-        if (!els.length) return;
-        var obs = new IntersectionObserver(
-          function (entries) {
-            entries.forEach(function (entry) {
-              if (entry.isIntersecting) {
-                entry.target.setAttribute("data-scroll-reveal-visible", "");
-                obs.unobserve(entry.target);
-              }
-            });
-          },
-          { threshold: 0.15, rootMargin: "0px 0px -50px 0px" },
-        );
-        els.forEach(function (el) {
-          obs.observe(el);
-        });
-      })();
+    <script>
+      // Import forces Astro to bundle this to an external /_astro/*.js module,
+      // which the strict `script-src 'self'` CSP permits (no is:inline).
+      import { initScrollReveal } from "../scripts/scroll-reveal";
+      initScrollReveal();
     </script>
   </body>
 </html>

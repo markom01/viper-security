@@ -27,7 +27,7 @@ const [pageContentEntry] = await getCollection("page-content");
 const pageContent = pageContentEntry?.data || {};
 const bd = pageContent?.booking_data;
 const siteName = SITE_NAME;
-const vehicleName = pageContent?.vehicle_name || "Mercedes-Benz S-Class";
+const vehicleName = pageContent?.vehicle_name;
 const allOfferings = (servicesEntry?.data?.offerings || []).map((o) => ({
   ...o,
   description: resolveTemplates(o.description, bd, siteName, vehicleName),

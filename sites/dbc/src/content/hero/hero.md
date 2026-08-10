@@ -1,6 +1,6 @@
 ---
 brand_name: DB Custom Garage
-tagline: Custom Builds, No Limits
-subtitle: Bespoke restoration, tuning, and custom car builds for enthusiasts who demand more.
-cta_text: View Our Builds
+tagline: Supercars & Classics, No Limits
+subtitle: Enclosed supercar transport, import/export logistics, and off-market buying and selling across Europe.
+cta_text: View Our Fleet
 ---

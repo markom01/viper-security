@@ -33,11 +33,14 @@
   [headers.values]
     Cache-Control = "public, max-age=86400"
 
-# Security headers — main site (strict)
+# Security headers — main site (strict). No 'unsafe-inline' on script-src:
+# all executable scripts are bundled modules ('self'); JSON-LD + hero data ship
+# as inert application/json tags (CSP ignores them). Inline <style> blocks are
+# still allowed (style-src 'unsafe-inline') — Astro emits them per-component.
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-src https://www.google.com; object-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-src https://www.google.com; object-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; upgrade-insecure-requests"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"

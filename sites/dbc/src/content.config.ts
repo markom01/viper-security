@@ -66,6 +66,7 @@ const pageContent = defineCollection({
           title: z.string().optional(),
           description: z.string().optional(),
           theme_color: z.string().optional(),
+          image: z.string().optional(),
         })
         .optional(),
       fleet: z

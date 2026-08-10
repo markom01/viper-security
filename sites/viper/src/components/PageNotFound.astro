@@ -28,7 +28,7 @@ const nf = notFound || {};
         fontSize: "6rem",
         lineHeight: 1,
         marginBottom: "24px",
-      }}>{nf?.code || "404"}</span
+      }}>{nf?.code}</span
     >
     <h1
       style={{
@@ -40,7 +40,7 @@ const nf = notFound || {};
         marginBottom: "16px",
       }}
     >
-      {nf?.heading || "Page Not Found"}
+      {nf?.heading}
     </h1>
     <p
       style={{
@@ -51,11 +51,11 @@ const nf = notFound || {};
         marginBottom: "32px",
       }}
     >
-      {nf?.body || "The page you're looking for doesn't exist."}
+      {nf?.body}
     </p>
     <a
       href="/"
-      aria-label={nf?.returnAria || "Return to home page"}
+      aria-label={nf?.returnAria}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -69,7 +69,7 @@ const nf = notFound || {};
         borderRadius: "26px",
       }}
     >
-      {nf?.returnLink || "Return Home"}
+      {nf?.returnLink}
     </a>
   </div>
 </section>

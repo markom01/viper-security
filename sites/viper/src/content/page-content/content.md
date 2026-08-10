@@ -4,6 +4,8 @@ jsonld:
   org_url: https://viper-security.netlify.app
   org_logo: https://viper-security.netlify.app/images/logo.svg
   org_description: Luxury chauffeur & VIP transport services in {location1} and {location2}.
+  webSiteName: VIPER Security
+  webSiteUrl: https://viper-security.netlify.app
   phoneSpain: +34 670 038 541
   phoneItaly: +39 349 663 8171
   privacy_policy: https://viper-security.netlify.app/privacy-policy
@@ -79,6 +81,7 @@ seo:
   description: "{site_name} — luxury chauffeur, executive transport, airport
     transfers & VIP travel in {location1} and {location2}. Premium private
     chauffeur service."
+  image: ../../assets/images/hero-image_upscaled.webp
   theme_color: "#000000"
 about:
   heading: World-Class Luxury Chauffeur Services Meticulously Tailored to Perfection
@@ -134,4 +137,6 @@ branding:
   luxury_without_limits: LUXURY WITHOUT LIMITS
   professional_discreet_reliable: Professional • Discreet • Reliable
 vehicle_name: Mercedes-Benz S-Class
+labels:
+  nav_contact: Contact Us
 ---

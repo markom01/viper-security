@@ -6,13 +6,17 @@ export default defineConfig({
   timeout: 30000,
   retries: 0,
   use: {
-    baseURL: "http://localhost:4322",
+    // Dedicated port; NOT the DBC dev port (4322). A collision here would
+    // silently serve the wrong site.
+    baseURL: "http://localhost:4173",
     headless: true,
   },
   webServer: {
-    command: "npx serve dist/ -p 4322 -L",
-    port: 4322,
+    command: "npx serve dist/ -p 4173 -L",
+    port: 4173,
     timeout: 10000,
-    reuseExistingServer: true,
+    // Refuse to reuse a foreign server on 4173 — fail loudly if something
+    // already owns the port instead of silently testing the wrong site.
+    reuseExistingServer: false,
   },
 });

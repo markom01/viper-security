@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 
 test.describe("Accessibility Regression Tests", () => {
   test("main landmark has accessible label", async ({ page }) => {
@@ -86,5 +87,30 @@ test.describe("Accessibility Regression Tests", () => {
     const jsonld = page.locator('script[type="application/ld+json"]').first();
     const text = await jsonld.textContent();
     expect(text).toContain('"privacyPolicy"');
+  });
+
+  test("axe scan: no critical or serious violations on home", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    // Complete the scroll-reveal: elements start at opacity:0 and animate in
+    // via IntersectionObserver (0.7s CSS transition). Axe scans mid-reveal
+    // would blend text colors toward the background and report phantom
+    // contrast failures, so force the final state and let it settle.
+    await page.evaluate(() => {
+      document
+        .querySelectorAll("[data-scroll-reveal]")
+        .forEach((el) => el.setAttribute("data-scroll-reveal-visible", ""));
+    });
+    await page.waitForTimeout(900);
+    const results = await new AxeBuilder({ page }).analyze();
+    const violations = results.violations.filter(
+      (v) =>
+        ["critical", "serious"].includes(v.impact ?? "") &&
+        // The skip-link is intentionally outside <main> (it targets it) —
+        // axe's `region` rule flags that as moderate; not a real defect.
+        v.id !== "region",
+    );
+    expect(violations).toEqual([]);
   });
 });

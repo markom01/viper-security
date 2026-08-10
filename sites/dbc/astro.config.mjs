@@ -13,6 +13,13 @@ export default defineConfig({
   site: site.url,
   prefetch: true,
   outDir: "./dist-dbc",
+  // Never inline bundled client scripts: Astro's @astro/plugin-scripts inlines
+  // any module chunk under `build.assetsInlineLimit` (vite default 4096 B).
+  // Inline <script type=module> is blocked by the strict `script-src 'self'`
+  // CSP, so keep everything external as /_astro/*.js modules. Expressed via the
+  // vite key so it lands in the merged Vite config the plugin reads at
+  // configResolved.
+  vite: { build: { assetsInlineLimit: 0 } },
   fonts: [
     {
       provider: fontProviders.fontsource(),

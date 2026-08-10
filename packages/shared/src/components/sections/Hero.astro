@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { jsonEscape } from "../../config/json-escape";
 const { pageContent } = Astro.props;
 const {
   subtitle,
@@ -9,6 +10,7 @@ const {
   phoneItaly,
   phoneSpain,
   fleetHref = "/#fleet",
+  services,
 } = Astro.props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
@@ -16,6 +18,10 @@ import { ICONS } from "../../config/icons";
 const s = resolveLabels(pageContent, STRINGS);
 
 const bd = pageContent?.booking_data;
+const hasBooking = !!(
+  bd &&
+  (bd.spain?.services?.length || bd.italy?.services?.length)
+);
 const SCRIPT_DATA = {
   spain: bd?.spain || { label: "", services: [] },
   italy: bd?.italy || { label: "", services: [] },
@@ -23,12 +29,19 @@ const SCRIPT_DATA = {
   SR: s.form.selectRoute,
   CL: s.form.chooseLocationFirst,
   CS: s.form.chooseServiceFirst,
-  PL: s.form.priceLabel,
   SP: s.form.pricePlaceholder,
   PI: phoneItaly || "",
   PS: phoneSpain || "",
-  SN: pageContent?.jsonld?.org_name || "VIPER Security",
+  SN: pageContent?.jsonld?.org_name,
+  HB: hasBooking,
+  // Garage (DBC) variant: service titles from the `services` prop.
+  SERVICES: Array.isArray(services)
+    ? services.map((x) => x?.title).filter(Boolean)
+    : [],
 };
+// Inert JSON tag (never executed, so CSP script-src does not apply).
+// jsonEscape strips any `</script>` breakout from CMS content.
+const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
 ---
 
 <section class="section home-hero-section">
@@ -80,7 +93,7 @@ const SCRIPT_DATA = {
                 class="hero-image"
                 width={hero_image.width}
                 height={hero_image.height}
-                widths={[480, 768, 1080, 1600, hero_image.width]}
+                widths={[480, 768, 1080, 1600]}
                 sizes="(min-width: 768px) 60vw, 100vw"
               />
             )
@@ -96,7 +109,12 @@ const SCRIPT_DATA = {
           >
           </div>
           <div class="booking-form-block">
-            <form class="booking-form" aria-label={s.hero.bookingFormAria}>
+            <form
+              class={`booking-form${hasBooking ? "" : " garage-form"}`}
+              aria-label={s.hero.bookingFormAria}
+              data-netlify="true"
+              name="booking-form"
+            >
               <div class="left-side-fields">
                 <div class="booking-form-label-field">
                   <label class="booking-form-label" for="full-name"
@@ -110,6 +128,7 @@ const SCRIPT_DATA = {
                     type="text"
                     required
                     aria-label="Full Name"
+                    aria-describedby="full-name-error"
                   />
                 </div>
                 <div class="booking-form-label-field">
@@ -124,56 +143,69 @@ const SCRIPT_DATA = {
                     type="tel"
                     required
                     aria-label="Phone"
+                    aria-describedby="phone-error"
                   />
                 </div>
-                <div class="booking-form-label-field">
-                  <label class="booking-form-label" for="form-location"
-                    >{s.form.location}</label
-                  >
-                  <select
-                    class="booking-form-field"
-                    name="Location"
-                    id="form-location"
-                    required
-                    aria-label="Location"
-                  >
-                    <option value="">{s.form.selectLocation}</option>
-                    <option value="spain">{bd?.spain?.label}</option>
-                    <option value="italy">{bd?.italy?.label}</option>
-                  </select>
-                </div>
+                {
+                  hasBooking && (
+                    <div class="booking-form-label-field">
+                      <label class="booking-form-label" for="form-location">
+                        {s.form.location}
+                      </label>
+                      <select
+                        class="booking-form-field"
+                        name="Location"
+                        id="form-location"
+                        required
+                        aria-label="Location"
+                      >
+                        <option value="">{s.form.selectLocation}</option>
+                        <option value="spain">{bd?.spain?.label}</option>
+                        <option value="italy">{bd?.italy?.label}</option>
+                      </select>
+                    </div>
+                  )
+                }
               </div>
               <div class="right-side-fields">
-                <div class="booking-form-label-field">
-                  <label class="booking-form-label" for="form-service"
-                    >{s.form.service}</label
-                  >
-                  <select
-                    class="booking-form-field"
-                    name="Service"
-                    id="form-service"
-                    required
-                    disabled
-                    aria-label="Service"
-                  >
-                    <option value="">{s.form.chooseLocationFirst}</option>
-                  </select>
-                </div>
-                <div class="booking-form-label-field">
-                  <label class="booking-form-label" for="form-destination"
-                    >{s.form.destination}</label
-                  >
-                  <select
-                    class="booking-form-field"
-                    name="Destination"
-                    id="form-destination"
-                    required
-                    disabled
-                    aria-label="Destination"
-                  >
-                    <option value="">{s.form.chooseServiceFirst}</option>
-                  </select>
-                </div>
+                {
+                  hasBooking && (
+                    <div class="booking-form-label-field">
+                      <label class="booking-form-label" for="form-service">
+                        {s.form.service}
+                      </label>
+                      <select
+                        class="booking-form-field"
+                        name="Service"
+                        id="form-service"
+                        required
+                        disabled
+                        aria-label="Service"
+                      >
+                        <option value="">{s.form.chooseLocationFirst}</option>
+                      </select>
+                    </div>
+                  )
+                }
+                {
+                  hasBooking && (
+                    <div class="booking-form-label-field">
+                      <label class="booking-form-label" for="form-destination">
+                        {s.form.destination}
+                      </label>
+                      <select
+                        class="booking-form-field"
+                        name="Destination"
+                        id="form-destination"
+                        required
+                        disabled
+                        aria-label="Destination"
+                      >
+                        <option value="">{s.form.chooseServiceFirst}</option>
+                      </select>
+                    </div>
+                  )
+                }
                 <div class="booking-form-label-field">
                   <label class="booking-form-label" for="pickup-date"
                     >{s.form.date}</label
@@ -184,21 +216,65 @@ const SCRIPT_DATA = {
                     name="Pick-Up-Date"
                     type="date"
                     required
-                    aria-label="Date"
+                    aria-label={s.form.date}
                   />
                 </div>
+                {
+                  !hasBooking && (
+                    <div class="booking-form-label-field">
+                      <label class="booking-form-label" for="form-service">
+                        {s.form.service}
+                      </label>
+                      <select
+                        class="booking-form-field"
+                        name="Service"
+                        id="form-service"
+                        required
+                        aria-label="Service"
+                      >
+                        <option value="">{s.form.selectService}</option>
+                        {SCRIPT_DATA.SERVICES.map((t) => (
+                          <option value={t}>{t}</option>
+                        ))}
+                      </select>
+                    </div>
+                  )
+                }
+                {
+                  !hasBooking && (
+                    <div class="booking-form-label-field">
+                      <label class="booking-form-label" for="form-message">
+                        {s.form.message}
+                      </label>
+                      <textarea
+                        class="booking-form-field"
+                        id="form-message"
+                        name="Message"
+                        placeholder={s.form.messagePlaceholder}
+                        rows="3"
+                        aria-label="Message"
+                      />
+                    </div>
+                  )
+                }
               </div>
               <div class="form-bottom-row">
-                <div class="booking-form-label-field" id="form-price-field">
-                  <label class="booking-form-label">{s.form.priceLabel}</label>
-                  <div
-                    class="booking-form-price"
-                    id="form-price-value"
-                    data-state="placeholder"
-                  >
-                    {s.form.pricePlaceholder}
-                  </div>
-                </div>
+                {
+                  hasBooking && (
+                    <div class="booking-form-label-field" id="form-price-field">
+                      <label class="booking-form-label">
+                        {s.form.priceLabel}
+                      </label>
+                      <div
+                        class="booking-form-price"
+                        id="form-price-value"
+                        data-state="placeholder"
+                      >
+                        {s.form.pricePlaceholder}
+                      </div>
+                    </div>
+                  )
+                }
                 <div class="booking-button-wrapper">
                   <input
                     type="submit"
@@ -270,6 +346,11 @@ const SCRIPT_DATA = {
     .right-side-fields {
       width: calc(50% - 22px) !important;
     }
+    /* Garage variant: 2 fields on the left, 3 on the right. auto-fit lets the
+       empty 3rd left cell collapse instead of leaving a gap before Date. */
+    .garage-form .left-side-fields {
+      grid-template-columns: 1fr 1fr;
+    }
   }
   .form-bottom-row {
     display: grid;
@@ -311,255 +392,342 @@ const SCRIPT_DATA = {
     cursor: not-allowed;
   }
 </style>
-<script define:vars={{ data: SCRIPT_DATA }}>
-  (function () {
-    var d = data;
-    var R = { spain: d.spain, italy: d.italy },
-      SS = d.SS,
-      SR = d.SR,
-      CL = d.CL,
-      CS = d.CS,
-      PL = d.PL,
-      SP = d.SP,
-      PI = d.PI,
-      PS = d.PS;
-    var L = document.getElementById("form-location"),
-      S = document.getElementById("form-service"),
-      D = document.getElementById("form-destination"),
-      PF = document.getElementById("form-price-field"),
-      PV = document.getElementById("form-price-value");
-    var form = document.querySelector(".booking-form"),
-      btn = form && form.querySelector(".booking-form-button");
-    if (!L) return;
-
-    // Set min date to today on the date input
-    var pickUpDate = form.querySelector('[name="Pick-Up-Date"]');
-    if (pickUpDate) {
-      var t = new Date();
-      pickUpDate.min =
-        t.getFullYear() +
-        "-" +
-        (t.getMonth() + 1).toString().padStart(2, "0") +
-        "-" +
-        t.getDate().toString().padStart(2, "0");
-    }
-
-    // Validation helpers
-    function validName(v) {
-      return v.trim().length >= 2 && /^[\p{L}\s\-'.]+$/u.test(v);
-    }
-    function validPhone(v) {
-      var d = v.replace(/[\s\-\+\(\)]/g, "");
-      return d.length >= 7 && d.length <= 15 && /^[\+\d\s\-\(\)]+$/.test(v);
-    }
-    function showErr(el, m) {
-      var mb = el.parentElement.querySelector(".field-error");
-      if (!mb) {
-        mb = document.createElement("div");
-        mb.className = "field-error";
-        mb.style.cssText =
-          "color:var(--colors--coral);font-size:1rem;margin-top:4px;font-family:var(--font-families--body-font);";
-        el.parentElement.appendChild(mb);
+<script
+  is:inline
+  type="application/json"
+  id="hero-data"
+  set:html={__heroData}
+/>
+<script>
+  // Read CMS data from the inert JSON tag (CSP-safe; no define:vars inline).
+  const raw = document.getElementById("hero-data");
+  if (raw) {
+    // IIFE: top-level `return` is illegal in a module script.
+    (() => {
+      interface Region {
+        label?: string;
+        services: {
+          name: string;
+          routes: (string | { route: string; price?: string })[];
+        }[];
       }
-      mb.textContent = m;
-      el.setAttribute("data-invalid", "");
-    }
-    function clearErr(el) {
-      var mb = el.parentElement.querySelector(".field-error");
-      if (mb) mb.textContent = "";
-      delete el.dataset.invalid;
-    }
+      interface HeroData {
+        spain: Region;
+        italy: Region;
+        SS: string;
+        SR: string;
+        CL: string;
+        CS: string;
+        SP: string;
+        PI: string;
+        PS: string;
+        SN: string;
+        HB: boolean;
+        SERVICES: string[];
+      }
+      const d = JSON.parse(raw.textContent || "{}") as HeroData;
+      const R: Record<string, Region> = { spain: d.spain, italy: d.italy };
+      const { SS, SR, CL, CS, SP, PI, PS } = d;
+      const HB = !!d.HB;
+      const L = document.getElementById(
+        "form-location",
+      ) as HTMLSelectElement | null;
+      const S = document.getElementById(
+        "form-service",
+      ) as HTMLSelectElement | null;
+      const D = document.getElementById(
+        "form-destination",
+      ) as HTMLSelectElement | null;
+      const PV = document.getElementById(
+        "form-price-value",
+      ) as HTMLElement | null;
+      const form = document.querySelector<HTMLFormElement>(".booking-form");
+      const btn =
+        form?.querySelector<HTMLInputElement>(".booking-form-button") ?? null;
+      const formError = document.querySelector<HTMLElement>(
+        ".form-error-message",
+      );
+      const msgIn =
+        form?.querySelector<HTMLTextAreaElement>('[name="Message"]') ?? null;
+      const pickUpDate = form?.querySelector<HTMLInputElement>(
+        '[name="Pick-Up-Date"]',
+      );
+      const nameIn =
+        form?.querySelector<HTMLInputElement>('[name="Full-Name"]') ?? null;
+      const phoneIn =
+        form?.querySelector<HTMLInputElement>('[name="Phone"]') ?? null;
+      // Chauffeur variant needs the location select; garage variant (no
+      // booking_data) is a simple name+phone+message form.
+      if (!form || !btn || (HB && !L)) return;
+      // Rebind to non-null so closures keep the narrowed type (TS loses
+      // narrowing of outer `btn` inside nested functions).
+      const submitBtn = btn;
 
-    // Validation listeners
-    var nameIn = form && form.querySelector('[name="Full-Name"]');
-    var phoneIn = form && form.querySelector('[name="Phone"]');
-    [nameIn, phoneIn].forEach(function (inp) {
-      if (!inp) return;
-      inp.addEventListener("input", function () {
-        if (!inp.value) {
-          clearErr(inp);
-          return;
+      // Set min date to today on the date input
+      if (pickUpDate) {
+        const t = new Date();
+        pickUpDate.min =
+          t.getFullYear() +
+          "-" +
+          (t.getMonth() + 1).toString().padStart(2, "0") +
+          "-" +
+          t.getDate().toString().padStart(2, "0");
+      }
+
+      // Validation helpers
+      function validName(v: string): boolean {
+        return v.trim().length >= 2 && /^[\p{L}\s\-'.]+$/u.test(v);
+      }
+      function validPhone(v: string): boolean {
+        const d = v.replace(/[\s\-\+\(\)]/g, "");
+        return d.length >= 7 && d.length <= 15 && /^[\+\d\s\-\(\)]+$/.test(v);
+      }
+      // a11y: the injected error is role=alert (announced), and the input gets
+      // aria-invalid + aria-describedby pointing at it.
+      function showErr(el: HTMLInputElement, m: string): void {
+        let mb = el.parentElement?.querySelector<HTMLElement>(".field-error");
+        if (!mb) {
+          mb = document.createElement("div");
+          mb.className = "field-error";
+          mb.setAttribute("role", "alert");
+          mb.style.cssText =
+            "color:var(--colors--coral);font-size:1rem;margin-top:4px;font-family:var(--font-families--body-font);";
+          el.parentElement?.appendChild(mb);
         }
-        var fn = inp === nameIn ? validName : validPhone;
-        if (fn(inp.value)) clearErr(inp);
-        else
-          showErr(
-            inp,
-            inp === nameIn
-              ? "Please enter your full name (at least 2 characters)"
-              : "Please enter a valid phone number (+ and 7-15 digits)",
-          );
-        updateBtn();
-      });
-      inp.addEventListener("blur", function () {
-        if (!inp.value)
-          showErr(
-            inp,
-            inp === nameIn ? "Name is required" : "Phone is required",
-          );
-        else if (!(inp === nameIn ? validName : validPhone)(inp.value))
-          showErr(
-            inp,
-            inp === nameIn
-              ? "Please enter your full name (at least 2 characters)"
-              : "Please enter a valid phone number (+ and 7-15 digits)",
-          );
-        updateBtn();
-      });
-    });
+        mb.textContent = m;
+        el.setAttribute("aria-invalid", "true");
+        const described = el.getAttribute("aria-describedby");
+        if (described)
+          el.setAttribute("aria-describedby", described + " " + mb.className);
+        el.setAttribute("data-invalid", "");
+      }
+      function clearErr(el: HTMLInputElement): void {
+        const mb = el.parentElement?.querySelector<HTMLElement>(".field-error");
+        if (mb) mb.textContent = "";
+        el.removeAttribute("aria-invalid");
+        delete el.dataset.invalid;
+      }
 
-    function placeOption(sel, text) {
-      // textContent (not innerHTML): SS/SR/CL/CS are CMS-overridable labels.
-      while (sel.firstChild) sel.removeChild(sel.firstChild);
-      var o = document.createElement("option");
-      o.value = "";
-      o.textContent = text;
-      sel.appendChild(o);
-    }
-    function uS() {
-      var l = L.value,
-        s = l && R[l] ? R[l].services : [];
-      placeOption(S, l ? SS : CL);
-      S.disabled = !l;
-      for (var i = 0; i < s.length; i++) {
-        var o = document.createElement("option");
-        o.value = s[i].name;
-        o.textContent = s[i].name;
-        S.appendChild(o);
-      }
-      uD();
-    }
-    function uD() {
-      var l = L.value,
-        sn = S.value,
-        rt = [];
-      if (l && sn && R[l]) {
-        var sv = R[l].services;
-        for (var i = 0; i < sv.length; i++) {
-          if (sv[i].name === sn) {
-            rt = sv[i].routes;
-            break;
-          }
-        }
-      }
-      placeOption(D, sn ? SR : CS);
-      D.disabled = !sn;
-      for (var j = 0; j < rt.length; j++) {
-        var r2 = rt[j].route ?? rt[j];
-        var o2 = document.createElement("option");
-        o2.value = r2;
-        o2.textContent = r2;
-        D.appendChild(o2);
-      }
-      upP();
-    }
-    function upP() {
-      var l = L.value,
-        sn = S.value,
-        dn = D.value;
-      if (!l || !sn || !dn || !R[l]) {
-        PV.textContent = SP || "Fill information to estimate price";
-        PV.dataset.state = "placeholder";
-        return;
-      }
-      var sv = R[l].services;
-      for (var i = 0; i < sv.length; i++) {
-        if (sv[i].name === sn) {
-          var rt = sv[i].routes;
-          for (var j = 0; j < rt.length; j++) {
-            var r = rt[j],
-              rn = r.route ?? r;
-            if (rn === dn) {
-              PV.textContent = r.price || "?";
-              delete PV.dataset.state;
+      // Validation listeners
+      if (nameIn && phoneIn) {
+        [nameIn, phoneIn].forEach(function (inp) {
+          inp.addEventListener("input", function () {
+            if (!inp.value) {
+              clearErr(inp);
               return;
+            }
+            const fn = inp === nameIn ? validName : validPhone;
+            if (fn(inp.value)) clearErr(inp);
+            else
+              showErr(
+                inp,
+                inp === nameIn
+                  ? "Please enter your full name (at least 2 characters)"
+                  : "Please enter a valid phone number (+ and 7-15 digits)",
+              );
+            updateBtn();
+          });
+          inp.addEventListener("blur", function () {
+            if (!inp.value)
+              showErr(
+                inp,
+                inp === nameIn ? "Name is required" : "Phone is required",
+              );
+            else if (!(inp === nameIn ? validName : validPhone)(inp.value))
+              showErr(
+                inp,
+                inp === nameIn
+                  ? "Please enter your full name (at least 2 characters)"
+                  : "Please enter a valid phone number (+ and 7-15 digits)",
+              );
+            updateBtn();
+          });
+        });
+      }
+
+      function placeOption(sel: HTMLSelectElement, text: string): void {
+        // textContent (not innerHTML): SS/SR/CL/CS are CMS-overridable labels.
+        while (sel.firstChild) sel.removeChild(sel.firstChild);
+        const o = document.createElement("option");
+        o.value = "";
+        o.textContent = text;
+        sel.appendChild(o);
+      }
+      function uS(): void {
+        if (!S) return;
+        const l = L?.value ?? "";
+        const s = l && R[l] ? R[l].services : [];
+        // Location set but no service yet -> "Select service..." (not the
+        // misleading "Choose location first" wording).
+        placeOption(S, l ? SS : CL);
+        S.disabled = !l;
+        for (let i = 0; i < s.length; i++) {
+          const o = document.createElement("option");
+          o.value = s[i].name;
+          o.textContent = s[i].name;
+          S.appendChild(o);
+        }
+        uD();
+      }
+      function uD(): void {
+        if (!D || !S) return;
+        const l = L?.value ?? "";
+        const sn = S.value;
+        let rt: (string | { route: string; price?: string })[] = [];
+        if (l && sn && R[l]) {
+          const sv = R[l].services;
+          for (let i = 0; i < sv.length; i++) {
+            if (sv[i].name === sn) {
+              rt = sv[i].routes;
+              break;
             }
           }
         }
+        placeOption(D, sn ? SR : CS);
+        D.disabled = !sn;
+        for (let j = 0; j < rt.length; j++) {
+          const r2 = rt[j];
+          const o2 = document.createElement("option");
+          o2.value = typeof r2 === "string" ? r2 : r2.route;
+          o2.textContent = typeof r2 === "string" ? r2 : r2.route;
+          D.appendChild(o2);
+        }
+        upP();
       }
-      PV.textContent = SP || "Fill information to estimate price";
-      PV.dataset.state = "placeholder";
-    }
+      function upP(): void {
+        if (!PV || !S) return;
+        const l = L?.value ?? "";
+        const sn = S.value;
+        const dn = D?.value ?? "";
+        if (!l || !sn || !dn || !R[l]) {
+          PV.textContent = SP;
+          PV.dataset.state = "placeholder";
+          return;
+        }
+        const sv = R[l].services;
+        for (let i = 0; i < sv.length; i++) {
+          if (sv[i].name === sn) {
+            const rt = sv[i].routes;
+            for (let j = 0; j < rt.length; j++) {
+              const r = rt[j];
+              const rn = typeof r === "string" ? r : r.route;
+              if (rn === dn) {
+                PV.textContent = typeof r === "string" ? "" : (r.price ?? "");
+                delete PV.dataset.state;
+                return;
+              }
+            }
+          }
+        }
+        PV.textContent = SP;
+        PV.dataset.state = "placeholder";
+      }
 
-    function updateBtn() {
-      if (!btn) return;
-      var allFilled =
-        nameIn &&
-        nameIn.value.trim() &&
-        validName(nameIn.value) &&
-        phoneIn &&
-        phoneIn.value.trim() &&
-        validPhone(phoneIn.value) &&
-        L &&
-        L.value &&
-        S &&
-        !S.disabled &&
-        S.value &&
-        form.querySelector('[name="Pick-Up-Date"]') &&
-        form.querySelector('[name="Pick-Up-Date"]').value &&
-        D &&
-        !D.disabled &&
-        D.value;
-      btn.disabled = !allFilled;
-      btn.style.opacity = allFilled ? "1" : "0.5";
-      btn.style.cursor = allFilled ? "pointer" : "not-allowed";
-    }
+      function updateBtn(): void {
+        const base =
+          !!nameIn &&
+          !!nameIn.value.trim() &&
+          validName(nameIn.value) &&
+          !!phoneIn &&
+          !!phoneIn.value.trim() &&
+          validPhone(phoneIn.value) &&
+          !!pickUpDate &&
+          !!pickUpDate.value;
+        // Chauffeur variant additionally requires a full location/service/dest;
+        // garage variant requires the service select to be picked.
+        const allFilled = HB
+          ? base &&
+            !!L &&
+            !!L.value &&
+            !!S &&
+            !S.disabled &&
+            !!S.value &&
+            !!D &&
+            !D.disabled &&
+            !!D.value
+          : base && !!S && !!S.value;
+        submitBtn.disabled = !allFilled;
+        submitBtn.style.opacity = allFilled ? "1" : "0.5";
+        submitBtn.style.cursor = allFilled ? "pointer" : "not-allowed";
+      }
 
-    // Listen on all relevant fields
-    L.addEventListener("change", function () {
+      // Listen on all relevant fields
+      L?.addEventListener("change", () => {
+        updateBtn();
+        uS();
+      });
+      S?.addEventListener("change", () => {
+        updateBtn();
+        uD();
+      });
+      D?.addEventListener("change", updateBtn);
+      pickUpDate?.addEventListener("change", updateBtn);
+      msgIn?.addEventListener("input", updateBtn);
+
+      // Init button state
       updateBtn();
-      uS();
-    });
-    S.addEventListener("change", function () {
-      updateBtn();
-      uD();
-    });
-    if (D) D.addEventListener("change", updateBtn);
-    form
-      .querySelector('[name="Pick-Up-Date"]')
-      .addEventListener("change", updateBtn);
 
-    // Init button state
-    updateBtn();
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (!form.checkValidity() || btn.disabled) return;
-      var n = nameIn.value,
-        p = phoneIn.value,
-        le = L,
-        lv = le.value,
-        lt = le.options[le.selectedIndex].text,
-        se = S,
-        st = se.options[se.selectedIndex].text,
-        dt = form.querySelector('[name="Pick-Up-Date"]').value,
-        de = D,
-        dst = de.options[de.selectedIndex].value,
-        pn = lv === "italy" ? d.PI : d.PS,
-        cn = pn.replace(/[\s+]/g, ""),
-        msg =
-          "Hi " +
-          d.SN +
-          "! I would like to book a ride.\n\n*Name:* " +
-          n +
-          "\n*Phone:* " +
-          p +
-          "\n*Location:* " +
-          lt +
-          "\n*Service:* " +
-          st +
-          "\n*Date:* " +
-          dt +
-          "\n*Destination:* " +
-          dst;
-      // Only digits survive into the wa.me path; reject when no phone is
-      // configured for the selected region (e.g. DBC has no phone numbers).
-      var digits = cn.replace(/\D/g, "");
-      if (!digits) return;
-      window.open(
-        "https://wa.me/" + digits + "?text=" + encodeURIComponent(msg),
-        "_blank",
-      );
-    });
-  })();
+      form.addEventListener("submit", (e: Event) => {
+        e.preventDefault();
+        if (!form.checkValidity() || btn.disabled) return;
+        const n = nameIn?.value ?? "";
+        const p = phoneIn?.value ?? "";
+        const dt = pickUpDate?.value ?? "";
+        let msg: string;
+        let pn: string;
+        let cn: string;
+        if (HB && L && S && D) {
+          const lt = L.options[L.selectedIndex].text;
+          const st = S.options[S.selectedIndex].text;
+          const dst = D.options[D.selectedIndex].value;
+          pn = L.value === "italy" ? PI : PS;
+          msg =
+            "Hi " +
+            d.SN +
+            "! I would like to book a ride.\n\n*Name:* " +
+            n +
+            "\n*Phone:* " +
+            p +
+            "\n*Location:* " +
+            lt +
+            "\n*Service:* " +
+            st +
+            "\n*Date:* " +
+            dt +
+            "\n*Destination:* " +
+            dst;
+        } else {
+          // Garage variant: prefer Spain number, fall back to Italy. The service
+          // select + message textarea (optional) are included when filled.
+          pn = PS || PI;
+          msg =
+            "Hi " +
+            d.SN +
+            "! I would like to get a quote.\n\n*Name:* " +
+            n +
+            "\n*Phone:* " +
+            p +
+            "\n*Date:* " +
+            dt +
+            "\n*Service:* " +
+            (S && S.value ? S.options[S.selectedIndex].text : "") +
+            (msgIn && msgIn.value.trim()
+              ? "\n*Message:* " + msgIn.value.trim()
+              : "");
+        }
+        cn = pn.replace(/[\s+]/g, "");
+        // Only digits survive into the wa.me path; if no phone is configured,
+        // surface an error instead of silently failing.
+        const digits = cn.replace(/\D/g, "");
+        if (!digits) {
+          if (formError) formError.style.display = "block";
+          return;
+        }
+        window.open(
+          "https://wa.me/" + digits + "?text=" + encodeURIComponent(msg),
+          "_blank",
+        );
+      });
+    })();
+  }
 </script>

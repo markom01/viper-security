@@ -11,6 +11,13 @@ export const site = {
   url: "https://dbcustomgarage.netlify.app",
   themeColor: "#ea580c",
   bgColor: "#000000",
+  /**
+   * WhatsApp number for the garage enquiry form (international format,
+   * digits only, e.g. "447700900123"). Empty string disables the wa.me path
+   * and the form shows a config error instead of silently failing.
+   * Currently empty — no public WhatsApp is verified for DB Custom Garage.
+   */
+  whatsappNumber: "",
 };
 
 export type SiteConfig = typeof site;

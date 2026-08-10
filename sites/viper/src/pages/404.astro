@@ -1,6 +1,8 @@
 ---
 import PageNotFound from "../components/PageNotFound.astro";
 import STRINGS, { SITE_NAME } from "@garage/shared/config/strings";
+import Font from "astro/components/Font.astro";
+import "@garage/shared/styles/global.css";
 const s = STRINGS;
 ---
 
@@ -10,11 +12,13 @@ const s = STRINGS;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{s.notFound.heading} — {SITE_NAME}</title>
+    <Font cssVariable="--font-families--body-font" />
+    <Font cssVariable="--font-families--title-font" />
+    <Font cssVariable="--font-families--accent-font" />
+    <link href="/styles/theme.css" rel="stylesheet" />
     <link href="/favicon.svg" rel="shortcut icon" type="image/x-icon" />
   </head>
   <body>
-    <div role="alert">
-      <PageNotFound notFound={s.notFound} />
-    </div>
+    <PageNotFound notFound={s.notFound} />
   </body>
 </html>

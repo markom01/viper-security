@@ -76,7 +76,8 @@ export interface BookingData {
 // ----- Pricing card (derived, not from Zod) --------------------------------
 export interface PricingCardSection {
   title: string;
-  routes: { label: string; price: string }[];
+  /** Display row: label + optional price (empty price = "on request"). */
+  routes: { label: string; price?: string }[];
 }
 
 export interface PricingCard {
@@ -117,6 +118,9 @@ export interface PageContent {
     privacy_policy?: string;
   };
   fleet?: { heading?: string };
+  howitworks?: { heading?: string };
+  /** Vehicle brand/model (VIPER: "Mercedes-Benz S-Class"), from {vehicle} template. */
+  vehicle_name?: string;
   about?: { heading?: string; text?: string; image?: ImageMetadata };
   stats?: {
     subheading?: string;

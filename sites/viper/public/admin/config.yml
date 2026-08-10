@@ -109,7 +109,7 @@ collections:
         field: { label: Feature, name: feature, widget: string }
         required: false
 
-  - name: pricing-hourly
+  - name: pricing
     label: Hourly Pricing
     description: Hourly chauffeur service rates
     files:
@@ -200,6 +200,18 @@ collections:
                   widget: string,
                   required: false,
                 }
+              - {
+                  name: webSiteName,
+                  label: "Website Name",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: webSiteUrl,
+                  label: "Website URL",
+                  widget: string,
+                  required: false,
+                }
           - {
               name: map_embed_url,
               label: "Map Embed URL (Google Maps iframe src)",
@@ -271,6 +283,12 @@ collections:
             fields:
               - { name: title, label: Page Title, widget: string }
               - { name: description, label: Meta Description, widget: text }
+              - {
+                  name: image,
+                  label: "Share / OG Image",
+                  widget: image,
+                  required: false,
+                }
               - { name: theme_color, label: Theme Color, widget: string }
 
           - name: about

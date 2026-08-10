@@ -13,7 +13,7 @@ import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 import { ICONS } from "../../config/icons";
 const s = resolveLabels(pageContent, STRINGS);
-const cta = ctaLabel || s.nav.contact;
+const cta = ctaLabel || "";
 // Nav items as data. Each: { label, href, children?: [{label,href}] }.
 // Default = VIPER chauffeur menu. A site passes its own via the navItems prop.
 const items = navItems ?? [
@@ -82,68 +82,74 @@ const items = navItems ?? [
               ),
             )
           }
-          <li class="nav-list-item desktop-button">
-            <a href="/#contact" class="primary-button small">
-              <div class="button-text">{cta}</div>
-              <span
-                aria-hidden="true"
-                class="button-arrow"
-                set:html={ICONS.rightArrow}
-              />
-            </a>
-          </li>
-          <li class="nav-list-item tablet-mobile-button">
-            <a href="/#contact" class="secondary-button">
-              <div class="button-text">{cta}</div>
-              <span
-                aria-hidden="true"
-                class="button-arrow"
-                set:html={ICONS.rightArrowPure}
-              />
-            </a>
-          </li>
+          {
+            cta && (
+              <>
+                <li class="nav-list-item desktop-button">
+                  <a href="/#contact" class="primary-button small">
+                    <div class="button-text">{cta}</div>
+                    <span
+                      aria-hidden="true"
+                      class="button-arrow"
+                      set:html={ICONS.rightArrow}
+                    />
+                  </a>
+                </li>
+                <li class="nav-list-item tablet-mobile-button">
+                  <a href="/#contact" class="secondary-button">
+                    <div class="button-text">{cta}</div>
+                    <span
+                      aria-hidden="true"
+                      class="button-arrow"
+                      set:html={ICONS.rightArrowPure}
+                    />
+                  </a>
+                </li>
+              </>
+            )
+          }
         </ul>
-        <div
+        <button
+          type="button"
           class="close-menu-button"
-          style="-webkit-user-select: text;"
           aria-label={s.nav.menuAria}
-          role="button"
-          tabindex="0"
           aria-haspopup="menu"
           aria-expanded="false"
         >
-          <div class="nav-close">
+          <span class="nav-close">
             <span aria-hidden="true" set:html={ICONS.cancel} />
-          </div>
-        </div>
+          </span>
+        </button>
       </nav>
       <div class="nav-buttons-wrapper">
-        <div class="tablet-button">
-          <a href="/#contact" class="primary-button small">
-            <div class="button-text">{cta}</div>
-            <span
-              aria-hidden="true"
-              class="button-arrow"
-              set:html={ICONS.rightArrow}
-            />
-          </a>
-        </div>
-        <div
+        {
+          cta && (
+            <div class="tablet-button">
+              <a href="/#contact" class="primary-button small">
+                <div class="button-text">{cta}</div>
+                <span
+                  aria-hidden="true"
+                  class="button-arrow"
+                  set:html={ICONS.rightArrow}
+                />
+              </a>
+            </div>
+          )
+        }
+        <button
+          type="button"
           class="open-menu-button"
-          style="-webkit-user-select: text;"
           aria-label={s.nav.menuAria}
-          role="button"
-          tabindex="0"
           aria-haspopup="menu"
           aria-expanded="false"
         >
-          <div class="nav-open">
-            <div class="menu-line"></div><div class="menu-line"></div><div
+          <span class="nav-open">
+            <span class="menu-line"></span><span class="menu-line"></span><span
               class="menu-line"
             >
-            </div>
-          </div>
-        </div>
+            </span>
+          </span>
+        </button>
       </div>
     </div>
   </div>
@@ -255,21 +261,9 @@ const items = navItems ?? [
     }
   }
 </style>
-<script is:inline>
-  (function () {
-    var navbar = document.querySelector(".navbar");
-    if (!navbar) return;
-    document.addEventListener("click", function (e) {
-      if (e.target.closest(".open-menu-button")) {
-        navbar.setAttribute("data-nav-open", "");
-      }
-      if (e.target.closest(".close-menu-button")) {
-        navbar.removeAttribute("data-nav-open");
-      }
-      // Close menu when a nav link is tapped
-      if (e.target.closest(".nav-link")) {
-        navbar.removeAttribute("data-nav-open");
-      }
-    });
-  })();
+<script>
+  // Imports force Astro to bundle this to an external /_astro/*.js module,
+  // which the strict `script-src 'self'` CSP permits (no is:inline).
+  import { initNavMenu } from "../../scripts/nav-menu";
+  initNavMenu();
 </script>

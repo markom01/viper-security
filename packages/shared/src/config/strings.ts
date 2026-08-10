@@ -5,7 +5,6 @@
  */
 
 export const SITE_NAME = "VIPER Security";
-const SITE_URL = "https://viper-security.netlify.app";
 
 const STRINGS = {
   nav: {
@@ -28,13 +27,6 @@ const STRINGS = {
     ogLocale: "en_US",
     ogType: "website",
     twitterCard: "summary_large_image",
-  },
-
-  jsonld: {
-    webSiteName: SITE_NAME,
-    webSiteUrl: SITE_URL,
-    phoneItaly: "",
-    phoneSpain: "",
   },
 
   admin: {
@@ -76,10 +68,8 @@ const STRINGS = {
     selectRoute: "Select route...",
     priceLabel: "Estimated Price",
     pricePlaceholder: "Fill information to estimate price",
-  },
-
-  icons: {
-    arrowAlt: "",
+    message: "Message",
+    messagePlaceholder: "Tell us about your project (optional)",
   },
 
   accessibility: {
@@ -105,7 +95,6 @@ const STRINGS = {
   },
 
   fleet: {
-    vehicleAltFallback: `${SITE_NAME} vehicle`,
     subheadline: "Our Fleet",
     year: "Year",
     seats: "Seats",
