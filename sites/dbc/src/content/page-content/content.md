@@ -17,7 +17,7 @@ fleet:
   heading: Our Fleet
 stats:
   subheading: Field-Proven, Industry-Wide
-  image: ../../assets/images/stats-bg.webp
+  image: /images/cms/stats-bg.webp
   items:
     - label: "2010"
       title: Serving Collectors Since
@@ -28,7 +28,7 @@ howitworks:
 cta:
   heading: Ready to Move, Sell, or Build?
   text: Tell us what you are buying, selling, or transporting and we will handle the rest.
-  image: ../../assets/images/gallery/supercars-and-classic-cars-provider.webp
+  image: /images/cms/gallery/supercars-and-classic-cars-provider.webp
 bottomcta:
   heading: Your Dream Car Starts Here
   values:
@@ -43,9 +43,9 @@ about:
   heading: About DB Custom Garage
   text: Founded by Dragan Meseldzija, DB Custom Garage is built on a team that never gives up — bringing results in automotive design, customizing Harley Davidson and Indian motorcycles, industrial design, and enclosed supercar and classic car transport. Active since 2010 and operating from Marbella, Milan, and New Jersey, we combine precision logistics with deep automotive and design market knowledge for collectors, dealers, and enthusiasts.
   images:
-    - ../../assets/images/gallery/supercars-and-classic-cars-provider-1.webp
-    - ../../assets/images/gallery/jeep-wrangler-body-kit.webp
-    - ../../assets/images/gallery/gt500.webp
+    - /images/cms/gallery/supercars-and-classic-cars-provider-1.webp
+    - /images/cms/gallery/jeep-wrangler-body-kit.webp
+    - /images/cms/gallery/gt500.webp
 map_embed_url: "https://www.google.com/maps?q=Camino+de+Campanales+6,+29651+Mijas,+Malaga,+Spain&output=embed"
 # CMS-editable UI labels — override the shared STRINGS chrome with garage wording.
 labels:

@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { getImage } from "astro:assets";
 import { Image } from "astro:assets";
+import { imageDims } from "@garage/shared/lib/imageDims.ts";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { site } from "../config/site";
 
@@ -26,17 +27,20 @@ const pageContent = {
 // PhotoSwipe nav stays within the group.
 const galleryItems = await Promise.all(
   (await getCollection("gallery")).map(async (item) => {
-    const meta = item.data.image;
+    const src = item.data.image;
     // Served URL for the lightbox + anchor href; intrinsic dims for PhotoSwipe.
-    const optimized = await getImage({ src: meta });
+    // `src` may be ImageMetadata (legacy) or a public path string — probe dims
+    // for the latter since Astro treats public URLs as remote.
+    const dims = await imageDims(src);
+    const optimized = await getImage({ src, width: dims.width, height: dims.height });
     return {
       id: item.id,
       category: item.data.category,
       alt: item.data.alt || item.data.name,
-      width: meta.width,
-      height: meta.height,
+      width: dims.width,
+      height: dims.height,
       href: optimized.src,
-      image: meta,
+      image: src,
     };
   }),
 );

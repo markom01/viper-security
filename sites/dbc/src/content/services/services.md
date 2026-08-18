@@ -12,23 +12,23 @@ offerings:
       subtitle: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs — across Europe and worldwide.
       cta_text: Get A Quote
       tagline: Supercars & Classics, No Limits
-      image: ../../assets/images/from-wix/hero.webp
+      image: /images/cms/from-wix/hero.webp
     about_text: Enclosed transport with our own trucks and enclosed vehicles — fully insured, secure, safe and clean — all over Europe and the USA.
-    about_image: ../../assets/images/from-wix/hero.webp
+    about_image: /images/cms/from-wix/hero.webp
     marquee: Enclosed Transport · Insured · Tracked · Europe & USA
     include:
       - title: Enclosed Trailers & Trucks
         text: Fully enclosed, never open-deck — full insurance on every move.
-        image: ../../assets/images/gallery/supercars-transport.webp
+        image: /images/cms/gallery/supercars-transport.webp
       - title: EU, UK & USA Routes
         text: Door-to-door supercar transport across Europe and worldwide.
-        image: ../../assets/images/gallery/supercars-transport-1.webp
+        image: /images/cms/gallery/supercars-transport-1.webp
       - title: Door-to-Door Delivery
         text: Origin collection to final destination, tracked throughout.
-        image: ../../assets/images/gallery/supercars-transport-2.webp
+        image: /images/cms/gallery/supercars-transport-2.webp
       - title: Transparent Pricing
         text: Quoted per route — price from €1/km, calculated both directions.
-        image: ../../assets/images/gallery/supercars-transport-3.webp
+        image: /images/cms/gallery/supercars-transport-3.webp
     bottomcta:
       heading: Transport, Handled End to End
       values:
@@ -54,7 +54,7 @@ offerings:
           - Hydraulic liftgate
           - GPS tracking
           - Fully insured transport
-        image: ../../assets/images/from-wix/hummer-project.webp
+        image: /images/cms/from-wix/hummer-project.webp
     form_fields:
       - label: Origin
         placeholder: Pick-up location
@@ -76,23 +76,23 @@ offerings:
       subtitle: We sell your classic or supercar — without you leaving your garage.
       cta_text: Get A Quote
       tagline: Supercars & Classics, No Limits
-      image: ../../assets/images/from-wix/auction-hero.webp
+      image: /images/cms/from-wix/auction-hero.webp
     about_text: "Active since 2010 in classic and supercar auctions. We prepare your car for auction — complete description and photography — and register it on several online auctions: Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's."
-    about_image: ../../assets/images/from-wix/auction-hero.webp
+    about_image: /images/cms/from-wix/auction-hero.webp
     marquee: Auction · Catawiki · Proxibid · Silverstone · Heritage · Sotheby's
     include:
       - title: Car & Motorcycle Auctions
         text: Classic cars, supercars and motorcycles — consignment, you stay home.
-        image: ../../assets/images/gallery/2016-ford-mustang-shelby-gt350-gt350r-te.webp
+        image: /images/cms/gallery/2016-ford-mustang-shelby-gt350-gt350r-te.webp
       - title: Full Auction Preparation
         text: Complete description and professional photography before listing.
-        image: ../../assets/images/gallery/2020-ford-mustang-shelby-gt500-first-dri.webp
+        image: /images/cms/gallery/2020-ford-mustang-shelby-gt500-first-dri.webp
       - title: Multi-Platform Listing
         text: Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's.
-        image: ../../assets/images/gallery/ford-shelby-gt500-grabber-lime.webp
+        image: /images/cms/gallery/ford-shelby-gt500-grabber-lime.webp
       - title: Representation & Sale
         text: We handle the auction process end to end — sold, funds to you.
-        image: ../../assets/images/gallery/shelby-gt-500.webp
+        image: /images/cms/gallery/shelby-gt-500.webp
     bottomcta:
       heading: From Your Garage to the Auction Block
       values:
@@ -126,23 +126,23 @@ offerings:
       subtitle: Find your dream car or invest off the open market — with research, consulting and legal support.
       cta_text: Get A Quote
       tagline: Supercars & Classics, No Limits
-      image: ../../assets/images/from-wix/classic-hero.webp
+      image: /images/cms/from-wix/classic-hero.webp
     about_text: Research, consulting and legal support to find your dream car — or make an investment off the open market, with deep market knowledge built since 2010.
-    about_image: ../../assets/images/from-wix/classic-hero.webp
+    about_image: /images/cms/from-wix/classic-hero.webp
     marquee: Sourcing · Consulting · Off-Market · Investments
     include:
       - title: Off-Market Sourcing
         text: Access to vehicles never listed publicly.
-        image: ../../assets/images/gallery/gt500.webp
+        image: /images/cms/gallery/gt500.webp
       - title: Market Research
         text: Valuation and provenance research before you buy.
-        image: ../../assets/images/gallery/neo.webp
+        image: /images/cms/gallery/neo.webp
       - title: Consulting & Legal Support
         text: Guidance through the buying process, paperwork included.
-        image: ../../assets/images/gallery/ford-shelby-gt500-1920-2.webp
+        image: /images/cms/gallery/ford-shelby-gt500-1920-2.webp
       - title: Investment Advisory
         text: Building collectible portfolios off the open market.
-        image: ../../assets/images/gallery/2017-shelby-f-150-super-snake-01-copia.webp
+        image: /images/cms/gallery/2017-shelby-f-150-super-snake-01-copia.webp
     bottomcta:
       heading: Your Dream Car, Sourced
       values:
@@ -169,23 +169,23 @@ offerings:
       subtitle: Full-service vehicle import and export — cars and motorcycles — paperwork, customs, shipping and delivery handled end to end.
       cta_text: Get A Quote
       tagline: Supercars & Classics, No Limits
-      image: ../../assets/images/from-wix/import-export.webp
+      image: /images/cms/from-wix/import-export.webp
     about_text: Complete support and logistics in buying and selling supercars, classic cars, other vehicles and motorcycles, in the EU and other continents.
-    about_image: ../../assets/images/from-wix/import-export.webp
+    about_image: /images/cms/from-wix/import-export.webp
     marquee: Import · Export · Customs · Logistics
     include:
       - title: Import & Export Paperwork
         text: Full documentation for cars and motorcycles.
-        image: ../../assets/images/from-wix/import-export.webp
+        image: /images/cms/from-wix/import-export.webp
       - title: Customs Clearance
         text: Duties, registration and compliance handled for you.
-        image: ../../assets/images/gallery/supercars-transport-4.webp
+        image: /images/cms/gallery/supercars-transport-4.webp
       - title: Shipping
         text: Enclosed where required, across the EU and worldwide.
-        image: ../../assets/images/gallery/supercars-and-classic-cars-provider.webp
+        image: /images/cms/gallery/supercars-and-classic-cars-provider.webp
       - title: Final Delivery
         text: End-to-end, to your door.
-        image: ../../assets/images/gallery/f150-hd-2020.webp
+        image: /images/cms/gallery/f150-hd-2020.webp
     bottomcta:
       heading: Cross-Border, Handled End to End
       values:
@@ -222,23 +222,23 @@ offerings:
       subtitle: Bespoke design and build — from restomod to show-grade.
       cta_text: Get A Quote
       tagline: Customize · Design · Build
-      image: ../../assets/images/from-wix/hummer-project.webp
+      image: /images/cms/from-wix/hummer-project.webp
     about_text: An in-house design studio and build shop for custom cars and motorcycles — restomod, widebody, interior and show-grade finishing — plus general repair and maintenance.
-    about_image: ../../assets/images/from-wix/hummer-project.webp
+    about_image: /images/cms/from-wix/hummer-project.webp
     marquee: Custom Builds · Design · Repair · Motorcycles
     include:
       - title: Custom Builds
         text: Complete builds from vision to show floor.
-        image: ../../assets/images/from-wix/hummer-project.webp
+        image: /images/cms/from-wix/hummer-project.webp
       - title: Body Kits
         text: Fabricated in metal, powder-coated — e.g. Jeep Wrangler bumpers.
-        image: ../../assets/images/gallery/jeep-wrangler-body-kit.webp
+        image: /images/cms/gallery/jeep-wrangler-body-kit.webp
       - title: Design Projects
         text: Concept, industrial and interior design from our in-house studio.
-        image: ../../assets/images/gallery/design.webp
+        image: /images/cms/gallery/design.webp
       - title: Repair & Maintenance
         text: General service and maintenance for cars and motorcycles.
-        image: ../../assets/images/gallery/car-service-and-repair.webp
+        image: /images/cms/gallery/car-service-and-repair.webp
     bottomcta:
       heading: Your Dream Build, Done
       values:

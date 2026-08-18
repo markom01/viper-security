@@ -22,7 +22,7 @@ export interface FleetVehicleData {
    */
   specs?: { label: string; value: string }[];
   features?: string[];
-  image?: ImageMetadata;
+  image?: SiteImage;
 }
 
 export interface FleetEntry {
@@ -156,6 +156,13 @@ export interface NavLink {
 // Mirrors the page-content content-collection Zod schema (both sites' schemas
 // are structurally identical here). Sections + layouts read these fields.
 // CMS-driven; most are optional and only present when configured in content.md.
+/**
+ * An image reference that is either an Astro `ImageMetadata` (from the `image()`
+ * schema helper — VIPER) or a site-root-relative public path string (from
+ * CMS-picked `/images/cms/...` — DBC). Shared sections must accept both.
+ */
+export type SiteImage = ImageMetadata | string;
+
 export interface PageContent {
   labels?: Record<string, string>;
   seo?: {
@@ -180,13 +187,13 @@ export interface PageContent {
   howitworks?: { heading?: string };
   /** Vehicle brand/model (VIPER: "Mercedes-Benz S-Class"), from {vehicle} template. */
   vehicle_name?: string;
-  about?: { heading?: string; text?: string; image?: ImageMetadata };
+  about?: { heading?: string; text?: string; image?: SiteImage; images?: SiteImage[] };
   stats?: {
     subheading?: string;
-    image: ImageMetadata;
+    image: SiteImage;
     items?: Array<{ label: string; title: string }>;
   };
-  cta?: { heading?: string; text?: string; image?: ImageMetadata };
+  cta?: { heading?: string; text?: string; image?: SiteImage };
   bottomcta?: {
     heading?: string;
     values?: Array<{ title: string; text: string }>;

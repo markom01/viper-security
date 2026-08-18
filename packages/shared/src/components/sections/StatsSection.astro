@@ -8,15 +8,19 @@ import { ICONS } from "../../config/icons";
 const s = resolveLabels(pageContent, STRINGS);
 const stats = pageContent?.stats;
 const items = stats?.items;
-// Optimize the stats background via the asset pipeline, then keep feeding it
-// into the CSS var so the existing section styles stay untouched.
-const statsBg = stats?.image ? await getImage({ src: stats.image }) : null;
+// Stats background for the CSS var. Public-path strings (e.g. /images/cms/…)
+// are served as-is; ImageMetadata goes through the asset pipeline.
+const statsBg = stats?.image
+  ? typeof stats.image === "string"
+    ? stats.image
+    : (await getImage({ src: stats.image })).src
+  : null;
 ---
 
 <section
   id="stats"
   class="section home-metrics-section"
-  style={`--metrics-bg: url(${statsBg?.src})`}
+  style={`--metrics-bg: url(${statsBg})`}
 >
   <div class="content-wrapper">
     <div class="metrics-content-wrapper">
