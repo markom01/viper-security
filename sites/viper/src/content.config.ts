@@ -4,7 +4,7 @@ import { glob } from "astro/loaders";
 
 const hero = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/hero" }),
-  schema: ({ image }) =>
+  schema: () =>
     z.object({
       brand_name: z.string().optional(),
       tagline: z.string().optional(),
@@ -12,7 +12,7 @@ const hero = defineCollection({
       cta_text: z.string().optional(),
       phone_italy: z.string().optional(),
       phone_spain: z.string().optional(),
-      hero_image: image().optional(),
+      hero_image: z.string().optional(),
     }),
 });
 
@@ -31,14 +31,14 @@ const howItWorks = defineCollection({
 
 const services = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/services" }),
-  schema: ({ image }) =>
+  schema: () =>
     z.object({
       offerings: z.array(
         z.object({
           region: z.string(),
           title: z.string(),
           description: z.string(),
-          image: image().optional(),
+          image: z.string().optional(),
           // Per-service detail-page fields (shared shape with DBC)
           slug: z.string().optional(),
           seo: z
@@ -52,19 +52,19 @@ const services = defineCollection({
             .object({
               subtitle: z.string().optional(),
               cta_text: z.string().optional(),
-              image: image().optional(),
+              image: z.string().optional(),
               tagline: z.string().optional(),
             })
             .optional(),
           about_text: z.string().optional(),
-          about_image: image().optional(),
+          about_image: z.string().optional(),
           marquee: z.string().optional(),
           include: z
             .array(
               z.object({
                 title: z.string(),
                 text: z.string(),
-                image: image().optional(),
+                image: z.string().optional(),
               }),
             )
             .optional(),
@@ -100,7 +100,7 @@ const services = defineCollection({
 
 const fleet = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/fleet" }),
-  schema: ({ image }) =>
+  schema: () =>
     z.object({
       name: z.string(),
       type: z.string().optional(),
@@ -116,7 +116,7 @@ const fleet = defineCollection({
         .array(z.object({ label: z.string(), value: z.string() }))
         .optional(),
       features: z.array(z.string()).optional(),
-      image: image().optional(),
+      image: z.string().optional(),
     }),
 });
 
@@ -159,7 +159,7 @@ const membership = defineCollection({
 
 const pageContent = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/page-content" }),
-  schema: ({ image }) =>
+  schema: () =>
     z.object({
       vehicle_name: z.string().optional(),
       jsonld: z
@@ -224,7 +224,7 @@ const pageContent = defineCollection({
         .object({
           heading: z.string().optional(),
           text: z.string().optional(),
-          image: image().optional(),
+          image: z.string().optional(),
         })
         .optional(),
       fleet: z
@@ -235,7 +235,7 @@ const pageContent = defineCollection({
       stats: z
         .object({
           subheading: z.string().optional(),
-          image: image(),
+          image: z.string(),
           items: z
             .array(
               z.object({
@@ -255,7 +255,7 @@ const pageContent = defineCollection({
         .object({
           heading: z.string().optional(),
           text: z.string().optional(),
-          image: image().optional(),
+          image: z.string().optional(),
         })
         .optional(),
       bottomcta: z

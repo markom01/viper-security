@@ -92,14 +92,14 @@ about:
     business travel, VIP events, yacht transfers, and exclusive experiences.
     Every journey is tailored to your schedule with privacy, comfort, and
     punctuality at our core."
-  image: ../../assets/images/about-image-v2.webp
+  image: /images/cms/about-image-v2.webp
 fleet:
   heading: Ride Luxury, Every Time
 stats:
   subheading: From airport transfers to VIP events, we deliver a seamless luxury
     experience backed by years of industry expertise and a commitment to
     excellence.
-  image: ../../assets/images/stats-bg.jpg
+  image: /images/cms/stats-bg.jpg
   items:
     - label: 15+
       title: Years Driving Experience
@@ -117,7 +117,7 @@ cta:
     Experience the difference of professional chauffeur service. Our {vehicle}
     and experienced chauffeur are ready to serve you across {location1},
     {location2}, and the French Riviera.
-  image: ../../assets/images/marketing-v2.webp
+  image: /images/cms/marketing-v2.webp
 bottomcta:
   heading: Ready to Begin Your Journey with Us?
   values:
