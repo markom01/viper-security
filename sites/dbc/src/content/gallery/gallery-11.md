@@ -1,5 +1,6 @@
 ---
-name: "DB Custom Garage build 11"
-alt: "DB Custom Garage build 11"
+name: "DB Custom Garage Gallery 11"
+alt: "DB Custom Garage Gallery 11"
+category: "all-builds"
 image: ../../assets/images/gallery/gallery-11.webp
 ---

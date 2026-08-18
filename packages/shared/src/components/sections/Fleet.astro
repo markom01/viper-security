@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import ZoomImage from "./ZoomImage.astro";
 const { pageContent, fleetFeatures } = Astro.props;
 const { vehicles } = Astro.props;
 import type { FleetEntry } from "../../types";
@@ -17,6 +17,13 @@ const f = pageContent?.fleet;
           {
             vehicles?.map((v: FleetEntry) => {
               const d = v.data || {};
+              // Right-of-image data: per-vehicle `specs` rows when present, else the
+              // legacy passenger-car fields. Chunked 3-per-row to reuse the card grid.
+              const specRows: { label: string; value: string }[][] = [];
+              if (d.specs?.length) {
+                for (let i = 0; i < d.specs.length; i += 3)
+                  specRows.push(d.specs.slice(i, i + 3));
+              }
               return (
                 <div role="listitem">
                   <a
@@ -32,60 +39,80 @@ const f = pageContent?.fleet;
                         </div>
                         <div class="car-listing-image-wrapper">
                           {d.image && (
-                            <Image
-                              loading="lazy"
+                            <ZoomImage
                               src={d.image}
                               alt={d.name}
                               class="car-listing-image"
+                              group="fleet"
                             />
                           )}
                         </div>
                       </div>
                       <div class="car-card-data">
-                        <div class="car-listing-details-wrapper">
-                          <div class="car-listing-detail">
-                            <div class="listing-label">{s.fleet.year}</div>
-                            <div class="listing-detail">{d.year}</div>
-                          </div>
-                          <div class="listing-detail-divider" />
-                          <div class="car-listing-detail">
-                            <div class="listing-label">{s.fleet.seats}</div>
-                            <div class="listing-detail">{d.seats}</div>
-                          </div>
-                          <div class="listing-detail-divider" />
-                          <div class="car-listing-detail">
-                            <div class="listing-label">{s.fleet.baggage}</div>
-                            <div class="listing-detail">{d.baggage}</div>
-                          </div>
-                        </div>
-                        <div class="car-listing-details-wrapper">
-                          <div class="car-listing-detail">
-                            <div class="listing-label">
-                              {s.fleet.capacityPassengers}
+                        {specRows.length ? (
+                          specRows.map((row) => (
+                            <div class="car-listing-details-wrapper">
+                              {row.map((cell, i) => (
+                                <>
+                                  <div class="car-listing-detail">
+                                    <div class="listing-label">{cell.label}</div>
+                                    <div class="listing-detail">{cell.value}</div>
+                                  </div>
+                                  {i < row.length - 1 && (
+                                    <div class="listing-detail-divider" />
+                                  )}
+                                </>
+                              ))}
                             </div>
-                            <div class="listing-detail">
-                              {d.capacity_passengers}
+                          ))
+                        ) : (
+                          <>
+                            <div class="car-listing-details-wrapper">
+                              <div class="car-listing-detail">
+                                <div class="listing-label">{s.fleet.year}</div>
+                                <div class="listing-detail">{d.year}</div>
+                              </div>
+                              <div class="listing-detail-divider" />
+                              <div class="car-listing-detail">
+                                <div class="listing-label">{s.fleet.seats}</div>
+                                <div class="listing-detail">{d.seats}</div>
+                              </div>
+                              <div class="listing-detail-divider" />
+                              <div class="car-listing-detail">
+                                <div class="listing-label">{s.fleet.baggage}</div>
+                                <div class="listing-detail">{d.baggage}</div>
+                              </div>
                             </div>
-                          </div>
-                          <div class="listing-detail-divider" />
-                          <div class="car-listing-detail">
-                            <div class="listing-label">
-                              {s.fleet.capacitySuitcases}
+                            <div class="car-listing-details-wrapper">
+                              <div class="car-listing-detail">
+                                <div class="listing-label">
+                                  {s.fleet.capacityPassengers}
+                                </div>
+                                <div class="listing-detail">
+                                  {d.capacity_passengers}
+                                </div>
+                              </div>
+                              <div class="listing-detail-divider" />
+                              <div class="car-listing-detail">
+                                <div class="listing-label">
+                                  {s.fleet.capacitySuitcases}
+                                </div>
+                                <div class="listing-detail">
+                                  {d.capacity_suitcases}
+                                </div>
+                              </div>
+                              <div class="listing-detail-divider" />
+                              <div class="car-listing-detail">
+                                <div class="listing-label">
+                                  {s.fleet.capacityCarryon}
+                                </div>
+                                <div class="listing-detail">
+                                  {d.capacity_carryon}
+                                </div>
+                              </div>
                             </div>
-                            <div class="listing-detail">
-                              {d.capacity_suitcases}
-                            </div>
-                          </div>
-                          <div class="listing-detail-divider" />
-                          <div class="car-listing-detail">
-                            <div class="listing-label">
-                              {s.fleet.capacityCarryon}
-                            </div>
-                            <div class="listing-detail">
-                              {d.capacity_carryon}
-                            </div>
-                          </div>
-                        </div>
+                          </>
+                        )}
                       </div>
                     </div>
                     <div style="opacity: 0;" class="car-card-hover-bg" />

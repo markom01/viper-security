@@ -81,7 +81,7 @@ seo:
   description: "{site_name} — luxury chauffeur, executive transport, airport
     transfers & VIP travel in {location1} and {location2}. Premium private
     chauffeur service."
-  image: ../../assets/images/hero-image_upscaled.webp
+  image: /images/og-viper.webp
   theme_color: "#000000"
 about:
   heading: World-Class Luxury Chauffeur Services Meticulously Tailored to Perfection

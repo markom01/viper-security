@@ -1,5 +1,6 @@
 ---
-import { Image } from "astro:assets";
+import ZoomImage from "./ZoomImage.astro";
+import FormField from "./FormField.astro";
 import { jsonEscape } from "../../config/json-escape";
 const { pageContent } = Astro.props;
 const {
@@ -11,6 +12,12 @@ const {
   phoneSpain,
   fleetHref = "/#fleet",
   services,
+  // Service already implied by the page (service detail pages): suppress the
+  // service <select> and inject this title into the WhatsApp message instead.
+  presetService = "",
+  // Service-specific extra form fields: { label, placeholder?, name }[].
+  // Rendered on the left side after Phone; values appended to the WhatsApp message.
+  form_fields = [],
 } = Astro.props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
@@ -32,6 +39,8 @@ const SCRIPT_DATA = {
   SP: s.form.pricePlaceholder,
   PI: phoneItaly || "",
   PS: phoneSpain || "",
+  // Preset service on detail pages — no select rendered, injected into msg.
+  PSV: presetService || "",
   SN: pageContent?.jsonld?.org_name,
   HB: hasBooking,
   // Garage (DBC) variant: service titles from the `services` prop.
@@ -85,23 +94,21 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
         <div class="hero-image-wrapper">
           {
             hero_image && (
-              <Image
+              <ZoomImage
                 src={hero_image}
-                loading="eager"
-                fetchpriority="high"
                 alt={s.hero.imageAlt}
                 class="hero-image"
-                width={hero_image.width}
-                height={hero_image.height}
-                widths={[480, 768, 1080, 1600]}
-                sizes="(min-width: 768px) 60vw, 100vw"
+                group="hero"
+                eager
+                widths={[480, 768, 1080, 1440]}
+                sizes="(min-width: 1200px) 100vw, 100vw"
               />
             )
           }
         </div>
         <div
           id="contact"
-          style="opacity:1;overflow:hidden;position:relative;border-top:none;"
+          style="opacity:1;overflow:visible;position:relative;border-top:none;"
           class="booking-form-wrapper"
         >
           <div
@@ -146,6 +153,12 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                     aria-describedby="phone-error"
                   />
                 </div>
+                {
+                  form_fields.length > 0 &&
+                    form_fields
+                      .filter((f) => f.side !== "right")
+                      .map((f) => <FormField f={f} />)
+                }
                 {
                   hasBooking && (
                     <div class="booking-form-label-field">
@@ -206,6 +219,12 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                     </div>
                   )
                 }
+                {
+                  form_fields.length > 0 &&
+                    form_fields
+                      .filter((f) => f.side === "right")
+                      .map((f) => <FormField f={f} />)
+                }
                 <div class="booking-form-label-field">
                   <label class="booking-form-label" for="pickup-date"
                     >{s.form.date}</label
@@ -221,6 +240,23 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                 </div>
                 {
                   !hasBooking && (
+                    <div class="booking-form-label-field">
+                      <label class="booking-form-label" for="form-message">
+                        {s.form.message}
+                      </label>
+                      <input
+                        class="booking-form-field"
+                        id="form-message"
+                        name="Message"
+                        type="text"
+                        placeholder={s.form.messagePlaceholder}
+                        aria-label="Message"
+                      />
+                    </div>
+                  )
+                }
+                {
+                  !hasBooking && !presetService && (
                     <div class="booking-form-label-field">
                       <label class="booking-form-label" for="form-service">
                         {s.form.service}
@@ -241,20 +277,8 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                   )
                 }
                 {
-                  !hasBooking && (
-                    <div class="booking-form-label-field">
-                      <label class="booking-form-label" for="form-message">
-                        {s.form.message}
-                      </label>
-                      <textarea
-                        class="booking-form-field"
-                        id="form-message"
-                        name="Message"
-                        placeholder={s.form.messagePlaceholder}
-                        rows="3"
-                        aria-label="Message"
-                      />
-                    </div>
+                  !hasBooking && presetService && (
+                    <input type="hidden" name="Service" value={presetService} />
                   )
                 }
               </div>
@@ -346,10 +370,61 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
     .right-side-fields {
       width: calc(50% - 22px) !important;
     }
-    /* Garage variant: 2 fields on the left, 3 on the right. auto-fit lets the
-       empty 3rd left cell collapse instead of leaving a gap before Date. */
-    .garage-form .left-side-fields {
-      grid-template-columns: 1fr 1fr;
+    /* Garage form = one continuous grid (no left/right columns). The two
+       side wrappers are transparent (display: contents), so every field
+       auto-places into a single 4-col row and wraps to the next row. The
+       last field stretches to the final column (auto / -1), so a partially
+       filled last row never leaves trailing empty cells. */
+    .garage-form {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-column-gap: 44px;
+      grid-row-gap: 18px;
+      align-items: end;
+      /* Source order (no dense backfill): 2-col-spanning items like the
+         vehicle block flow beside same-row fields instead of scrambling. */
+      grid-auto-flow: row;
+    }
+    .garage-form .left-side-fields,
+    .garage-form .right-side-fields {
+      display: contents;
+    }
+    /* Garage form has no price field, so the 2-col bottom row would leave the
+       right half empty — single column, button right-aligned (matches the
+       chauffeur layout's right-side CTA placement). */
+    /* form-bottom-row hosts the submit button (and price field for chauffeur).
+       For garage-form it's transparent (display:contents), so the submit button
+       (and any price field) becomes a direct grid item of the booking form —
+       same 1-column width as fields, counted in the balanced distribution. */
+    .garage-form .form-bottom-row {
+      display: contents;
+    }
+    /* Vehicle selector: `display: contents` makes the 4 sub-fields (type |
+       make | model | year) become direct grid items of the booking form so they
+       count as 4 columns in the balanced grid — e.g. auction's 10 leaf fields
+       lay out 5+5. The block itself is transparent; its children size themselves
+       via the column tracks. Global selector: `.vehicle-fields` is rendered by
+       DropdownInput.astro (different component scope), so Hero's scoped id
+       never matches it. */
+    :global(.garage-form .vehicle-fields) {
+      display: contents;
+    }
+    /* Uniform field width across every form: .booking-form-field is
+       inline-block by default, so inputs/selects size to content (178/135px)
+       instead of their grid cell. width:100% makes every field the same width
+       as its column. The global .booking-form-label-field{width:100%} would
+       stretch a lone field to the whole row, so garage-form label-fields use
+       width:auto — the grid track (not width) governs the size. */
+    :global(.garage-form .booking-form-label-field) {
+      width: auto !important;
+    }
+    :global(.garage-form .booking-form-field) {
+      width: 100%;
+    }
+    /* Submit button, direct grid item via form-bottom-row display:contents:
+       fills its single column track exactly like an input field. */
+    :global(.garage-form .booking-button-wrapper) {
+      width: 100%;
     }
   }
   .form-bottom-row {
@@ -362,13 +437,49 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
   .form-bottom-row > .booking-button-wrapper {
     grid-column: auto;
   }
+  /* Garage form tablet: 2-column grid, submit spans the whole last row. The
+     two side wrappers stay transparent (contents), vehicle sub-fields collapse
+     via their own contents — only the vehicle type + make + model + year
+     label-fields become grid items, exactly like desktop. Submit gets
+     grid-column: 1 / -1 so it reads as a full-width bar under the 2-up fields
+     (better tap target than a half-width button). */
+  @media (min-width: 768px) and (max-width: 991px) {
+    .garage-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-column-gap: 24px;
+      grid-row-gap: 18px;
+      align-items: end;
+      grid-auto-flow: row;
+    }
+    .garage-form .left-side-fields,
+    .garage-form .right-side-fields {
+      display: contents;
+    }
+    .garage-form .form-bottom-row {
+      display: contents;
+    }
+    :global(.garage-form .vehicle-fields) {
+      display: contents;
+    }
+    :global(.garage-form .booking-form-label-field) {
+      width: auto !important;
+    }
+    :global(.garage-form .booking-form-field) {
+      width: 100%;
+    }
+    :global(.garage-form .form-bottom-row > .booking-button-wrapper) {
+      width: 100%;
+      grid-column: 1 / -1 !important;
+    }
+  }
   @media (max-width: 991px) {
     .booking-form {
-      flex-direction: row;
+      flex-direction: column;
     }
     .left-side-fields,
     .right-side-fields {
-      width: calc(50% - 22px);
+      width: 100%;
       grid-template-columns: 1fr;
       grid-column-gap: 0;
     }
@@ -421,13 +532,14 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
         SP: string;
         PI: string;
         PS: string;
+        PSV: string;
         SN: string;
         HB: boolean;
         SERVICES: string[];
       }
       const d = JSON.parse(raw.textContent || "{}") as HeroData;
       const R: Record<string, Region> = { spain: d.spain, italy: d.italy };
-      const { SS, SR, CL, CS, SP, PI, PS } = d;
+      const { SS, SR, CL, CS, SP, PI, PS, PSV } = d;
       const HB = !!d.HB;
       const L = document.getElementById(
         "form-location",
@@ -645,7 +757,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
             !!D &&
             !D.disabled &&
             !!D.value
-          : base && !!S && !!S.value;
+          : base && (!!S && !!S.value || !!PSV);
         submitBtn.disabled = !allFilled;
         submitBtn.style.opacity = allFilled ? "1" : "0.5";
         submitBtn.style.cursor = allFilled ? "pointer" : "not-allowed";
@@ -710,10 +822,34 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
             "\n*Date:* " +
             dt +
             "\n*Service:* " +
-            (S && S.value ? S.options[S.selectedIndex].text : "") +
-            (msgIn && msgIn.value.trim()
-              ? "\n*Message:* " + msgIn.value.trim()
-              : "");
+            (S && S.value ? S.options[S.selectedIndex].text : PSV);
+          // Append any per-service custom fields (Origin/Destination, etc.).
+          // Location-typed fields prefer the full address from their hidden input.
+          document
+            .querySelectorAll<HTMLInputElement>("[data-custom-field]")
+            .forEach((el) => {
+              let v = el.value.trim();
+              if (el.hasAttribute("data-custom-location")) {
+                // autoComplete.js wraps the input in .autoComplete_wrapper, so
+                // the hidden field is a sibling of that wrapper, not a child —
+                // resolve it by id (DropdownInput uses `<id>-location`).
+                const hid = document.getElementById(
+                  el.id + "-location",
+                ) as HTMLInputElement | null;
+                if (hid && hid.value) v = hid.value.trim();
+              }
+              if (v) {
+                // autoComplete.js wraps location inputs in .autoComplete_wrapper,
+                // so the label is not a previous sibling anymore — read aria-label
+                // (set by the field component) and fall back to the input name.
+                const lbl =
+                  (el.getAttribute("aria-label") || el.name).trim();
+                msg += "\n*" + lbl + ":* " + v;
+              }
+            });
+          if (msgIn && msgIn.value.trim()) {
+            msg += "\n*Message:* " + msgIn.value.trim();
+          }
         }
         cn = pn.replace(/[\s+]/g, "");
         // Only digits survive into the wa.me path; if no phone is configured,
@@ -728,6 +864,179 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
           "_blank",
         );
       });
+      // Balanced field grid: pick a column count so items pack with no empty
+      // cells. Rule (user spec): 4→2+2, 5→3+2, 6→3+3, 7→4+3, 8→4+4,
+      // 9→3+3+3, 10→5+5, 11→6+5 — i.e. `cols = round(N/2)`, except N=9 →3.
+      // `.vehicle-fields` uses `display:contents`, so its 4 sub-fields
+      // (type/make/model/year) are direct grid items counted as 4 leaf fields.
+      // The submit button (form-bottom-row) is a 1-col item too — it sits the
+      // same width as a field and participates in distribution. N = total
+      // columns = label-fields + 1 submit. Runs after render so counts are real.
+      const gform = document.querySelector<HTMLElement>(".garage-form");
+      if (gform && window.matchMedia("(min-width: 992px)").matches) {
+        const units = gform.querySelectorAll(
+          ".booking-form-label-field",
+        ).length + 1; /* +1 submit button */
+        const cols = units === 9 ? 3 : Math.max(1, Math.round(units / 2));
+        gform.style.setProperty(
+          "grid-template-columns",
+          `repeat(${cols}, minmax(0, 1fr))`,
+        );
+        // Submit fills trailing cells in its row (no empty space). It's the
+        // final grid item, so it starts at column (units-1)%cols and spans the
+        // remaining cells of that last row. If it starts a fresh row (last
+        // fields row was full), (units-1)%cols === 0 → spans the whole row.
+        const submit = gform.querySelector<HTMLElement>(
+          ".booking-button-wrapper",
+        );
+        const span = cols - ((units - 1) % cols);
+        if (submit) submit.style.gridColumn = `span ${span}`;
+      }
     })();
+  }
+</script>
+<script>
+  // Photon address autocomplete for per-service `form_fields` entries with
+  // `type: "location"` / `type: "country"` (rendered via the shared
+  // DropdownInput.astro component). Bundled → external /_astro/*.js module,
+  // allowed by the strict `script-src 'self'` CSP. The Photon fetch is allowed
+  // by `connect-src 'self' https://photon.komoot.io`.
+  import autoComplete from "@tarekraafat/autocomplete.js";
+
+  const locationInputs = Array.from(
+    document.querySelectorAll<HTMLInputElement>("[data-photon-location]"),
+  );
+  if (locationInputs.length) {
+    // Europe + US only — Photon's countrycode param must be repeated, not
+    // comma-separated (public instance rejects comma format). Builds URL
+    // dynamically to append &countrycode=XX for each country.
+    // layer=street|house prefers real addresses. No lang param — public
+    // instance rejects lang=es with 400. Limit 6 for a compact dropdown.
+    const PHOTON_COUNTRIES = [
+      "AL","AD","AT","BY","BE","BA","BG","HR","CY","CZ","DK","EE","FI","FR",
+      "DE","GR","HU","IS","IE","IT","XK","LV","LI","LT","LU","MT","MD","MC",
+      "ME","NL","MK","NO","PL","PT","RO","RU","SM","RS","SK","SI","ES","SE",
+      "CH","TR","UA","GB","US",
+    ];
+    // EU + US allow-set for country-only dropdowns (same list as the address
+    // countrycode bias). Photon country features carry an ISO countrycode.
+    const PHOTON_COUNTRY_ALLOW = new Set(PHOTON_COUNTRIES);
+    const PHOTON_BASE =
+      "https://photon.komoot.io/api?limit=6&layer=street&layer=house";
+    // Country-only: Photon `layer=country`, worldwide (no countrycode filter).
+    const PHOTON_COUNTRY_BASE = "https://photon.komoot.io/api?limit=6&layer=country";
+
+    locationInputs.forEach((input) => {
+      const hidden = document.getElementById(
+        input.id + "-location",
+      ) as HTMLInputElement | null;
+      // Country-only fields (Origin/Destination country on import-export) use
+      // layer=country worldwide; address fields use street|house biased to EU/US.
+      const isCountry = input.hasAttribute("data-country-location");
+      const queryUrl = isCountry
+        ? PHOTON_COUNTRY_BASE
+        : PHOTON_BASE +
+          "&" +
+          PHOTON_COUNTRIES.map((cc) => "countrycode=" + cc).join("&");
+      new autoComplete({
+        selector: () => input,
+        threshold: 2,
+        debounce: 250,
+        data: {
+          src: async (query: string) => {
+            if (!query || query.trim().length < 2) return [];
+            const res = await fetch(
+              queryUrl + "&q=" + encodeURIComponent(query.trim()),
+            );
+            if (!res.ok) return [];
+            const json = await res.json();
+            // autoComplete.js matches against top-level keys, so flatten each
+            // Photon feature's nested `properties` into a flat record. Keep the
+            // whole feature on `_feature` for the selection handler.
+            // Country-only: Photon returns country names in the local language
+            // ("España"), which won't match a typed "spain" client-side — carry
+            // the raw query on `_q` so the record always matches; display uses
+            // the real country name from `_feature`.
+            const rows = (json.features ?? []).map((f: any) => ({
+              name: f.properties?.name ?? "",
+              street: f.properties?.street ?? "",
+              city: f.properties?.city ?? "",
+              country: f.properties?.country ?? "",
+              ...(isCountry ? { _q: query.trim() } : {}),
+              _feature: f,
+            }));
+            // Country-only: Photon returns duplicate country features — dedup by
+            // country name so "United States" appears once. The `countrycode`
+            // PARAM doesn't filter layer=country results, so restrict to EU + US
+            // client-side via each feature's countrycode property.
+            return isCountry
+              ? rows
+                  .filter(
+                    (r, i, a) =>
+                      a.findIndex((x) => x.country === r.country) === i,
+                  )
+                  .filter((r) =>
+                    PHOTON_COUNTRY_ALLOW.has(
+                      r._feature?.properties?.countrycode,
+                    ),
+                  )
+              : rows;
+          },
+          keys: isCountry ? ["_q"] : ["name", "street"],
+          cache: false,
+        },
+        resultsList: {
+          element: (list: HTMLUListElement) => {
+            // Runs on every open after items are appended; attach the shared
+            // dropdown panel class so autocomplete reuses the nav-panel look.
+            list.classList.add("dropdown-panel");
+          },
+          maxResults: 6,
+        },
+        resultItem: {
+          highlight: false,
+          element: (item: HTMLElement, data: { value: any }) => {
+            const v = data.value;
+            item.classList.add("dropdown-panel-item");
+            // Country-only: just the country name (Photon sets name==country).
+            const label = isCountry
+              ? v.name || v.country || ""
+              : [v.name, v.street, v.city, v.country]
+                  .filter(Boolean)
+                  .join(", ");
+            item.textContent = label;
+          },
+        },
+        events: {
+          input: {
+            selection: (e: Event) => {
+              // autoComplete.js dispatches selection as CustomEvent with the
+              // feedback object in `detail` (not `e.feedback`).
+              const feedback = (e as CustomEvent).detail;
+              const v = feedback?.selection?.value ?? {};
+              const p = v._feature?.properties ?? v;
+              const full = isCountry
+                ? p.name || p.country || ""
+                : [
+                    p.name,
+                    p.street,
+                    p.housenumber,
+                    p.city,
+                    p.country,
+                  ]
+                    .filter(Boolean)
+                    .join(", ");
+              // autoComplete.js does NOT back-fill the input on select — show
+              // the full chosen value in the visible field, and keep the
+              // hidden input carrying the address for the submit handler.
+              input.value = full;
+              if (hidden) hidden.value = full;
+              // Custom location fields carry the full address on the hidden
+              // input; the submit handler appends it with its own label.
+            },
+          },
+        },
+      });
+    });
   }
 </script>

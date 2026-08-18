@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import ZoomImage from "./ZoomImage.astro";
 const { pageContent, ctaHref = "/#contact" } = Astro.props as {
   pageContent?: any;
   ctaHref?: string;
@@ -30,11 +30,11 @@ const s = resolveLabels(pageContent, STRINGS);
       <div data-scroll-reveal class="marketing-image-wrapper">
         {
           pageContent?.cta?.image && (
-            <Image
+            <ZoomImage
               src={pageContent.cta.image}
-              loading="eager"
               alt={s.cta.imageAlt}
               class="marketing-image"
+              group="cta"
               width="600"
               height="500"
             />

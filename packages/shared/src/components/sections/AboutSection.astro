@@ -1,11 +1,13 @@
 ---
-import { Image } from "astro:assets";
+import ZoomImage from "./ZoomImage.astro";
+import ImageCarousel from "./ImageCarousel.astro";
 const { pageContent } = Astro.props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 import { ICONS } from "../../config/icons";
 const s = resolveLabels(pageContent, STRINGS);
 const about = pageContent?.about;
+const aboutGallery = about?.images?.length ? about.images : null;
 ---
 
 <section id="about" class="section home-about-section">
@@ -30,17 +32,23 @@ const about = pageContent?.about;
         </a>
       </div>
       {
-        about?.image && (
+        aboutGallery ? (
           <div data-scroll-reveal class="home-page-image-wrapper">
-            <Image
-              src={about.image}
-              loading="eager"
-              alt={s.about.imageAlt}
-              class="about-image"
-              width={about.image.width}
-              height={about.image.height}
-            />
+            <ImageCarousel images={aboutGallery} alt={s.about.imageAlt} />
           </div>
+        ) : (
+          about?.image && (
+            <div data-scroll-reveal class="home-page-image-wrapper">
+              <ZoomImage
+                src={about.image}
+                alt={s.about.imageAlt}
+                class="about-image"
+                group="about"
+                widths={[480, 768, 1200]}
+                sizes="(max-width: 991px) 100vw, 50vw"
+              />
+            </div>
+          )
         )
       }
     </div>

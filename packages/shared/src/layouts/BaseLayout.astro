@@ -5,6 +5,7 @@ import { jsonEscape } from "../config/json-escape";
 const s = STRINGS;
 import Nav from "../components/sections/Nav.astro";
 import Footer from "../components/sections/Footer.astro";
+import DropdownMenu from "../components/sections/DropdownMenu.astro";
 import Font from "astro/components/Font.astro";
 import "../styles/global.css";
 import "lenis/dist/lenis.css";
@@ -32,13 +33,29 @@ const cmsJd = pageContent?.jsonld;
 const siteUrl = Astro.site!;
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
 const bd = pageContent?.booking_data;
-const ogImageUrl = seo?.image
-  ? seo.image.startsWith("http")
-    ? seo.image
-    : new URL(seo.image, siteUrl)
-  : null;
+// Social image: CMS `seo.image` wins; fall back to the JSON-LD org logo so a
+// site never emits zero og:image/twitter:image (orgLogo is only trusted as an
+// absolute http(s) URL).
+// Root relative `seo.image` at the serving origin, not the canonical siteUrl:
+// in dev siteUrl points at prod, so rooting there fetches the image
+// cross-origin (ERR_BLOCKED_BY_ORB) and defeats local preview. Absolute
+// http(s) values pass through unchanged.
+const ogImageUrl =
+  (seo?.image
+    ? seo.image.startsWith("http")
+      ? seo.image
+      : new URL(seo.image, Astro.url.origin)
+    : null) ??
+  (cmsJd?.org_logo?.startsWith("http") ? cmsJd.org_logo : null);
+// Preload only root-relative og paths: they resolve against the SERVING host,
+// so dev preview (localhost) and prod both fetch a same-origin, real file. An
+// absolute `seo.image` (common when CMS fills a prod URL) or org_logo fallback
+// would preload cross-origin in dev → ERR_BLOCKED_BY_ORB; skipping preload for
+// those is harmless (it's just an optimization). Social metas keep the
+// absolute ogImageUrl — scrapers need absolute.
+const ogImagePath = seo?.image?.startsWith("/") ? seo.image : null;
 const jd = {
-  orgName: cmsJd?.org_name,
+  orgName: cmsJd?.org_name || cmsJd?.webSiteName,
   orgUrl: cmsJd?.org_url,
   orgLogo: cmsJd?.org_logo,
   orgDescription: cmsJd?.org_description,
@@ -70,6 +87,7 @@ const addressJson = jd.hasAddress
       },
     ]
   : undefined;
+const jdPhones = [jd.phoneSpain, jd.phoneItaly].filter(Boolean);
 const jsonLdOrg = cmsJd?.org_name
   ? jsonEscape(
       JSON.stringify({
@@ -81,7 +99,7 @@ const jsonLdOrg = cmsJd?.org_name
         description: jd.orgDescription,
         ...(addressJson ? { address: addressJson } : {}),
         ...(jd.privacyPolicy ? { privacyPolicy: jd.privacyPolicy } : {}),
-        telephone: [jd.phoneSpain, jd.phoneItaly],
+        ...(jdPhones.length ? { telephone: jdPhones } : {}),
       }),
     )
   : null;
@@ -131,6 +149,9 @@ const jsonLdWebSite = jsonEscape(
     <Font cssVariable="--font-families--accent-font" />
     <link href="/styles/theme.css" rel="stylesheet" />
     <title>{seo?.title}</title>
+    {ogImagePath && !ogImagePath.endsWith(".svg") && (
+      <link rel="preload" as="image" href={ogImagePath} />
+    )}
     <link rel="canonical" href={canonicalUrl} />
     <meta content={seo?.description} name="description" />
     <meta content={seo?.title} property="og:title" />
@@ -165,6 +186,7 @@ const jsonLdWebSite = jsonEscape(
       }
     </style>
     <link href="/favicon.svg" rel="shortcut icon" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {jsonLdOrg && <script type="application/ld+json" set:html={jsonLdOrg} />}
     <script type="application/ld+json" set:html={jsonLdWebSite} />
   </head>
@@ -175,6 +197,7 @@ const jsonLdWebSite = jsonEscape(
       navItems={navItems}
       ctaLabel={ctaLabel}
     />
+    <DropdownMenu />
     <a href="#main-content" class="skip-link">{s.accessibility.skipLink}</a>
     <main id="main-content" class="page-wrapper" aria-label="Main content">
       <slot />
@@ -201,6 +224,11 @@ const jsonLdWebSite = jsonEscape(
       // which the strict `script-src 'self'` CSP permits (no is:inline).
       import { initScrollReveal } from "../scripts/scroll-reveal";
       initScrollReveal();
+    </script>
+    <script>
+      // Full-screen PhotoSwipe lightbox: any `a[data-lightbox]` (rendered by the
+      // shared ZoomImage) opens a gallery grouped by its data-lightbox value.
+      import "../scripts/lightbox";
     </script>
   </body>
 </html>

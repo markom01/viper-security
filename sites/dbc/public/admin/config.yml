@@ -1,10 +1,12 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
 backend:
   name: github
   repo: markom01/viper-security
   branch: main
 
-media_folder: sites/dbc/src/assets/images
-public_folder: ../../assets/images
+media_folder: sites/dbc/public/images/cms
+public_folder: /images/cms
 
 collections:
   - name: gallery
@@ -57,6 +59,57 @@ collections:
                   widget: image,
                   required: false,
                 }
+              - label: Fleet Vehicles
+                name: fleet
+                widget: list
+                required: false
+                collapsed: true
+                fields:
+                  - { name: name, label: Vehicle Name, widget: string }
+                  - { name: type, label: Type, widget: string, required: false }
+                  - { name: year, label: Year, widget: string, required: false }
+                  - { name: seats, label: Seats, widget: string, required: false }
+                  - { name: baggage, label: Baggage, widget: string, required: false }
+                  - {
+                      name: capacity_passengers,
+                      label: "Capacity (Passengers)",
+                      widget: number,
+                      required: false,
+                    }
+                  - {
+                      name: capacity_suitcases,
+                      label: "Capacity (Suitcases)",
+                      widget: number,
+                      required: false,
+                    }
+                  - {
+                      name: capacity_carryon,
+                      label: "Capacity (Carry-on)",
+                      widget: number,
+                      required: false,
+                    }
+                  - label: Specs (right-of-image fields)
+                    name: specs
+                    widget: list
+                    required: false
+                    collapsed: true
+                    summary: "{{fields.label}}: {{fields.value}}"
+                    fields:
+                      - { name: label, label: Label, widget: string }
+                      - { name: value, label: Value, widget: string }
+                  - {
+                      name: image,
+                      label: "Vehicle Image",
+                      widget: image,
+                      required: false,
+                    }
+                  - {
+                      name: features,
+                      label: Features,
+                      widget: list,
+                      field: { name: feature, label: Feature, widget: string },
+                      required: false,
+                    }
 
   - name: how-it-works
     label: How It Works

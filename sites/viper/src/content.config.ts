@@ -39,6 +39,60 @@ const services = defineCollection({
           title: z.string(),
           description: z.string(),
           image: image().optional(),
+          // Per-service detail-page fields (shared shape with DBC)
+          slug: z.string().optional(),
+          seo: z
+            .object({
+              title: z.string().optional(),
+              description: z.string().optional(),
+              image: z.string().optional(),
+            })
+            .optional(),
+          hero: z
+            .object({
+              subtitle: z.string().optional(),
+              cta_text: z.string().optional(),
+              image: image().optional(),
+              tagline: z.string().optional(),
+            })
+            .optional(),
+          about_text: z.string().optional(),
+          about_image: image().optional(),
+          marquee: z.string().optional(),
+          include: z
+            .array(
+              z.object({
+                title: z.string(),
+                text: z.string(),
+                image: image().optional(),
+              }),
+            )
+            .optional(),
+          bottomcta: z
+            .object({
+              heading: z.string().optional(),
+              values: z
+                .array(
+                  z.object({
+                    title: z.string(),
+                    text: z.string(),
+                  }),
+                )
+                .optional(),
+            })
+            .optional(),
+          form_fields: z
+            .array(
+              z.object({
+                label: z.string(),
+                placeholder: z.string().optional(),
+                name: z.string(),
+                // "location" → Photon address-autocomplete input; "country" → country-only
+                // autocomplete (Photon layer=country); "text" (default) → plain input.
+                type: z.enum(["text", "location", "country", "vehicle"]).optional(),
+              }),
+            )
+            .optional(),
         }),
       ),
     }),
@@ -56,6 +110,11 @@ const fleet = defineCollection({
       capacity_passengers: z.number().optional(),
       capacity_suitcases: z.number().optional(),
       capacity_carryon: z.number().optional(),
+      // Right-of-image spec rows (label/value) — replaces the passenger fields
+      // when present (shared Fleet section, shared FleetVehicleData type).
+      specs: z
+        .array(z.object({ label: z.string(), value: z.string() }))
+        .optional(),
       features: z.array(z.string()).optional(),
       image: image().optional(),
     }),
@@ -116,7 +175,7 @@ const pageContent = defineCollection({
           webSiteUrl: z.string().optional(),
         })
         .optional(),
-      map_embed_url: z.string().optional(),
+      map_embed_url: z.string().regex(/^https:\/\/(www\.)?google\.[a-z]{2,}(\/\S*)?$/i).optional(),
       booking_data: z
         .object({
           spain: z.object({

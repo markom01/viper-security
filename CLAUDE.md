@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Session auto-behavior
+
+At the start of any task-oriented session — any interaction where you will use tools and produce deliverables — invoke the `task-observer` skill before beginning work. This ensures skill-improvement opportunities are captured throughout the session. (Auto-load is also injected by the SessionStart hook; this line is the belt-and-suspenders fallback.)
+
 ## Commands
 
 Monorepo (npm workspaces). This repo hosts two independent Astro sites + a shared package:
@@ -45,7 +49,7 @@ Astro 7 static site (no SSR, no adapter, no routing beyond `/`, `/404`, `/admin`
 
 ## Gotchas
 
-- **`src/components/AGENTS.md` is STALE** — describes a deleted React/JSX architecture (PageRoot.jsx, ServiceCard.jsx, etc.). Ignore it; real sections are `.astro`. README.md and this file are accurate.
+- **`src/components/AGENTS.md` is current** — real sections are `.astro`, one React `.jsx` 404 page. Updated in the monorepo refactor (`a90a821`) — describes the Astro architecture including the deleted JSX tree in a historical note.
 - **Pricing collection key is `pricing`**, entry id `hourly` (`getEntry('pricing', 'hourly')`). README/memory may say `pricing-hourly` — wrong, that was the old name.
 - **`getCollection('page-content')` is destructured as `[pageContentEntry]`** — exactly one `content.md` allowed; a second file breaks the destructure.
 - **After editing `src/content.config.ts` schemas or collection files**: dev server may serve stale content. Press `s` then Enter in the dev terminal to re-sync the content layer (README-documented).

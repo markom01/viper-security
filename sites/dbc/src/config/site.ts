@@ -7,7 +7,7 @@ export const site = {
   name: "DB Custom Garage",
   shortName: "DB Garage",
   description:
-    "DB Custom Garage — bespoke custom car builds, restorations, and performance tuning.",
+    "DB Custom Garage — supercar and classic car transport, sale & auction, import/export logistics, and bespoke customizing and design.",
   url: "https://dbcustomgarage.netlify.app",
   themeColor: "#ea580c",
   bgColor: "#000000",
@@ -15,9 +15,9 @@ export const site = {
    * WhatsApp number for the garage enquiry form (international format,
    * digits only, e.g. "447700900123"). Empty string disables the wa.me path
    * and the form shows a config error instead of silently failing.
-   * Currently empty — no public WhatsApp is verified for DB Custom Garage.
+   * Verified from old Wix site footer (RESEARCH §1): +34 617 201 441.
    */
-  whatsappNumber: "",
+  whatsappNumber: "34617201441",
 };
 
 export type SiteConfig = typeof site;

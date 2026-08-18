@@ -33,7 +33,7 @@ export function pwaPluginOptions({
     // the HTML at install time (network-first below) so deploys are always
     // fresh on first load.
     workbox: {
-      globPatterns: ["**/*.{js,css,woff2,webp,png,svg,ico}"],
+      globPatterns: ["**/*.{js,css,woff2,png,svg,ico}"],
       globIgnores: ["admin/**", "**/*.map"],
       navigateFallback: null, // no SPA routes; HTML handled by runtime cache
       runtimeCaching: [
@@ -54,15 +54,6 @@ export function pwaPluginOptions({
           options: {
             cacheName: "astro-assets-cache",
             expiration: { maxEntries: 512, maxAgeSeconds: 60 * 60 * 24 * 365 },
-          },
-        },
-        {
-          // Self-hosted fonts (local /fonts/*.woff2) cache-first.
-          urlPattern: ({ url }) => url.pathname.startsWith("/fonts/"),
-          handler: "CacheFirst",
-          options: {
-            cacheName: "fonts-cache",
-            expiration: { maxEntries: 64, maxAgeSeconds: 60 * 60 * 24 * 365 },
           },
         },
       ],

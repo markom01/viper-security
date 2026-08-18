@@ -1,0 +1,127 @@
+---
+// DBC service detail pages — one static route per services.md offering.
+// Per-service sections (Hero, Marquee, About, Includes, Why-Choose-Us, form
+// fields) render ONLY from that offering's frontmatter — no fallback to home
+// copy. Site-global chrome (Nav, Footer, Stats, HowItWorks, CTA) stays shared.
+import { getCollection } from "astro:content";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { site } from "../../config/site";
+
+import Hero from "@garage/shared/sections/Hero.astro";
+import Marquee from "@garage/shared/sections/Marquee.astro";
+import StatsSection from "@garage/shared/sections/StatsSection.astro";
+import AboutSection from "@garage/shared/sections/AboutSection.astro";
+import Services from "@garage/shared/sections/Services.astro";
+import Fleet from "@garage/shared/sections/Fleet.astro";
+import HowItWorks from "@garage/shared/sections/HowItWorks.astro";
+import CtaBanner from "@garage/shared/sections/CtaBanner.astro";
+import BottomCta from "@garage/shared/sections/BottomCta.astro";
+
+export async function getStaticPaths() {
+  const [servicesEntry] = await getCollection("services");
+  const offerings = servicesEntry?.data?.offerings || [];
+  return offerings.map((o) => ({
+    params: { slug: o.slug ?? o.title.toLowerCase().replace(/[^a-z0-9]+/g, "-") },
+    props: { offering: o },
+  }));
+}
+
+const { offering } = Astro.props;
+
+const [pageContentEntry] = await getCollection("page-content");
+const [howItWorksEntry] = await getCollection("how-it-works");
+
+const howItWorks = howItWorksEntry?.data || {};
+const baseContent = pageContentEntry?.data || {};
+
+// Site-global chrome/identity only. Per-service copy is NOT merged in —
+// sections below render from `offering.*` directly, no home-copy fallback.
+// Per-service image for StatsSection bg + CtaBanner (from the offering's hero
+// image) — keeps every DBC service page visually matched to its own service.
+const pageContent = {
+  ...baseContent,
+  seo: offering.seo || baseContent?.seo,
+  ...(offering.hero?.image
+    ? {
+        cta: { ...baseContent.cta, image: offering.hero.image },
+        stats: { ...baseContent.stats, image: offering.hero.image },
+      }
+    : {}),
+};
+
+const hasHero = offering.hero?.subtitle || offering.hero?.tagline;
+const hasAbout = !!offering.about_text;
+const hasIncludes = !!offering.include?.length;
+const hasBottomCta = !!offering.bottomcta?.heading || !!offering.bottomcta?.values?.length;
+const hasFleet = !!offering.fleet?.length;
+
+// Per-service fleet vehicles — mapped to the shared FleetEntry shape.
+const fleetVehicles = (offering.fleet || []).map((f) => ({
+  id: `${offering.slug}-${f.name}`,
+  collection: "fleet",
+  data: f,
+}));
+// Deduplicated feature list, sentence-formatted (mirrors VIPER home).
+const allFleetFeatures = [...new Set((offering.fleet || []).flatMap((f) => f.features || []))];
+const fleetFeaturesText =
+  allFleetFeatures.length > 0
+    ? allFleetFeatures.length === 1
+      ? allFleetFeatures[0] + "."
+      : allFleetFeatures.slice(0, -1).join(", ") + ", and " + allFleetFeatures.slice(-1)[0] + "."
+    : "";
+
+// "What falls under this service" — rendered as service cards.
+const includes = (offering.include || []).map((i) => ({
+  region: "Garage",
+  title: i.title,
+  description: i.text,
+  ...(i.image ? { image: i.image } : {}),
+}));
+
+// Per-service About copy + image, only when present.
+const serviceAbout = hasAbout
+  ? {
+      heading: offering.title,
+      text: offering.about_text,
+      ...(offering.about_image ? { image: offering.about_image } : {}),
+    }
+  : undefined;
+
+// No fallback to home hero — a service page's Hero copy comes only from its own
+// frontmatter. If a service ever lacks `hero`, the section is skipped.
+const heroFields = offering.hero || {};
+---
+
+<SiteLayout pageContent={pageContent}>
+  {
+    hasHero && (
+      <Hero
+        subtitle={heroFields.subtitle}
+        cta_text={heroFields.cta_text}
+        tagline={heroFields.tagline}
+        hero_image={heroFields.image}
+        pageContent={pageContent}
+        fleetHref="/gallery"
+        phoneSpain={site.whatsappNumber}
+        presetService={offering.title}
+        form_fields={offering.form_fields || []}
+      />
+    )
+  }
+  {offering.marquee && <Marquee pageContent={pageContent} text={offering.marquee} />}
+  {hasAbout && <AboutSection pageContent={{ ...pageContent, about: serviceAbout }} />}
+  {hasIncludes && (
+    <Services pageContent={pageContent} marbella={includes} milano={includes} />
+  )}
+  {hasFleet && (
+    <Fleet
+      vehicles={fleetVehicles}
+      pageContent={pageContent}
+      fleetFeatures={fleetFeaturesText}
+    />
+  )}
+  <StatsSection pageContent={pageContent} />
+  <HowItWorks steps={howItWorks.steps} pageContent={pageContent} />
+  <CtaBanner pageContent={pageContent} />
+  {hasBottomCta && <BottomCta pageContent={{ ...pageContent, bottomcta: offering.bottomcta }} />}
+</SiteLayout>

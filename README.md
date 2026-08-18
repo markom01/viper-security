@@ -112,7 +112,7 @@ _Only 2 documented environment variables currently exist._
 | `hero`           | `src/content/hero/hero.md`         | Hero banner copy                       |
 | `services`       | `src/content/services/services.md` | Both Marbella + Milano service details |
 | `fleet`          | `src/content/fleet/*.md`           | Vehicle fleet entries                  |
-| `pricing-hourly` | `src/content/pricing/hourly.md`    | Hourly chauffeur rates                 |
+| `pricing`        | `src/content/pricing/hourly.md`    | Hourly chauffeur rates                 |
 | `membership`     | `src/content/membership/tiers.md`  | VIP membership tiers                   |
 
 ## Architecture Decisions

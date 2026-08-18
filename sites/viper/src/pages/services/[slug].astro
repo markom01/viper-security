@@ -1,0 +1,127 @@
+---
+// VIPER Security service detail pages — one static route per services.md offering.
+// Per-service sections render ONLY from that offering's frontmatter — no fallback
+// to home copy. VIPER-specific shared sections (Fleet, Pricing, Membership) stay.
+import BaseLayout from "@garage/shared/layouts/BaseLayout.astro";
+
+import Hero from "@garage/shared/sections/Hero.astro";
+import Marquee from "@garage/shared/sections/Marquee.astro";
+import AboutSection from "@garage/shared/sections/AboutSection.astro";
+import Services from "@garage/shared/sections/Services.astro";
+import Fleet from "@garage/shared/sections/Fleet.astro";
+import StatsSection from "@garage/shared/sections/StatsSection.astro";
+import HowItWorks from "@garage/shared/sections/HowItWorks.astro";
+import Pricing from "@garage/shared/sections/Pricing.astro";
+import Membership from "@garage/shared/sections/Membership.astro";
+import CtaBanner from "@garage/shared/sections/CtaBanner.astro";
+import BottomCta from "@garage/shared/sections/BottomCta.astro";
+
+import { getCollection, getEntry } from "astro:content";
+import { resolveTemplates } from "@garage/shared/config/templates";
+import { SITE_NAME } from "@garage/shared/config/strings";
+
+export async function getStaticPaths() {
+  const [servicesEntry] = await getCollection("services");
+  const offerings = servicesEntry?.data?.offerings || [];
+  return offerings.map((o) => ({
+    params: { slug: o.slug ?? o.title.toLowerCase().replace(/[^a-z0-9]+/g, "-") },
+    props: { offering: o },
+  }));
+}
+
+const { offering } = Astro.props;
+
+const [heroEntry] = await getCollection("hero");
+const [howItWorksEntry] = await getCollection("how-it-works");
+const [servicesEntry] = await getCollection("services");
+const fleetEntries = await getCollection("fleet");
+const [membershipEntry] = await getCollection("membership");
+const [pageContentEntry] = await getCollection("page-content");
+
+const pageContent = pageContentEntry?.data || {};
+const bd = pageContent?.booking_data;
+const siteName = SITE_NAME;
+const vehicleName = pageContent?.vehicle_name;
+const allOfferings = (servicesEntry?.data?.offerings || []).map((o) => ({
+  ...o,
+  description: resolveTemplates(o.description, bd, siteName, vehicleName),
+}));
+
+const hourlyEntry = await getEntry("pricing", "hourly");
+
+const hero = heroEntry?.data || {};
+const howItWorks = howItWorksEntry?.data || {};
+const hourly = hourlyEntry?.data || {};
+const membership = membershipEntry?.data || {};
+const universalServices = { services: allOfferings };
+
+const allFleetFeatures = [
+  ...new Set(fleetEntries.flatMap((e) => e.data.features || [])),
+];
+const fleetFeaturesText =
+  allFleetFeatures.length > 0
+    ? allFleetFeatures.length === 1
+      ? allFleetFeatures[0] + "."
+      : allFleetFeatures.slice(0, -1).join(", ") +
+        ", and " +
+        allFleetFeatures.slice(-1)[0] +
+        "."
+    : "";
+
+// Site-global chrome/identity only — per-service copy is NOT merged in.
+const mergedContent = {
+  ...pageContent,
+  seo: offering.seo || pageContent?.seo,
+};
+
+const hasHero = offering.hero?.subtitle || offering.hero?.tagline;
+const hasAbout = !!offering.about_text;
+const hasIncludes = !!offering.include?.length;
+const hasBottomCta = !!offering.bottomcta?.heading || !!offering.bottomcta?.values?.length;
+
+const includes = (offering.include || []).map((i) => ({
+  region: "VIPER",
+  title: i.title,
+  description: i.text,
+  ...(i.image ? { image: i.image } : {}),
+}));
+const serviceAbout = hasAbout
+  ? {
+      heading: offering.title,
+      text: offering.about_text,
+      ...(offering.about_image ? { image: offering.about_image } : {}),
+    }
+  : undefined;
+const heroFields = offering.hero || {};
+---
+
+<BaseLayout pageContent={mergedContent} brandName={hero.brand_name || SITE_NAME}>
+  {
+    hasHero && (
+      <Hero
+        subtitle={heroFields.subtitle}
+        cta_text={heroFields.cta_text}
+        tagline={heroFields.tagline}
+        hero_image={heroFields.image}
+        phoneItaly={hero.phone_italy}
+        phoneSpain={hero.phone_spain}
+        pageContent={mergedContent}
+        form_fields={offering.form_fields || []}
+      />
+    )
+  }
+  {offering.marquee && <Marquee pageContent={mergedContent} text={offering.marquee} />}
+  {hasAbout && <AboutSection pageContent={{ ...mergedContent, about: serviceAbout }} />}
+  {hasIncludes ? (
+    <Services pageContent={mergedContent} marbella={includes} milano={includes} />
+  ) : (
+    <Services pageContent={mergedContent} marbella={universalServices.services} milano={universalServices.services} />
+  )}
+  <Fleet vehicles={fleetEntries} pageContent={mergedContent} fleetFeatures={fleetFeaturesText} />
+  <StatsSection pageContent={mergedContent} />
+  <HowItWorks steps={howItWorks.steps} pageContent={mergedContent} />
+  <Pricing hourly={hourly} pageContent={mergedContent} />
+  <Membership tiers={membership.tiers} pageContent={mergedContent} />
+  <CtaBanner pageContent={mergedContent} />
+  {hasBottomCta && <BottomCta pageContent={{ ...mergedContent, bottomcta: offering.bottomcta }} />}
+</BaseLayout>

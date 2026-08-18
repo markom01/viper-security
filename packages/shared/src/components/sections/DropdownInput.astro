@@ -1,0 +1,383 @@
+---
+// Reusable dropdown input, two modes:
+//
+//  kind="address" (default) — Photon address autocomplete (formerly
+//    LocationInput). Renders a text input that the shared Hero script wires
+//    to autoComplete.js via `[data-photon-location]`, plus a hidden input
+//    carrying the full selected address. Used for pickup/dropoff + per-service
+//    `type: "location"` / `type: "country"` fields.
+//
+//  kind="vehicle" — Make → Model → Year, three separate cascading search
+//    inputs, each an autoComplete.js dropdown styled like the location field.
+//    All data from the NHTSA VPIC API at runtime (no bundled dataset, no
+//    hardcoded makes). Picking a make loads that make's models into the model
+//    field; picking a model loads its production years into the year field.
+//    Hidden inputs carry Make / Model / Year for the WhatsApp message.
+interface Props {
+  /** Which dropdown mode this renders. */
+  kind?: "address" | "vehicle";
+  /** Unique input id (address-mode hidden gets `<id>-location`). */
+  id: string;
+  label: string;
+  placeholder?: string;
+  /** Visible input / value field name (vehicle summary input uses this). */
+  name: string;
+  /** Address mode only: hidden input name carrying the full address. */
+  addressName?: string;
+  /** Mark as a per-service custom field (appended to the WhatsApp message). */
+  custom?: boolean;
+  /** Address mode: restrict the Photon dropdown to countries only. */
+  country?: boolean;
+}
+
+const {
+  kind = "address",
+  id,
+  label,
+  placeholder,
+  name,
+  addressName,
+  custom = false,
+  country = false,
+} = Astro.props;
+const customAttrs = custom
+  ? { "data-custom-field": "", "data-custom-location": "" }
+  : {};
+const countryAttr = country ? { "data-country-location": "" } : {};
+---
+
+{
+  kind === "address" ? (
+    <div class="booking-form-label-field">
+      <label class="booking-form-label" for={id}>{label}</label>
+      <input
+        class="booking-form-field"
+        id={id}
+        name={name}
+        type="text"
+        placeholder={placeholder}
+        autocomplete="off"
+        data-photon-location
+        aria-label={label}
+        {...customAttrs}
+        {...countryAttr}
+      />
+      <input type="hidden" id={`${id}-location`} name={addressName} />
+    </div>
+  ) : (
+    <div class="vehicle-fields">
+      <div class="booking-form-label-field">
+        <label class="booking-form-label" for={`${id}-type`}>Vehicle type</label>
+        <select class="booking-form-field" id={`${id}-type`} name={`${name}-type`} data-vehicle-type>
+          <option value="car">Car</option>
+          <option value="motorcycle">Motorcycle</option>
+        </select>
+      </div>
+      <div class="booking-form-label-field">
+        <label class="booking-form-label" for={`${id}-make`}>Make</label>
+        <input
+          class="booking-form-field"
+          id={`${id}-make`}
+          name={`${name}-make`}
+          type="text"
+          placeholder={placeholder || "Select make..."}
+          autocomplete="off"
+          aria-label={`${label} make`}
+          data-vehicle-make
+        />
+      </div>
+      <div class="booking-form-label-field">
+        <label class="booking-form-label" for={`${id}-model`}>Model</label>
+        <input
+          class="booking-form-field"
+          id={`${id}-model`}
+          name={`${name}-model`}
+          type="text"
+          placeholder="Select model..."
+          autocomplete="off"
+          aria-label={`${label} model`}
+          data-vehicle-model
+          disabled
+        />
+      </div>
+      <div class="booking-form-label-field">
+        <label class="booking-form-label" for={`${id}-year`}>Year</label>
+        <input
+          class="booking-form-field"
+          id={`${id}-year`}
+          name={`${name}-year`}
+          type="text"
+          placeholder="Select year..."
+          autocomplete="off"
+          aria-label={`${label} year`}
+          data-vehicle-year
+          disabled
+        />
+      </div>
+      <!-- Hidden: full value for the WhatsApp message (single clean line). -->
+      <input type="hidden" name={name} data-vehicle-summary data-custom-field aria-label={label} />
+    </div>
+  )
+}
+
+{
+  kind === "vehicle" && (
+  <script>
+    // Vehicle Make → Model → Year, three cascading autoComplete.js dropdowns
+    // (same UX as the Photon address field). All data from the NHTSA VPIC API
+    // at runtime; no bundled dataset, no hardcoded makes. Picking a make loads
+    // its models into the model field; picking a model loads its years.
+    import autoComplete from "@tarekraafat/autocomplete.js";
+    const NHTSA = "https://vpic.nhtsa.dot.gov/api/vehicles";
+    const YEARS: number[] = [];
+    for (let y = 1992; y <= 2026; y++) YEARS.push(y);
+
+    const makeInput = document.querySelector<HTMLInputElement>("[data-vehicle-make]");
+    const modelInput = document.querySelector<HTMLInputElement>("[data-vehicle-model]");
+    const yearInput = document.querySelector<HTMLInputElement>("[data-vehicle-year]");
+    const typeInput = document.querySelector<HTMLSelectElement>("[data-vehicle-type]");
+    const summary = document.querySelector<HTMLInputElement>("[data-vehicle-summary]");
+    if (!makeInput || !modelInput || !yearInput || !typeInput) throw new Error("vehicle fields missing");
+    // Non-null refs for use inside nested closures (TS loses narrowing).
+    const makeF: HTMLInputElement = makeInput;
+    const modelF: HTMLInputElement = modelInput;
+    const yearF: HTMLInputElement = yearInput;
+    const typeF: HTMLSelectElement = typeInput;
+
+    const jf = (r: Response) => r.json();
+
+    // Caches, keyed by vehicle type where relevant.
+    const makesByType: Record<string, string[]> = {}; // type → make names (sorted)
+    let activeType: string = "car";       // currently selected vehicle type
+    let modelNames: string[] = [];          // models for the selected make
+    let modelYears: Record<string, number[]> = {}; // model → production years
+    let activeMakeId: number | null = null;
+
+    async function getMakes(): Promise<string[]> {
+      const vt = activeType;
+      if (makesByType[vt]) return makesByType[vt];
+      const ids = new Map<string, number>();
+      try {
+        const d = await fetch(`${NHTSA}/GetMakesForVehicleType/${vt}?format=json`).then(jf);
+        for (const r of d.Results || []) if (!ids.has(r.MakeName)) ids.set(r.MakeName, r.MakeId);
+      } catch { /* offline — empty */ }
+      makesByType[vt] = [...ids.keys()].sort();
+      return makesByType[vt];
+    }
+
+    async function loadModels(makeName: string): Promise<void> {
+      // Resolve make ID, then fetch models + every year's model list in parallel.
+      let id = activeMakeId;
+      if (!id) {
+        // Resolve the make ID from the active type's make list.
+        const d = await fetch(`${NHTSA}/GetMakesForVehicleType/${activeType}?format=json`).then(jf).catch(() => null);
+        const hit = (d?.Results || []).find((r: any) => r.MakeName === makeName);
+        id = hit?.MakeId ?? null;
+        activeMakeId = id;
+      }
+      modelNames = [];
+      modelYears = {};
+      if (!id) return;
+      const modelP = fetch(`${NHTSA}/GetModelsForMakeId/${id}?format=json`).then(jf).catch(() => ({ Results: [] }));
+      const yearP = Promise.all(YEARS.map((y) =>
+        fetch(`${NHTSA}/GetModelsForMakeIdYear/makeId/${id}/modelyear/${y}?format=json`)
+          .then(jf).then((d) => ({ y, names: (d.Results || []).map((m: any) => m.Model_Name) }))
+          .catch(() => ({ y, names: [] as string[] }))
+      ));
+      const [md, yrRows] = await Promise.all([modelP, yearP]);
+      for (const row of yrRows) {
+        for (const nm of row.names) {
+          if (!modelYears[nm]) modelYears[nm] = [];
+          modelYears[nm].push(row.y);
+        }
+      }
+      modelNames = Array.from(new Set<string>((md.Results || []).map((m: any) => m.Model_Name))).sort();
+    }
+
+    // Sentinel query used by openAll() to force the dropdown open with every
+    // candidate. It must pass the trigger (length >= threshold) AND match every
+    // record in searchController's loose mode: `"::"` against `_q:"::"`
+    // advances char-by-char and returns a truthy match. Users never type it.
+    const SENTINEL = "::";
+    // Max rows per dropdown. NHTSA's largest make is HONDA (361 models);
+    // 500 keeps every make fully selectable without unbounded lists.
+    const MAX = 500;
+
+    // Generic autoComplete init for one input over a candidate list.
+    // Returns the instance so callers can drive it programmatically (`.start`).
+    // The package ships no type declarations, so the instance is `any`.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function initAC(
+      input: HTMLInputElement,
+      getCandidates: () => string[] | Promise<string[]>,
+      onPick: (val: string) => void,
+      threshold = 2,
+    ): any {
+      return new autoComplete({
+        selector: () => input,
+        threshold,
+        debounce: 250,
+        data: {
+          src: async (query: string) => {
+            // "Show all" path: openAll() calls start(SENTINEL) — return every
+            // candidate with `_q: SENTINEL` so the match always holds.
+            if (query === SENTINEL) {
+              const all = await getCandidates();
+              return all.slice(0, MAX).map((c) => ({ value: c, _q: SENTINEL }));
+            }
+            const q = (query || "").trim().toLowerCase();
+            const candidates = await getCandidates();
+            return candidates
+              .filter((c) => c.toLowerCase().includes(q))
+              .slice(0, MAX)
+              .map((c) => ({ value: c, _q: query || "" }));
+          },
+          cache: false,
+          keys: ["_q"],
+        },
+        resultsList: {
+          element: (list: HTMLUListElement) => { list.classList.add("dropdown-panel"); },
+          maxResults: MAX,
+        },
+        resultItem: {
+          highlight: false,
+          element: (item: HTMLElement, data: { value: any }) => {
+            item.classList.add("dropdown-panel-item");
+            item.textContent = String(data.value.value);
+          },
+        },
+        events: {
+          input: {
+            selection: (e: Event) => {
+              const feedback = (e as CustomEvent).detail;
+              const picked = feedback?.selection?.value ?? {};
+              const val = typeof picked === "string" ? picked : String(picked.value ?? "");
+              if (!val) return;
+              input.value = val;
+              onPick(val);
+            },
+          },
+        },
+      });
+    }
+
+    function updateSummary(): void {
+      if (!summary) return;
+      const parts = [makeF.value, modelF.value, yearF.value ? `(${yearF.value})` : ""].filter(Boolean);
+      summary.value = parts.join(" ");
+    }
+
+    // Focus a field and open its full dropdown list programmatically.
+    // autoComplete.js can't render on an empty query (its loose-mode match
+    // returns '' for an empty `_q`, dropping every record), so openAll drives
+    // the public `.start()` API with a SENTINEL query. The sentinel passes the
+    // trigger threshold and the src special-cases it to return every candidate
+    // with `_q: SENTINEL`, so every item renders and the list opens. The input
+    // value stays empty; the placeholder remains visible.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function openAll(ac: any, input: HTMLInputElement): void {
+      input.focus();
+      ac.start(SENTINEL);
+    }
+
+    // Make pick → load models, enable + clear model field, then auto-focus
+    // and show every model for the chosen make.
+    function onMakePick(makeName: string): void {
+      activeMakeId = null;
+      modelF.value = "";
+      yearF.value = "";
+      modelF.disabled = true;
+      yearF.disabled = true;
+      updateSummary();
+      loadModels(makeName).then(() => {
+        modelF.disabled = !modelNames.length;
+        modelF.placeholder = modelNames.length ? "Select model..." : "No models available";
+        updateSummary();
+        // Defer one tick: the make field's list "close"/"blur" handlers run
+        // after the click that fires the selection. Opening the model list in
+        // the same async gap gets immediately re-closed; a macrotask delay
+        // lets that settle first.
+        if (modelNames.length) setTimeout(() => openAll(modelAC, modelF), 0);
+      });
+    }
+
+    // Model pick → derive years, enable + clear year field, then auto-focus
+    // and show every production year for the chosen model.
+    function onModelPick(modelName: string): void {
+      yearF.value = "";
+      yearF.disabled = true;
+      updateSummary();
+      const years = activeMakeId != null ? (modelYears[modelName] || []) : [];
+      yearF.disabled = !years.length;
+      yearF.placeholder = years.length ? "Select year..." : "No years available";
+      updateSummary();
+      if (years.length) setTimeout(() => openAll(yearAC, yearF), 0);
+    }
+
+    // Note: autoComplete.js can't render a list on a truly empty query (its
+    // loose-mode match returns '' for an empty `_q`, dropping every record) —
+    // hence the SENTINEL-driven openAll() above. Manual typing behaves exactly
+    // like the Photon address fields.
+    const makeAC = initAC(makeF, getMakes, onMakePick);
+    const modelAC = initAC(modelF, () => modelNames, onModelPick);
+    const yearAC = initAC(yearF, () => {
+      const mdl = modelF.value;
+      const years = activeMakeId != null ? (modelYears[mdl] || []) : [];
+      return years.slice().sort((a, b) => a - b).map((y) => String(y));
+    }, () => {
+      updateSummary();
+    });
+
+    // Open the full list when a focus lands on an enabled, empty field, and
+    // again when the user deletes back to empty — autoComplete.js closes the
+    // list on an empty query, so after clearing the field we re-open it. The
+    // 300ms defer outlives autoComplete's own debounced (250ms) close so the
+    // re-open isn't stomped.
+    function openOnEmpty(ac: any, input: HTMLInputElement): void {
+      input.addEventListener("focus", () => {
+        if (input.disabled || input.value) return;
+        openAll(ac, input);
+      });
+      let reopen: number | undefined;
+      input.addEventListener("input", () => {
+        // Re-open only when the field was emptied by deleting, is still empty,
+        // and is still the active field (don't steal focus from another field).
+        if (input.disabled || input.value || document.activeElement !== input) return;
+        if (reopen) return; // one pending re-open is enough
+        reopen = window.setTimeout(() => {
+          reopen = undefined;
+          if (!input.value && document.activeElement === input) openAll(ac, input);
+        }, 300);
+      });
+    }
+    openOnEmpty(makeAC, makeF);
+    openOnEmpty(modelAC, modelF);
+    openOnEmpty(yearAC, yearF);
+    // Keep the hidden summary in sync as the user types/edits too.
+    [makeF, modelF, yearF].forEach((inp) =>
+      inp.addEventListener("input", updateSummary),
+    );
+
+    // Switching vehicle type resets the cascade and swaps the make list.
+    typeF.addEventListener("change", () => {
+      activeType = typeF.value;
+      activeMakeId = null;
+      modelNames = [];
+      modelYears = {};
+      makeF.value = "";
+      modelF.value = "";
+      yearF.value = "";
+      modelF.disabled = true;
+      yearF.disabled = true;
+      updateSummary();
+      getMakes().then(() => {
+        if (!makeF.value && document.activeElement === makeF) {
+          openAll(makeAC, makeF); // show the new type's makes
+        }
+      });
+    });
+
+    getMakes(); // prewarm the make list
+  </script>
+  )
+}

@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import ZoomImage from "./ZoomImage.astro";
 const { pageContent } = Astro.props;
 const { marbella, milano } = Astro.props;
 import type { ServiceOffering } from "../../types";
@@ -8,6 +8,8 @@ import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
 // Services are universal — both props carry the same data, pick whichever exists
 const services = marbella || milano || [];
+// 5+ cards overflow the 4-col row → horizontal scroll sheet (starts at 5 on DBC home)
+const scrollSheet = services.length > 4;
 ---
 
 <section id="services" class="section services-section">
@@ -21,17 +23,21 @@ const services = marbella || milano || [];
       </div>
     </div>
     <div data-scroll-reveal>
-      <div role="list" class="_4-column-collection">
+      <div
+        role="list"
+        class:list={["_4-column-collection", { "scroll-sheet": scrollSheet }]}
+        tabindex={scrollSheet ? 0 : undefined}
+      >
         {
           services.map((svc: ServiceOffering) => (
             <div role="listitem" class="service-collection-item">
               <div class="service-card">
-                {svc.image && (
-                  <Image
-                    src={svc.image}
-                    loading="lazy"
+                {(svc.image || svc.hero?.image) && (
+                  <ZoomImage
+                    src={svc.image || svc.hero?.image!}
                     alt={svc.title}
                     class="service-listing-image"
+                    group="services"
                     width="400"
                     height="300"
                   />
@@ -51,6 +57,28 @@ const services = marbella || milano || [];
   </div>
 </section>
 <style>
+  /* 5+ offerings overflow the 4-col grid → horizontal scroll sheet.
+     Card = 30% of the row, so 3 cards fill the sheet and a third of the
+     next peeks in — the scrollbar (native, theme-colored) drives the tail. */
+  .scroll-sheet {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding-bottom: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--colors--gold) var(--colors--onyx);
+  }
+  .scroll-sheet > .service-collection-item {
+    /* 3 full cards + ⅓ of the 4th peek at every width (above the min).
+       R = 3(W−3·gap)/10  ⟹  peek = W − 3R − 3gap = R/3 exactly. */
+    flex: 0 0 calc((100% - 60px) * 0.3);
+    /* below ~1060px container the basis math would give <300px cards;
+       freeze them and let the sheet scroll (mobile-carousel pattern). */
+    min-width: 300px;
+    /* responsive min/max height (420/400/360px) from global.css still applies */
+    scroll-snap-align: start;
+  }
   .service-card:hover .service-short-description {
     opacity: 1 !important;
     transform: translateY(0) !important;

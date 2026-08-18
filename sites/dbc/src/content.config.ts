@@ -40,6 +40,87 @@ const services = defineCollection({
           title: z.string(),
           description: z.string(),
           image: image().optional(),
+          // Per-service detail-page fields (shared shape with VIPER)
+          slug: z.string().optional(),
+          seo: z
+            .object({
+              title: z.string().optional(),
+              description: z.string().optional(),
+              image: z.string().optional(),
+            })
+            .optional(),
+          hero: z
+            .object({
+              subtitle: z.string().optional(),
+              cta_text: z.string().optional(),
+              image: image().optional(),
+              tagline: z.string().optional(),
+            })
+            .optional(),
+          about_text: z.string().optional(),
+          about_image: image().optional(),
+          marquee: z.string().optional(),
+          include: z
+            .array(
+              z.object({
+                title: z.string(),
+                text: z.string(),
+                image: image().optional(),
+              }),
+            )
+            .optional(),
+          bottomcta: z
+            .object({
+              heading: z.string().optional(),
+              values: z
+                .array(
+                  z.object({
+                    title: z.string(),
+                    text: z.string(),
+                  }),
+                )
+                .optional(),
+            })
+            .optional(),
+          form_fields: z
+            .array(
+              z.object({
+                label: z.string(),
+                placeholder: z.string().optional(),
+                name: z.string(),
+                // "location" → Photon address-autocomplete input; "country" → country-only
+                // autocomplete (Photon layer=country); "vehicle" → car/bike model datalist;
+                // "text" (default) → plain input.
+                type: z.enum(["text", "location", "country", "vehicle"]).optional(),
+                // Which form column the field renders in (default "left").
+                side: z.enum(["left", "right"]).optional(),
+              }),
+            )
+            .optional(),
+          // Per-service fleet vehicles — only supercar-transport today. Mirrors the
+          // VIPER `fleet` collection shape so the shared Fleet section renders.
+          fleet: z
+            .array(
+              z.object({
+                name: z.string(),
+                type: z.string().optional(),
+                year: z.string().optional(),
+                seats: z.string().optional(),
+                baggage: z.string().optional(),
+                capacity_passengers: z.number().optional(),
+                capacity_suitcases: z.number().optional(),
+                capacity_carryon: z.number().optional(),
+                // Right-of-image spec rows (label/value) — used when the vehicle
+                // isn't a passenger car (e.g. hauler with trailer). Replaces the
+                // passenger fields above when present.
+                specs: z
+                  .array(z.object({ label: z.string(), value: z.string() }))
+                  .optional(),
+                features: z.array(z.string()).optional(),
+                image: image().optional(),
+              }),
+            )
+            .optional(),
         }),
       ),
     }),
@@ -79,6 +160,7 @@ const pageContent = defineCollection({
           heading: z.string().optional(),
           text: z.string().optional(),
           image: image().optional(),
+          images: image().array().optional(),
         })
         .optional(),
       stats: z
@@ -93,6 +175,11 @@ const pageContent = defineCollection({
               }),
             )
             .optional(),
+        })
+        .optional(),
+      howitworks: z
+        .object({
+          heading: z.string().optional(),
         })
         .optional(),
       cta: z
@@ -121,7 +208,7 @@ const pageContent = defineCollection({
           professional_discreet_reliable: z.string().optional(),
         })
         .optional(),
-      map_embed_url: z.string().optional(),
+      map_embed_url: z.string().regex(/^https:\/\/(www\.)?google\.[a-z]{2,}(\/\S*)?$/i).optional(),
       labels: z.record(z.string(), z.string()).optional(),
     }),
 });
@@ -132,6 +219,11 @@ const gallery = defineCollection({
     z.object({
       name: z.string(),
       alt: z.string().optional(),
+      // Gallery grouping key. CMS-curated categories mirror the site sections:
+      // brand | supercar | customizing | auction | import-export | all-builds
+      category: z
+        .enum(["brand", "supercar", "customizing", "auction", "import-export", "all-builds"])
+        .default("all-builds"),
       image: image(),
     }),
 });

@@ -25,3 +25,10 @@ graphify-out/
 # Playwright output (can contain PII in traces/snapshots)
 test-results/
 **/test-results/
+
+# Throwaway verification scripts + screenshots (not source)
+probe-*.mjs
+serve*.mjs
+ss.mjs
+*.png
+dbc-home-services-sheet.yml

@@ -1,0 +1,49 @@
+---
+// One custom `form_fields` entry for the booking form. Renders a text input,
+// or a DropdownInput (address/country Photon autocomplete, or the live NHTSA
+// make→model→year vehicle cascade). Used on left/right form columns.
+import DropdownInput from "./DropdownInput.astro";
+
+interface Props {
+  f: {
+    label: string;
+    placeholder?: string;
+    name: string;
+    type?: "text" | "location" | "country" | "vehicle";
+    side?: "left" | "right";
+  };
+}
+
+const { f } = Astro.props;
+const id = `form-${f.name}`;
+---
+
+{f.type === "location" || f.type === "country" ? (
+  <DropdownInput
+    kind="address"
+    id={id}
+    label={f.label}
+    placeholder={f.placeholder}
+    name={f.name}
+    addressName={`${f.name}-address`}
+    custom
+    country={f.type === "country"}
+  />
+) : f.type === "vehicle" ? (
+  <DropdownInput kind="vehicle" id={id} label={f.label} placeholder={f.placeholder} name={f.name} />
+) : (
+  <div class="booking-form-label-field">
+    <label class="booking-form-label" for={id}
+      >{f.label}</label
+    >
+    <input
+      class="booking-form-field"
+      id={id}
+      name={f.name}
+      type="text"
+      placeholder={f.placeholder}
+      aria-label={f.label}
+      data-custom-field
+    />
+  </div>
+)}

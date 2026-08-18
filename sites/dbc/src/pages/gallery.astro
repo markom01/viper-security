@@ -16,11 +16,14 @@ const pageContent = {
     description:
       "Browse our latest custom builds, restorations, and performance projects.",
     theme_color: site.themeColor,
+    image: "/images/og-dbc.webp",
   },
 };
 
-// CMS-editable gallery images. Full-res original is served for the PhotoSwipe
-// lightbox (getImage without width/height = original dimensions, optimized).
+// CMS-editable gallery images, grouped by service category. The lightbox
+// reuses the original asset (sources are already ~1600px; a separate width
+// cap only duplicates files). Each category renders its own masonry grid, so
+// PhotoSwipe nav stays within the group.
 const galleryItems = await Promise.all(
   (await getCollection("gallery")).map(async (item) => {
     const meta = item.data.image;
@@ -28,6 +31,7 @@ const galleryItems = await Promise.all(
     const optimized = await getImage({ src: meta });
     return {
       id: item.id,
+      category: item.data.category,
       alt: item.data.alt || item.data.name,
       width: meta.width,
       height: meta.height,
@@ -36,6 +40,20 @@ const galleryItems = await Promise.all(
     };
   }),
 );
+
+// Ordered gallery sections. Empty groups (e.g. auction, import-export before
+// photos exist) are skipped so the page doesn't show a bare heading.
+const sections = [
+  { key: "brand", title: "Brand & Home" },
+  { key: "supercar", title: "Supercar Transport" },
+  { key: "customizing", title: "Customizing & Design" },
+  { key: "auction", title: "Auction & Sale" },
+  { key: "import-export", title: "Import & Export" },
+  { key: "all-builds", title: "All Builds" },
+].map((section) => ({
+  ...section,
+  items: galleryItems.filter((item) => item.category === section.key),
+})).filter((section) => section.items.length > 0);
 ---
 
 <SiteLayout pageContent={pageContent}>
@@ -45,32 +63,39 @@ const galleryItems = await Promise.all(
         <h1>Gallery</h1>
         <p>Selected builds from our garage.</p>
       </header>
-      <div class="masonry" data-masonry data-gallery>
-        {
-          galleryItems.map((item) => (
-            <div class="masonry-item">
-              <a
-                href={item.href}
-                class="gallery-item"
-                data-pswp-width={item.width}
-                data-pswp-height={item.height}
-                aria-label={item.alt}
-              >
-                <Image
-                  src={item.image}
-                  alt={item.alt}
-                  width={item.width}
-                  height={item.height}
-                  loading="lazy"
-                  decoding="async"
-                  widths={[480, 768, 1080]}
-                  sizes="(min-width: 991px) 33vw, (min-width: 640px) 50vw, 100vw"
-                />
-              </a>
+      {
+        sections.map((section) => (
+          <section class="gallery-group">
+            <h2 class="gallery-group-title">{section.title}</h2>
+            <div class="masonry" data-masonry data-gallery>
+              {
+                section.items.map((item) => (
+                  <div class="masonry-item">
+                    <a
+                      href={item.href}
+                      class="gallery-item"
+                      data-pswp-width={item.width}
+                      data-pswp-height={item.height}
+                      aria-label={item.alt}
+                    >
+                      <Image
+                        src={item.image}
+                        alt={item.alt}
+                        width={item.width}
+                        height={item.height}
+                        loading="lazy"
+                        decoding="async"
+                        widths={[480, 768]}
+                        sizes="(min-width: 991px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      />
+                    </a>
+                  </div>
+                ))
+              }
             </div>
-          ))
-        }
-      </div>
+          </section>
+        ))
+      }
     </div>
   </section>
 </SiteLayout>
@@ -93,6 +118,16 @@ const galleryItems = await Promise.all(
     color: var(--colors--slate);
     max-width: 560px;
     margin: 0 auto;
+  }
+  .gallery-group + .gallery-group {
+    margin-top: 56px;
+  }
+  .gallery-group-title {
+    font-family: var(--font-families--accent-font);
+    font-size: var(--desktop-heading-sizes--h3);
+    color: var(--colors--gold);
+    text-align: center;
+    margin-bottom: 24px;
   }
   /* Frame the grid: cap width + center, instead of edge-to-edge */
   .masonry {
@@ -140,8 +175,7 @@ const galleryItems = await Promise.all(
   import PhotoSwipeLightbox from "photoswipe/lightbox";
   import "photoswipe/dist/photoswipe.css";
 
-  const grid = document.querySelector("[data-masonry]");
-  if (grid) {
+  document.querySelectorAll("[data-masonry]").forEach((grid) => {
     const msnry = new Masonry(grid, {
       itemSelector: ".masonry-item",
       columnWidth: ".masonry-item",
@@ -152,8 +186,10 @@ const galleryItems = await Promise.all(
       clearTimeout(t);
       t = setTimeout(() => msnry.layout(), 100);
     });
-  }
+  });
 
+  // `gallery: "[data-gallery]"` matches every category grid; each becomes its
+  // own PhotoSwipe gallery, so arrow nav stays within the current group.
   const lightbox = new PhotoSwipeLightbox({
     gallery: "[data-gallery]",
     children: "a",

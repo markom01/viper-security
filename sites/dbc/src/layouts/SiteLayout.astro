@@ -4,7 +4,7 @@
 // so pages only pass `pageContent` + slot content.
 import BaseLayout from "@garage/shared/layouts/BaseLayout.astro";
 import type { PageContent } from "@garage/shared/types";
-import { buildNav } from "../data/nav";
+import { buildNav, buildFooterNav } from "../data/nav";
 
 interface Props {
   /** page-content collection entry data (seo, jsonld, labels, booking_data, ...). */
@@ -30,13 +30,14 @@ const normalizedContent: PageContent = {
 };
 
 const navItems = buildNav(labels);
+const footerItems = buildFooterNav(labels);
 const ctaLabel = labels["nav.contact"];
 ---
 
 <BaseLayout
   pageContent={normalizedContent}
   navItems={navItems}
-  footerItems={navItems}
+  footerItems={footerItems}
   ctaLabel={ctaLabel}
 >
   <slot />

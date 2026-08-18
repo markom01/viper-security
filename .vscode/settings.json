@@ -1,0 +1,8 @@
+{
+  "yaml.schemas": {
+    "https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json": [
+      "/sites/dbc/public/admin/config.yml",
+      "/sites/viper/public/admin/config.yml"
+    ]
+  }
+}

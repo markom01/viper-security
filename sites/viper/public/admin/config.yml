@@ -1,10 +1,12 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
 backend:
   name: github
   repo: markom01/viper-security
   branch: main
 
-media_folder: sites/viper/src/assets/images
-public_folder: ../../assets/images
+media_folder: sites/viper/public/images/cms
+public_folder: /images/cms
 
 collections:
   - name: hero
@@ -117,7 +119,7 @@ collections:
         label: Hourly Rates
         file: sites/viper/src/content/pricing/hourly.md
         fields:
-          - { name: type, label: Type, widget: hidden, default: hourly }
+          - { name: type, widget: hidden, default: hourly }
           - label: Rates
             name: rates
             widget: list

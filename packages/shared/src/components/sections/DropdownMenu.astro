@@ -1,0 +1,41 @@
+---
+// Shared dropdown panel look, used by:
+//   - Nav.astro hover dropdown  (`<ul class="dropdown-panel">`, static)
+//   - DropdownInput.astro autoComplete results (`<ul class="dropdown-panel">`,
+//     JS-injected at runtime, so these rules are global)
+// Included once in BaseLayout so the style emits once per page.
+---
+<style is:global>
+  /* Floating dropdown panel — shared chrome for nav hover + autocomplete. */
+  .dropdown-panel {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    min-width: 200px;
+    background: var(--colors--pure);
+    border: 1px solid var(--colors--cloud);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    font-family: var(--font-families--body-font);
+    font-size: 0.95rem;
+    color: var(--colors--onyx);
+  }
+  .dropdown-panel-item {
+    display: block;
+    width: 100%;
+    padding: 8px 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--colors--onyx);
+    text-decoration: none;
+    text-align: left;
+  }
+  .dropdown-panel-item:hover {
+    color: var(--colors--gold);
+  }
+  .dropdown-panel-item[aria-selected="true"] {
+    background: var(--colors--gold);
+    color: var(--colors--ivory);
+  }
+</style>

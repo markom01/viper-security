@@ -1,0 +1,79 @@
+---
+/**
+ * Wraps an Astro <Image> in a PhotoSwipe lightbox trigger. Renders as
+ * `<a data-lightbox="{group}">` so the page-level lightbox script (injected
+ * once in BaseLayout) picks it up; `data-pswp-width/height` carry the
+ * intrinsic dims PhotoSwipe needs.
+ *
+ * `class` passes to the <Image> so existing per-image CSS (`.hero-image`,
+ * `.about-image`, …) keeps working; the anchor itself gets `zoomable`.
+ *
+ * group: lightbox gallery id — images sharing an id navigate together in the
+ * full-screen modal (e.g. carousel slides all `about`). Defaults to `page`.
+ */
+import { Image, getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+const {
+  src,
+  alt,
+  group = "page",
+  loading = "lazy",
+  decoding = "async",
+  class: imgClass,
+  anchorClass = "",
+  width,
+  height,
+  widths,
+  sizes,
+  eager = false,
+} = Astro.props as Props;
+
+const optimized = await getImage({ src });
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  group?: string;
+  loading?: string;
+  decoding?: string;
+  class?: string;
+  /** extra classes merged onto the wrapping <a> (e.g. "carousel-zoom") */
+  anchorClass?: string;
+  width?: number | string;
+  height?: number | string;
+  widths?: number[];
+  sizes?: string;
+  eager?: boolean;
+}
+---
+
+<a
+  href={optimized.src}
+  class={`zoomable${anchorClass ? " " + anchorClass : ""}`}
+  data-lightbox={group}
+  data-pswp-width={src.width}
+  data-pswp-height={src.height}
+  aria-label={`Open ${alt} full screen`}
+>
+  <Image
+    src={src}
+    alt={alt}
+    class={imgClass}
+    loading={eager ? "eager" : loading}
+    decoding={decoding}
+    {...(eager ? { fetchpriority: "high" as const } : {})}
+    {...(width !== undefined ? { width } : {})}
+    {...(height !== undefined ? { height } : {})}
+    {...(widths !== undefined ? { widths } : {})}
+    {...(sizes !== undefined ? { sizes } : {})}
+  />
+</a>
+
+<style>
+  .zoomable {
+    display: block;
+    cursor: zoom-in;
+    line-height: 0;
+  }
+</style>

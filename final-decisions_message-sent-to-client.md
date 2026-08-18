@@ -1,0 +1,3 @@
+Imam neki plan, bice stranice: Home, Supercar transport, Car & motocycle auction and sale, Import/export of cars, Customizing & design projects. 
+Svaka stranica ce imati sekcije kao sto su sad na viper secuirty, sem pricing i membership: forma sa poljima za tu uslugu koja ce biit povezana sa whatsapp pa ce ti stizati ono sto popuni klijent od polja, About sekcija o toj usluzi, Services info sta sve spada u tu uslugu, Why Choose Us, How It Works i Footer sa dodatnim informacijama
+Jos ce biti stranica za galeriju sa svim slikama kategorisanim po usluzi i admin stranica gde ces moci da menjas tekst i slike kao sto moze na viper security.

@@ -1,10 +1,15 @@
 ---
-const { pageContent } = Astro.props;
+const { pageContent, text } = Astro.props as {
+  pageContent?: any;
+  /** Page-specific marquee copy (e.g. per-service). Falls back to site `marquee.text`. */
+  text?: string;
+};
 import STRINGS from "../../config/strings";
 import { ICONS } from "../../config/icons";
 import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
-const items = Array.from({ length: 4 }, () => ({ text: s.marquee.text }));
+const marqueeText = text ?? s.marquee.text;
+const items = Array.from({ length: 4 }, () => ({ text: marqueeText }));
 ---
 
 <section id="marquee" class="marquee-section" aria-label={s.marquee.ariaLabel}>
@@ -19,7 +24,7 @@ const items = Array.from({ length: 4 }, () => ({ text: s.marquee.text }));
       {
         items.map(() => (
           <>
-            <div class="marquee-text">{s.marquee.text}</div>
+            <div class="marquee-text">{marqueeText}</div>
             <span
               aria-hidden="true"
               class="marquee-icon"
@@ -33,7 +38,7 @@ const items = Array.from({ length: 4 }, () => ({ text: s.marquee.text }));
       {
         items.map(() => (
           <>
-            <div class="marquee-text">{s.marquee.text}</div>
+            <div class="marquee-text">{marqueeText}</div>
             <span
               aria-hidden="true"
               class="marquee-icon"

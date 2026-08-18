@@ -63,10 +63,14 @@ const items = navItems ?? [
                       set:html={ICONS.caretDown}
                     />
                   </a>
-                  <ul role="menu" class="chauffeur-dropdown">
+                  <ul role="menu" class="chauffeur-dropdown dropdown-panel">
                     {item.children.map((child) => (
                       <li role="none">
-                        <a role="menuitem" href={child.href} class="nav-link">
+                        <a
+                          role="menuitem"
+                          href={child.href}
+                          class="nav-link dropdown-panel-item"
+                        >
                           {child.label}
                         </a>
                       </li>
@@ -175,7 +179,6 @@ const items = navItems ?? [
     transition: transform 0.2s ease;
   }
   .chauffeur-dropdown {
-    list-style: none;
     margin: 0;
     padding: 0;
   }
@@ -194,10 +197,18 @@ const items = navItems ?? [
     }
     .chauffeur-dropdown {
       padding: 8px 0 0 12px;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      min-width: 0;
     }
-    .chauffeur-dropdown .nav-link {
+    .chauffeur-dropdown .nav-link.dropdown-panel-item {
       padding: 6px 0;
       opacity: 0.85;
+    }
+    .chauffeur-dropdown .dropdown-panel-item:hover {
+      background: transparent;
+      color: var(--colors--onyx);
     }
   }
   /* Desktop: nav inline, not overlay; Chauffeur hover dropdown */
@@ -223,12 +234,6 @@ const items = navItems ?? [
       position: absolute;
       top: 100%;
       left: 0;
-      min-width: 200px;
-      background: var(--colors--pure);
-      border: 1px solid var(--colors--cloud);
-      border-radius: 12px;
-      padding: 8px 0;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       opacity: 0;
       visibility: hidden;
       transform: translateY(8px);
@@ -246,10 +251,6 @@ const items = navItems ?? [
     .has-dropdown:hover .caret,
     .has-dropdown:focus-within .caret {
       transform: rotate(180deg);
-    }
-    .chauffeur-dropdown .nav-link {
-      padding: 8px 20px;
-      white-space: nowrap;
     }
     .nav-list-brand,
     .close-menu-button,
