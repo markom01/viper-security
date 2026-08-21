@@ -1,6 +1,10 @@
 ---
-const { pageContent } = Astro.props;
-const { hourly } = Astro.props;
+import type { PageContent } from "../../types";
+interface Props {
+  pageContent?: PageContent;
+  hourly?: { rates?: { name: string; price: string }[] };
+}
+const { pageContent, hourly } = Astro.props as Props;
 import type {
   BookingService,
   PricingRate,

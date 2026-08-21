@@ -39,7 +39,7 @@ export interface ServiceOffering {
   region: string;
   title: string;
   description: string;
-  image?: ImageMetadata;
+  image?: SiteImage;
   // ------ Per-service detail-page fields (shared across VIPER + DBC) -------
   /** Route slug for the generated `/services/<slug>` page. Derived from title if omitted. */
   slug?: string;
@@ -54,13 +54,13 @@ export interface ServiceOffering {
   hero?: {
     subtitle?: string;
     cta_text?: string;
-    image?: ImageMetadata;
+    image?: SiteImage;
     tagline?: string;
   };
   /** Per-service About section copy (overrides generic page-content about). */
   about_text?: string;
   /** Per-service About section image (rendered when about_text present). */
-  about_image?: ImageMetadata;
+  about_image?: SiteImage;
   /** Marquee band copy for the service page (falls back to site marquee label). */
   marquee?: string;
   /** "What falls under this service" items (Services / includes). */
@@ -68,7 +68,7 @@ export interface ServiceOffering {
     title: string;
     text: string;
     /** Per-card background image (rendered under the onyx overlay in Services.astro). */
-    image?: ImageMetadata;
+    image?: SiteImage;
   }[];
   /** Why-Choose-Us band (BottomCta values) for the service page. */
   bottomcta?: {
@@ -86,7 +86,7 @@ export interface ServiceOffering {
     label: string;
     placeholder?: string;
     name: string;
-    type?: "text" | "location" | "country";
+    type?: "text" | "location" | "country" | "vehicle";
     /** Which side of the form the field renders on. Default "left" (after
      *  Phone, before the date/message block). "right" places it after the
      *  date field on the right column — used to balance rows so e.g. a

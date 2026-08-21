@@ -25,9 +25,11 @@ const [pageContentEntry] = await getCollection("page-content");
 const [howItWorksEntry] = await getCollection("how-it-works");
 
 const howItWorks = howItWorksEntry?.data || {};
-const baseContent: any = pageContentEntry?.data || {};
-const bd = baseContent?.booking_data;
-const vehicleName = baseContent?.vehicle_name;
+type DbcPageContent = import("@garage/shared/types").PageContent & Record<string, unknown>;
+const rawData = (pageContentEntry?.data || {}) as unknown as DbcPageContent;
+const baseContent = rawData;
+const bd = baseContent.booking_data as import("@garage/shared/config/templates").BookingData | undefined;
+const vehicleName = baseContent.vehicle_name;
 
 // Site-global chrome + identity only. Per-service stats/cta overrides +
 // hero image are merged in the shared ServicePage renderer.
@@ -68,19 +70,19 @@ const fleetFeaturesText =
       : allFleetFeatures.slice(0, -1).join(", ") + ", and " + allFleetFeatures.slice(-1)[0] + "."
     : "";
 const hasFleet = !!offering.fleet?.length;
-const heroFields: any = offering.hero || {};
+const heroFields = (offering.hero || {}) as NonNullable<typeof offering.hero> & Record<string, unknown>;
 if (heroFields.subtitle)
   heroFields.subtitle = resolveTemplates(heroFields.subtitle, bd, site.name, vehicleName);
-if ((offering as any).description)
-  (offering as any).description = resolveTemplates((offering as any).description, bd, site.name, vehicleName);
-if ((pageContent as any).seo?.title)
-  (pageContent as any).seo.title = resolveTemplates((pageContent as any).seo.title, bd, site.name, vehicleName);
-if ((pageContent as any).seo?.description)
-  (pageContent as any).seo.description = resolveTemplates((pageContent as any).seo.description, bd, site.name, vehicleName);
-if ((pageContent as any).jsonld?.org_description)
-  (pageContent as any).jsonld.org_description = resolveTemplates((pageContent as any).jsonld.org_description, bd, site.name, vehicleName);
-if ((pageContent as any).jsonld?.org_name)
-  (pageContent as any).jsonld.org_name = resolveTemplates((pageContent as any).jsonld.org_name, bd, site.name, vehicleName);
+if ((offering as { description?: string }).description)
+  (offering as { description: string }).description = resolveTemplates((offering as { description: string }).description, bd, site.name, vehicleName);
+if ((pageContent as { seo?: { title?: string } }).seo?.title)
+  (pageContent as { seo: { title: string } }).seo.title = resolveTemplates((pageContent as { seo: { title: string } }).seo.title, bd, site.name, vehicleName);
+if ((pageContent as { seo?: { description?: string } }).seo?.description)
+  (pageContent as { seo: { description: string } }).seo.description = resolveTemplates((pageContent as { seo: { description: string } }).seo.description, bd, site.name, vehicleName);
+if ((pageContent as { jsonld?: { org_description?: string } }).jsonld?.org_description)
+  (pageContent as { jsonld: { org_description: string } }).jsonld.org_description = resolveTemplates((pageContent as { jsonld: { org_description: string } }).jsonld.org_description, bd, site.name, vehicleName);
+if ((pageContent as { jsonld?: { org_name?: string } }).jsonld?.org_name)
+  (pageContent as { jsonld: { org_name: string } }).jsonld.org_name = resolveTemplates((pageContent as { jsonld: { org_name: string } }).jsonld.org_name, bd, site.name, vehicleName);
 ---
 
 <SiteLayout pageContent={pageContent} ogLocale="en_US" preloadImage={heroFields.image}>

@@ -21,7 +21,12 @@ export async function imageDims(src: ImageMetadata | string): Promise<ImageDims>
     return { width: src.width, height: src.height };
   }
   const file = join(process.cwd(), "public", src.replace(/^\//, ""));
-  const meta = await sharp(file).metadata();
+  let meta: { width?: number; height?: number };
+  try {
+    meta = await sharp(file).metadata();
+  } catch (cause) {
+    throw new Error(`Failed to read image dimensions for ${src}`, { cause });
+  }
   if (!meta.width || !meta.height) throw new Error(`No dimensions for ${src}`);
   return { width: meta.width, height: meta.height };
 }

@@ -1,10 +1,14 @@
 ---
 import ZoomImage from "./ZoomImage.astro";
-const { pageContent } = Astro.props;
-const { marbella, milano } = Astro.props;
-import type { ServiceOffering } from "../../types";
+import type { ServiceOffering, PageContent } from "../../types";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
+interface Props {
+  pageContent?: PageContent;
+  marbella?: ServiceOffering[];
+  milano?: ServiceOffering[];
+}
+const { pageContent, marbella, milano } = Astro.props as Props;
 const s = resolveLabels(pageContent, STRINGS);
 // Services are universal — both props carry the same data, pick whichever exists
 const services = marbella || milano || [];
@@ -26,16 +30,16 @@ const services = marbella || milano || [];
           services.map((svc: ServiceOffering) => (
             <div role="listitem" class="service-collection-item">
               <div class="service-card">
-                {(svc.image || svc.hero?.image) && (
+                {(() => { const _img = svc.image ?? svc.hero?.image; return _img ? (
                   <ZoomImage
-                    src={svc.image || svc.hero?.image!}
+                    src={_img}
                     alt={svc.title}
                     class="service-listing-image"
                     group="services"
                     width="400"
                     height="300"
                   />
-                )}
+                ) : null; })()}
                 <div class="service-info-wrapper">
                   <h3 class="service-listing-name">{svc.title}</h3>
                   <div class="service-short-description">

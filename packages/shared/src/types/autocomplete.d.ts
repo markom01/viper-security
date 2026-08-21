@@ -1,11 +1,11 @@
 // Minimal type for @tarekraafat/autocomplete.js (no official types shipped).
 declare module "@tarekraafat/autocomplete.js" {
-  interface ResultItemData<T = any> {
+  interface ResultItemData<T = unknown> {
     match: string;
     value: T;
     key?: string;
   }
-  interface Feedback<T = any> {
+  interface Feedback<T = unknown> {
     query: string;
     matches: { match: string; value: T; key?: string }[];
     results: { match: string; value: T; key?: string }[];
@@ -13,7 +13,7 @@ declare module "@tarekraafat/autocomplete.js" {
     selection: { index: number; match: string; value: T; key?: string };
     event: Event;
   }
-  interface AutoCompleteOptions<T = any> {
+  interface AutoCompleteOptions<T = unknown> {
     selector: string | (() => Element);
     data: {
       src: (query: string) => Promise<T[]> | T[];
@@ -25,7 +25,7 @@ declare module "@tarekraafat/autocomplete.js" {
     resultsList?: {
       tag?: string;
       maxResults?: number;
-      element?: (list: HTMLUListElement, data: any) => void;
+      element?: (list: HTMLUListElement, data: Feedback<T>) => void;
     };
     resultItem?: {
       tag?: string;
@@ -37,7 +37,7 @@ declare module "@tarekraafat/autocomplete.js" {
       list?: Record<string, (event: Event) => void>;
     };
   }
-  export default class autoComplete<T = any> {
+  export default class autoComplete<T = unknown> {
     constructor(options: AutoCompleteOptions<T>);
     input: HTMLInputElement;
     init(): void;

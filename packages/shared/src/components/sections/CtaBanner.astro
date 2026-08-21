@@ -1,9 +1,11 @@
 ---
+import type { PageContent } from "../../types";
 import ZoomImage from "./ZoomImage.astro";
-const { pageContent, ctaHref = "/#contact" } = Astro.props as {
-  pageContent?: any;
+interface Props {
+  pageContent?: PageContent;
   ctaHref?: string;
-};
+}
+const { pageContent, ctaHref = "/#contact" } = Astro.props as Props;
 import { ICONS } from "../../config/icons";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";

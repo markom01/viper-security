@@ -1,8 +1,12 @@
 ---
 import ZoomImage from "./ZoomImage.astro";
-const { pageContent, fleetFeatures } = Astro.props;
-const { vehicles } = Astro.props;
-import type { FleetEntry } from "../../types";
+import type { FleetEntry, PageContent } from "../../types";
+interface Props {
+  pageContent?: PageContent;
+  fleetFeatures?: string;
+  vehicles?: FleetEntry[];
+}
+const { pageContent, fleetFeatures, vehicles } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);

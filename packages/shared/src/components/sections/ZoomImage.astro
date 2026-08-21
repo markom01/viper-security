@@ -15,6 +15,21 @@ import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import { imageDims } from "../../lib/imageDims";
 
+interface Props {
+  src: ImageMetadata | string;
+  alt: string;
+  group?: string;
+  loading?: string;
+  decoding?: string;
+  class?: string;
+  anchorClass?: string;
+  width?: number | string;
+  height?: number | string;
+  widths?: number[];
+  sizes?: string;
+  eager?: boolean;
+}
+
 const {
   src,
   alt,
@@ -30,24 +45,14 @@ const {
   eager = false,
 } = Astro.props as Props;
 
-const dims = width && height ? { width, height } : await imageDims(src);
+let dims: { width: number; height: number };
+try {
+  dims = width && height ? { width: Number(width), height: Number(height) } : await imageDims(src);
+} catch {
+  dims = { width: Number(width) || 800, height: Number(height) || 600 };
+}
 const optimized = await getImage({ src, width: dims.width, height: dims.height });
 
-interface Props {
-  src: ImageMetadata | string;
-  alt: string;
-  group?: string;
-  loading?: string;
-  decoding?: string;
-  class?: string;
-  /** extra classes merged onto the wrapping <a> (e.g. "carousel-zoom") */
-  anchorClass?: string;
-  width?: number | string;
-  height?: number | string;
-  widths?: number[];
-  sizes?: string;
-  eager?: boolean;
-}
 ---
 
 <a

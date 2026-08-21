@@ -47,7 +47,8 @@ const ctaLabel =
 const seo = pageContent?.seo;
 const cmsJd = pageContent?.jsonld;
 // Astro.site is always configured in both astro.configs (`site: site.url`).
-const siteUrl = Astro.site!;
+if (!Astro.site) throw new Error("Astro.site is not configured (astro.config site missing)");
+const siteUrl = Astro.site;
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
 const bd = pageContent?.booking_data;
 // Social image: CMS `seo.image` wins; fall back to the JSON-LD org logo so a

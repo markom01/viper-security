@@ -2,7 +2,21 @@
 import ZoomImage from "./ZoomImage.astro";
 import FormField from "./FormField.astro";
 import { jsonEscape } from "../../config/json-escape";
-const { pageContent } = Astro.props;
+import type { PageContent } from "../../types";
+interface Props {
+  pageContent?: PageContent;
+  subtitle?: string;
+  cta_text?: string;
+  tagline?: string;
+  hero_image?: string;
+  phoneItaly?: string;
+  phoneSpain?: string;
+  fleetHref?: string;
+  services?: { title: string }[];
+  presetService?: string;
+  form_fields?: { label: string; placeholder?: string; name: string; side?: string; type?: string }[];
+}
+const { pageContent } = Astro.props as Props;
 const {
   subtitle,
   cta_text,
@@ -18,7 +32,7 @@ const {
   // Service-specific extra form fields: { label, placeholder?, name }[].
   // Rendered on the left side after Phone; values appended to the WhatsApp message.
   form_fields = [],
-} = Astro.props;
+} = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 import { ICONS } from "../../config/icons";
@@ -963,7 +977,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
             // ("España"), which won't match a typed "spain" client-side — carry
             // the raw query on `_q` so the record always matches; display uses
             // the real country name from `_feature`.
-            const rows = (json.features ?? []).map((f: any) => ({
+            const rows = (json.features ?? []).map((f: { properties?: { name?: string; street?: string; city?: string; country?: string; countrycode?: string; housenumber?: string } }) => ({
               name: f.properties?.name ?? "",
               street: f.properties?.street ?? "",
               city: f.properties?.city ?? "",
@@ -1001,7 +1015,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
         },
         resultItem: {
           highlight: false,
-          element: (item: HTMLElement, data: { value: any }) => {
+          element: (item: HTMLElement, data: { value: Record<string, string> }) => {
             const v = data.value;
             item.classList.add("dropdown-panel-item");
             // Country-only: just the country name (Photon sets name==country).

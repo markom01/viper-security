@@ -1,6 +1,7 @@
 ---
+import type { PageContent } from "../../types";
 const { pageContent, text } = Astro.props as {
-  pageContent?: any;
+  pageContent?: PageContent;
   /** Page-specific marquee copy (e.g. per-service). Falls back to site `marquee.text`. */
   text?: string;
 };

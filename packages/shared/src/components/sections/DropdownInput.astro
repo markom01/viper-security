@@ -176,7 +176,7 @@ const countryAttr = country ? { "data-country-location": "" } : {};
       if (!id) {
         // Resolve the make ID from the active type's make list.
         const d = await fetch(`${NHTSA}/GetMakesForVehicleType/${activeType}?format=json`).then(jf).catch(() => null);
-        const hit = (d?.Results || []).find((r: any) => r.MakeName === makeName);
+        const hit = (d?.Results || []).find((r: { MakeName: string; MakeId: number }) => r.MakeName === makeName);
         id = hit?.MakeId ?? null;
         activeMakeId = id;
       }
@@ -186,7 +186,7 @@ const countryAttr = country ? { "data-country-location": "" } : {};
       const modelP = fetch(`${NHTSA}/GetModelsForMakeId/${id}?format=json`).then(jf).catch(() => ({ Results: [] }));
       const yearP = Promise.all(YEARS.map((y) =>
         fetch(`${NHTSA}/GetModelsForMakeIdYear/makeId/${id}/modelyear/${y}?format=json`)
-          .then(jf).then((d) => ({ y, names: (d.Results || []).map((m: any) => m.Model_Name) }))
+          .then(jf).then((d) => ({ y, names: (d.Results || []).map((m: { Model_Name: string }) => m.Model_Name) }))
           .catch(() => ({ y, names: [] as string[] }))
       ));
       const [md, yrRows] = await Promise.all([modelP, yearP]);
@@ -196,7 +196,7 @@ const countryAttr = country ? { "data-country-location": "" } : {};
           modelYears[nm].push(row.y);
         }
       }
-      modelNames = Array.from(new Set<string>((md.Results || []).map((m: any) => m.Model_Name))).sort();
+      modelNames = Array.from(new Set<string>((md.Results || []).map((m: { Model_Name: string }) => m.Model_Name))).sort();
     }
 
     // Sentinel query used by openAll() to force the dropdown open with every
@@ -217,7 +217,7 @@ const countryAttr = country ? { "data-country-location": "" } : {};
       getCandidates: () => string[] | Promise<string[]>,
       onPick: (val: string) => void,
       threshold = 2,
-    ): any {
+    ): InstanceType<typeof autoComplete> {
       return new autoComplete({
         selector: () => input,
         threshold,
@@ -246,7 +246,7 @@ const countryAttr = country ? { "data-country-location": "" } : {};
         },
         resultItem: {
           highlight: false,
-          element: (item: HTMLElement, data: { value: any }) => {
+          element: (item: HTMLElement, data: { value: { value: string } }) => {
             item.classList.add("dropdown-panel-item");
             item.textContent = String(data.value.value);
           },
@@ -280,7 +280,7 @@ const countryAttr = country ? { "data-country-location": "" } : {};
     // with `_q: SENTINEL`, so every item renders and the list opens. The input
     // value stays empty; the placeholder remains visible.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    function openAll(ac: any, input: HTMLInputElement): void {
+    function openAll(ac: InstanceType<typeof autoComplete>, input: HTMLInputElement): void {
       input.focus();
       ac.start(SENTINEL);
     }
@@ -338,7 +338,7 @@ const countryAttr = country ? { "data-country-location": "" } : {};
     // list on an empty query, so after clearing the field we re-open it. The
     // 300ms defer outlives autoComplete's own debounced (250ms) close so the
     // re-open isn't stomped.
-    function openOnEmpty(ac: any, input: HTMLInputElement): void {
+    function openOnEmpty(ac: InstanceType<typeof autoComplete>, input: HTMLInputElement): void {
       input.addEventListener("focus", () => {
         if (input.disabled || input.value) return;
         openAll(ac, input);

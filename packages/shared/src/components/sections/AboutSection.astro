@@ -1,7 +1,11 @@
 ---
+import type { PageContent } from "../../types";
 import ZoomImage from "./ZoomImage.astro";
 import ImageCarousel from "./ImageCarousel.astro";
-const { pageContent } = Astro.props;
+interface Props {
+  pageContent?: PageContent;
+}
+const { pageContent } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 import { ICONS } from "../../config/icons";

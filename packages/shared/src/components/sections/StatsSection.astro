@@ -1,6 +1,9 @@
 ---
 import type { PageContent } from "../../types";
-const { pageContent } = Astro.props as { pageContent?: PageContent };
+interface Props {
+  pageContent?: PageContent;
+}
+const { pageContent } = Astro.props as Props;
 import { getImage } from "astro:assets";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";

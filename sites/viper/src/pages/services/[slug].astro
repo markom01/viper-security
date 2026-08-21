@@ -28,8 +28,8 @@ const [membershipEntry] = await getCollection("membership");
 const [pageContentEntry] = await getCollection("page-content");
 
 const pageContent = pageContentEntry?.data || {};
-const bd = (pageContent as any)?.booking_data;
-const vehicleName = (pageContent as any)?.vehicle_name;
+const bd = (pageContent as { booking_data?: unknown })?.booking_data as import("@garage/shared/config/templates").BookingData | undefined;
+const vehicleName = (pageContent as { vehicle_name?: string })?.vehicle_name;
 
 const hourlyEntry = await getEntry("pricing", "hourly");
 
@@ -53,25 +53,27 @@ const fleetFeaturesText =
 
 // Site-global chrome + per-offering seo. VIPER always renders the full fleet
 // collection (RHS), so hasFleet=true.
-const mergedContent: any = {
+type MergedSeo = { title?: string; description?: string; image?: string; theme_color?: string };
+type MergedJsonLd = { org_name?: string; org_description?: string };
+const mergedContent: Record<string, unknown> & { seo?: MergedSeo; jsonld?: MergedJsonLd } = {
   ...pageContent,
   seo: offering.seo
-    ? { ...((pageContent as any)?.seo || {}), ...(offering.seo as any) }
-    : (pageContent as any)?.seo,
+    ? { ...((pageContent as { seo?: MergedSeo })?.seo || {}), ...(offering.seo as MergedSeo) }
+    : (pageContent as { seo?: MergedSeo })?.seo,
 };
-const heroFields: any = offering.hero || {};
+const heroFields = (offering.hero || {}) as NonNullable<typeof offering.hero> & Record<string, unknown>;
 // Ensure og:image is never an SVG (BaseLayout skips SVG preload/meta). Prefer
 // offering hero image (raster), else fall back to site og (og-viper.webp).
 if (!mergedContent.seo) mergedContent.seo = {};
 if (!mergedContent.seo.image || mergedContent.seo.image.endsWith(".svg")) {
-  mergedContent.seo.image = heroFields.image || (pageContent as any)?.seo?.image || "/images/og-viper.webp";
+  mergedContent.seo.image = (heroFields as { image?: string }).image || (pageContent as { seo?: { image?: string } })?.seo?.image || "/images/og-viper.webp";
 }
 
 // Resolve {placeholders} in service-specific prose + SEO/JSON-LD (mirrors index.astro)
 if (heroFields.subtitle)
   heroFields.subtitle = resolveTemplates(heroFields.subtitle, bd, SITE_NAME, vehicleName);
-if ((offering as any).description)
-  (offering as any).description = resolveTemplates((offering as any).description, bd, SITE_NAME, vehicleName);
+if ((offering as { description?: string }).description)
+  (offering as { description: string }).description = resolveTemplates((offering as { description: string }).description, bd, SITE_NAME, vehicleName);
 if (mergedContent.seo?.title)
   mergedContent.seo.title = resolveTemplates(mergedContent.seo.title, bd, SITE_NAME, vehicleName);
 if (mergedContent.seo?.description)

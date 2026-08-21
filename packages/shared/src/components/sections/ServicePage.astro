@@ -8,7 +8,7 @@
 // A site's `[slug].astro` collects site-specific content collections and calls
 // this with everything. Optional VIPER-only sections (Pricing, Membership) are
 // gated on props so DBC simply omits them.
-import type { FleetEntry, PageContent } from "../../types";
+import type { FleetEntry, PageContent, MembershipTier } from "../../types";
 import { membershipValueNote } from "../../config/membership";
 
 import Hero from "./Hero.astro";
@@ -69,9 +69,9 @@ interface Props {
   defaultServices?: { region: string; title: string; description: string; image?: string }[];
   /** VIPER-only sections — omitted entirely when not passed. */
   showPricing?: boolean;
-  hourly?: any;
+  hourly?: { rates?: { name: string; price: string }[] };
   showMembership?: boolean;
-  membershipTiers?: any[];
+  membershipTiers?: MembershipTier[];
 }
 
 const {

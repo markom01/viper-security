@@ -1,6 +1,10 @@
 ---
-const { pageContent } = Astro.props;
-const { steps } = Astro.props;
+import type { PageContent } from "../../types";
+interface Props {
+  pageContent?: PageContent;
+  steps?: { title: string; description: string; image?: string }[];
+}
+const { pageContent, steps } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
