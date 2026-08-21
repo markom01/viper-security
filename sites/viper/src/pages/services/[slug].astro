@@ -55,13 +55,15 @@ const fleetFeaturesText =
 // collection (RHS), so hasFleet=true.
 type MergedSeo = { title?: string; description?: string; image?: string; theme_color?: string };
 type MergedJsonLd = { org_name?: string; org_description?: string };
+// Clone so template resolution never mutates the content-collection entries
 const mergedContent: Record<string, unknown> & { seo?: MergedSeo; jsonld?: MergedJsonLd } = {
   ...pageContent,
   seo: offering.seo
     ? { ...((pageContent as { seo?: MergedSeo })?.seo || {}), ...(offering.seo as MergedSeo) }
-    : (pageContent as { seo?: MergedSeo })?.seo,
+    : (pageContent as { seo?: MergedSeo })?.seo ? { ...((pageContent as { seo?: MergedSeo }).seo as MergedSeo) } : undefined,
+  jsonld: (pageContent as { jsonld?: MergedJsonLd })?.jsonld ? { ...((pageContent as { jsonld?: MergedJsonLd }).jsonld as MergedJsonLd) } : undefined,
 };
-const heroFields = (offering.hero || {}) as NonNullable<typeof offering.hero> & Record<string, unknown>;
+const heroFields = { ...(offering.hero || {}) } as NonNullable<typeof offering.hero> & Record<string, unknown>;
 // Ensure og:image is never an SVG (BaseLayout skips SVG preload/meta). Prefer
 // offering hero image (raster), else fall back to site og (og-viper.webp).
 if (!mergedContent.seo) mergedContent.seo = {};
@@ -69,11 +71,16 @@ if (!mergedContent.seo.image || mergedContent.seo.image.endsWith(".svg")) {
   mergedContent.seo.image = (heroFields as { image?: string }).image || (pageContent as { seo?: { image?: string } })?.seo?.image || "/images/og-viper.webp";
 }
 
-// Resolve {placeholders} in service-specific prose + SEO/JSON-LD (mirrors index.astro)
+// Resolve {placeholders} in service-specific prose + SEO/JSON-LD — work on clones only
 if (heroFields.subtitle)
   heroFields.subtitle = resolveTemplates(heroFields.subtitle, bd, SITE_NAME, vehicleName);
-if ((offering as { description?: string }).description)
-  (offering as { description: string }).description = resolveTemplates((offering as { description: string }).description, bd, SITE_NAME, vehicleName);
+// offering.description is Astro.props data — clone before resolving
+const offeringDescription = (offering as { description?: string }).description
+  ? resolveTemplates((offering as { description: string }).description, bd, SITE_NAME, vehicleName)
+  : (offering as { description?: string }).description;
+const offeringResolved = offeringDescription !== (offering as { description?: string }).description
+  ? { ...offering, description: offeringDescription as string }
+  : offering;
 if (mergedContent.seo?.title)
   mergedContent.seo.title = resolveTemplates(mergedContent.seo.title, bd, SITE_NAME, vehicleName);
 if (mergedContent.seo?.description)
@@ -101,7 +108,7 @@ if (mergedContent.jsonld?.org_name)
   preloadImage={heroFields.image}
 >
   <ServicePage
-    offering={offering}
+    offering={offeringResolved}
     pageContent={mergedContent}
     region="VIPER"
     hero={{

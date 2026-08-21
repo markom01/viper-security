@@ -32,7 +32,8 @@ export function resolveLabels<T extends LabelTree>(
   const labels = pageContent?.labels;
   if (!labels) return strings;
 
-  const merged = { ...strings };
+  // Deep clone so CMS overrides never mutate the imported STRINGS singleton.
+  const merged = structuredClone(strings) as unknown as T & LabelTree;
   for (const [path, value] of Object.entries(labels)) {
     if (typeof value !== "string" || value === "") continue;
     const parts = path.split(".");
@@ -50,5 +51,5 @@ export function resolveLabels<T extends LabelTree>(
       depth[parts[parts.length - 1]] = value;
     }
   }
-  return merged;
+  return merged as T;
 }

@@ -552,7 +552,15 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
         HB: boolean;
         SERVICES: string[];
       }
-      const d = JSON.parse(raw.textContent || "{}") as HeroData;
+      let d: HeroData;
+      try {
+        d = JSON.parse(raw.textContent || "{}") as HeroData;
+      } catch (err) {
+        console.warn("[Hero] invalid hero-data JSON", err);
+        const fe = document.querySelector<HTMLElement>(".form-error-message");
+        if (fe) fe.style.display = "block";
+        return;
+      }
       const R: Record<string, Region> = { spain: d.spain, italy: d.italy };
       const { SS, SR, CL, CS, SP, PI, PS, PSV } = d;
       const HB = !!d.HB;
@@ -965,11 +973,19 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
         data: {
           src: async (query: string) => {
             if (!query || query.trim().length < 2) return [];
-            const res = await fetch(
-              queryUrl + "&q=" + encodeURIComponent(query.trim()),
-            );
-            if (!res.ok) return [];
-            const json = await res.json();
+            const ac = new AbortController();
+            const tid = setTimeout(() => ac.abort(), 5000);
+            let res: Response;
+            let json: { features?: { properties?: Record<string, string> }[] };
+            try {
+              res = await fetch(`${queryUrl}&q=${encodeURIComponent(query.trim())}`, { signal: ac.signal });
+              if (!res.ok) return [];
+              json = (await res.json()) as typeof json;
+            } catch {
+              return [];
+            } finally {
+              clearTimeout(tid);
+            }
             // autoComplete.js matches against top-level keys, so flatten each
             // Photon feature's nested `properties` into a flat record. Keep the
             // whole feature on `_feature` for the selection handler.

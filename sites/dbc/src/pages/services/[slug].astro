@@ -26,8 +26,7 @@ const [howItWorksEntry] = await getCollection("how-it-works");
 
 const howItWorks = howItWorksEntry?.data || {};
 type DbcPageContent = import("@garage/shared/types").PageContent & Record<string, unknown>;
-const rawData = (pageContentEntry?.data || {}) as unknown as DbcPageContent;
-const baseContent = rawData;
+const baseContent = (pageContentEntry?.data || {}) as unknown as DbcPageContent;
 const bd = baseContent.booking_data as import("@garage/shared/config/templates").BookingData | undefined;
 const vehicleName = baseContent.vehicle_name;
 
@@ -36,19 +35,20 @@ const vehicleName = baseContent.vehicle_name;
 // Per-service Fleet heading/subheadline override (import/export: "Currently
 // Selling" instead of the site-global "Our Fleet") — merged only when the
 // offering provides it; other services keep the site-wide fleet copy.
-const fleetSection = offering.fleet_section || {};
+const fleetSection = (offering as { fleet_section?: { heading?: string; subheadline?: string } }).fleet_section || {};
 const pageContent = {
   ...baseContent,
   seo: offering.seo
-    ? { ...(baseContent?.seo || {}), ...offering.seo }
-    : baseContent?.seo,
+    ? { ...((baseContent as { seo?: Record<string, string> })?.seo || {}), ...offering.seo }
+    : (baseContent as { seo?: Record<string, string> })?.seo ? { ...((baseContent as { seo?: Record<string, string> }).seo as Record<string, string>) } : undefined,
+  jsonld: (baseContent as { jsonld?: Record<string, string> })?.jsonld ? { ...((baseContent as { jsonld?: Record<string, string> }).jsonld as Record<string, string>) } : undefined,
   ...((fleetSection.heading || fleetSection.subheadline) && {
     fleet: {
-      ...(baseContent?.fleet || {}),
+      ...((baseContent as { fleet?: Record<string, string> })?.fleet || {}),
       ...(fleetSection.heading ? { heading: fleetSection.heading } : {}),
     },
     labels: {
-      ...(baseContent?.labels || {}),
+      ...((baseContent as { labels?: Record<string, string> })?.labels || {}),
       ...(fleetSection.subheadline
         ? { "fleet.subheadline": fleetSection.subheadline }
         : {}),
@@ -57,44 +57,48 @@ const pageContent = {
 };
 
 // Per-service fleet vehicles — mapped to the shared FleetEntry shape.
-const fleetVehicles = (offering.fleet || []).map((f) => ({
+const fleetVehicles = ((offering as { fleet?: { name: string; features?: string[] }[] }).fleet || []).map((f) => ({
   id: `${offering.slug ?? offering.title}-${f.name}`,
   collection: "fleet" as const,
   data: f,
 }));
-const allFleetFeatures = [...new Set((offering.fleet || []).flatMap((f) => f.features || []))];
+const allFleetFeatures = [...new Set(((offering as { fleet?: { features?: string[] }[] }).fleet || []).flatMap((f) => f.features || []))];
 const fleetFeaturesText =
   allFleetFeatures.length > 0
     ? allFleetFeatures.length === 1
       ? allFleetFeatures[0] + "."
       : allFleetFeatures.slice(0, -1).join(", ") + ", and " + allFleetFeatures.slice(-1)[0] + "."
     : "";
-const hasFleet = !!offering.fleet?.length;
-const heroFields = (offering.hero || {}) as NonNullable<typeof offering.hero> & Record<string, unknown>;
-if (heroFields.subtitle)
-  heroFields.subtitle = resolveTemplates(heroFields.subtitle, bd, site.name, vehicleName);
-if ((offering as { description?: string }).description)
-  (offering as { description: string }).description = resolveTemplates((offering as { description: string }).description, bd, site.name, vehicleName);
-if ((pageContent as { seo?: { title?: string } }).seo?.title)
-  (pageContent as { seo: { title: string } }).seo.title = resolveTemplates((pageContent as { seo: { title: string } }).seo.title, bd, site.name, vehicleName);
-if ((pageContent as { seo?: { description?: string } }).seo?.description)
-  (pageContent as { seo: { description: string } }).seo.description = resolveTemplates((pageContent as { seo: { description: string } }).seo.description, bd, site.name, vehicleName);
-if ((pageContent as { jsonld?: { org_description?: string } }).jsonld?.org_description)
-  (pageContent as { jsonld: { org_description: string } }).jsonld.org_description = resolveTemplates((pageContent as { jsonld: { org_description: string } }).jsonld.org_description, bd, site.name, vehicleName);
-if ((pageContent as { jsonld?: { org_name?: string } }).jsonld?.org_name)
-  (pageContent as { jsonld: { org_name: string } }).jsonld.org_name = resolveTemplates((pageContent as { jsonld: { org_name: string } }).jsonld.org_name, bd, site.name, vehicleName);
+const hasFleet = !!((offering as { fleet?: unknown[] }).fleet?.length);
+// Clone — never mutate Astro.props offering.hero
+const heroFields = { ...((offering as { hero?: Record<string, unknown> }).hero || {}) } as NonNullable<typeof offering.hero> & Record<string, unknown>;
+const _heroSubtitle = heroFields.subtitle as string | undefined;
+if (_heroSubtitle) heroFields.subtitle = resolveTemplates(_heroSubtitle, bd, site.name, vehicleName);
+// offering.description is Astro.props data — resolve on a clone
+const _offeringDesc = (offering as { description?: string }).description;
+const _resolvedDesc = _offeringDesc ? resolveTemplates(_offeringDesc, bd, site.name, vehicleName) : _offeringDesc;
+const offeringResolved = _resolvedDesc !== _offeringDesc ? { ...offering, description: _resolvedDesc as string } : offering;
+// pageContent seo/jsonld are clones above, safe to resolve in place
+if ((pageContent as unknown as { seo?: { title?: string } }).seo?.title)
+  (pageContent as unknown as { seo: { title: string } }).seo.title = resolveTemplates((pageContent as unknown as { seo: { title: string } }).seo.title, bd, site.name, vehicleName);
+if ((pageContent as unknown as { seo?: { description?: string } }).seo?.description)
+  (pageContent as unknown as { seo: { description: string } }).seo.description = resolveTemplates((pageContent as unknown as { seo: { description: string } }).seo.description, bd, site.name, vehicleName);
+if ((pageContent as unknown as { jsonld?: { org_description?: string } }).jsonld?.org_description)
+  (pageContent as unknown as { jsonld: { org_description: string } }).jsonld.org_description = resolveTemplates((pageContent as unknown as { jsonld: { org_description: string } }).jsonld.org_description, bd, site.name, vehicleName);
+if ((pageContent as unknown as { jsonld?: { org_name?: string } }).jsonld?.org_name)
+  (pageContent as unknown as { jsonld: { org_name: string } }).jsonld.org_name = resolveTemplates((pageContent as unknown as { jsonld: { org_name: string } }).jsonld.org_name, bd, site.name, vehicleName);
 ---
 
-<SiteLayout pageContent={pageContent} ogLocale="en_US" preloadImage={heroFields.image}>
+<SiteLayout pageContent={pageContent} ogLocale="en_US" preloadImage={heroFields.image as string | undefined}>
   <ServicePage
-    offering={offering}
+    offering={offeringResolved}
     pageContent={pageContent}
     region="Garage"
     hero={{
-      subtitle: heroFields.subtitle,
-      cta_text: heroFields.cta_text,
-      tagline: offering.title || heroFields.tagline,
-      image: heroFields.image,
+      subtitle: heroFields.subtitle as string | undefined,
+      cta_text: heroFields.cta_text as string | undefined,
+      tagline: offering.title || (heroFields.tagline as string | undefined),
+      image: heroFields.image as string | undefined,
       phoneSpain: site.whatsappNumber,
       fleetHref: "/gallery",
       presetService: offering.title,

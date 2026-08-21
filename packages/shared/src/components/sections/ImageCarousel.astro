@@ -13,14 +13,13 @@
  */
 import ZoomImage from "./ZoomImage.astro";
 import type { ImageMetadata } from "astro";
-const { images, alt } = Astro.props;
-const total = images.length;
-
 interface Props {
   /** Astro ImageMetadata refs or public-path strings (CMS-picked). */
   images: (ImageMetadata | string)[];
   alt: string;
 }
+const { images, alt } = Astro.props as Props;
+const total = images.length;
 const baseId = "about-carousel";
 ---
 
@@ -105,8 +104,10 @@ const baseId = "about-carousel";
         behavior: reduced ? "auto" : "smooth",
       });
     };
-    root.querySelector("[data-carousel-prev]").addEventListener("click", () => step(-1));
-    root.querySelector("[data-carousel-next]").addEventListener("click", () => step(1));
+    const prev = root.querySelector("[data-carousel-prev]");
+    const next = root.querySelector("[data-carousel-next]");
+    prev?.addEventListener("click", () => step(-1));
+    next?.addEventListener("click", () => step(1));
   }
 </script>
 

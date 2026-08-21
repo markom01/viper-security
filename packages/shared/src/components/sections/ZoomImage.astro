@@ -48,10 +48,17 @@ const {
 let dims: { width: number; height: number };
 try {
   dims = width && height ? { width: Number(width), height: Number(height) } : await imageDims(src);
-} catch {
+} catch (err) {
+  console.warn(`[ZoomImage] fallback dims for ${typeof src === "string" ? src : src.src}`, err);
   dims = { width: Number(width) || 800, height: Number(height) || 600 };
 }
-const optimized = await getImage({ src, width: dims.width, height: dims.height });
+let optimized: { src: string };
+try {
+  optimized = await getImage({ src, width: dims.width, height: dims.height });
+} catch (err) {
+  console.warn(`[ZoomImage] getImage failed for ${typeof src === "string" ? src : src.src}`, err);
+  optimized = { src: typeof src === "string" ? src : src.src };
+}
 
 ---
 

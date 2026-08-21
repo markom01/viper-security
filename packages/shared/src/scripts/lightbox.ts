@@ -17,11 +17,23 @@ function initLightbox(): void {
   const lightbox = new PhotoSwipeLightbox({
     gallery: "body",
     children: "a[data-lightbox]",
-    pswpModule: () => import("photoswipe"),
+    pswpModule: () =>
+      import("photoswipe").catch((err) => {
+        console.warn("[lightbox] failed to load photoswipe", err);
+        throw err;
+      }),
   });
-  lightbox.init();
+  try {
+    lightbox.init();
+  } catch (err) {
+    console.warn("[lightbox] init failed", err);
+  }
 }
 
 if (typeof document !== "undefined") {
-  initLightbox();
+  try {
+    initLightbox();
+  } catch (err) {
+    console.warn("[lightbox] init failed", err);
+  }
 }
