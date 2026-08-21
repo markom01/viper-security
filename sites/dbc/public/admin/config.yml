@@ -160,6 +160,37 @@ collections:
                     fields:
                       - { name: title, label: Title, widget: string }
                       - { name: text, label: Text, widget: text }
+              - label: "How It Works Steps"
+                name: steps
+                widget: list
+                required: false
+                collapsed: true
+                summary: "{{fields.title}}"
+                fields:
+                  - { name: title, label: Title, widget: string }
+                  - { name: description, label: Description, widget: text }
+              - label: "Stats (per-service)"
+                name: stats
+                widget: object
+                required: false
+                collapsed: true
+                fields:
+                  - { name: subheading, label: Subheading, widget: text, required: false }
+                  - label: Items
+                    name: items
+                    widget: list
+                    required: false
+                    fields:
+                      - { name: label, label: "Label (e.g. 99%)", widget: string }
+                      - { name: title, label: "Title", widget: string }
+              - label: "CTA (per-service)"
+                name: cta
+                widget: object
+                required: false
+                collapsed: true
+                fields:
+                  - { name: heading, label: Heading, widget: string, required: false }
+                  - { name: text, label: Text, widget: text, required: false }
               - label: Form Fields
                 name: form_fields
                 widget: list
@@ -261,6 +292,17 @@ collections:
                   widget: image,
                   required: false,
                 }
+
+  - name: privacy
+    label: Privacy Policy
+    description: Legal / GDPR privacy policy page content
+    files:
+      - name: policy
+        label: Privacy Policy Body
+        file: sites/dbc/src/content/privacy/content.md
+        fields:
+          - { name: heading, label: Heading, widget: string }
+          - { name: body, label: Policy Body (Markdown), widget: markdown }
 
   - name: page-content
     label: Page Content
@@ -458,3 +500,15 @@ collections:
                   label: "Build Image Alt Fallback",
                   widget: string,
                 }
+              - { name: gallery_heading, label: "Gallery Heading", widget: string }
+              - { name: gallery_subheadline, label: "Gallery Subheadline", widget: text }
+              - { name: gallery_group_brand, label: "Gallery Group: Brand", widget: string }
+              - { name: gallery_group_supercar, label: "Gallery Group: Supercar", widget: string }
+              - {
+                  name: gallery_group_customizing,
+                  label: "Gallery Group: Customizing",
+                  widget: string,
+                }
+              - { name: gallery_group_auction, label: "Gallery Group: Auction", widget: string }
+              - { name: gallery_group_import-export, label: "Gallery Group: Import/Export", widget: string }
+              - { name: gallery_group_all-builds, label: "Gallery Group: All Builds", widget: string }

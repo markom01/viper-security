@@ -1,5 +1,5 @@
 ---
-const { tiers, pageContent } = Astro.props;
+const { tiers, pageContent, note } = Astro.props;
 import type { MembershipTier } from "../../types";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
@@ -14,6 +14,7 @@ const s = resolveLabels(pageContent, STRINGS);
         <div class="subheadline">{s.membership.title}</div>
       </div>
       <h2 class="steps-heading">{s.membership.heading}</h2>
+      {note && <p class="memb-note">{note}</p>}
     </div>
     <div data-scroll-reveal>
       <div role="list" class="_3-column-collection">
@@ -93,6 +94,14 @@ const s = resolveLabels(pageContent, STRINGS);
     width: 100%;
     border-radius: 0;
     margin-top: 0;
+  }
+  .membership-section .memb-note {
+    max-width: 34rem;
+    margin: 0 auto 2rem;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--colors--ivory);
+    line-height: 1.6;
   }
   .membership-section .memb-badge-spacer {
     height: 38px;

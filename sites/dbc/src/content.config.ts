@@ -60,6 +60,16 @@ const services = defineCollection({
           about_text: z.string().optional(),
           about_image: z.string().optional(),
           marquee: z.string().optional(),
+          // Per-service How-It-Works steps — rendered on the service page when
+          // present, otherwise the site-global steps from how-it-works.
+          steps: z
+            .array(
+              z.object({
+                title: z.string(),
+                description: z.string(),
+              }),
+            )
+            .optional(),
           include: z
             .array(
               z.object({
@@ -82,6 +92,25 @@ const services = defineCollection({
                 .optional(),
             })
             .optional(),
+          stats: z
+            .object({
+              subheading: z.string().optional(),
+              items: z
+                .array(
+                  z.object({
+                    label: z.string(),
+                    title: z.string(),
+                  }),
+                )
+                .optional(),
+            })
+            .optional(),
+          cta: z
+            .object({
+              heading: z.string().optional(),
+              text: z.string().optional(),
+            })
+            .optional(),
           form_fields: z
             .array(
               z.object({
@@ -97,8 +126,18 @@ const services = defineCollection({
               }),
             )
             .optional(),
-          // Per-service fleet vehicles — only supercar-transport today. Mirrors the
-          // VIPER `fleet` collection shape so the shared Fleet section renders.
+          // Per-service fleet-vehicle sale-listing heading override (import/export:
+          // "Currently Selling" instead of the site-global "Our Fleet"). Optional —
+          // when absent the service keeps the site-wide fleet labels.
+          fleet_section: z
+            .object({
+              heading: z.string().optional(),
+              subheadline: z.string().optional(),
+            })
+            .optional(),
+          // Per-service fleet vehicles — supercar-transport (haulers) +
+          // import/export (cars for sale). Mirrors the VIPER `fleet` collection
+          // shape so the shared Fleet section renders.
           fleet: z
             .array(
               z.object({
@@ -140,6 +179,7 @@ const pageContent = defineCollection({
           phoneItaly: z.string().optional(),
           webSiteName: z.string().optional(),
           webSiteUrl: z.string().optional(),
+          privacy_policy: z.string().optional(),
         })
         .optional(),
       seo: z
@@ -228,10 +268,18 @@ const gallery = defineCollection({
     }),
 });
 
+const privacy = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/privacy" }),
+  schema: z.object({
+    heading: z.string().optional(),
+  }),
+});
+
 export const collections = {
   hero,
   "how-it-works": howItWorks,
   services,
   "page-content": pageContent,
   gallery,
+  privacy,
 };

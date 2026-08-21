@@ -14,3 +14,18 @@
 .hero-text-details .subheadline {
   color: var(--colors--gold-on-light);
 }
+
+/* CTA banner sits on --colors--gold (orange). White text/button = 3.55:1
+   contrast fail; onyx on orange passes with large margin. Same dark-on-light
+   treatment as the hero subheadline above. */
+.marketing-section .marketing-heading,
+.marketing-section .pure-text {
+  color: var(--colors--onyx);
+}
+.marketing-section .secondary-button {
+  border-color: var(--colors--onyx);
+  color: var(--colors--onyx);
+}
+.marketing-section .secondary-button:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}

@@ -8,6 +8,7 @@ jsonld:
   webSiteUrl: https://dbcustomgarage.netlify.app
   phoneSpain: "+34 637 137 730"
   phoneItaly: "+39 349 663 8171"
+  privacy_policy: https://dbcustomgarage.netlify.app/privacy-policy
 seo:
   title: DB Custom Garage — Supercar Transport & Logistics
   description: Supercar and classic car enclosed transport, import/export logistics, auction representation, and off-market buying and selling, across Europe.
@@ -16,13 +17,14 @@ seo:
 fleet:
   heading: Our Fleet
 stats:
-  subheading: Field-Proven, Industry-Wide
+  subheading: Three bases, one standard — precision logistics and deep market
+    knowledge for collectors, dealers, and enthusiasts.
   image: /images/cms/stats-bg.webp
   items:
     - label: "2010"
       title: Serving Collectors Since
-    - label: "3"
-      title: Locations — Europe & USA
+    - label: Marbella · Milan · New Jersey
+      title: Three Bases, One Standard
 howitworks:
   heading: How We Build Your Dream
 cta:
@@ -41,7 +43,7 @@ branding:
   professional_discreet_reliable: Professional • Discreet • Reliable
 about:
   heading: About DB Custom Garage
-  text: Founded by Dragan Meseldzija, DB Custom Garage is built on a team that never gives up — bringing results in automotive design, customizing Harley Davidson and Indian motorcycles, industrial design, and enclosed supercar and classic car transport. Active since 2010 and operating from Marbella, Milan, and New Jersey, we combine precision logistics with deep automotive and design market knowledge for collectors, dealers, and enthusiasts.
+  text: Founded by Dragan Meseldzija, DB Custom Garage brings together decades of automotive design, customizing for Harley-Davidson and Indian motorcycles, industrial design, and enclosed supercar and classic car transport. Active since 2010 and operating from Marbella, Milan, and New Jersey, we combine precision logistics with deep market knowledge for collectors, dealers, and enthusiasts.
   images:
     - /images/cms/gallery/supercars-and-classic-cars-provider-1.webp
     - /images/cms/gallery/jeep-wrangler-body-kit.webp
@@ -83,4 +85,12 @@ labels:
   cta_imageAlt: DB Custom Garage automotive projects
   fleet_vehicleAltFallback: DB Custom Garage vehicle
   footer_pagesHeading: Links
+  gallery_heading: Gallery
+  gallery_subheadline: Selected builds from our garage.
+  gallery_group_brand: Brand & Home
+  gallery_group_supercar: Supercar Transport
+  gallery_group_customizing: Customizing & Design
+  gallery_group_auction: Auction & Sale
+  gallery_group_import-export: Import & Export
+  gallery_group_all-builds: All Builds
 ---

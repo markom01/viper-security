@@ -1,0 +1,169 @@
+---
+// Shared service-detail page renderer — one route per services.md offering.
+// Both sites (VIPER + DBC) render through this component so their service
+// pages cannot drift. Per-service sections (Hero, Marquee, About, Includes,
+// Fleet, Stats, HowItWorks, CTA, BottomCTA) render ONLY from the offering's
+// frontmatter + the site-passed data — no cross-site fallback.
+//
+// A site's `[slug].astro` collects site-specific content collections and calls
+// this with everything. Optional VIPER-only sections (Pricing, Membership) are
+// gated on props so DBC simply omits them.
+import type { FleetEntry, PageContent } from "../../types";
+import { membershipValueNote } from "../../config/membership";
+
+import Hero from "./Hero.astro";
+import Marquee from "./Marquee.astro";
+import AboutSection from "./AboutSection.astro";
+import Services from "./Services.astro";
+import Fleet from "./Fleet.astro";
+import StatsSection from "./StatsSection.astro";
+import HowItWorks from "./HowItWorks.astro";
+import Pricing from "./Pricing.astro";
+import Membership from "./Membership.astro";
+import CtaBanner from "./CtaBanner.astro";
+import BottomCta from "./BottomCta.astro";
+
+interface ServiceOffering {
+  title: string;
+  slug?: string;
+  marquee?: string;
+  about_text?: string;
+  about_image?: string;
+  steps?: { title: string; description: string }[];
+  include?: { title: string; text: string; image?: string }[];
+  hero?: { subtitle?: string; cta_text?: string; tagline?: string; image?: string };
+  form_fields?: { label: string; placeholder?: string; name: string; side?: string; type?: string }[];
+  bottomcta?: { heading?: string; values?: { title: string; text: string }[] };
+  /** Per-service overrides for the site-global Stats + CTA sections. */
+  stats?: { subheading?: string; items?: { label: string; title: string }[] };
+  cta?: { heading?: string; text?: string };
+}
+
+interface Props {
+  offering: ServiceOffering;
+  /** Site-merged pageContent: chrome identity + per-offering cta/stats image. */
+  pageContent: PageContent;
+  /** Card region label (Services cards). */
+  region: string;
+  /** Hero extras — site-specific phone/fleet wiring. */
+  hero: {
+    subtitle?: string;
+    cta_text?: string;
+    tagline?: string;
+    image?: string;
+    phoneItaly?: string;
+    phoneSpain?: string;
+    fleetHref?: string;
+    presetService?: string;
+  };
+  /** Fleet — a site passes the collection entries (VIPER) or per-offering
+   *  vehicles gated by `hasFleet` (DBC). */
+  fleetVehicles: FleetEntry[];
+  fleetFeaturesText: string;
+  hasFleet: boolean;
+  /** HowItWorks steps (site-global, shared with home). */
+  howItWorksSteps?: { title: string; description: string; image?: string }[];
+  /** Fallback service cards when the offering has no `include` list (VIPER:
+   *  renders the full services list). Omitted → no Services section when
+   *  no includes. */
+  defaultServices?: { region: string; title: string; description: string; image?: string }[];
+  /** VIPER-only sections — omitted entirely when not passed. */
+  showPricing?: boolean;
+  hourly?: any;
+  showMembership?: boolean;
+  membershipTiers?: any[];
+}
+
+const {
+  offering,
+  pageContent,
+  region,
+  hero,
+  fleetVehicles,
+  fleetFeaturesText,
+  hasFleet,
+  howItWorksSteps = [],
+  defaultServices,
+  showPricing = false,
+  hourly,
+  showMembership = false,
+  membershipTiers = [],
+} = Astro.props as Props;
+
+// Membership value line — derived from live pricing + tier data, never
+// hardcoded, so a price change re-syncs automatically.
+const membershipNote = membershipValueNote(membershipTiers, hourly?.rates);
+
+const hasHero = !!(offering.hero?.subtitle || offering.hero?.tagline);
+const hasAbout = !!offering.about_text;
+const hasIncludes = !!offering.include?.length;
+const hasBottomCta = !!offering.bottomcta?.heading || !!offering.bottomcta?.values?.length;
+
+// Per-service Stats + CTA sections: offering overrides spread over the
+// site-global values. Image falls back to the offering hero image so the
+// section stays matched to the service without a separate field.
+const mergedStats = {
+  ...(pageContent?.stats || {}),
+  ...(offering.stats || {}),
+  ...(offering.hero?.image ? { image: offering.hero.image } : {}),
+};
+const mergedCta = {
+  ...(pageContent?.cta || {}),
+  ...(offering.cta || {}),
+  ...(offering.hero?.image ? { image: offering.hero.image } : {}),
+};
+
+// Per-service How-It-Works steps take precedence over the site-global steps.
+const steps = offering.steps?.length ? offering.steps : howItWorksSteps;
+
+// "What falls under this service" — the offering's include list as service cards.
+const includes = (offering.include || []).map((i) => ({
+  region,
+  title: i.title,
+  description: i.text,
+  ...(i.image ? { image: i.image } : {}),
+}));
+
+const serviceAbout = hasAbout
+  ? {
+      heading: offering.title,
+      text: offering.about_text,
+      ...(offering.about_image ? { image: offering.about_image } : {}),
+    }
+  : undefined;
+---
+
+{
+  hasHero && (
+    <Hero
+      subtitle={hero.subtitle}
+      cta_text={hero.cta_text}
+      tagline={hero.tagline}
+      hero_image={hero.image}
+      pageContent={pageContent}
+      fleetHref={hero.fleetHref}
+      phoneItaly={hero.phoneItaly}
+      phoneSpain={hero.phoneSpain}
+      presetService={hero.presetService}
+      form_fields={offering.form_fields || []}
+    />
+  )
+}
+{offering.marquee && <Marquee pageContent={pageContent} text={offering.marquee} />}
+{hasAbout && <AboutSection pageContent={{ ...pageContent, about: serviceAbout }} />}
+{hasIncludes ? (
+  <Services pageContent={pageContent} marbella={includes} milano={includes} />
+) : defaultServices ? (
+  <Services pageContent={pageContent} marbella={defaultServices} milano={defaultServices} />
+) : null}
+{hasFleet && (
+  <Fleet vehicles={fleetVehicles} pageContent={pageContent} fleetFeatures={fleetFeaturesText} />
+)}
+<StatsSection pageContent={{ ...pageContent, stats: mergedStats }} />
+<HowItWorks steps={steps} pageContent={pageContent} />
+{showPricing && <Pricing hourly={hourly} pageContent={pageContent} />}
+{showMembership && (
+  <Membership tiers={membershipTiers} pageContent={pageContent} note={membershipNote} />
+)}
+<CtaBanner pageContent={{ ...pageContent, cta: mergedCta }} />
+{hasBottomCta && <BottomCta pageContent={{ ...pageContent, bottomcta: offering.bottomcta }} />}

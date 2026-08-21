@@ -17,11 +17,28 @@ interface Props {
   subtitle?: string;
   navItems?: NavLink[];
   footerItems?: NavLink[];
+  /** Social profiles for the footer (real handles per site). */
+  social?: { icon: string; href: string; label: string }[];
   ctaLabel?: string;
+  /** Emit `<meta name="robots" content="noindex,follow">` (soft-noindex pages). */
+  noindex?: boolean;
+  /** Open Graph locale tag — defaults to the shared STRINGS value (en_US). */
+  ogLocale?: string;
+  /** <link rel=preload as=image> for the LCP image (hero). Optional. */
+  preloadImage?: string;
 }
 
-const { pageContent, brandName, subtitle, navItems, footerItems } =
-  Astro.props as Props;
+const {
+  pageContent,
+  brandName,
+  subtitle,
+  navItems,
+  footerItems,
+  social,
+  noindex,
+  ogLocale,
+  preloadImage,
+} = Astro.props as Props;
 // Explicit CMS labels take precedence; the layout never injects a hardcoded
 // default button label. Site layouts pass ctaLabel explicitly (DBC: Get A
 // Quote); VIPER reads its CMS `nav_contact` label here.
@@ -152,14 +169,18 @@ const jsonLdWebSite = jsonEscape(
     {ogImagePath && !ogImagePath.endsWith(".svg") && (
       <link rel="preload" as="image" href={ogImagePath} />
     )}
+    {preloadImage && (
+      <link rel="preload" as="image" href={preloadImage} />
+    )}
     <link rel="canonical" href={canonicalUrl} />
     <meta content={seo?.description} name="description" />
+    {noindex && <meta content="noindex,follow" name="robots" />}
     <meta content={seo?.title} property="og:title" />
     <meta content={seo?.description} property="og:description" />
     {ogImageUrl && <meta content={ogImageUrl} property="og:image" />}
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={jd.orgName} />
-    <meta property="og:locale" content={s.seo.ogLocale} />
+    <meta property="og:locale" content={ogLocale ?? s.seo.ogLocale} />
     <meta content={seo?.title} name="twitter:title" />
     <meta content={seo?.description} name="twitter:description" />
     {ogImageUrl && <meta content={ogImageUrl} name="twitter:image" />}
@@ -206,6 +227,7 @@ const jsonLdWebSite = jsonEscape(
       brandName={brandName ?? jd.orgName}
       pageContent={pageContent}
       footerItems={footerItems}
+      social={social}
       phoneItaly={jd.phoneItaly}
       phoneSpain={jd.phoneSpain}
     />

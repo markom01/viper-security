@@ -9,9 +9,33 @@ import { buildNav, buildFooterNav } from "../data/nav";
 interface Props {
   /** page-content collection entry data (seo, jsonld, labels, booking_data, ...). */
   pageContent: PageContent;
+  /** Open Graph locale (defaults to shared en_US; garage serves ES market). */
+  ogLocale?: string;
+  /** LCP hero image to <link preload> in <head>. */
+  preloadImage?: string;
+  /** Emit noindex robots meta (e.g. placeholder pages). */
+  noindex?: boolean;
+  /** Real social profiles for the footer. */
+  social?: { icon: string; href: string; label: string }[];
 }
 
-const { pageContent } = Astro.props;
+const { pageContent, ogLocale, preloadImage, noindex, social } = Astro.props;
+
+// Default footer socials — verified real handles (Instagram @dbcustomgarage,
+// WhatsApp 34617201441 per RESEARCH-DBC). Pages may override.
+const defaultSocial = [
+  {
+    icon: "instagram-logo.svg",
+    href: "https://www.instagram.com/dbcustomgarage/",
+    label: "Follow us on Instagram",
+  },
+  {
+    icon: "whatsapp-logo.svg",
+    href: "https://wa.me/34617201441",
+    label: "Contact us on WhatsApp",
+  },
+];
+const footerSocials = social ?? defaultSocial;
 
 // Sveltia CMS rejects dotted field names — CMS saves underscore keys,
 // normalize to dot-path so buildNav AND shared-section resolveLabels lookups
@@ -39,6 +63,10 @@ const ctaLabel = labels["nav.contact"];
   navItems={navItems}
   footerItems={footerItems}
   ctaLabel={ctaLabel}
+  ogLocale={ogLocale}
+  preloadImage={preloadImage}
+  noindex={noindex}
+  social={footerSocials}
 >
   <slot />
 </BaseLayout>

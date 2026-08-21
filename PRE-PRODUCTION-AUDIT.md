@@ -189,3 +189,41 @@ All fixes below are applied to source and verified via `astro build` (VIPER exit
 - M1-placeholders — sitemap still lists the 2 'Coming soon' pages (content decision: ship real content or noindex).
 - Low: `og:locale` hardcoded en_US; `org_logo` = favicon.svg; DBC page-content single-file guard (add throw); doc debt (CLAUDE.md "React 404", "Decap" → Sveltia).
 - H5 DBC hero text-only (decide if intentional) · H9 font/LCP preload (partial — only raster preload added).
+
+---
+
+## ✅ RESOLVED 2026-08-18 — full pre-prod batch implemented + verified
+
+All items below implemented, built (exit 0 both), astro-check 0/0/0 both, VIPER a11y **9/9** (incl. previously-failing axe link-name on fleet). Verified against built dist.
+
+| Item | Status | Evidence |
+|------|--------|----------|
+| **DBC Privacy Policy page** | ✅ | `sites/dbc/src/pages/privacy-policy.astro` (GDPR sections) + footer link + JSON-LD `privacy_policy` + DBC schema field added (was silently stripped by Zod!) → Legal Compliance local audit **44→100** |
+| **VIPER Privacy content** | ✅ | Rewritten to 10-section GDPR-aligned (was 124 words / 8 sections thin), + `jsonld` (name/url/WebSite) so WebSite JSON-LD valid (previously emitted `undefined` name/url → structured-data fail) |
+| **VIPER service H1 + unique titles** | ✅ | Added per-offering `hero.tagline` (renders `<h1>`) + `seo.title/description` to all 4 `services.md` offerings → `<h1>Airport Transfers</h1>` + unique `<title>` in dist; duplicate-title rule gone |
+| **DBC gallery images** | ⚠️ REVERTED 08-19 | Netlify CDN approach broke ALL gallery images locally (`/.netlify/images` 404s off-Netlify infra) → reverted to astro `getImage` (working, portable). Verified 122/122 imgs load in browser. Perf-weight fix deferred (separate task, non-image-breaking). |
+| **Dead from-wix media** | ✅ | git-rm `images/from-wix/` (29 files, ~7M, 0 refs — all migrated to `images/cms/from-wix`) → DBC dist **34M→27M** |
+| **og:locale** | ✅ | `ogLocale="es_ES"` prop on BaseLayout + wired VIPER/DBC index + service + gallery + privacy; `es_ES` in dist both |
+| **LCP image preload** | ✅ | `preloadImage` prop → `<link rel=preload as=image>` for hero (VIPER index/service + DBC index/service); `hero-image_upscaled.webp` now preloaded |
+| **Hero form a11y** | ✅ | Removed dead `aria-describedby` refs (nonexistent ids); `showErr` now sets real `id="${input.id}-error"` + `aria-describedby` to it; `clearErr` removes it. Form aria-label test 9/9 passes |
+| **Fleet link-name (pre-existing axe fail)** | ✅ | Nested `<a>` (ZoomImage) inside `.car-card` `<a>` → outer lost accessible name. Added `aria-label={d.name}` to `.car-card` → axe link-name cleared. **Was failing at clean HEAD too** |
+| **Placeholders noindex + sitemap** | ✅ | `noindex` prop on BaseLayout → VIPER `/luxury-cars` + `/armoured-vehicles` emit `robots noindex,follow`; VIPER sitemap filter excludes both (0 refs). DBC sitemap clean |
+| **DBC JSON-LD privacyPolicy** | ✅ | `privacy_policy` added to DBC `content.md` jsonld + schema (was missing from DBC schema → silently stripped) → Organization + WebSite JSON-LD emit `privacyPolicy`, Structured Data local audit **90→100** |
+
+**Local audit deltas (localhost, environment — CSP/HTTP penalties not site defects):**
+- VIPER: Legal **44→100**, Content **70→89**, Core SEO **79→86** (overall 56-F = localhost no-CSP/env; live serves strict CSP)
+- DBC: Legal **44→100**, Structured Data **90→100**, Content 90, Core SEO 93 (overall 61-D = localhost env)
+- Live `viper-security.netlify.app` / `dbcustomgarage.netlify.app` scores unchanged until this batch is committed+pushed (Netlify auto-deploy on `main`).
+
+**Still open (content/data decisions, not code):**
+- **M1 pricing gaps** — 14 empty pricing-amount spans live (Malaga→Gibraltar, Milano→Nice/Lago, yacht marinas, Puerto Banus). Data entry in CMS page-content.
+- **VIPER 2 'Coming soon' pages** — now noindexed + out of sitemap; decide ship real content or delete routes + footer/nav links.
+- **DBC gallery originals deploy weight** — 25M originals in dist; Netlify CDN broke local rendering (reverted). Portable slimming: astro `getImage` width cap for grid (in-branch) or accept 27M. DN: CDN-only paths break local/preview.
+
+## ✅ 2026-08-19 — CtaBanner image fill + service-page dedup
+
+| Item | Result |
+|------|--------|
+| **CtaBanner image fills container** | `.marketing-image-wrapper .zoomable { height:100% }` — image was forking at the ZoomImage `<a>` (sized to intrinsic attrs, not wrapper). Now image=anchor=wrapper exactly on DBC home/service + VIPER home/service (measured 446/446 DBC, 512/512 VIPER). |
+| **Merge service templates → shared** | New `packages/shared/src/components/sections/ServicePage.astro` renders the full service-page skeleton (Hero/Marquee/About/Services/Fleet/Stats/HowItWorks/Pricing/Membership/CtaBanner/BottomCta), parameterized by props. Both `sites/*/src/pages/services/[slug].astro` reduced to thin data-collectors (~50 lines each). Kills cross-site drift (was duplicated ~130 lines each, edited twice this week). VIPER-only Pricing/Membership gated on `showPricing`/`showMembership`; VIPER `defaultServices` fallback for its no-include offerings preserved. |
+| **Verify** | Both builds exit 0, astro-check 0/0/0, VIPER a11y 9/9. Browser probe: all 8 sections render on VIPER + DBC service pages; fleet cards correct (VIPER 4, DBC supercar-transport 4, customizing 0); ctaFits true everywhere. |

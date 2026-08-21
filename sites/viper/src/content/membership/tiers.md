@@ -2,6 +2,7 @@
 tiers:
   - name: "SILVER VIP"
     price: "€1,500"
+    hours: 15
     is_featured: false
     benefits:
       - "15 chauffeur hours annually"
@@ -9,6 +10,7 @@ tiers:
       - "Preferred member rates"
   - name: "GOLD VIP"
     price: "€3,500"
+    hours: 40
     is_featured: true
     benefits:
       - "40 chauffeur hours annually"
@@ -17,6 +19,7 @@ tiers:
       - "Complimentary airport transfers (2 per year)"
   - name: "PLATINUM VIP"
     price: "€5,900"
+    hours: 80
     is_featured: false
     benefits:
       - "80 chauffeur hours annually"

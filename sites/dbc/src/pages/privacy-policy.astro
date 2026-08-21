@@ -1,6 +1,8 @@
 ---
-import BaseLayout from "@garage/shared/layouts/BaseLayout.astro";
-import { SITE_NAME } from "@garage/shared/config/strings";
+// DB Custom Garage privacy policy — legal compliance (GDPR/EU).
+// Body is CMS-editable markdown (src/content/privacy/content.md); this page
+// renders it through the per-site SiteLayout.
+import SiteLayout from "../layouts/SiteLayout.astro";
 import { site } from "../config/site";
 import { getCollection, render } from "astro:content";
 
@@ -9,20 +11,21 @@ const { Content } = policy ? await render(policy) : { Content: undefined };
 
 const pageContent = {
   jsonld: {
-    org_name: SITE_NAME,
+    org_name: site.name,
     org_url: site.url,
-    webSiteName: SITE_NAME,
+    webSiteName: site.name,
     webSiteUrl: site.url,
   },
   seo: {
-    title: `Privacy Policy | ${SITE_NAME}`,
+    title: `Privacy Policy | ${site.name}`,
     description:
-      "How VIPER Security collects, uses, and protects your personal data when you use our website or book our chauffeur service.",
+      "How DB Custom Garage collects, uses, and protects your personal data when you use our website or contact us.",
+    image: "/images/og-dbc.webp",
   },
 };
 ---
 
-<BaseLayout pageContent={pageContent} brandName={SITE_NAME} ogLocale="en_US">
+<SiteLayout pageContent={pageContent} ogLocale="en_US">
   <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "4rem 24px" }}>
     <article>
       {Content ? (
@@ -35,7 +38,7 @@ const pageContent = {
       )}
     </article>
   </div>
-</BaseLayout>
+</SiteLayout>
 
 <style>
   article :global(h1) {

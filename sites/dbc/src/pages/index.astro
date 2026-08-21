@@ -23,7 +23,7 @@ const howItWorks = howItWorksEntry?.data || {};
 const services = servicesEntry?.data?.offerings || [];
 ---
 
-<SiteLayout pageContent={pageContent}>
+<SiteLayout pageContent={pageContent} ogLocale="en_US" preloadImage={hero.hero_image}>
   <Hero
     subtitle={hero.subtitle}
     cta_text={hero.cta_text}

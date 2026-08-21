@@ -8,9 +8,11 @@ interface Props {
   tagline?: string;
   phoneItaly?: string;
   phoneSpain?: string;
+  /** Social profiles. Verified real handles per site; bare roots disabled. */
+  social?: { icon: string; href: string; label: string }[];
 }
 
-const { pageContent, footerItems } = Astro.props as Props;
+const { pageContent, footerItems, social } = Astro.props as Props;
 const { brandName, tagline, phoneItaly, phoneSpain } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
@@ -28,6 +30,7 @@ const links = footerItems ?? [
   { label: s.nav.howItWorks, href: "/#how-it-works" },
   { label: s.nav.pricing, href: "/#pricing" },
   { label: s.nav.contact, href: "/#contact" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
 ];
 
 const cleanPhone = (phone?: string) => phone?.replace(/[\s+]/g, "") || "";
@@ -68,20 +71,29 @@ const mapEmbedUrl = pageContent?.map_embed_url;
               )
             }
           </p>
-          <!-- <div class="social-links-wrapper">
-            <a href="https://x.com/" target="_blank" class="social-link" aria-label={s.footer.socialX}>
-              <img src="/images/x-logo.svg" width="20" height="20" loading="eager" alt="" aria-hidden="true" />
-            </a>
-            <a href="https://www.tiktok.com/" target="_blank" class="social-link" aria-label={s.footer.socialTiktok}>
-              <img src="/images/tiktok-logo.svg" loading="eager" alt="" aria-hidden="true" />
-            </a>
-            <a href="https://www.instagram.com/" target="_blank" class="social-link" aria-label={s.footer.socialInstagram}>
-              <img src="/images/instagram-logo.svg" loading="eager" alt="" aria-hidden="true" />
-            </a>
-            <a href="https://www.whatsapp.com/" target="_blank" class="social-link" aria-label={s.footer.socialWhatsapp}>
-              <img src="/images/whatsapp-logo.svg" loading="eager" alt="" aria-hidden="true" />
-            </a>
-          </div> -->
+          {
+            social?.length ? (
+              <div class="social-links-wrapper">
+                {social.map((link) => (
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    class="social-link"
+                    aria-label={link.label}
+                  >
+                    <img
+                      src={`/images/${link.icon}`}
+                      width="20"
+                      height="20"
+                      loading="eager"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  </a>
+                ))}
+              </div>
+            ) : null
+          }
         </div>
         <div class="footer-links-wrapper">
           <div class="footer-links-column">

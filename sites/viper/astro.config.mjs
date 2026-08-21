@@ -42,7 +42,10 @@ export default defineConfig({
   ],
   integrations: [
     sitemap({
-      filter: (page) => !page.includes("/admin/"),
+      filter: (page) =>
+        !page.includes("/admin/") &&
+        !page.includes("/luxury-cars") &&
+        !page.includes("/armoured-vehicles"),
     }),
     AstroPWA(
       pwaPluginOptions({

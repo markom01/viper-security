@@ -135,7 +135,6 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                     type="text"
                     required
                     aria-label="Full Name"
-                    aria-describedby="full-name-error"
                   />
                 </div>
                 <div class="booking-form-label-field">
@@ -150,7 +149,6 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                     type="tel"
                     required
                     aria-label="Phone"
-                    aria-describedby="phone-error"
                   />
                 </div>
                 {
@@ -601,6 +599,9 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
         if (!mb) {
           mb = document.createElement("div");
           mb.className = "field-error";
+          // Real element id so aria-describedby resolves (a11y rule:
+          // aria-describedby must reference an existing element id, not a class).
+          mb.id = el.id + "-error";
           mb.setAttribute("role", "alert");
           mb.style.cssText =
             "color:var(--colors--coral);font-size:1rem;margin-top:4px;font-family:var(--font-families--body-font);";
@@ -608,15 +609,14 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
         }
         mb.textContent = m;
         el.setAttribute("aria-invalid", "true");
-        const described = el.getAttribute("aria-describedby");
-        if (described)
-          el.setAttribute("aria-describedby", described + " " + mb.className);
+        el.setAttribute("aria-describedby", mb.id);
         el.setAttribute("data-invalid", "");
       }
       function clearErr(el: HTMLInputElement): void {
         const mb = el.parentElement?.querySelector<HTMLElement>(".field-error");
         if (mb) mb.textContent = "";
         el.removeAttribute("aria-invalid");
+        el.removeAttribute("aria-describedby");
         delete el.dataset.invalid;
       }
 

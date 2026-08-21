@@ -16,6 +16,7 @@ import BottomCta from "@garage/shared/sections/BottomCta.astro";
 import { getCollection, getEntry } from "astro:content";
 import { resolveTemplates } from "@garage/shared/config/templates";
 import { SITE_NAME } from "@garage/shared/config/strings";
+import { membershipValueNote } from "@garage/shared/config/membership";
 
 const [heroEntry] = await getCollection("hero");
 const [howItWorksEntry] = await getCollection("how-it-works");
@@ -112,9 +113,10 @@ const fleetFeaturesText =
     : "";
 const hourly = hourlyEntry?.data || {};
 const membership = membershipEntry?.data || {};
+const membershipNote = membershipValueNote(membership.tiers, hourly.rates);
 ---
 
-<BaseLayout pageContent={pageContent} brandName={hero.brand_name}>
+<BaseLayout pageContent={pageContent} brandName={hero.brand_name} ogLocale="en_US" preloadImage={hero.hero_image}>
   <Hero
     subtitle={hero.subtitle}
     cta_text={hero.cta_text}
@@ -139,7 +141,7 @@ const membership = membershipEntry?.data || {};
   <StatsSection pageContent={pageContent} />
   <HowItWorks steps={howItWorks.steps} pageContent={pageContent} />
   <Pricing hourly={hourly} pageContent={pageContent} />
-  <Membership tiers={membership.tiers} pageContent={pageContent} />
+  <Membership tiers={membership.tiers} pageContent={pageContent} note={membershipNote} />
   <CtaBanner pageContent={pageContent} />
   <BottomCta pageContent={pageContent} />
 </BaseLayout>

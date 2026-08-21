@@ -5,6 +5,8 @@ import { Image } from "astro:assets";
 import { imageDims } from "@garage/shared/lib/imageDims.ts";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { site } from "../config/site";
+import STRINGS from "@garage/shared/config/strings";
+import { resolveLabels } from "@garage/shared/config/labels";
 
 // Full CMS page-content (jsonld, labels, booking_data) so Nav/Footer/JSON-LD
 // carry dbc identity — NOT the shared VIPER fallbacks. Gallery-specific SEO
@@ -20,6 +22,17 @@ const pageContent = {
     image: "/images/og-dbc.webp",
   },
 };
+
+// DBC CMS stores underscore keys (Sveltia rejects dots); normalize to dot-path
+// like SiteLayout does, so resolveLabels can match STRINGS keys.
+const normalizeKey = (k: string) => k.replace(/_/g, ".");
+const normalizedLabels = Object.fromEntries(
+  Object.entries(pageContent?.labels ?? {}).map(([k, v]) => [
+    normalizeKey(k),
+    String(v),
+  ]),
+);
+const s = resolveLabels({ ...pageContent, labels: normalizedLabels }, STRINGS);
 
 // CMS-editable gallery images, grouped by service category. The lightbox
 // reuses the original asset (sources are already ~1600px; a separate width
@@ -48,24 +61,24 @@ const galleryItems = await Promise.all(
 // Ordered gallery sections. Empty groups (e.g. auction, import-export before
 // photos exist) are skipped so the page doesn't show a bare heading.
 const sections = [
-  { key: "brand", title: "Brand & Home" },
-  { key: "supercar", title: "Supercar Transport" },
-  { key: "customizing", title: "Customizing & Design" },
-  { key: "auction", title: "Auction & Sale" },
-  { key: "import-export", title: "Import & Export" },
-  { key: "all-builds", title: "All Builds" },
+  { key: "brand", title: s.gallery.brand },
+  { key: "supercar", title: s.gallery.supercar },
+  { key: "customizing", title: s.gallery.customizing },
+  { key: "auction", title: s.gallery.auction },
+  { key: "import-export", title: s.gallery["import-export"] },
+  { key: "all-builds", title: s.gallery["all-builds"] },
 ].map((section) => ({
   ...section,
   items: galleryItems.filter((item) => item.category === section.key),
 })).filter((section) => section.items.length > 0);
 ---
 
-<SiteLayout pageContent={pageContent}>
+<SiteLayout pageContent={pageContent} ogLocale="en_US">
   <section class="gallery-section">
     <div class="content-wrapper">
       <header class="gallery-header">
-        <h1>Gallery</h1>
-        <p>Selected builds from our garage.</p>
+        <h1>{s.gallery.heading}</h1>
+        <p>{s.gallery.subheadline}</p>
       </header>
       {
         sections.map((section) => (

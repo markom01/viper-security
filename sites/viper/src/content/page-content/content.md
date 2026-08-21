@@ -77,14 +77,12 @@ booking_data:
         routes:
           - route: Milano — Nightlife & Events
 seo:
-  title: "{site_name} — Luxury Chauffeur & VIP Transport"
-  description: "{site_name} — luxury chauffeur, executive transport, airport
-    transfers & VIP travel in {location1} and {location2}. Premium private
-    chauffeur service."
+  title: "{site_name} — Luxury Chauffeur & VIP Transport in {location1} & {location2}"
+  description: "{site_name} — luxury chauffeur & VIP transfers in {location1} and {location2}. Malaga, Malpensa & Bergamo airport transfers in a Mercedes-Benz S-Class, door to door."
   image: /images/og-viper.webp
   theme_color: "#000000"
 about:
-  heading: World-Class Luxury Chauffeur Services Meticulously Tailored to Perfection
+  heading: Discreet Luxury, Tailored to Every Journey
   text:
     "{site_name} delivers premium chauffeur-driven travel across {location1},
     {location2}, and beyond. Our {vehicle} and professional English-speaking
@@ -96,9 +94,8 @@ about:
 fleet:
   heading: Ride Luxury, Every Time
 stats:
-  subheading: From airport transfers to VIP events, we deliver a seamless luxury
-    experience backed by years of industry expertise and a commitment to
-    excellence.
+  subheading: Every pickup flight-tracked, every route priced upfront, and every
+    journey driven to one standard — 24/7.
   image: /images/cms/stats-bg.jpg
   items:
     - label: 15+
@@ -106,7 +103,7 @@ stats:
     - label: 100+
       title: Happy Clients
     - label: "1"
-      title: Dedicated Chauffeur
+      title: Trusted Hand
     - label: 24/7
       title: Availability
 howitworks:

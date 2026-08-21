@@ -13,7 +13,7 @@ const f = pageContent?.fleet;
   <div class="content-wrapper">
     <div class="home-about-content">
       <div data-scroll-reveal>
-        <div role="list" class="_3-column-collection">
+        <div role="list" class="_3-column-collection" data-count={vehicles?.length ?? 0}>
           {
             vehicles?.map((v: FleetEntry) => {
               const d = v.data || {};
@@ -29,6 +29,7 @@ const f = pageContent?.fleet;
                   <a
                     href="#fleet"
                     class="car-card"
+                    aria-label={d.name}
                     style="border-color: var(--colors--cloud);"
                   >
                     <div class="car-card-details">
@@ -137,22 +138,42 @@ const f = pageContent?.fleet;
   </div>
 </section>
 <style>
+  /* Card count decides the rule:
+       1 = full row "before" layout (single wide card)
+       2 = current auto-fit horizontal (2 side-by-side, wraps naturally)
+       3+ = tablet layout on all sizes, wrapping new rows when out of space
+     Without a :has(count) selector the grid alone can't distinguish, so
+     the list carries data-count and three scoped overrides below. */
+  #fleet .home-about-content > :first-child {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  /* Default (2-card case): auto-fit horizontal wrapping. Works as "now". */
+  #fleet ._3-column-collection {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+  /* 1 card → restore "before" (full row, same as original 1024+ row layout). */
+  #fleet ._3-column-collection[data-count="1"] {
+    grid-template-columns: 1fr;
+  }
+  #fleet ._3-column-collection[data-count="1"] .car-card-details {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  #fleet ._3-column-collection[data-count="1"] .car-card-left {
+    width: 50%;
+    flex-shrink: 0;
+  }
+  #fleet ._3-column-collection[data-count="1"] .car-card-data {
+    flex: 1;
+  }
+  /* 3+ cards → "tablet" rule on every viewport: fixed 2-col wrapping. */
+  #fleet ._3-column-collection:not([data-count="0"]):not([data-count="1"]):not([data-count="2"]) {
+    grid-template-columns: 1fr 1fr;
+  }
   @media (min-width: 768px) {
-    #fleet ._3-column-collection {
-      grid-template-columns: 1fr;
-    }
     #fleet .car-card-details {
-      flex-direction: row;
-      align-items: flex-start;
-    }
-    #fleet .car-card-left {
-      display: flex;
-      flex-direction: column;
-      width: 50%;
-      flex-shrink: 0;
-    }
-    #fleet .car-card-data {
-      flex: 1;
+      align-items: center;
     }
   }
   .car-card-left {
@@ -168,7 +189,10 @@ const f = pageContent?.fleet;
     #fleet .home-about-content {
       flex-direction: column;
     }
+    /* In column layout flex-basis is height — the grid must fill width. */
     #fleet .home-about-content > :first-child {
+      flex: 0 0 auto;
+      width: 100%;
       order: 2;
     }
     #fleet .home-about-text-wrapper {
@@ -190,6 +214,20 @@ const f = pageContent?.fleet;
     background-color: rgba(0, 0, 0, 0.03);
     position: absolute;
     inset: 0%;
+  }
+  /* Tablet "1fr 1fr" must collapse to 1-col on phone, otherwise cards squeeze. */
+  @media (max-width: 767px) {
+    #fleet ._3-column-collection:not([data-count="0"]):not([data-count="1"]):not([data-count="2"]) {
+      grid-template-columns: 1fr;
+    }
+    /* On mobile the "single wide card" row would over-stretch; stack inside. */
+    #fleet ._3-column-collection[data-count="1"] .car-card-details {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    #fleet ._3-column-collection[data-count="1"] .car-card-left {
+      width: auto;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .home-about-section .home-about-content > *,

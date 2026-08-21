@@ -1,9 +1,9 @@
 ---
 steps:
-  - title: Share Your Vision
-    description: Tell us what you want to build, restore, or transform. We discuss budget and timeline.
-  - title: We Build
-    description: Our technicians strip, fabricate, tune, and finish your car to spec, with progress updates.
-  - title: Drive It Home
-    description: Pick up your finished build, fully documented and ready for the road or the show floor.
+  - title: Share Your Goal
+    description: Whether it is transporting a supercar, selling at auction, importing, or building — tell us what you want and we plan the route, price, and timeline.
+  - title: We Handle It
+    description: Enclosed transport, auction prep, customs paperwork, or fabrication — our team handles every step, with updates along the way.
+  - title: Delivered
+    description: Your car arrives safe, your sale closes, or your build is ready for the road or the show floor.
 ---

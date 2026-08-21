@@ -149,6 +149,17 @@ const STRINGS = {
   },
 
   stepNumber: ["1", "2", "3"],
+
+  gallery: {
+    heading: "Gallery",
+    subheadline: "Selected builds from our garage.",
+    brand: "Brand & Home",
+    supercar: "Supercar Transport",
+    customizing: "Customizing & Design",
+    auction: "Auction & Sale",
+    "import-export": "Import & Export",
+    "all-builds": "All Builds",
+  },
 };
 
 export default STRINGS;

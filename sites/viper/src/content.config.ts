@@ -59,6 +59,16 @@ const services = defineCollection({
           about_text: z.string().optional(),
           about_image: z.string().optional(),
           marquee: z.string().optional(),
+          // Per-service How-It-Works steps — rendered on the service page when
+          // present, otherwise the site-global steps from how-it-works.
+          steps: z
+            .array(
+              z.object({
+                title: z.string(),
+                description: z.string(),
+              }),
+            )
+            .optional(),
           include: z
             .array(
               z.object({
@@ -79,6 +89,25 @@ const services = defineCollection({
                   }),
                 )
                 .optional(),
+            })
+            .optional(),
+          stats: z
+            .object({
+              subheading: z.string().optional(),
+              items: z
+                .array(
+                  z.object({
+                    label: z.string(),
+                    title: z.string(),
+                  }),
+                )
+                .optional(),
+            })
+            .optional(),
+          cta: z
+            .object({
+              heading: z.string().optional(),
+              text: z.string().optional(),
             })
             .optional(),
           form_fields: z
@@ -150,6 +179,7 @@ const membership = defineCollection({
       z.object({
         name: z.string(),
         price: z.string(),
+        hours: z.number().optional(),
         is_featured: z.boolean().optional(),
         benefits: z.array(z.string()),
       }),
@@ -286,6 +316,13 @@ const pageContent = defineCollection({
     }),
 });
 
+const privacy = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/privacy" }),
+  schema: z.object({
+    heading: z.string().optional(),
+  }),
+});
+
 export const collections = {
   hero,
   "how-it-works": howItWorks,
@@ -294,4 +331,5 @@ export const collections = {
   pricing,
   membership,
   "page-content": pageContent,
+  privacy,
 };
