@@ -8,6 +8,7 @@ import ServicePage from "@garage/shared/sections/ServicePage.astro";
 
 import { getCollection, getEntry } from "astro:content";
 import { SITE_NAME } from "@garage/shared/config/strings";
+import { resolveTemplates } from "@garage/shared/config/templates";
 
 export async function getStaticPaths() {
   const [servicesEntry] = await getCollection("services");
@@ -27,6 +28,8 @@ const [membershipEntry] = await getCollection("membership");
 const [pageContentEntry] = await getCollection("page-content");
 
 const pageContent = pageContentEntry?.data || {};
+const bd = (pageContent as any)?.booking_data;
+const vehicleName = (pageContent as any)?.vehicle_name;
 
 const hourlyEntry = await getEntry("pricing", "hourly");
 
@@ -50,11 +53,43 @@ const fleetFeaturesText =
 
 // Site-global chrome + per-offering seo. VIPER always renders the full fleet
 // collection (RHS), so hasFleet=true.
-const mergedContent = {
+const mergedContent: any = {
   ...pageContent,
-  seo: offering.seo || pageContent?.seo,
+  seo: offering.seo
+    ? { ...((pageContent as any)?.seo || {}), ...(offering.seo as any) }
+    : (pageContent as any)?.seo,
 };
-const heroFields = offering.hero || {};
+const heroFields: any = offering.hero || {};
+// Ensure og:image is never an SVG (BaseLayout skips SVG preload/meta). Prefer
+// offering hero image (raster), else fall back to site og (og-viper.webp).
+if (!mergedContent.seo) mergedContent.seo = {};
+if (!mergedContent.seo.image || mergedContent.seo.image.endsWith(".svg")) {
+  mergedContent.seo.image = heroFields.image || (pageContent as any)?.seo?.image || "/images/og-viper.webp";
+}
+
+// Resolve {placeholders} in service-specific prose + SEO/JSON-LD (mirrors index.astro)
+if (heroFields.subtitle)
+  heroFields.subtitle = resolveTemplates(heroFields.subtitle, bd, SITE_NAME, vehicleName);
+if ((offering as any).description)
+  (offering as any).description = resolveTemplates((offering as any).description, bd, SITE_NAME, vehicleName);
+if (mergedContent.seo?.title)
+  mergedContent.seo.title = resolveTemplates(mergedContent.seo.title, bd, SITE_NAME, vehicleName);
+if (mergedContent.seo?.description)
+  mergedContent.seo.description = resolveTemplates(mergedContent.seo.description, bd, SITE_NAME, vehicleName);
+if (mergedContent.jsonld?.org_description)
+  mergedContent.jsonld.org_description = resolveTemplates(
+    mergedContent.jsonld.org_description,
+    bd,
+    SITE_NAME,
+    vehicleName,
+  );
+if (mergedContent.jsonld?.org_name)
+  mergedContent.jsonld.org_name = resolveTemplates(
+    mergedContent.jsonld.org_name,
+    bd,
+    SITE_NAME,
+    vehicleName,
+  );
 ---
 
 <BaseLayout
@@ -70,7 +105,7 @@ const heroFields = offering.hero || {};
     hero={{
       subtitle: heroFields.subtitle,
       cta_text: heroFields.cta_text,
-      tagline: heroFields.tagline,
+      tagline: offering.title || heroFields.tagline,
       image: heroFields.image,
       phoneItaly: hero.phone_italy,
       phoneSpain: hero.phone_spain,

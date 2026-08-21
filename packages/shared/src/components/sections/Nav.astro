@@ -33,14 +33,14 @@ const items = navItems ?? [
 ];
 ---
 
-<div role="banner" class="navbar">
+<div class="navbar">
   <div class="content-wrapper">
     <div class="navbar-wrapper">
       <a href="/" class="logo-link" aria-label={s.nav.homeAria}>
         <span class="brand-text">{brandName}</span>
       </a>
-      <nav role="navigation" class="nav-menu-wrapper">
-        <ul role="list" class="nav-menu-list">
+      <nav class="nav-menu-wrapper" aria-label="Primary">
+        <ul class="nav-menu-list">
           <li class="nav-list-item nav-list-brand">
             <a href="/" class="logo-link" aria-label={s.nav.homeAria}>
               <span class="brand-text">{brandName}</span>
@@ -63,11 +63,10 @@ const items = navItems ?? [
                       set:html={ICONS.caretDown}
                     />
                   </a>
-                  <ul role="menu" class="chauffeur-dropdown dropdown-panel">
+                  <ul class="chauffeur-dropdown dropdown-panel">
                     {item.children.map((child) => (
-                      <li role="none">
+                      <li>
                         <a
-                          role="menuitem"
                           href={child.href}
                           class="nav-link dropdown-panel-item"
                         >
@@ -117,7 +116,6 @@ const items = navItems ?? [
           type="button"
           class="close-menu-button"
           aria-label={s.nav.menuAria}
-          aria-haspopup="menu"
           aria-expanded="false"
         >
           <span class="nav-close">
@@ -144,7 +142,6 @@ const items = navItems ?? [
           type="button"
           class="open-menu-button"
           aria-label={s.nav.menuAria}
-          aria-haspopup="menu"
           aria-expanded="false"
         >
           <span class="nav-open">

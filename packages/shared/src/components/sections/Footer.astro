@@ -78,6 +78,7 @@ const mapEmbedUrl = pageContent?.map_embed_url;
                   <a
                     href={link.href}
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="social-link"
                     aria-label={link.label}
                   >
@@ -97,7 +98,7 @@ const mapEmbedUrl = pageContent?.map_embed_url;
         </div>
         <div class="footer-links-wrapper">
           <div class="footer-links-column">
-            <div class="footer-links-heading">{s.footer.pagesHeading}</div>
+            <h2 class="footer-links-heading">{s.footer.pagesHeading}</h2>
             <div class="footer-links">
               {
                 links.map((l) => (

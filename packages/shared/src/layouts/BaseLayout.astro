@@ -166,7 +166,7 @@ const jsonLdWebSite = jsonEscape(
     <Font cssVariable="--font-families--accent-font" />
     <link href="/styles/theme.css" rel="stylesheet" />
     <title>{seo?.title}</title>
-    {ogImagePath && !ogImagePath.endsWith(".svg") && (
+    {ogImagePath && !ogImagePath.endsWith(".svg") && ogImagePath !== preloadImage && (
       <link rel="preload" as="image" href={ogImagePath} />
     )}
     {preloadImage && (

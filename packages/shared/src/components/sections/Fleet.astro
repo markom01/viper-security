@@ -12,7 +12,17 @@ const f = pageContent?.fleet;
 <section id="fleet" class="section home-about-section">
   <div class="content-wrapper">
     <div class="home-about-content">
-      <div data-scroll-reveal>
+      <div data-scroll-reveal class="home-about-text-wrapper fleet-intro">
+        <div class="about-heading">
+          <div class="subheadline-wrapper">
+            <div class="subheadline-line"></div>
+            <div class="subheadline">{s.fleet.subheadline}</div>
+          </div>
+          <h2>{f?.heading}</h2>
+        </div>
+        {fleetFeatures && <p>{fleetFeatures}</p>}
+      </div>
+      <div data-scroll-reveal class="fleet-vehicles">
         <div role="list" class="_3-column-collection" data-count={vehicles?.length ?? 0}>
           {
             vehicles?.map((v: FleetEntry) => {
@@ -26,10 +36,8 @@ const f = pageContent?.fleet;
               }
               return (
                 <div role="listitem">
-                  <a
-                    href="#fleet"
+                  <div
                     class="car-card"
-                    aria-label={d.name}
                     style="border-color: var(--colors--cloud);"
                   >
                     <div class="car-card-details">
@@ -117,22 +125,12 @@ const f = pageContent?.fleet;
                       </div>
                     </div>
                     <div style="opacity: 0;" class="car-card-hover-bg" />
-                  </a>
+                  </div>
                 </div>
               );
             })
           }
         </div>
-      </div>
-      <div data-scroll-reveal class="home-about-text-wrapper">
-        <div class="about-heading">
-          <div class="subheadline-wrapper">
-            <div class="subheadline-line"></div>
-            <div class="subheadline">{s.fleet.subheadline}</div>
-          </div>
-          <h2>{f?.heading}</h2>
-        </div>
-        {fleetFeatures && <p>{fleetFeatures}</p>}
       </div>
     </div>
   </div>
@@ -144,10 +142,13 @@ const f = pageContent?.fleet;
        3+ = tablet layout on all sizes, wrapping new rows when out of space
      Without a :has(count) selector the grid alone can't distinguish, so
      the list carries data-count and three scoped overrides below. */
-  #fleet .home-about-content > :first-child {
+  #fleet .home-about-content > .fleet-vehicles {
     flex: 1 1 0;
     min-width: 0;
   }
+  /* DOM is h2-first for heading outline; visuals keep vehicles left via order. */
+  #fleet .fleet-intro { order: 2; }
+  #fleet .fleet-vehicles { order: 1; }
   /* Default (2-card case): auto-fit horizontal wrapping. Works as "now". */
   #fleet ._3-column-collection {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -190,12 +191,12 @@ const f = pageContent?.fleet;
       flex-direction: column;
     }
     /* In column layout flex-basis is height — the grid must fill width. */
-    #fleet .home-about-content > :first-child {
+    #fleet .fleet-vehicles {
       flex: 0 0 auto;
       width: 100%;
       order: 2;
     }
-    #fleet .home-about-text-wrapper {
+    #fleet .fleet-intro {
       order: 1;
     }
   }

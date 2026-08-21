@@ -17,7 +17,7 @@ export function buildFooterNav(labels: Record<string, string>): NavLink[] {
     { label: "Import & Export", href: "/services/import-export" },
     { label: "Customizing & Design", href: "/services/customizing" },
     { label: labels["nav.gallery"] ?? "Gallery", href: "/gallery" },
-    { label: labels["nav.fleet"] ?? "Our Fleet", href: "/gallery" },
+    { label: labels["nav.fleet"] ?? "Our Fleet", href: "/gallery#fleet" },
     { label: "Privacy Policy", href: "/privacy-policy" },
   ];
 }

@@ -1130,6 +1130,11 @@ blockquote {
   margin-bottom: 10px;
   break-inside: avoid;
 }
+@media (max-width: 479px) {
+  .footer-links {
+    column-count: 1;
+  }
+}
 .footer-links-heading {
   font-family: var(--font-families--title-font);
   color: var(--colors--pure);

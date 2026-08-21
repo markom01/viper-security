@@ -87,10 +87,10 @@ labels:
   footer_pagesHeading: Links
   gallery_heading: Gallery
   gallery_subheadline: Selected builds from our garage.
-  gallery_group_brand: Brand & Home
-  gallery_group_supercar: Supercar Transport
-  gallery_group_customizing: Customizing & Design
-  gallery_group_auction: Auction & Sale
-  gallery_group_import-export: Import & Export
-  gallery_group_all-builds: All Builds
+  gallery.brand: Brand & Home
+  gallery.supercar: Supercar Transport
+  gallery.customizing: Customizing & Design
+  gallery.auction: Auction & Sale
+  gallery.import-export: Import & Export
+  gallery.all-builds: All Builds
 ---

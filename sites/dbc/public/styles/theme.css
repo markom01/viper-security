@@ -5,7 +5,7 @@
 :root {
   --colors--gold: #ea580c;
   --colors--gold-bright: #fb923c;
-  --colors--amber: #f97416b3;
+  --colors--amber: #f97316;
   /* Subheadline renders on white hero bg — #ea580c fails WCAG AA (3.55:1).
      Darker orange (orange-700) = 5.18:1. Keeps brand family, passes contrast. */
   --colors--gold-on-light: #c2410c;

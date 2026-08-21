@@ -130,24 +130,29 @@ const countryAttr = country ? { "data-country-location": "" } : {};
     import autoComplete from "@tarekraafat/autocomplete.js";
     const NHTSA = "https://vpic.nhtsa.dot.gov/api/vehicles";
     const YEARS: number[] = [];
-    for (let y = 1992; y <= 2026; y++) YEARS.push(y);
+    for (let y = 1992; y <= new Date().getFullYear() + 1; y++) YEARS.push(y);
 
-    const makeInput = document.querySelector<HTMLInputElement>("[data-vehicle-make]");
-    const modelInput = document.querySelector<HTMLInputElement>("[data-vehicle-model]");
-    const yearInput = document.querySelector<HTMLInputElement>("[data-vehicle-year]");
-    const typeInput = document.querySelector<HTMLSelectElement>("[data-vehicle-type]");
-    const summary = document.querySelector<HTMLInputElement>("[data-vehicle-summary]");
-    if (!makeInput || !modelInput || !yearInput || !typeInput) throw new Error("vehicle fields missing");
-    // Non-null refs for use inside nested closures (TS loses narrowing).
-    const makeF: HTMLInputElement = makeInput;
-    const modelF: HTMLInputElement = modelInput;
-    const yearF: HTMLInputElement = yearInput;
-    const typeF: HTMLSelectElement = typeInput;
+    // Support multiple vehicle blocks on the same page (e.g. 2 form_fields of
+    // type:vehicle). Scope all selectors to the container; global querySelector
+    // only wired the first block.
+    const vehicleBlocks = document.querySelectorAll<HTMLElement>(".vehicle-fields");
+    // Shared across blocks so switching type in one block warms the cache for others
+    const makesByType: Record<string, string[]> = {}; // type → make names (sorted)
+    vehicleBlocks.forEach((block) => {
+      const makeInput = block.querySelector<HTMLInputElement>("[data-vehicle-make]");
+      const modelInput = block.querySelector<HTMLInputElement>("[data-vehicle-model]");
+      const yearInput = block.querySelector<HTMLInputElement>("[data-vehicle-year]");
+      const typeInput = block.querySelector<HTMLSelectElement>("[data-vehicle-type]");
+      const summary = block.querySelector<HTMLInputElement>("[data-vehicle-summary]");
+      if (!makeInput || !modelInput || !yearInput || !typeInput) return;
+      // Non-null refs for use inside nested closures (TS loses narrowing).
+      const makeF: HTMLInputElement = makeInput;
+      const modelF: HTMLInputElement = modelInput;
+      const yearF: HTMLInputElement = yearInput;
+      const typeF: HTMLSelectElement = typeInput;
 
     const jf = (r: Response) => r.json();
 
-    // Caches, keyed by vehicle type where relevant.
-    const makesByType: Record<string, string[]> = {}; // type → make names (sorted)
     let activeType: string = "car";       // currently selected vehicle type
     let modelNames: string[] = [];          // models for the selected make
     let modelYears: Record<string, number[]> = {}; // model → production years
@@ -377,7 +382,8 @@ const countryAttr = country ? { "data-country-location": "" } : {};
       });
     });
 
-    getMakes(); // prewarm the make list
+      getMakes(); // prewarm the make list
+    });
   </script>
   )
 }

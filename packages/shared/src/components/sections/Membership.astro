@@ -79,8 +79,11 @@ const s = resolveLabels(pageContent, STRINGS);
     height: 100%;
   }
   .membership-section .memb-featured-card {
-    border-top-color: var(--colors--gold-bright);
-    border-top-width: 8px;
+    border-top-color: transparent;
+    border-top-width: 0;
+  }
+  .membership-section .memb-featured-card::before {
+    background: var(--colors--gold-bright);
   }
   .membership-section .memb-badge {
     background: var(--colors--amber);

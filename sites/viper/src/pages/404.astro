@@ -20,6 +20,9 @@ const s = STRINGS;
     <link href="/favicon.svg" rel="shortcut icon" type="image/x-icon" />
   </head>
   <body>
-    <PageNotFound notFound={s.notFound} />
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <main id="main-content">
+      <PageNotFound notFound={s.notFound} />
+    </main>
   </body>
 </html>

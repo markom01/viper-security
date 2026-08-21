@@ -4,6 +4,7 @@
 // cannot drift. This file only gathers DBC-specific collections and passes
 // them through with DBC's chrome/identity.
 import { getCollection } from "astro:content";
+import { resolveTemplates } from "@garage/shared/config/templates";
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { site } from "../../config/site";
 
@@ -24,7 +25,9 @@ const [pageContentEntry] = await getCollection("page-content");
 const [howItWorksEntry] = await getCollection("how-it-works");
 
 const howItWorks = howItWorksEntry?.data || {};
-const baseContent = pageContentEntry?.data || {};
+const baseContent: any = pageContentEntry?.data || {};
+const bd = baseContent?.booking_data;
+const vehicleName = baseContent?.vehicle_name;
 
 // Site-global chrome + identity only. Per-service stats/cta overrides +
 // hero image are merged in the shared ServicePage renderer.
@@ -34,7 +37,9 @@ const baseContent = pageContentEntry?.data || {};
 const fleetSection = offering.fleet_section || {};
 const pageContent = {
   ...baseContent,
-  seo: offering.seo || baseContent?.seo,
+  seo: offering.seo
+    ? { ...(baseContent?.seo || {}), ...offering.seo }
+    : baseContent?.seo,
   ...((fleetSection.heading || fleetSection.subheadline) && {
     fleet: {
       ...(baseContent?.fleet || {}),
@@ -63,7 +68,19 @@ const fleetFeaturesText =
       : allFleetFeatures.slice(0, -1).join(", ") + ", and " + allFleetFeatures.slice(-1)[0] + "."
     : "";
 const hasFleet = !!offering.fleet?.length;
-const heroFields = offering.hero || {};
+const heroFields: any = offering.hero || {};
+if (heroFields.subtitle)
+  heroFields.subtitle = resolveTemplates(heroFields.subtitle, bd, site.name, vehicleName);
+if ((offering as any).description)
+  (offering as any).description = resolveTemplates((offering as any).description, bd, site.name, vehicleName);
+if ((pageContent as any).seo?.title)
+  (pageContent as any).seo.title = resolveTemplates((pageContent as any).seo.title, bd, site.name, vehicleName);
+if ((pageContent as any).seo?.description)
+  (pageContent as any).seo.description = resolveTemplates((pageContent as any).seo.description, bd, site.name, vehicleName);
+if ((pageContent as any).jsonld?.org_description)
+  (pageContent as any).jsonld.org_description = resolveTemplates((pageContent as any).jsonld.org_description, bd, site.name, vehicleName);
+if ((pageContent as any).jsonld?.org_name)
+  (pageContent as any).jsonld.org_name = resolveTemplates((pageContent as any).jsonld.org_name, bd, site.name, vehicleName);
 ---
 
 <SiteLayout pageContent={pageContent} ogLocale="en_US" preloadImage={heroFields.image}>
@@ -74,7 +91,7 @@ const heroFields = offering.hero || {};
     hero={{
       subtitle: heroFields.subtitle,
       cta_text: heroFields.cta_text,
-      tagline: heroFields.tagline,
+      tagline: offering.title || heroFields.tagline,
       image: heroFields.image,
       phoneSpain: site.whatsappNumber,
       fleetHref: "/gallery",

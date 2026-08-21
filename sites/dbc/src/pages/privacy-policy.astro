@@ -20,6 +20,7 @@ const pageContent = {
     title: `Privacy Policy | ${site.name}`,
     description:
       "How DB Custom Garage collects, uses, and protects your personal data when you use our website or contact us.",
+    theme_color: site.themeColor,
     image: "/images/og-dbc.webp",
   },
 };
@@ -29,7 +30,10 @@ const pageContent = {
   <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "4rem 24px" }}>
     <article>
       {Content ? (
-        <Content />
+        <>
+          <h1>{policy.data.heading ?? "Privacy Policy"}</h1>
+          <Content />
+        </>
       ) : (
         <>
           <h1>Privacy Policy</h1>
@@ -53,7 +57,7 @@ const pageContent = {
   }
   article :global(p),
   article :global(li) {
-    color: var(--colors--slate);
+    color: var(--colors--cloud);
     line-height: 1.6;
   }
   article :global(ul) {

@@ -7,7 +7,7 @@ offerings:
     seo:
       title: DB Custom Garage — Enclosed Supercar Transport
       description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe, the UK, and the USA.
-      image: /images/from-wix/hero.webp
+      image: /images/cms/from-wix/hero.webp
     hero:
       subtitle: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs — across Europe, the UK, and the USA.
       cta_text: Get A Quote
@@ -90,7 +90,7 @@ offerings:
     seo:
       title: DB Custom Garage — Classic Cars & Motorcycles Sale & Auction
       description: We sell your classic or supercar at auction — without you leaving your garage.
-      image: /images/from-wix/auction-hero.webp
+      image: /images/cms/from-wix/auction-hero.webp
     hero:
       subtitle: We sell your classic or supercar — without you leaving your garage.
       cta_text: Get A Quote
@@ -159,7 +159,7 @@ offerings:
     seo:
       title: DB Custom Garage — Off-Market Sourcing & Consulting
       description: Find your dream car or invest off the open market, with research, consulting and legal support.
-      image: /images/from-wix/classic-hero.webp
+      image: /images/cms/from-wix/classic-hero.webp
     hero:
       subtitle: Find your dream car or invest off the open market — with research, consulting and legal support.
       cta_text: Get A Quote
@@ -221,7 +221,7 @@ offerings:
     seo:
       title: DB Custom Garage — Import & Export Logistics
       description: Full-service vehicle import and export — cars and motorcycles — handled end to end.
-      image: /images/from-wix/import-export.webp
+      image: /images/cms/from-wix/import-export.webp
     hero:
       subtitle: Full-service vehicle import and export — cars and motorcycles — paperwork, customs, shipping and delivery handled end to end.
       cta_text: Get A Quote
@@ -314,7 +314,7 @@ offerings:
     seo:
       title: DB Custom Garage — Automotive Customizing & Design Projects
       description: Bespoke design and build — from restomod to show-grade.
-      image: /images/from-wix/hummer-project.webp
+      image: /images/cms/from-wix/hummer-project.webp
     hero:
       subtitle: Bespoke design and build — from restomod to show-grade.
       cta_text: Get A Quote

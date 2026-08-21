@@ -112,7 +112,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
           class="booking-form-wrapper"
         >
           <div
-            style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:24px 24px 0 0;"
+            style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:18px 18px 0 0;"
           >
           </div>
           <div class="booking-form-block">
@@ -120,8 +120,10 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
               class={`booking-form${hasBooking ? "" : " garage-form"}`}
               aria-label={s.hero.bookingFormAria}
               data-netlify="true"
+              netlify-honeypot="bot-field"
               name="booking-form"
             >
+              <input type="hidden" name="bot-field" aria-hidden="true" tabindex="-1" autocomplete="off" style="display:none" />
               <div class="left-side-fields">
                 <div class="booking-form-label-field">
                   <label class="booking-form-label" for="full-name"
@@ -189,7 +191,6 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                         class="booking-form-field"
                         name="Service"
                         id="form-service"
-                        required
                         disabled
                         aria-label="Service"
                       >
@@ -208,7 +209,6 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                         class="booking-form-field"
                         name="Destination"
                         id="form-destination"
-                        required
                         disabled
                         aria-label="Destination"
                       >
@@ -284,13 +284,16 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                 {
                   hasBooking && (
                     <div class="booking-form-label-field" id="form-price-field">
-                      <label class="booking-form-label">
+                      <div class="booking-form-label" id="form-price-label">
                         {s.form.priceLabel}
-                      </label>
+                      </div>
                       <div
                         class="booking-form-price"
                         id="form-price-value"
                         data-state="placeholder"
+                        role="status"
+                        aria-live="polite"
+                        aria-labelledby="form-price-label"
                       >
                         {s.form.pricePlaceholder}
                       </div>
@@ -673,6 +676,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
         // misleading "Choose location first" wording).
         placeOption(S, l ? SS : CL);
         S.disabled = !l;
+        S.required = !S.disabled;
         for (let i = 0; i < s.length; i++) {
           const o = document.createElement("option");
           o.value = s[i].name;
@@ -697,6 +701,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
         }
         placeOption(D, sn ? SR : CS);
         D.disabled = !sn;
+        D.required = !D.disabled;
         for (let j = 0; j < rt.length; j++) {
           const r2 = rt[j];
           const o2 = document.createElement("option");
@@ -862,6 +867,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
         window.open(
           "https://wa.me/" + digits + "?text=" + encodeURIComponent(msg),
           "_blank",
+          "noopener,noreferrer",
         );
       });
       // Balanced field grid: pick a column count so items pack with no empty

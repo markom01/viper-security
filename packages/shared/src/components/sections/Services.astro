@@ -38,7 +38,7 @@ const services = marbella || milano || [];
                 )}
                 <div class="service-info-wrapper">
                   <h3 class="service-listing-name">{svc.title}</h3>
-                  <div style="opacity: 0;" class="service-short-description">
+                  <div class="service-short-description">
                     {svc.description}
                   </div>
                 </div>
@@ -51,11 +51,19 @@ const services = marbella || milano || [];
   </div>
 </section>
 <style>
-  .service-card:hover .service-short-description {
+  .service-card:hover .service-short-description,
+  .service-card:focus-within .service-short-description {
     opacity: 1 !important;
     transform: translateY(0) !important;
   }
+  @media (hover: none) {
+    .service-short-description {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
   .service-short-description {
+    opacity: 0;
     transition:
       opacity 0.3s ease,
       transform 0.3s ease;
