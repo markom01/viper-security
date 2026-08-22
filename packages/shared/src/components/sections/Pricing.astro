@@ -76,19 +76,19 @@ const allCards: PricingCard[] = [marbellaCard, milanoCard].filter(
     <div data-scroll-reveal class="steps-heading-wrapper">
       <div class="subheadline-wrapper">
         <div class="subheadline-line"></div>
-        <div class="subheadline">{s.pricing.title}</div>
+        <h2 class="subheadline">{s.pricing.title}</h2>
       </div>
     </div>
     <div data-scroll-reveal class="pricing-grid">
       {
         allCards.map((card) => (
           <div class="pricing-card-wrapper">
-            <h2 class="pricing-card-heading">{card.name}</h2>
+            <h3 class="pricing-card-heading">{card.name}</h3>
             <div class="booking-form-wrapper pricing-card">
               {card.sections.map((section, si) => (
                 <div class="pricing-section-wrap">
                   {si > 0 && <div class="pricing-section-divider" />}
-                  <h3 class="pricing-section-title">{section.title}</h3>
+                  <h4 class="pricing-section-title">{section.title}</h4>
                   {section.routes.map((item, ri) => (
                     <div
                       class={

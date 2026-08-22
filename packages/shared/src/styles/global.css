@@ -767,6 +767,9 @@ blockquote {
   height: 100%;
 }
 ._4-column-collection {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   grid-column-gap: 20px;
   grid-row-gap: 40px;
   grid-template-rows: auto;
@@ -1184,6 +1187,9 @@ blockquote {
   font-weight: 500;
 }
 ._3-column-collection {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   grid-column-gap: 20px;
   grid-row-gap: 40px;
   grid-template-rows: auto;

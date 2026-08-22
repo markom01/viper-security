@@ -92,20 +92,12 @@ const jd = {
 // verbatim (no escaping). jsonEscape converts `<`, `>`, `&` and U+2028/U+2029
 // to Unicode escapes that decode back to identical JSON — closing the raw-text
 // `<script>` boundary while the strict CSP keeps script-src 'self'.
-const addressJson = jd.hasAddress
-  ? [
-      {
-        "@type": "PostalAddress",
-        addressLocality: jd.spainLocality,
-        addressCountry: "ES",
-      },
-      {
-        "@type": "PostalAddress",
-        addressLocality: jd.italyLocality,
-        addressCountry: "IT",
-      },
-    ]
-  : undefined;
+const addressJson = (() => {
+  const addrs: { "@type": string; addressLocality: string; addressCountry: string }[] = [];
+  if (jd.spainLocality) addrs.push({ "@type": "PostalAddress", addressLocality: jd.spainLocality, addressCountry: "ES" });
+  if (jd.italyLocality) addrs.push({ "@type": "PostalAddress", addressLocality: jd.italyLocality, addressCountry: "IT" });
+  return addrs.length ? addrs : undefined;
+})();
 const jdPhones = [jd.phoneSpain, jd.phoneItaly].filter(Boolean);
 const jsonLdOrg = cmsJd?.org_name
   ? jsonEscape(
@@ -139,7 +131,6 @@ const jsonLdWebSite = jd.webSiteName || jd.webSiteUrl
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style is:global>
       [tabindex="-1"]:focus-visible {
         outline: 2px solid var(--colors--amber);
@@ -170,11 +161,8 @@ const jsonLdWebSite = jd.webSiteName || jd.webSiteUrl
     <Font cssVariable="--font-families--accent-font" />
     <link href="/styles/theme.css" rel="stylesheet" />
     <title>{seo?.title ?? jd.webSiteName ?? jd.orgName ?? brandName ?? ""}</title>
-    {ogImagePath && !ogImagePath.endsWith(".svg") && ogImagePath !== preloadImage && (
-      <link rel="preload" as="image" href={ogImagePath} />
-    )}
     {preloadImage && (
-      <link rel="preload" as="image" href={preloadImage} />
+      <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />
     )}
     <link rel="canonical" href={canonicalUrl} />
     {seo?.description && <meta content={seo.description} name="description" />}
@@ -210,12 +198,13 @@ const jsonLdWebSite = jd.webSiteName || jd.webSiteUrl
         font-display: swap !important;
       }
     </style>
-    <link href="/favicon.svg" rel="shortcut icon" type="image/x-icon" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {jsonLdOrg && <script type="application/ld+json" set:html={jsonLdOrg} />}
     {jsonLdWebSite && <script type="application/ld+json" set:html={jsonLdWebSite} />}
   </head>
   <body>
+    <a href="#main-content" class="skip-link">{s.accessibility.skipLink}</a>
     <Nav
       brandName={brandName ?? jd.orgName}
       pageContent={pageContent}
@@ -223,7 +212,6 @@ const jsonLdWebSite = jd.webSiteName || jd.webSiteUrl
       ctaLabel={ctaLabel}
     />
     <DropdownMenu />
-    <a href="#main-content" class="skip-link">{s.accessibility.skipLink}</a>
     <main id="main-content" class="page-wrapper" aria-label="Main content">
       <slot />
     </main>

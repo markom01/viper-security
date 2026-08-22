@@ -38,9 +38,10 @@ if (navbar) {
   });
 }
 
-// aria-current on the link matching the current path
+  // aria-current only for non-hash links matching the current path
   document.querySelectorAll<HTMLElement>(".nav-link").forEach((a) => {
     const href = a.getAttribute("href") || "";
+    if (href.startsWith("/#")) return;
     const path = href.split("#")[0] || "/";
     if (path === location.pathname) a.setAttribute("aria-current", "page");
   });

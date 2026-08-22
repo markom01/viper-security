@@ -29,7 +29,7 @@ const baseId = "about-carousel";
   aria-roledescription="carousel"
   aria-label={alt}
 >
-  <div class="carousel-viewport" tabindex="0">
+  <div class="carousel-viewport" tabindex="0" role="region" aria-label={`${alt} — scrollable images, use arrow buttons or swipe`}>
     <div class="carousel-track">
       {
         images.map((img, i) => (

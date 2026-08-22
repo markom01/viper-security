@@ -53,11 +53,15 @@ try {
   dims = { width: Number(width) || 800, height: Number(height) || 600 };
 }
 let optimized: { src: string };
-try {
-  optimized = await getImage({ src, width: dims.width, height: dims.height });
-} catch (err) {
-  console.warn(`[ZoomImage] getImage failed for ${typeof src === "string" ? src : src.src}`, err);
-  optimized = { src: typeof src === "string" ? src : src.src };
+if (typeof src === "string" && /^\s*(javascript|data|vbscript):/i.test(src)) {
+  optimized = { src: "/images/placeholder.webp" };
+} else {
+  try {
+    optimized = await getImage({ src, width: dims.width, height: dims.height });
+  } catch (err) {
+    console.warn(`[ZoomImage] getImage failed for ${typeof src === "string" ? src : src.src}`, err);
+    optimized = { src: typeof src === "string" ? src : src.src };
+  }
 }
 
 ---
@@ -72,7 +76,8 @@ try {
 >
   <Image
     src={src}
-    alt={alt}
+    alt=""
+    aria-hidden="true"
     class={imgClass}
     loading={eager ? "eager" : loading}
     decoding={decoding}

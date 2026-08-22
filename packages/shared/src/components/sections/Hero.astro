@@ -136,8 +136,9 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
               data-netlify="true"
               netlify-honeypot="bot-field"
               name="booking-form"
+              method="POST"
             >
-              <input type="hidden" name="bot-field" aria-hidden="true" tabindex="-1" autocomplete="off" style="display:none" />
+              <input type="text" name="bot-field" aria-hidden="true" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden" />
               <div class="left-side-fields">
                 <div class="booking-form-label-field">
                   <label class="booking-form-label" for="full-name"
@@ -150,6 +151,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                     placeholder={s.form.namePlaceholder}
                     type="text"
                     required
+                    autocomplete="name"
                     aria-label="Full Name"
                   />
                 </div>
@@ -164,6 +166,8 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                     placeholder={s.form.phonePlaceholder}
                     type="tel"
                     required
+                    autocomplete="tel"
+                    inputmode="tel"
                     aria-label="Phone"
                   />
                 </div>
@@ -186,7 +190,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                         required
                         aria-label="Location"
                       >
-                        <option value="">{s.form.selectLocation}</option>
+                        <option value="" disabled selected hidden>{s.form.selectLocation}</option>
                         <option value="spain">{bd?.spain?.label}</option>
                         <option value="italy">{bd?.italy?.label}</option>
                       </select>
@@ -208,7 +212,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                         disabled
                         aria-label="Service"
                       >
-                        <option value="">{s.form.chooseLocationFirst}</option>
+                        <option value="" disabled selected hidden>{s.form.chooseLocationFirst}</option>
                       </select>
                     </div>
                   )
@@ -226,7 +230,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                         disabled
                         aria-label="Destination"
                       >
-                        <option value="">{s.form.chooseServiceFirst}</option>
+                        <option value="" disabled selected hidden>{s.form.chooseServiceFirst}</option>
                       </select>
                     </div>
                   )
@@ -256,14 +260,14 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                       <label class="booking-form-label" for="form-message">
                         {s.form.message}
                       </label>
-                      <input
+                      <textarea
                         class="booking-form-field"
                         id="form-message"
                         name="Message"
-                        type="text"
+                        rows="3"
                         placeholder={s.form.messagePlaceholder}
                         aria-label="Message"
-                      />
+                      ></textarea>
                     </div>
                   )
                 }
@@ -280,7 +284,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                         required
                         aria-label="Service"
                       >
-                        <option value="">{s.form.selectService}</option>
+                        <option value="" disabled selected hidden>{s.form.selectService}</option>
                         {SCRIPT_DATA.SERVICES.map((t) => (
                           <option value={t}>{t}</option>
                         ))}
@@ -315,11 +319,10 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
                   )
                 }
                 <div class="booking-button-wrapper">
-                  <input
+                  <button
                     type="submit"
                     class="booking-form-button home-booking-form"
-                    value={s.form.bookNow}
-                  />
+                  >{s.form.bookNow}</button>
                 </div>
               </div>
             </form>
@@ -578,7 +581,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
       ) as HTMLElement | null;
       const form = document.querySelector<HTMLFormElement>(".booking-form");
       const btn =
-        form?.querySelector<HTMLInputElement>(".booking-form-button") ?? null;
+        form?.querySelector<HTMLButtonElement>(".booking-form-button") ?? null;
       const formError = document.querySelector<HTMLElement>(
         ".form-error-message",
       );
@@ -687,6 +690,9 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
         while (sel.firstChild) sel.removeChild(sel.firstChild);
         const o = document.createElement("option");
         o.value = "";
+        o.disabled = true;
+        o.hidden = true;
+        o.selected = true;
         o.textContent = text;
         sel.appendChild(o);
       }

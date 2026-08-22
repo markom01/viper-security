@@ -32,12 +32,13 @@ const links = footerItems ?? [
   { label: "Privacy Policy", href: "/privacy-policy" },
 ];
 
-const cleanPhone = (phone?: string) => phone?.replace(/[\s+]/g, "") || "";
+const cleanPhone = (phone?: string) => (phone || "").replace(/\D/g, "");
 const phoneSep = s.footer.phoneSeparator;
 const mapEmbedUrl = pageContent?.map_embed_url;
+const isAllowedMapUrl = (u?: string) => !!u && (u.startsWith("https://www.google.com/maps/embed/") || u.startsWith("https://maps.google.com/"));
 ---
 
-<footer class="footer" role="contentinfo">
+<footer class="footer">
   <div class="content-wrapper">
     <div class="footer-content-wrapper">
       <div class="footer-middle">
@@ -85,7 +86,8 @@ const mapEmbedUrl = pageContent?.map_embed_url;
                       src={`/images/${link.icon}`}
                       width="20"
                       height="20"
-                      loading="eager"
+                      loading="lazy"
+                      decoding="async"
                       alt=""
                       aria-hidden="true"
                     />
@@ -110,7 +112,7 @@ const mapEmbedUrl = pageContent?.map_embed_url;
           </div>
         </div>
         {
-          mapEmbedUrl && (
+          isAllowedMapUrl(mapEmbedUrl) && (
             <div class="footer-map-wrapper">
               <iframe
                 src={mapEmbedUrl}

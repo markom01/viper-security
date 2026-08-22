@@ -25,10 +25,10 @@ const services = marbella || milano || [];
       </div>
     </div>
     <div data-scroll-reveal>
-      <div role="list" class="_4-column-collection">
+      <ul class="_4-column-collection">
         {
           services.map((svc: ServiceOffering) => (
-            <div role="listitem" class="service-collection-item">
+            <li class="service-collection-item">
               <div class="service-card">
                 {(() => { const _img = svc.image ?? svc.hero?.image; return _img ? (
                   <ZoomImage
@@ -49,10 +49,10 @@ const services = marbella || milano || [];
                   </div>
                 </div>
               </div>
-            </div>
+            </li>
           ))
         }
-      </div>
+      </ul>
     </div>
   </div>
 </section>

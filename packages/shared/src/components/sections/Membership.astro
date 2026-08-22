@@ -23,10 +23,10 @@ const s = resolveLabels(pageContent, STRINGS);
       {note && <p class="memb-note">{note}</p>}
     </div>
     <div data-scroll-reveal>
-      <div role="list" class="_3-column-collection">
+      <ul class="_3-column-collection">
         {
           tiers?.map((t: MembershipTier) => (
-            <div role="listitem" style="padding:8px;display:flex;">
+            <li style="padding:8px;display:flex;list-style:none;">
               <div
                 class={
                   "booking-form-wrapper" +
@@ -55,10 +55,10 @@ const s = resolveLabels(pageContent, STRINGS);
                   </ul>
                 </div>
               </div>
-            </div>
+            </li>
           ))
         }
-      </div>
+      </ul>
     </div>
   </div>
 </section>

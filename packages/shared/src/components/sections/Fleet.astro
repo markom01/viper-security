@@ -27,7 +27,7 @@ const f = pageContent?.fleet;
         {fleetFeatures && <p>{fleetFeatures}</p>}
       </div>
       <div data-scroll-reveal class="fleet-vehicles">
-        <div role="list" class="_3-column-collection" data-count={vehicles?.length ?? 0}>
+        <ul class="_3-column-collection" data-count={vehicles?.length ?? 0}>
           {
             vehicles?.map((v: FleetEntry) => {
               const d = v.data || {};
@@ -39,7 +39,7 @@ const f = pageContent?.fleet;
                   specRows.push(d.specs.slice(i, i + 3));
               }
               return (
-                <div role="listitem">
+                <li>
                   <div
                     class="car-card"
                     style="border-color: var(--colors--cloud);"
@@ -57,6 +57,8 @@ const f = pageContent?.fleet;
                               alt={d.name}
                               class="car-listing-image"
                               group="fleet"
+                              widths={[320, 480, 640]}
+                              sizes="(max-width: 767px) 100vw, (max-width: 991px) 50vw, 400px"
                             />
                           )}
                         </div>
@@ -130,11 +132,11 @@ const f = pageContent?.fleet;
                     </div>
                     <div style="opacity: 0;" class="car-card-hover-bg" />
                   </div>
-                </div>
+                </li>
               );
             })
           }
-        </div>
+        </ul>
       </div>
     </div>
   </div>
