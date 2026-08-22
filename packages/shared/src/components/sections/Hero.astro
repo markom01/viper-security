@@ -453,8 +453,8 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
        as its column. The global .booking-form-label-field{width:100%} would
        stretch a lone field to the whole row, so garage-form label-fields use
        width:auto — the grid track (not width) governs the size. */
-    :global(.garage-form .booking-form-label-field) {
-      width: auto !important;
+    :global(.booking-form.garage-form .booking-form-label-field) {
+      width: auto;
     }
     :global(.garage-form .booking-form-field) {
       width: 100%;
@@ -500,15 +500,15 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
     :global(.garage-form .vehicle-fields) {
       display: contents;
     }
-    :global(.garage-form .booking-form-label-field) {
-      width: auto !important;
+    :global(.booking-form.garage-form .booking-form-label-field) {
+      width: auto;
     }
     :global(.garage-form .booking-form-field) {
       width: 100%;
     }
-    :global(.garage-form .form-bottom-row > .booking-button-wrapper) {
+    :global(.booking-form.garage-form .form-bottom-row > .booking-button-wrapper) {
       width: 100%;
-      grid-column: 1 / -1 !important;
+      grid-column: 1 / -1;
     }
   }
   @media (max-width: 991px) {
