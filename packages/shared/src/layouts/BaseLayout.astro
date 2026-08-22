@@ -58,13 +58,14 @@ const bd = pageContent?.booking_data;
 // in dev siteUrl points at prod, so rooting there fetches the image
 // cross-origin (ERR_BLOCKED_BY_ORB) and defeats local preview. Absolute
 // http(s) values pass through unchanged.
+const isSvg = (u: string) => u.toLowerCase().endsWith(".svg");
 const ogImageUrl =
-  (seo?.image
+  (seo?.image && !isSvg(seo.image)
     ? seo.image.startsWith("http")
       ? seo.image
-      : new URL(seo.image, Astro.url.origin)
+      : new URL(seo.image, Astro.url.origin).toString()
     : null) ??
-  (cmsJd?.org_logo?.startsWith("http") ? cmsJd.org_logo : null);
+  (cmsJd?.org_logo?.startsWith("http") && !isSvg(cmsJd.org_logo) ? cmsJd.org_logo : null);
 // Preload only root-relative og paths: they resolve against the SERVING host,
 // so dev preview (localhost) and prod both fetch a same-origin, real file. An
 // absolute `seo.image` (common when CMS fills a prod URL) or org_logo fallback
@@ -121,15 +122,17 @@ const jsonLdOrg = cmsJd?.org_name
       }),
     )
   : null;
-const jsonLdWebSite = jsonEscape(
-  JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: jd.webSiteName,
-    url: jd.webSiteUrl,
-    ...(jd.privacyPolicy ? { privacyPolicy: jd.privacyPolicy } : {}),
-  }),
-);
+const jsonLdWebSite = jd.webSiteName || jd.webSiteUrl
+  ? jsonEscape(
+      JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: jd.webSiteName,
+        url: jd.webSiteUrl,
+        ...(jd.privacyPolicy ? { privacyPolicy: jd.privacyPolicy } : {}),
+      }),
+    )
+  : null;
 ---
 
 <!doctype html>
@@ -137,7 +140,7 @@ const jsonLdWebSite = jsonEscape(
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <style>
+    <style is:global>
       [tabindex="-1"]:focus-visible {
         outline: 2px solid var(--colors--amber);
         outline-offset: 2px;
@@ -166,7 +169,7 @@ const jsonLdWebSite = jsonEscape(
     <Font cssVariable="--font-families--title-font" />
     <Font cssVariable="--font-families--accent-font" />
     <link href="/styles/theme.css" rel="stylesheet" />
-    <title>{seo?.title}</title>
+    <title>{seo?.title ?? jd.webSiteName ?? jd.orgName ?? brandName ?? ""}</title>
     {ogImagePath && !ogImagePath.endsWith(".svg") && ogImagePath !== preloadImage && (
       <link rel="preload" as="image" href={ogImagePath} />
     )}
@@ -174,16 +177,16 @@ const jsonLdWebSite = jsonEscape(
       <link rel="preload" as="image" href={preloadImage} />
     )}
     <link rel="canonical" href={canonicalUrl} />
-    <meta content={seo?.description} name="description" />
+    {seo?.description && <meta content={seo.description} name="description" />}
     {noindex && <meta content="noindex,follow" name="robots" />}
-    <meta content={seo?.title} property="og:title" />
-    <meta content={seo?.description} property="og:description" />
+    {(seo?.title ?? jd.webSiteName ?? jd.orgName) && <meta content={seo?.title ?? jd.webSiteName ?? jd.orgName} property="og:title" />}
+    {seo?.description && <meta content={seo.description} property="og:description" />}
     {ogImageUrl && <meta content={ogImageUrl} property="og:image" />}
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={jd.orgName} />
     <meta property="og:locale" content={ogLocale ?? s.seo.ogLocale} />
-    <meta content={seo?.title} name="twitter:title" />
-    <meta content={seo?.description} name="twitter:description" />
+    {(seo?.title ?? jd.webSiteName ?? jd.orgName) && <meta content={seo?.title ?? jd.webSiteName ?? jd.orgName} name="twitter:title" />}
+    {seo?.description && <meta content={seo.description} name="twitter:description" />}
     {ogImageUrl && <meta content={ogImageUrl} name="twitter:image" />}
     <meta property="og:type" content={s.seo.ogType} />
     <meta content={s.seo.twitterCard} name="twitter:card" />
@@ -210,7 +213,7 @@ const jsonLdWebSite = jsonEscape(
     <link href="/favicon.svg" rel="shortcut icon" type="image/x-icon" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {jsonLdOrg && <script type="application/ld+json" set:html={jsonLdOrg} />}
-    <script type="application/ld+json" set:html={jsonLdWebSite} />
+    {jsonLdWebSite && <script type="application/ld+json" set:html={jsonLdWebSite} />}
   </head>
   <body>
     <Nav
