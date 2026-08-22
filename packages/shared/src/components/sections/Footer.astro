@@ -35,7 +35,12 @@ const links = footerItems ?? [
 const cleanPhone = (phone?: string) => (phone || "").replace(/\D/g, "");
 const phoneSep = s.footer.phoneSeparator;
 const mapEmbedUrl = pageContent?.map_embed_url;
-const isAllowedMapUrl = (u?: string) => !!u && (u.startsWith("https://www.google.com/maps/embed/") || u.startsWith("https://maps.google.com/"));
+const isAllowedMapUrl = (u?: string) => {
+  try {
+    const url = new URL(u || "");
+    return (url.origin === "https://www.google.com" && url.pathname.startsWith("/maps")) || url.origin === "https://maps.google.com";
+  } catch { return false; }
+};
 ---
 
 <footer class="footer">
