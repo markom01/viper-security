@@ -46,9 +46,7 @@ export function resolveTemplates(
   };
   let result = str;
   for (const [key, value] of Object.entries(map)) {
-    if (value) {
-      result = result.replaceAll(key, value);
-    }
+    result = result.replaceAll(key, value);
   }
   return result;
 }

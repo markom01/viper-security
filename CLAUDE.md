@@ -29,11 +29,11 @@ npm run build -w @garage/dbc            # → sites/dbc/dist-dbc
 (cd sites/dbc && npx astro check)
 ```
 
-No lint script. Tests are Playwright-only (`sites/viper/e2e/a11y.spec.ts`); vitest is installed but has no test script. Build before `npm run test:a11y` — the webServer in `sites/viper/playwright.config.js` serves `dist/`.
+No lint script. Tests are Playwright-only (`sites/viper/e2e/a11y.spec.ts`); Build before `npm run test:a11y` — the webServer in `sites/viper/playwright.config.js` serves `dist/`.
 
 ## Architecture
 
-Astro 7 static site (no SSR, no adapter, no routing beyond `/`, `/404`, `/admin`). Tailwind v4 via `@tailwindcss/vite` — no config file, CSS-first. React 19 used only for the 404 page. Deployed to Netlify: push to `main` → auto-build.
+Astro 7 static site (no SSR, no adapter, no routing beyond `/`, `/404`, `/admin`). Hand-written CSS (no Tailwind runtime; `global.css` + site `theme.css` tokens). Deployed to Netlify: push to `main` → auto-build.
 
 - **Content**: 7 Zod-validated markdown collections in [src/content.config.ts](src/content.config.ts) under `src/content/`: `hero`, `how-it-works`, `services`, `fleet`, `pricing`, `membership`, `page-content`. All copy lives in these files.
 - **Data hub**: [src/pages/index.astro](src/pages/index.astro) fetches every collection in frontmatter, resolves `{placeholder}` templates via `resolveTemplates`, then passes props to 13 `.astro` section components in `src/components/sections/`.
