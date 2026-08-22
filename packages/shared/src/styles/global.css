@@ -262,13 +262,13 @@ button,
   /* Dark bronze for text on light sections — passes 4.5:1 on white
      (gold #917148 on white is only ~3.3:1). */
   --colors--bronze: #6f5230;
-  --colors--gold: #917148;
-  --colors--gold-bright: #c8a04c;
-  --colors--amber: #c1a176;
 
-  /* Native scrollbars + widgets follow the dark theme & gold accent */
+  /* Native scrollbars + widgets follow the dark theme & gold accent.
+     Brand accent (--colors--gold/amber) is NOT defined here — each site's
+     theme.css (loaded via /styles/theme.css) owns it: VIPER #917148 gold,
+     DBC #ea580c orange. Shared stays neutral so one build doesn't tint the other. */
   color-scheme: dark;
-  scrollbar-color: var(--colors--gold) var(--colors--onyx);
+  scrollbar-color: var(--colors--gold, #917148) var(--colors--onyx);
   scrollbar-width: thin;
 }
 
