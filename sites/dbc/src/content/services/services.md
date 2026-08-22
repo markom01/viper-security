@@ -12,7 +12,7 @@ offerings:
       subtitle: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs — across Europe, the UK, and the USA.
       cta_text: Get A Quote
       tagline: Supercars & Classics, No Limits
-      image: /images/cms/from-wix/hero.webp
+      image: /images/cms/supercar transport hero.jpeg
     about_text: Enclosed transport with our own trucks and enclosed vehicles — fully insured, secure, safe and clean — all over Europe and the USA.
     steps:
       - title: Request a Quote
