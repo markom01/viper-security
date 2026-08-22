@@ -396,8 +396,8 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
     .garage-form {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      grid-column-gap: 44px;
-      grid-row-gap: 18px;
+      column-gap: 44px;
+      row-gap: 18px;
       align-items: end;
       /* Source order (no dense backfill): 2-col-spanning items like the
          vehicle block flow beside same-row fields instead of scrambling. */
@@ -448,7 +448,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
   .form-bottom-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 44px;
+    column-gap: 44px;
     align-items: end;
     width: 100%;
   }
@@ -465,8 +465,8 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
     .garage-form {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-column-gap: 24px;
-      grid-row-gap: 18px;
+      column-gap: 24px;
+      row-gap: 18px;
       align-items: end;
       grid-auto-flow: row;
     }
@@ -499,7 +499,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
     .right-side-fields {
       width: 100%;
       grid-template-columns: 1fr;
-      grid-column-gap: 0;
+      column-gap: 0;
     }
   }
   @media (max-width: 767px) {
@@ -513,7 +513,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
     .right-side-fields {
       width: 100%;
       grid-template-columns: 1fr;
-      grid-column-gap: 0;
+      column-gap: 0;
     }
   }
   .booking-form-button:disabled {

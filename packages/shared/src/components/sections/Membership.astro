@@ -26,13 +26,12 @@ const s = resolveLabels(pageContent, STRINGS);
       <ul class="_3-column-collection">
         {
           tiers?.map((t: MembershipTier) => (
-            <li style="padding:8px;display:flex;list-style:none;">
+            <li class="memb-tier-item">
               <div
                 class={
-                  "booking-form-wrapper" +
+                  "booking-form-wrapper memb-card" +
                   (t.is_featured ? " memb-featured-card" : "")
                 }
-                style="width:100%;display:flex;flex-direction:column;align-items:center;padding:0;"
               >
                 {t.is_featured ? (
                   <div class="memb-badge">{s.membership.badge}</div>
@@ -41,8 +40,7 @@ const s = resolveLabels(pageContent, STRINGS);
                 )}
                 <div class="memb-card-body">
                   <h3
-                    class="booking-form-label"
-                    style="font-size:1rem;letter-spacing:2px;"
+                    class="booking-form-label memb-tier-name"
                   >
                     {t.name}
                   </h3>
@@ -66,6 +64,7 @@ const s = resolveLabels(pageContent, STRINGS);
   .membership-section .booking-form-wrapper {
     overflow: hidden;
     position: relative;
+    border-top: none;
   }
   .membership-section .booking-form-wrapper::before {
     content: "";
@@ -78,11 +77,22 @@ const s = resolveLabels(pageContent, STRINGS);
     z-index: 1;
     border-radius: 24px 24px 0 0;
   }
-  .membership-section .booking-form-wrapper {
-    border-top: none;
+  .memb-tier-item {
+    padding: 8px;
+    display: flex;
+    list-style: none;
   }
-  .membership-section .booking-form-wrapper {
+  .memb-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
     height: 100%;
+  }
+  .memb-tier-name {
+    font-size: 1rem;
+    letter-spacing: 2px;
   }
   .membership-section .memb-featured-card {
     border-top-color: transparent;
@@ -93,7 +103,7 @@ const s = resolveLabels(pageContent, STRINGS);
   }
   .membership-section .memb-badge {
     background: var(--colors--amber);
-    color: #000;
+    color: var(--colors--onyx);
     text-align: center;
     padding: 10px 20px;
     font-size: 1rem;

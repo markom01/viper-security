@@ -152,8 +152,8 @@ const baseId = "about-carousel";
     height: 36px;
     border: none;
     border-radius: 9999px;
-    background: rgba(0, 0, 0, 0.45);
-    color: #fff;
+    background: color-mix(in srgb, var(--colors--onyx) 45%, transparent);
+    color: var(--colors--pure);
     font-size: 24px;
     line-height: 1;
     cursor: pointer;
@@ -163,10 +163,10 @@ const baseId = "about-carousel";
     transition: background 0.2s ease;
   }
   .carousel-arrow:hover {
-    background: rgba(0, 0, 0, 0.7);
+    background: color-mix(in srgb, var(--colors--onyx) 70%, transparent);
   }
   .carousel-arrow:focus-visible {
-    outline: 2px solid var(--colors--gold, #fff);
+    outline: 2px solid var(--colors--gold, var(--colors--pure));
     outline-offset: 2px;
   }
   .carousel-arrow-prev {
@@ -185,11 +185,11 @@ const baseId = "about-carousel";
     width: 8px;
     height: 8px;
     border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.4);
+    background: color-mix(in srgb, var(--colors--pure) 40%, transparent);
     transition: background 0.2s ease;
   }
   .carousel-dot:hover {
-    background: rgba(255, 255, 255, 0.8);
+    background: color-mix(in srgb, var(--colors--pure) 80%, transparent);
   }
   @media (prefers-reduced-motion: reduce) {
     .carousel-viewport {
