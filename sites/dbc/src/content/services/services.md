@@ -1,26 +1,20 @@
 ---
 offerings:
-  - region: Garage
-    title: Enclosed Supercar Transport
-    description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe, the UK, and the USA.
+  - title: Enclosed Supercar Transport
+    description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe and worldwide.
+    image: ''
     slug: supercar-transport
+    region: Garage
     seo:
       title: DB Custom Garage — Enclosed Supercar Transport
-      description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe, the UK, and the USA.
-      image: /images/cms/from-wix/hero.webp
+      description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe and worldwide.
+      image: /images/from-wix/hero.webp
     hero:
-      subtitle: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs — across Europe, the UK, and the USA.
+      subtitle: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs — across Europe and worldwide.
       cta_text: Get A Quote
       tagline: Supercars & Classics, No Limits
       image: /images/cms/supercar transport hero.jpeg
     about_text: Enclosed transport with our own trucks and enclosed vehicles — fully insured, secure, safe and clean — all over Europe and the USA.
-    steps:
-      - title: Request a Quote
-        description: Tell us the vehicle and route, from and to. We quote a flat per-route price within a day.
-      - title: We Collect Enclosed
-        description: Our enclosed truck collects your car from the origin, sealed and insured.
-      - title: Tracked Delivery
-        description: Live tracking to the destination — delivered safe, clean, and on time.
     about_image: /images/cms/from-wix/hero.webp
     marquee: Enclosed Transport · Insured · Tracked · Europe & USA
     include:
@@ -28,7 +22,7 @@ offerings:
         text: Fully enclosed, never open-deck — full insurance on every move.
         image: /images/cms/gallery/supercars-transport.webp
       - title: EU, UK & USA Routes
-        text: Door-to-door supercar transport across Europe, the UK, and the USA.
+        text: Door-to-door supercar transport across Europe and worldwide.
         image: /images/cms/gallery/supercars-transport-1.webp
       - title: Door-to-Door Delivery
         text: Origin collection to final destination, tracked throughout.
@@ -45,65 +39,61 @@ offerings:
           text: Every move covered on our own trucks and trailers.
         - title: Tracked Door-to-Door
           text: Origin to destination, with updates along the way.
-    stats:
-      subheading: Our own enclosed fleet — fully insured, GPS-tracked transport across Europe, the UK, and the USA.
-      items:
-        - label: 1,000+
-          title: Cars Moved Enclosed
-        - label: 100%
-          title: Insured In Transit
-        - label: Live
-          title: GPS Tracking
-    cta:
-      heading: Your Supercar, Moved Safe
-      text: Get a flat per-route quote for enclosed transport — door to door, insured, tracked.
-
-    fleet:
-      - name: Hummer H2 with Enclosed Trailer
-        type: Heavy-Duty Hauler
-        # Hauler spec rows render right of the image — no passenger seats/baggage.
-        specs:
-          - { label: Year, value: "2008" }
-          - { label: Capacity, value: 2 cars }
-          - { label: Trailer, value: Fully enclosed }
-          - { label: Liftgate, value: Hydraulic }
-          - { label: Tracking, value: GPS live }
-        features:
-          - Enclosed trailer
-          - Hydraulic liftgate
-          - GPS tracking
-          - Fully insured transport
-        image: /images/cms/from-wix/hummer-project.webp
+    steps: []
+    stats: null
+    cta: null
     form_fields:
       - label: Origin
         placeholder: Pick-up location
         name: origin
         type: location
+        side: ''
       - label: Destination
         placeholder: Delivery location
         name: destination
         type: location
-  - region: Garage
-    title: Classic Cars & Motorcycles Sale & Auction
+        side: ''
+    fleet:
+      - name: Hummer H2 with Enclosed Trailer
+        type: Heavy-Duty Hauler
+        year: ''
+        seats: ''
+        baggage: ''
+        capacity_passengers: null
+        capacity_suitcases: null
+        capacity_carryon: null
+        specs:
+          - label: Year
+            value: '2008'
+          - label: Capacity
+            value: 2 cars
+          - label: Trailer
+            value: Fully enclosed
+          - label: Liftgate
+            value: Hydraulic
+          - label: Tracking
+            value: GPS live
+        image: /images/cms/from-wix/hummer-project.webp
+        features:
+          - Enclosed trailer
+          - Hydraulic liftgate
+          - GPS tracking
+          - Fully insured transport
+  - title: Classic Cars & Motorcycles Sale & Auction
     description: Auction preparation and representation on Catawiki, Proxibid, Silverstone, Heritage, Bonhams and more — consignment without leaving your garage.
+    image: ''
     slug: auction
+    region: Garage
     seo:
       title: DB Custom Garage — Classic Cars & Motorcycles Sale & Auction
       description: We sell your classic or supercar at auction — without you leaving your garage.
-      image: /images/cms/from-wix/auction-hero.webp
+      image: /images/from-wix/auction-hero.webp
     hero:
       subtitle: We sell your classic or supercar — without you leaving your garage.
       cta_text: Get A Quote
       tagline: Supercars & Classics, No Limits
-      image: /images/cms/from-wix/auction-hero.webp
+      image: /images/cms/auction hero.jpeg
     about_text: "Active since 2010 in classic and supercar auctions. We prepare your car for auction — complete description and photography — and register it on several online auctions: Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's."
-    steps:
-      - title: Send the Details
-        description: Tell us what you want to sell — photos, condition, and your target.
-      - title: We Prepare & List
-        description: We write the description, shoot the photos, and list across multiple auction platforms.
-      - title: Sold, Funds to You
-        description: We manage bids and the sale — payment lands with you, you never leave the garage.
     about_image: /images/cms/from-wix/auction-hero.webp
     marquee: Auction · Catawiki · Proxibid · Silverstone · Heritage · Sotheby's
     include:
@@ -128,51 +118,41 @@ offerings:
           text: Your car listed across the leading online auction houses.
         - title: You Stay Home
           text: Consignment handled entirely for you.
-    stats:
-      subheading: Active since 2010 — prepared, listed, and sold across the leading online auction houses, from your garage.
-      items:
-        - label: "2010"
-          title: Active In Auctions
-        - label: 6+
-          title: Auction Platforms
-        - label: End-to-End
-          title: Prep To Sale Funds
-    cta:
-      heading: Your Car, Sold at Auction
-      text: Send the details and we prepare, list, and sell it across the leading platforms — you never leave the garage.
-
+    steps: []
+    stats: null
+    cta: null
     form_fields:
       - label: Details
         placeholder: Year, condition, mileage
         name: vehicle_details
+        type: ''
+        side: ''
       - label: Target price
         placeholder: Estimated value or target sale price
         name: target_price
+        type: ''
+        side: ''
       - label: Vehicle (make & model)
         placeholder: Start typing — e.g. Ferrari 812
         name: vehicle_model
         type: vehicle
-  - region: Garage
-    title: Off-Market Sourcing & Consulting
+        side: ''
+    fleet: []
+  - title: Off-Market Sourcing & Consulting
     description: Research, consulting and legal support to find your dream car — or make an investment off the open market.
+    image: ''
     slug: off-market-sourcing
+    region: Garage
     seo:
       title: DB Custom Garage — Off-Market Sourcing & Consulting
       description: Find your dream car or invest off the open market, with research, consulting and legal support.
-      image: /images/cms/from-wix/classic-hero.webp
+      image: /images/from-wix/classic-hero.webp
     hero:
       subtitle: Find your dream car or invest off the open market — with research, consulting and legal support.
       cta_text: Get A Quote
       tagline: Supercars & Classics, No Limits
       image: /images/cms/from-wix/classic-hero.webp
     about_text: Research, consulting and legal support to find your dream car — or make an investment off the open market, with deep market knowledge built since 2010.
-    steps:
-      - title: Define the Target
-        description: Tell us the car, budget, and timeline you are looking for.
-      - title: We Source & Research
-        description: Off-market access, valuation, and provenance research before you commit.
-      - title: You Buy, We Support
-        description: Consulting and legal backing through the whole purchase.
     about_image: /images/cms/from-wix/classic-hero.webp
     marquee: Sourcing · Consulting · Off-Market · Investments
     include:
@@ -197,44 +177,31 @@ offerings:
           text: Research and valuation from deep industry experience.
         - title: Full Support
           text: Consulting and legal backing through the whole buy.
-    stats:
-      subheading: Access to vehicles never listed publicly, backed by research, valuation, and legal support.
-      items:
-        - label: Off-Market
-          title: Only Access
-        - label: "1-to-1"
-          title: Dedicated Consulting
-        - label: Full
-          title: Legal Support
-    cta:
-      heading: Find What Is Never Listed
-      text: Tell us the car you are looking for — we source it off the open market, research it, and support the buy.
-
+    steps: []
+    stats: null
+    cta: null
     form_fields:
       - label: Target vehicle
         placeholder: Make, model, year, budget
         name: target_vehicle
-  - region: Garage
-    title: Import & Export Logistics
+        type: ''
+        side: ''
+    fleet: []
+  - title: Import & Export Logistics
     description: Full-service vehicle import and export — paperwork, customs, shipping and delivery handled end to end.
+    image: ''
     slug: import-export
+    region: Garage
     seo:
       title: DB Custom Garage — Import & Export Logistics
       description: Full-service vehicle import and export — cars and motorcycles — handled end to end.
-      image: /images/cms/from-wix/import-export.webp
+      image: /images/from-wix/import-export.webp
     hero:
       subtitle: Full-service vehicle import and export — cars and motorcycles — paperwork, customs, shipping and delivery handled end to end.
       cta_text: Get A Quote
       tagline: Supercars & Classics, No Limits
       image: /images/cms/from-wix/import-export.webp
-    about_text: Complete support and logistics in buying and selling supercars, classic cars, other vehicles and motorcycles — across Europe, the UK, and beyond.
-    steps:
-      - title: Tell Us the Move
-        description: What vehicle, from where, to where — cars and motorcycles.
-      - title: We Handle Paperwork & Shipping
-        description: Customs, duties, registration, and enclosed shipping where needed.
-      - title: Delivered, Compliant
-        description: End-to-end delivery to your door, fully documented.
+    about_text: Complete support and logistics in buying and selling supercars, classic cars, other vehicles and motorcycles, in the EU and other continents.
     about_image: /images/cms/from-wix/import-export.webp
     marquee: Import · Export · Customs · Logistics
     include:
@@ -259,75 +226,41 @@ offerings:
           text: Full coverage across Europe and other continents.
         - title: Own Transport Fleet
           text: Enclosed shipping where your vehicle needs it.
-    stats:
-      subheading: Full import/export support for cars and motorcycles — paperwork, customs, shipping, and delivery, end to end.
-      items:
-        - label: Full
-          title: Paperwork & Customs
-        - label: Door-to-Door
-          title: Enclosed When Needed
-        - label: EU + More
-          title: Worldwide Routes
-    cta:
-      heading: Import or Export, Handled
-      text: Tell us the vehicle and the route — we handle paperwork, customs, shipping, and delivery to your door.
-
-    # Sale-listings section — same card grid as the fleet section, but headed
-    # "Currently Selling". Mock cars for now; the CMS editor fills real stock.
-    fleet_section:
-      heading: Currently Selling
-      subheadline: Our Stock Available Today
-    fleet:
-      - name: 2020 Ford Shelby GT500
-        type: For Sale
-        image: /images/cms/gallery/2020-ford-mustang-shelby-gt500-first-dri.webp
-        specs:
-          - { label: Stock, value: "DBC-001" }
-          - { label: Mileage, value: "2,400 km" }
-          - { label: Condition, value: Showroom }
-      - name: 2016 Ford Shelby GT350R
-        type: For Sale
-        image: /images/cms/gallery/2016-ford-mustang-shelby-gt350-gt350r-te.webp
-        specs:
-          - { label: Stock, value: "DBC-002" }
-          - { label: Mileage, value: "8,900 km" }
-          - { label: Condition, value: Excellent }
-
+    steps: []
+    stats: null
+    cta: null
     form_fields:
       - label: From
         placeholder: Where is the vehicle now?
         name: origin_country
         type: country
+        side: ''
       - label: To
         placeholder: Where is it going?
         name: destination_country
         type: country
+        side: ''
       - label: Vehicle (make & model)
         placeholder: Start typing — e.g. Ferrari 812
         name: vehicle_model
         type: vehicle
         side: right
-  - region: Garage
-    title: Automotive Customizing & Design Projects
+    fleet: []
+  - title: Automotive Customizing & Design Projects
     description: Bespoke design and build projects — restomod, widebody, interior and show-grade finishing.
+    image: ''
     slug: customizing
+    region: Garage
     seo:
       title: DB Custom Garage — Automotive Customizing & Design Projects
       description: Bespoke design and build — from restomod to show-grade.
-      image: /images/cms/from-wix/hummer-project.webp
+      image: /images/from-wix/hummer-project.webp
     hero:
       subtitle: Bespoke design and build — from restomod to show-grade.
       cta_text: Get A Quote
       tagline: Customize · Design · Build
-      image: /images/cms/from-wix/hummer-project.webp
+      image: /images/cms/custom design hero.jpeg
     about_text: An in-house design studio and build shop for custom cars and motorcycles — restomod, widebody, interior and show-grade finishing — plus general repair and maintenance.
-    steps:
-      - title: Share Your Vision
-        description: What you want to build, restore, or transform — with budget and timeline.
-      - title: We Design & Fabricate
-        description: Concept, metalwork, and finish — real parts built by hand, with progress updates.
-      - title: Drive It Home
-        description: Your finished build, fully documented and ready for the road or the show floor.
     about_image: /images/cms/from-wix/hummer-project.webp
     marquee: Custom Builds · Design · Repair · Motorcycles
     include:
@@ -352,23 +285,19 @@ offerings:
           text: Real parts, built by hand — not off the shelf.
         - title: Cars & Motorcycles
           text: Customizing and repair for both.
-    stats:
-      subheading: An in-house studio and build shop — concept to show floor for cars and motorcycles.
-      items:
-        - label: In-House
-          title: Design Studio & Shop
-        - label: Steel
-          title: Fabricated By Hand
-        - label: Cars + Bikes
-          title: Customizing & Repair
-    cta:
-      heading: Your Vision, Built
-      text: Share your project — restomod, widebody, interior, or show-grade. We design, fabricate, and finish it.
+    steps: []
+    stats: null
+    cta: null
     form_fields:
       - label: Project type
         placeholder: Restomod, widebody, interior, design
         name: project_type
+        type: ''
+        side: ''
       - label: Budget
         placeholder: Approximate budget
         name: budget
+        type: ''
+        side: ''
+    fleet: []
 ---
