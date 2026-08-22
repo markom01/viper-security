@@ -1,9 +1,10 @@
 ---
 offerings:
-  - region: Garage
-    title: Enclosed Supercar Transport
+  - title: Enclosed Supercar Transport
     description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe and worldwide.
+    image: ''
     slug: supercar-transport
+    region: Garage
     seo:
       title: DB Custom Garage — Enclosed Supercar Transport
       description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe and worldwide.
@@ -12,7 +13,7 @@ offerings:
       subtitle: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs — across Europe and worldwide.
       cta_text: Get A Quote
       tagline: Supercars & Classics, No Limits
-      image: /images/cms/from-wix/hero.webp
+      image: /images/cms/supercar transport hero.jpeg
     about_text: Enclosed transport with our own trucks and enclosed vehicles — fully insured, secure, safe and clean — all over Europe and the USA.
     about_image: /images/cms/from-wix/hero.webp
     marquee: Enclosed Transport · Insured · Tracked · Europe & USA
@@ -38,36 +39,51 @@ offerings:
           text: Every move covered on our own trucks and trailers.
         - title: Tracked Door-to-Door
           text: Origin to destination, with updates along the way.
-
-    fleet:
-      - name: Hummer H2 with Enclosed Trailer
-        type: Heavy-Duty Hauler
-        # Hauler spec rows render right of the image — no passenger seats/baggage.
-        specs:
-          - { label: Year, value: "2008" }
-          - { label: Capacity, value: 2 cars }
-          - { label: Trailer, value: Fully enclosed }
-          - { label: Liftgate, value: Hydraulic }
-          - { label: Tracking, value: GPS live }
-        features:
-          - Enclosed trailer
-          - Hydraulic liftgate
-          - GPS tracking
-          - Fully insured transport
-        image: /images/cms/from-wix/hummer-project.webp
+    steps: []
+    stats: null
+    cta: null
     form_fields:
       - label: Origin
         placeholder: Pick-up location
         name: origin
         type: location
+        side: ''
       - label: Destination
         placeholder: Delivery location
         name: destination
         type: location
-  - region: Garage
-    title: Classic Cars & Motorcycles Sale & Auction
+        side: ''
+    fleet:
+      - name: Hummer H2 with Enclosed Trailer
+        type: Heavy-Duty Hauler
+        year: ''
+        seats: ''
+        baggage: ''
+        capacity_passengers: null
+        capacity_suitcases: null
+        capacity_carryon: null
+        specs:
+          - label: Year
+            value: '2008'
+          - label: Capacity
+            value: 2 cars
+          - label: Trailer
+            value: Fully enclosed
+          - label: Liftgate
+            value: Hydraulic
+          - label: Tracking
+            value: GPS live
+        image: /images/cms/from-wix/hummer-project.webp
+        features:
+          - Enclosed trailer
+          - Hydraulic liftgate
+          - GPS tracking
+          - Fully insured transport
+  - title: Classic Cars & Motorcycles Sale & Auction
     description: Auction preparation and representation on Catawiki, Proxibid, Silverstone, Heritage, Bonhams and more — consignment without leaving your garage.
+    image: ''
     slug: auction
+    region: Garage
     seo:
       title: DB Custom Garage — Classic Cars & Motorcycles Sale & Auction
       description: We sell your classic or supercar at auction — without you leaving your garage.
@@ -102,22 +118,31 @@ offerings:
           text: Your car listed across the leading online auction houses.
         - title: You Stay Home
           text: Consignment handled entirely for you.
-
+    steps: []
+    stats: null
+    cta: null
     form_fields:
       - label: Details
         placeholder: Year, condition, mileage
         name: vehicle_details
+        type: ''
+        side: ''
       - label: Target price
         placeholder: Estimated value or target sale price
         name: target_price
+        type: ''
+        side: ''
       - label: Vehicle (make & model)
         placeholder: Start typing — e.g. Ferrari 812
         name: vehicle_model
         type: vehicle
-  - region: Garage
-    title: Off-Market Sourcing & Consulting
+        side: ''
+    fleet: []
+  - title: Off-Market Sourcing & Consulting
     description: Research, consulting and legal support to find your dream car — or make an investment off the open market.
+    image: ''
     slug: off-market-sourcing
+    region: Garage
     seo:
       title: DB Custom Garage — Off-Market Sourcing & Consulting
       description: Find your dream car or invest off the open market, with research, consulting and legal support.
@@ -152,15 +177,21 @@ offerings:
           text: Research and valuation from deep industry experience.
         - title: Full Support
           text: Consulting and legal backing through the whole buy.
-
+    steps: []
+    stats: null
+    cta: null
     form_fields:
       - label: Target vehicle
         placeholder: Make, model, year, budget
         name: target_vehicle
-  - region: Garage
-    title: Import & Export Logistics
+        type: ''
+        side: ''
+    fleet: []
+  - title: Import & Export Logistics
     description: Full-service vehicle import and export — paperwork, customs, shipping and delivery handled end to end.
+    image: ''
     slug: import-export
+    region: Garage
     seo:
       title: DB Custom Garage — Import & Export Logistics
       description: Full-service vehicle import and export — cars and motorcycles — handled end to end.
@@ -195,25 +226,31 @@ offerings:
           text: Full coverage across Europe and other continents.
         - title: Own Transport Fleet
           text: Enclosed shipping where your vehicle needs it.
-
+    steps: []
+    stats: null
+    cta: null
     form_fields:
       - label: From
         placeholder: Where is the vehicle now?
         name: origin_country
         type: country
+        side: ''
       - label: To
         placeholder: Where is it going?
         name: destination_country
         type: country
+        side: ''
       - label: Vehicle (make & model)
         placeholder: Start typing — e.g. Ferrari 812
         name: vehicle_model
         type: vehicle
         side: right
-  - region: Garage
-    title: Automotive Customizing & Design Projects
+    fleet: []
+  - title: Automotive Customizing & Design Projects
     description: Bespoke design and build projects — restomod, widebody, interior and show-grade finishing.
+    image: ''
     slug: customizing
+    region: Garage
     seo:
       title: DB Custom Garage — Automotive Customizing & Design Projects
       description: Bespoke design and build — from restomod to show-grade.
@@ -248,11 +285,19 @@ offerings:
           text: Real parts, built by hand — not off the shelf.
         - title: Cars & Motorcycles
           text: Customizing and repair for both.
+    steps: []
+    stats: null
+    cta: null
     form_fields:
       - label: Project type
         placeholder: Restomod, widebody, interior, design
         name: project_type
+        type: ''
+        side: ''
       - label: Budget
         placeholder: Approximate budget
         name: budget
+        type: ''
+        side: ''
+    fleet: []
 ---
