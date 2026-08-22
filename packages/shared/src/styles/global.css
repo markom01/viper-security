@@ -12,15 +12,7 @@ html {
 body {
   margin: 0;
 }
-article,
-aside,
-figure,
-footer,
-header,
-main,
-menu,
-nav,
-section {
+:where(article, aside, figure, footer, header, main, menu, nav, section) {
   display: block;
 }
 audio,
@@ -270,6 +262,9 @@ button,
   /* Dark bronze for text on light sections — passes 4.5:1 on white
      (gold #917148 on white is only ~3.3:1). */
   --colors--bronze: #6f5230;
+  --colors--gold: #917148;
+  --colors--gold-bright: #c8a04c;
+  --colors--amber: #c1a176;
 
   /* Native scrollbars + widgets follow the dark theme & gold accent */
   color-scheme: dark;

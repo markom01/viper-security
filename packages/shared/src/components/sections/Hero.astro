@@ -122,12 +122,9 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
         </div>
         <div
           id="contact"
-          style="opacity:1;overflow:visible;position:relative;border-top:none;"
-          class="booking-form-wrapper"
+          class="booking-form-wrapper booking-form-wrapper--hero"
         >
-          <div
-            style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--colors--amber);z-index:1;border-radius:18px 18px 0 0;"
-          >
+          <div class="booking-amber-bar">
           </div>
           <div class="booking-form-block">
             <form
@@ -138,7 +135,7 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
               name="booking-form"
               method="POST"
             >
-              <input type="text" name="bot-field" aria-hidden="true" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden" />
+              <input type="text" name="bot-field" aria-hidden="true" tabindex="-1" autocomplete="off" class="honeypot-hidden" />
               <div class="left-side-fields">
                 <div class="booking-form-label-field">
                   <label class="booking-form-label" for="full-name"
@@ -329,11 +326,10 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
             <div
               class="booking-form-success"
               role="status"
-              style="display:none"
             >
               <div>{s.form.success}</div>
             </div>
-            <div class="form-error-message" role="alert" style="display:none">
+            <div class="form-error-message" role="alert">
               <div>{s.form.error}</div>
             </div>
           </div>
@@ -371,11 +367,33 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
     flex-wrap: wrap;
     gap: 18px 44px;
   }
-  .left-side-fields {
-    margin-right: 0 !important;
+  .booking-form-wrapper--hero {
+    opacity: 1;
+    overflow: visible;
+    position: relative;
+    border-top: none;
   }
-  .right-side-fields {
-    margin-left: 0 !important;
+  .booking-amber-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: var(--colors--amber);
+    z-index: 1;
+    border-radius: 18px 18px 0 0;
+  }
+  .honeypot-hidden {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .booking-form-success,
+  .form-error-message {
+    display: none;
   }
   .booking-form-label-field {
     min-width: 0;
@@ -383,10 +401,12 @@ const __heroData = jsonEscape(JSON.stringify(SCRIPT_DATA));
   .booking-form-field {
     width: 100%;
   }
+  :is(.left-side-fields, .right-side-fields) {
+    margin: 0;
+  }
   @media (min-width: 992px) {
-    .left-side-fields,
-    .right-side-fields {
-      width: calc(50% - 22px) !important;
+    :is(.left-side-fields, .right-side-fields) {
+      width: calc(50% - 22px);
     }
     /* Garage form = one continuous grid (no left/right columns). The two
        side wrappers are transparent (display: contents), so every field
