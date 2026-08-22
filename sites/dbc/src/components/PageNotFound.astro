@@ -1,5 +1,6 @@
 ---
-const { notFound } = Astro.props;
+interface Props { notFound?: { code?: string; heading?: string; body?: string; returnLink?: string; returnAria?: string } }
+const { notFound } = Astro.props as Props;
 const nf = notFound || {};
 ---
 

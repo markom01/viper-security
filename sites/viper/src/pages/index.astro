@@ -25,7 +25,15 @@ const fleetEntries = await getCollection("fleet");
 const [membershipEntry] = await getCollection("membership");
 const [pageContentEntry] = await getCollection("page-content");
 
-const pageContent = pageContentEntry?.data || {};
+const _pcRaw = pageContentEntry?.data || {};
+const pageContent = {
+  ..._pcRaw,
+  seo: _pcRaw.seo ? { ..._pcRaw.seo } : undefined,
+  jsonld: _pcRaw.jsonld ? { ..._pcRaw.jsonld } : undefined,
+  about: _pcRaw.about ? { ..._pcRaw.about } : undefined,
+  cta: _pcRaw.cta ? { ..._pcRaw.cta } : undefined,
+  bottomcta: _pcRaw.bottomcta ? { ..._pcRaw.bottomcta, values: _pcRaw.bottomcta.values ? [..._pcRaw.bottomcta.values] : undefined } : undefined,
+} as typeof _pcRaw;
 const bd = pageContent?.booking_data;
 const siteName = SITE_NAME;
 const vehicleName = pageContent?.vehicle_name;
@@ -36,10 +44,12 @@ const allOfferings = (servicesEntry?.data?.offerings || []).map((o) => ({
 
 const hourlyEntry = await getEntry("pricing", "hourly");
 
-const hero = heroEntry?.data || {};
+const _heroRaw = heroEntry?.data || {};
+const hero = { ..._heroRaw };
 if (hero.subtitle)
   hero.subtitle = resolveTemplates(hero.subtitle, bd, siteName, vehicleName);
-const howItWorks = howItWorksEntry?.data || {};
+const _hiwRaw = howItWorksEntry?.data || {};
+const howItWorks = { ..._hiwRaw, steps: _hiwRaw.steps ? [..._hiwRaw.steps] : undefined };
 if (howItWorks.steps) {
   howItWorks.steps = howItWorks.steps.map((s) => ({
     ...s,

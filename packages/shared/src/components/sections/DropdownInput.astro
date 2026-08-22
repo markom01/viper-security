@@ -39,7 +39,7 @@ const {
   addressName,
   custom = false,
   country = false,
-} = Astro.props;
+} = Astro.props as Props;
 const customAttrs = custom
   ? { "data-custom-field": "", "data-custom-location": "" }
   : {};

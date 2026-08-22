@@ -5,6 +5,7 @@
 // them through with DBC's chrome/identity.
 import { getCollection } from "astro:content";
 import { resolveTemplates } from "@garage/shared/config/templates";
+import { slugify } from "@garage/shared/lib/slugify";
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { site } from "../../config/site";
 
@@ -14,12 +15,12 @@ export async function getStaticPaths() {
   const [servicesEntry] = await getCollection("services");
   const offerings = servicesEntry?.data?.offerings || [];
   return offerings.map((o) => ({
-    params: { slug: o.slug ?? o.title.toLowerCase().replace(/[^a-z0-9]+/g, "-") },
+    params: { slug: o.slug ?? slugify(o.title) },
     props: { offering: o },
   }));
 }
 
-const { offering } = Astro.props;
+const { offering } = Astro.props as { offering: Record<string, unknown> & { title: string; slug?: string; hero?: Record<string, string>; seo?: Record<string, string>; description?: string } };
 
 const [pageContentEntry] = await getCollection("page-content");
 const [howItWorksEntry] = await getCollection("how-it-works");

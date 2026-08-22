@@ -12,8 +12,7 @@ interface Props {
   social?: { icon: string; href: string; label: string }[];
 }
 
-const { pageContent, footerItems, social } = Astro.props as Props;
-const { brandName, tagline, phoneItaly, phoneSpain } = Astro.props as Props;
+const { pageContent, footerItems, brandName, tagline, phoneItaly, phoneSpain, social } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);

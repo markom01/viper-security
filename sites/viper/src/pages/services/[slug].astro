@@ -9,17 +9,18 @@ import ServicePage from "@garage/shared/sections/ServicePage.astro";
 import { getCollection, getEntry } from "astro:content";
 import { SITE_NAME } from "@garage/shared/config/strings";
 import { resolveTemplates } from "@garage/shared/config/templates";
+import { slugify } from "@garage/shared/lib/slugify";
 
 export async function getStaticPaths() {
   const [servicesEntry] = await getCollection("services");
   const offerings = servicesEntry?.data?.offerings || [];
   return offerings.map((o) => ({
-    params: { slug: o.slug ?? o.title.toLowerCase().replace(/[^a-z0-9]+/g, "-") },
+    params: { slug: o.slug ?? slugify(o.title) },
     props: { offering: o },
   }));
 }
 
-const { offering } = Astro.props;
+const { offering } = Astro.props as { offering: Record<string, unknown> & { title: string; slug?: string; hero?: Record<string, string>; seo?: Record<string, string>; description?: string } };
 
 const [heroEntry] = await getCollection("hero");
 const [howItWorksEntry] = await getCollection("how-it-works");
@@ -73,7 +74,7 @@ if (!mergedContent.seo.image || mergedContent.seo.image.endsWith(".svg")) {
 
 // Resolve {placeholders} in service-specific prose + SEO/JSON-LD — work on clones only
 if (heroFields.subtitle)
-  heroFields.subtitle = resolveTemplates(heroFields.subtitle, bd, SITE_NAME, vehicleName);
+  if (typeof heroFields.subtitle === "string") heroFields.subtitle = resolveTemplates(heroFields.subtitle, bd, SITE_NAME, vehicleName);
 // offering.description is Astro.props data — clone before resolving
 const offeringDescription = (offering as { description?: string }).description
   ? resolveTemplates((offering as { description: string }).description, bd, SITE_NAME, vehicleName)
@@ -105,17 +106,17 @@ if (mergedContent.jsonld?.org_name)
   pageContent={mergedContent}
   brandName={hero.brand_name || SITE_NAME}
   ogLocale="en_US"
-  preloadImage={heroFields.image}
+  preloadImage={heroFields.image as string | undefined}
 >
   <ServicePage
     offering={offeringResolved}
     pageContent={mergedContent}
     region="VIPER"
     hero={{
-      subtitle: heroFields.subtitle,
-      cta_text: heroFields.cta_text,
-      tagline: offering.title || heroFields.tagline,
-      image: heroFields.image,
+      subtitle: heroFields.subtitle as string | undefined,
+      cta_text: heroFields.cta_text as string | undefined,
+      tagline: (offering.title as string) || (heroFields.tagline as string | undefined),
+      image: heroFields.image as string | undefined,
       phoneItaly: hero.phone_italy,
       phoneSpain: hero.phone_spain,
     }}
