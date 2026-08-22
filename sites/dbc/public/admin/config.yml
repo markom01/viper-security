@@ -57,6 +57,7 @@ collections:
           - label: Services
             name: offerings
             widget: list
+            summary: "{{fields.title}}"
             fields:
               - { name: title, label: Service Title, widget: string }
               - { name: description, label: Description, widget: text }
@@ -179,6 +180,7 @@ collections:
                   - label: Items
                     name: items
                     widget: list
+                    summary: "{{fields.label}}: {{fields.title}}"
                     required: false
                     fields:
                       - { name: label, label: "Label (e.g. 99%)", widget: string }
@@ -223,6 +225,7 @@ collections:
               - label: Fleet Vehicles
                 name: fleet
                 widget: list
+                summary: "{{fields.name}}"
                 required: false
                 collapsed: true
                 fields:
@@ -283,6 +286,7 @@ collections:
           - label: Steps
             name: steps
             widget: list
+            summary: "{{fields.title}}"
             fields:
               - { name: title, label: Title, widget: string }
               - { name: description, label: Description, widget: text }
@@ -357,6 +361,7 @@ collections:
               - label: Items
                 name: items
                 widget: list
+                summary: "{{fields.label}}: {{fields.title}}"
                 fields:
                   - { name: label, label: Label (e.g. 15+), widget: string }
                   - {
@@ -386,6 +391,7 @@ collections:
               - label: Values
                 name: values
                 widget: list
+                summary: "{{fields.title}}"
                 fields:
                   - { name: title, label: Title, widget: string }
                   - { name: text, label: Text, widget: text }

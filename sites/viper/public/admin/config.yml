@@ -51,6 +51,7 @@ collections:
           - label: Services
             name: offerings
             widget: list
+            summary: "{{fields.title}}"
             fields:
               - {
                   name: region,
@@ -91,6 +92,7 @@ collections:
               - label: "How It Works Steps"
                 name: steps
                 widget: list
+                summary: "{{fields.title}}"
                 collapsed: true
                 required: false
                 fields:
@@ -99,6 +101,7 @@ collections:
               - label: "Include (service cards)"
                 name: include
                 widget: list
+                summary: "{{fields.title}}"
                 collapsed: true
                 required: false
                 fields:
@@ -108,6 +111,7 @@ collections:
               - label: "Form Fields"
                 name: form_fields
                 widget: list
+                summary: "{{fields.label}}"
                 collapsed: true
                 required: false
                 fields:
@@ -124,6 +128,7 @@ collections:
                   - label: Values
                     name: values
                     widget: list
+                    summary: "{{fields.title}}"
                     fields:
                       - { name: title, label: Title, widget: string }
                       - { name: text, label: Text, widget: text }
@@ -137,6 +142,7 @@ collections:
                   - label: Items
                     name: items
                     widget: list
+                    summary: "{{fields.label}}: {{fields.title}}"
                     fields:
                       - { name: label, label: "Label (e.g. 99%)", widget: string }
                       - { name: title, label: "Title", widget: string }
@@ -206,6 +212,7 @@ collections:
           - label: Rates
             name: rates
             widget: list
+            summary: "{{fields.name}}"
             fields:
               - { name: name, label: Duration, widget: string }
               - { name: price, label: Price, widget: string }
@@ -221,6 +228,7 @@ collections:
           - label: Steps
             name: steps
             widget: list
+            summary: "{{fields.title}}"
             fields:
               - { name: title, label: Title, widget: string }
               - { name: description, label: Description, widget: text }
@@ -242,6 +250,7 @@ collections:
           - label: Tiers
             name: tiers
             widget: list
+            summary: "{{fields.name}}"
             fields:
               - { name: name, label: Tier Name, widget: string }
               - { name: price, label: Annual Price, widget: string }
@@ -338,11 +347,13 @@ collections:
                   - label: Services
                     name: services
                     widget: list
+                    summary: "{{fields.name}}"
                     fields:
                       - { name: name, label: "Service Name", widget: string }
                       - label: Routes
                         name: routes
                         widget: list
+                        summary: "{{fields.route}}"
                         fields:
                           - { name: route, label: Route, widget: string }
                           - {
@@ -364,11 +375,13 @@ collections:
                   - label: Services
                     name: services
                     widget: list
+                    summary: "{{fields.name}}"
                     fields:
                       - { name: name, label: "Service Name", widget: string }
                       - label: Routes
                         name: routes
                         widget: list
+                        summary: "{{fields.route}}"
                         fields:
                           - { name: route, label: Route, widget: string }
                           - {
@@ -421,6 +434,7 @@ collections:
               - label: Items
                 name: items
                 widget: list
+                summary: "{{fields.label}}: {{fields.title}}"
                 fields:
                   - { name: label, label: Label (e.g. 99%), widget: string }
                   - {
@@ -456,6 +470,7 @@ collections:
               - label: Values
                 name: values
                 widget: list
+                summary: "{{fields.title}}"
                 fields:
                   - { name: title, label: Title, widget: string }
                   - { name: text, label: Text, widget: text }
