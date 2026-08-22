@@ -1,6 +1,6 @@
 ---
-name: "DB Custom Garage Gallery 15"
-alt: "DB Custom Garage Gallery 15"
-category: "all-builds"
+name: DB Custom Garage Gallery 15
+alt: DB Custom Garage Gallery 15
+category: supercar
 image: /images/cms/gallery/gallery-15.webp
 ---

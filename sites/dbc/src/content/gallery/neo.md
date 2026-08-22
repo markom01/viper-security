@@ -1,6 +1,6 @@
 ---
-name: "DB Custom Garage Neo"
-alt: "DB Custom Garage Neo"
-category: "supercar"
+name: DB Custom Garage Neo
+alt: DB Custom Garage Neo
+category: customizing
 image: /images/cms/gallery/neo.webp
 ---
