@@ -1,12 +1,11 @@
 ---
-import type { PageContent } from "../../types";
+import type { PageContent, MembershipTier } from "../../types";
 interface Props {
   tiers?: MembershipTier[];
   pageContent?: PageContent;
   note?: string;
 }
 const { tiers, pageContent, note } = Astro.props as Props;
-import type { MembershipTier, PageContent } from "../../types";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);

@@ -5,9 +5,13 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { site } from "../config/site";
 import { getCollection, render } from "astro:content";
+import AboutSection from "@garage/shared/sections/AboutSection.astro";
 
 const [policy] = await getCollection("privacy");
 const { Content } = policy ? await render(policy) : { Content: undefined };
+
+const galleryEntries = await getCollection("gallery");
+const privacyCarousel = galleryEntries.slice(0, 5).map((e) => (e.data as { image: string }).image);
 
 const pageContent = {
   jsonld: {
@@ -27,6 +31,7 @@ const pageContent = {
 ---
 
 <SiteLayout pageContent={pageContent} ogLocale="en_US">
+  <AboutSection pageContent={pageContent} images={privacyCarousel} />
   <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "4rem 24px" }}>
     <article>
       {Content ? (

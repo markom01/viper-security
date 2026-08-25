@@ -95,7 +95,7 @@ const baseId = "about-carousel";
     const reduced = window.matchMedia?.(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    const step = (dir) => {
+    const step = (dir: number) => {
       const w = viewport.clientWidth;
       const next =
         Math.round(viewport.scrollLeft / w + dir) * w;

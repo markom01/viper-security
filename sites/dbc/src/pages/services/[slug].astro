@@ -71,6 +71,25 @@ const fleetFeaturesText =
       : allFleetFeatures.slice(0, -1).join(", ") + ", and " + allFleetFeatures.slice(-1)[0] + "."
     : "";
 const hasFleet = !!((offering as { fleet?: unknown[] }).fleet?.length);
+
+// Category carousel: 5 gallery images matching this service's category
+const slugToCategory: Record<string, string> = {
+  "supercar-transport": "supercar",
+  "customizing": "customizing",
+  "auction": "customizing",
+  "off-market-sourcing": "supercar",
+  "import-export": "supercar",
+};
+const activeSlug = (offering.slug ?? (offering as { slug?: string }).slug ?? "") as string;
+const serviceCategory = slugToCategory[activeSlug] ?? "supercar";
+const galleryEntries2 = await getCollection("gallery");
+const catImages = galleryEntries2
+  .filter((e) => (e.data as { category?: string }).category === serviceCategory)
+  .map((e) => (e.data as { image: string }).image);
+const fallbackImages = galleryEntries2
+  .filter((e) => (e.data as { category?: string }).category !== serviceCategory)
+  .map((e) => (e.data as { image: string }).image);
+const aboutCarouselImages = [...catImages, ...fallbackImages].slice(0, 5);
 // Clone — never mutate Astro.props offering.hero
 const heroFields = { ...((offering as { hero?: Record<string, unknown> }).hero || {}) } as NonNullable<typeof offering.hero> & Record<string, unknown>;
 const _heroSubtitle = heroFields.subtitle as string | undefined;
@@ -108,5 +127,6 @@ if ((pageContent as unknown as { jsonld?: { org_name?: string } }).jsonld?.org_n
     fleetFeaturesText={fleetFeaturesText}
     hasFleet={hasFleet}
     howItWorksSteps={howItWorks.steps}
+    aboutCarouselImages={aboutCarouselImages}
   />
 </SiteLayout>

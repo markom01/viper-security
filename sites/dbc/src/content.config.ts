@@ -104,12 +104,14 @@ const services = defineCollection({
                 )
                 .optional(),
             })
+            .nullable()
             .optional(),
           cta: z
             .object({
               heading: z.string().optional(),
               text: z.string().optional(),
             })
+            .nullable()
             .optional(),
           form_fields: z
             .array(
@@ -117,12 +119,21 @@ const services = defineCollection({
                 label: z.string(),
                 placeholder: z.string().optional(),
                 name: z.string(),
-                // "location" → Photon address-autocomplete input; "country" → country-only
-                // autocomplete (Photon layer=country); "vehicle" → car/bike model datalist;
-                // "text" (default) → plain input.
-                type: z.enum(["text", "location", "country", "vehicle"]).optional(),
-                // Which form column the field renders in (default "left").
-                side: z.enum(["left", "right"]).optional(),
+                // "location" → Photon; "country" → country-only; "vehicle" → datalist;
+                // Empty string from CMS means plain text / left default.
+                // Keep the type narrow (enum) — preprocess just maps "" → undefined.
+                type: z
+                  .preprocess(
+                    (v) => (v === "" || v == null ? undefined : v),
+                    z.enum(["text", "location", "country", "vehicle"]).optional(),
+                  )
+                  .optional(),
+                side: z
+                  .preprocess(
+                    (v) => (v === "" || v == null ? undefined : v),
+                    z.enum(["left", "right"]).optional(),
+                  )
+                  .optional(),
               }),
             )
             .optional(),
@@ -146,9 +157,9 @@ const services = defineCollection({
                 year: z.string().optional(),
                 seats: z.string().optional(),
                 baggage: z.string().optional(),
-                capacity_passengers: z.number().optional(),
-                capacity_suitcases: z.number().optional(),
-                capacity_carryon: z.number().optional(),
+                capacity_passengers: z.preprocess((v) => (v == null || v === "" ? undefined : v), z.number().optional()).optional() as unknown as z.ZodOptional<z.ZodNumber>,
+                capacity_suitcases: z.preprocess((v) => (v == null || v === "" ? undefined : v), z.number().optional()).optional() as unknown as z.ZodOptional<z.ZodNumber>,
+                capacity_carryon: z.preprocess((v) => (v == null || v === "" ? undefined : v), z.number().optional()).optional() as unknown as z.ZodOptional<z.ZodNumber>,
                 // Right-of-image spec rows (label/value) — used when the vehicle
                 // isn't a passenger car (e.g. hauler with trailer). Replaces the
                 // passenger fields above when present.

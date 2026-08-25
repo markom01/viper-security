@@ -19,8 +19,8 @@ interface Props {
   src: ImageMetadata | string;
   alt: string;
   group?: string;
-  loading?: string;
-  decoding?: string;
+  loading?: "eager" | "lazy";
+  decoding?: "async" | "sync" | "auto";
   class?: string;
   anchorClass?: string;
   width?: number | string;
@@ -75,7 +75,7 @@ if (typeof src === "string" && /^\s*(javascript|data|vbscript):/i.test(src)) {
   aria-label={`Open ${alt} full screen`}
 >
   <Image
-    src={src}
+    src={optimized.src}
     alt=""
     aria-hidden="true"
     class={imgClass}
@@ -83,9 +83,8 @@ if (typeof src === "string" && /^\s*(javascript|data|vbscript):/i.test(src)) {
     decoding={decoding}
     width={dims.width}
     height={dims.height}
-    {...(widths !== undefined ? { widths } : {})}
-    {...(sizes !== undefined ? { sizes } : {})}
-    {...(eager ? { fetchpriority: "high" as const } : {})}
+    widths={widths}
+    sizes={sizes}
   />
 </a>
 

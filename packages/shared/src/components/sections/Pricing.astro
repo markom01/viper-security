@@ -52,17 +52,17 @@ function buildRegionCard(
   return null;
 }
 
-const spainLabel = bd?.spain?.short_label;
-const italyLabel = bd?.italy?.short_label;
+const spainLabel = bd?.spain?.short_label ?? "";
+const italyLabel = bd?.italy?.short_label ?? "";
 
 const marbellaCard = buildRegionCard(
   bd?.spain?.services,
-  `${spainLabel}`,
+  spainLabel || "Spain",
   spainLabel,
 );
 const milanoCard = buildRegionCard(
   bd?.italy?.services,
-  `${italyLabel}`,
+  italyLabel || "Italy",
   italyLabel,
 );
 

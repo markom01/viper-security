@@ -15,12 +15,21 @@ const [heroEntry] = await getCollection("hero");
 const [pageContentEntry] = await getCollection("page-content");
 const [howItWorksEntry] = await getCollection("how-it-works");
 const [servicesEntry] = await getCollection("services");
+const galleryEntries = await getCollection("gallery");
 
 const hero = heroEntry?.data || {};
 const pageContent = pageContentEntry?.data || {};
 
 const howItWorks = howItWorksEntry?.data || {};
 const services = servicesEntry?.data?.offerings || [];
+
+// Home carousel: 5 images from gallery — prefer all-builds, fill from supercar+customizing
+const galleryImages = galleryEntries.map((e) => ({ cat: (e.data as { category?: string }).category, img: (e.data as { image: string }).image }));
+const homeCarousel = [
+  ...galleryImages.filter((g) => g.cat === "all-builds").map((g) => g.img),
+  ...galleryImages.filter((g) => g.cat === "supercar").map((g) => g.img),
+  ...galleryImages.filter((g) => g.cat === "customizing").map((g) => g.img),
+].slice(0, 5);
 ---
 
 <SiteLayout pageContent={pageContent} ogLocale="en_US" preloadImage={hero.hero_image}>
@@ -34,7 +43,7 @@ const services = servicesEntry?.data?.offerings || [];
     phoneSpain={site.whatsappNumber}
     services={services}
   />
-  <AboutSection pageContent={pageContent} />
+  <AboutSection pageContent={pageContent} images={homeCarousel} />
   <Services pageContent={pageContent} marbella={services} milano={services} />
   <StatsSection pageContent={pageContent} />
   <HowItWorks steps={howItWorks.steps} pageContent={pageContent} />

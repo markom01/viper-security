@@ -1,0 +1,877 @@
+---
+import FormField from "./FormField.astro";
+import { jsonEscape } from "../../config/json-escape";
+import type { PageContent } from "../../types";
+import STRINGS from "../../config/strings";
+import { resolveLabels } from "../../config/labels";
+
+interface FieldDef { label: string; placeholder?: string; name: string; type?: string; side?: string }
+interface Props {
+  pageContent?: PageContent;
+  phoneItaly?: string;
+  phoneSpain?: string;
+  services?: { title: string; slug?: string; form_fields?: FieldDef[] }[];
+  presetService?: string;
+  form_fields?: FieldDef[];
+}
+const { pageContent, phoneItaly, phoneSpain, services, presetService = "", form_fields = [] } = Astro.props as Props;
+const s = resolveLabels(pageContent, STRINGS);
+const bd = (pageContent as unknown as { booking_data?: { spain?: { label: string; services: { name: string; routes: unknown[] }[] }; italy?: { label: string; services: { name: string; routes: unknown[] }[] } } })?.booking_data;
+const hasBooking = !!(bd && (bd.spain?.services?.length || bd.italy?.services?.length));
+const isGarageHome = !hasBooking && !presetService && Array.isArray(services) && services.length > 0;
+
+// Map title -> fields for dynamic home form
+const svcFieldsMap: Record<string, FieldDef[]> = {};
+if (isGarageHome) {
+  for (const svc of services as { title: string; form_fields?: FieldDef[] }[]) {
+    if (svc?.title) svcFieldsMap[svc.title] = svc.form_fields || [];
+  }
+}
+
+const SCRIPT_DATA = {
+  spain: bd?.spain || { label: "", services: [] },
+  italy: bd?.italy || { label: "", services: [] },
+  SS: s.form.selectService,
+  SR: s.form.selectRoute,
+  CL: s.form.chooseLocationFirst,
+  CS: s.form.chooseServiceFirst,
+  SP: s.form.pricePlaceholder,
+  PI: phoneItaly || "",
+  PS: phoneSpain || "",
+  PSV: presetService || "",
+  SN: (pageContent as unknown as { jsonld?: { org_name?: string } })?.jsonld?.org_name,
+  HB: hasBooking,
+  SERVICES: Array.isArray(services) ? (services as { title: string }[]).map((x) => x?.title).filter(Boolean) : [],
+  SVC_FIELDS: svcFieldsMap,
+  IS_GARAGE_HOME: isGarageHome,
+};
+const __data = jsonEscape(JSON.stringify(SCRIPT_DATA));
+const staticLeft = isGarageHome ? [] : form_fields.filter((f) => f.side !== "right");
+const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "right");
+---
+
+<div id="contact" class="booking-form-wrapper booking-form-wrapper--hero">
+  <div class="booking-form-block">
+    <form
+      class={`booking-form${hasBooking ? "" : " garage-form"}`}
+      aria-label={s.hero.bookingFormAria}
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      name="booking-form"
+      method="POST"
+    >
+      <input type="text" name="bot-field" aria-hidden="true" tabindex="-1" autocomplete="off" class="honeypot-hidden" />
+      <div class="left-side-fields">
+        <div class="booking-form-label-field">
+          <label class="booking-form-label" for="full-name">{s.form.name}</label>
+          <input class="booking-form-field" id="full-name" name="Full-Name" placeholder={s.form.namePlaceholder} type="text" required autocomplete="name" aria-label="Full Name" />
+        </div>
+        <div class="booking-form-label-field">
+          <label class="booking-form-label" for="phone">{s.form.phone}</label>
+          <input class="booking-form-field" id="phone" name="Phone" placeholder={s.form.phonePlaceholder} type="tel" required autocomplete="tel" inputmode="tel" aria-label="Phone" />
+        </div>
+        {staticLeft.map((f) => <FormField f={f as never} />)}
+        {isGarageHome && <div id="svc-fields-left" class="svc-fields-host" aria-live="polite"></div>}
+        {
+          hasBooking && (
+            <div class="booking-form-label-field">
+              <label class="booking-form-label" for="form-location">{s.form.location}</label>
+              <select class="booking-form-field" name="Location" id="form-location" required aria-label="Location">
+                <option value="" disabled selected hidden>{s.form.selectLocation}</option>
+                <option value="spain">{bd?.spain?.label}</option>
+                <option value="italy">{bd?.italy?.label}</option>
+              </select>
+            </div>
+          )
+        }
+      </div>
+      <div class="right-side-fields">
+        {
+          hasBooking && (
+            <div class="booking-form-label-field">
+              <label class="booking-form-label" for="form-service">{s.form.service}</label>
+              <select class="booking-form-field" name="Service" id="form-service" disabled aria-label="Service">
+                <option value="" disabled selected hidden>{s.form.chooseLocationFirst}</option>
+              </select>
+            </div>
+          )
+        }
+        {
+          hasBooking && (
+            <div class="booking-form-label-field">
+              <label class="booking-form-label" for="form-destination">{s.form.destination}</label>
+              <select class="booking-form-field" name="Destination" id="form-destination" disabled aria-label="Destination">
+                <option value="" disabled selected hidden>{s.form.chooseServiceFirst}</option>
+              </select>
+            </div>
+          )
+        }
+        {staticRight.map((f) => <FormField f={f as never} />)}
+        {isGarageHome && <div id="svc-fields-right" class="svc-fields-host" aria-live="polite"></div>}
+        <div class="booking-form-label-field">
+          <label class="booking-form-label" for="pickup-date">{s.form.date}</label>
+          <input class="booking-form-field" id="pickup-date" name="Pick-Up-Date" type="date" required aria-label={s.form.date} />
+        </div>
+        {
+          !hasBooking && (
+            <div class="booking-form-label-field">
+              <label class="booking-form-label" for="form-message">{s.form.message}</label>
+              <input class="booking-form-field" id="form-message" name="Message" type="text" placeholder={s.form.messagePlaceholder} aria-label="Message" />
+            </div>
+          )
+        }
+        {
+          !hasBooking && !presetService && (
+            <div class="booking-form-label-field">
+              <label class="booking-form-label" for="form-service">{s.form.service}</label>
+              <select class="booking-form-field" name="Service" id="form-service" required aria-label="Service">
+                <option value="" disabled selected hidden>{s.form.selectService}</option>
+                {SCRIPT_DATA.SERVICES.map((t) => (
+                  <option value={t}>{t}</option>
+                ))}
+              </select>
+            </div>
+          )
+        }
+        {!hasBooking && presetService && <input type="hidden" name="Service" value={presetService} />}
+      </div>
+      <div class="form-bottom-row">
+        {
+          hasBooking && (
+            <div class="booking-form-label-field" id="form-price-field">
+              <div class="booking-form-label" id="form-price-label">{s.form.priceLabel}</div>
+              <div class="booking-form-price" id="form-price-value" data-state="placeholder" role="status" aria-live="polite" aria-labelledby="form-price-label">{s.form.pricePlaceholder}</div>
+            </div>
+          )
+        }
+        <div class="booking-button-wrapper">
+          <button type="submit" class="booking-form-button home-booking-form">{s.form.bookNow}</button>
+        </div>
+      </div>
+    </form>
+    <div class="booking-form-success" role="status"><div>{s.form.success}</div></div>
+    <div class="form-error-message" role="alert"><div>{s.form.error}</div></div>
+  </div>
+</div>
+<style>
+  .booking-form-price[data-state="placeholder"] {
+    font-family: var(--font-families--body-font);
+    font-size: var(--body-text-sizes--small);
+    font-weight: 400;
+    color: var(--colors--slate);
+    text-transform: uppercase;
+    padding: 8px 0;
+    line-height: 22.8571px;
+    background: transparent;
+    border-radius: 0;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .booking-form-price:not([data-state="placeholder"]) {
+    font-family: var(--font-families--accent-font);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--colors--gold);
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    display: inline-block;
+  }
+  .booking-form { flex-wrap: wrap; gap: 18px 44px; }
+  .booking-form-wrapper--hero { opacity: 1; overflow: visible; position: relative; }
+  .honeypot-hidden { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+  .booking-form-success, .form-error-message { display: none; }
+  .booking-form-label-field { min-width: 0; }
+  .booking-form-field { width: 100%; }
+  :is(.left-side-fields, .right-side-fields) { margin: 0; }
+  .svc-fields-host { display: contents; }
+  @media (min-width: 992px) {
+    :is(.left-side-fields, .right-side-fields) { width: calc(50% - 22px); }
+    .garage-form { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); column-gap: 44px; row-gap: 18px; align-items: end; grid-auto-flow: row; }
+    .garage-form .left-side-fields, .garage-form .right-side-fields { display: contents; }
+    .garage-form .form-bottom-row { display: contents; }
+    :global(.garage-form .vehicle-fields) { display: contents; }
+    :global(.booking-form.garage-form .booking-form-label-field) { width: auto; min-width: 0; }
+    :global(.garage-form .booking-form-field) { width: 100%; }
+    :global(.garage-form .booking-button-wrapper) { width: 100%; align-self: end; display: flex; align-items: end; }
+    .svc-fields-host { display: contents; }
+  }
+  .form-bottom-row { display: grid; grid-template-columns: 1fr 1fr; column-gap: 44px; align-items: end; width: 100%; }
+  .form-bottom-row > .booking-button-wrapper { grid-column: auto; }
+  @media (min-width: 768px) and (max-width: 991px) {
+    .garage-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; row-gap: 18px; align-items: end; grid-auto-flow: row; }
+    .garage-form .left-side-fields, .garage-form .right-side-fields { display: contents; }
+    .garage-form .form-bottom-row { display: contents; }
+    :global(.garage-form .vehicle-fields) { display: contents; }
+    :global(.booking-form.garage-form .booking-form-label-field) { width: auto; }
+    :global(.garage-form .booking-form-field) { width: 100%; }
+    :global(.booking-form.garage-form .form-bottom-row > .booking-button-wrapper) { width: 100%; grid-column: 1 / -1; }
+  }
+  @media (max-width: 991px) {
+    .booking-form { flex-direction: column; }
+    .left-side-fields, .right-side-fields { width: 100%; grid-template-columns: 1fr; column-gap: 0; }
+  }
+  @media (max-width: 767px) {
+    .booking-form { flex-direction: column; }
+    .form-bottom-row { grid-template-columns: 1fr; }
+    .left-side-fields, .right-side-fields { width: 100%; grid-template-columns: 1fr; column-gap: 0; }
+  }
+  .booking-form-button:disabled { opacity: 0.5; cursor: not-allowed; }
+</style>
+<script is:inline type="application/json" id="hero-data" set:html={__data} />
+<script>
+  const raw = document.getElementById("hero-data");
+  if (raw) {
+    (() => {
+      interface Region { label?: string; services: { name: string; routes: (string | { route: string; price?: string })[] }[] }
+      interface FieldDef { label: string; placeholder?: string; name: string; type?: string; side?: string }
+      interface HeroData {
+        spain: Region; italy: Region;
+        SS: string; SR: string; CL: string; CS: string; SP: string;
+        PI: string; PS: string; PSV: string; SN: string; HB: boolean;
+        SERVICES: string[]; SVC_FIELDS: Record<string, FieldDef[]>; IS_GARAGE_HOME: boolean;
+      }
+      let d: HeroData;
+      try { d = JSON.parse(raw.textContent || "{}") as HeroData; } catch (err) {
+        console.warn("[Hero] invalid hero-data JSON", err);
+        const fe = document.querySelector<HTMLElement>(".form-error-message");
+        if (fe) fe.style.display = "block";
+        return;
+      }
+      const R: Record<string, Region> = { spain: d.spain, italy: d.italy };
+      const { SS, SR, CL, CS, SP, PI, PS, PSV } = d;
+      const HB = !!d.HB;
+      const L = document.getElementById("form-location") as HTMLSelectElement | null;
+      const S = document.getElementById("form-service") as HTMLSelectElement | null;
+      const D = document.getElementById("form-destination") as HTMLSelectElement | null;
+      const PV = document.getElementById("form-price-value") as HTMLElement | null;
+      const form = document.querySelector<HTMLFormElement>(".booking-form");
+      const btn = form?.querySelector<HTMLButtonElement>(".booking-form-button") ?? null;
+      const formError = document.querySelector<HTMLElement>(".form-error-message");
+      const msgIn = form?.querySelector<HTMLInputElement>('[name="Message"]') ?? null;
+      const pickUpDate = form?.querySelector<HTMLInputElement>('[name="Pick-Up-Date"]');
+      const nameIn = form?.querySelector<HTMLInputElement>('[name="Full-Name"]') ?? null;
+      const phoneIn = form?.querySelector<HTMLInputElement>('[name="Phone"]') ?? null;
+      if (!form || !btn || (HB && !L)) return;
+      const submitBtn = btn;
+      if (pickUpDate) {
+        const t = new Date();
+        pickUpDate.min = t.getFullYear() + "-" + (t.getMonth() + 1).toString().padStart(2, "0") + "-" + t.getDate().toString().padStart(2, "0");
+      }
+      function validName(v: string): boolean { return v.trim().length >= 2 && /^[\p{L}\s\-'.]+$/u.test(v); }
+      function validPhone(v: string): boolean {
+        const dd = v.replace(/[\s\-\+\(\)]/g, "");
+        return dd.length >= 7 && dd.length <= 15 && /^[\+\d\s\-\(\)]+$/.test(v);
+      }
+      function showErr(el: HTMLInputElement, m: string): void {
+        let mb = el.parentElement?.querySelector<HTMLElement>(".field-error");
+        if (!mb) {
+          mb = document.createElement("div");
+          mb.className = "field-error";
+          mb.id = el.id + "-error";
+          mb.setAttribute("role", "alert");
+          mb.style.cssText = "color:var(--colors--coral);font-size:1rem;margin-top:4px;font-family:var(--font-families--body-font);";
+          el.parentElement?.appendChild(mb);
+        }
+        mb.textContent = m;
+        el.setAttribute("aria-invalid", "true");
+        el.setAttribute("aria-describedby", mb.id);
+        el.setAttribute("data-invalid", "");
+      }
+      function clearErr(el: HTMLInputElement): void {
+        const mb = el.parentElement?.querySelector<HTMLElement>(".field-error");
+        if (mb) mb.textContent = "";
+        el.removeAttribute("aria-invalid");
+        el.removeAttribute("aria-describedby");
+        delete el.dataset.invalid;
+      }
+      if (nameIn && phoneIn) {
+        [nameIn, phoneIn].forEach(function (inp) {
+          inp.addEventListener("input", function () {
+            if (!inp.value) { clearErr(inp); return; }
+            const fn = inp === nameIn ? validName : validPhone;
+            if (fn(inp.value)) clearErr(inp);
+            else showErr(inp, inp === nameIn ? "Please enter your full name (at least 2 characters)" : "Please enter a valid phone number (+ and 7-15 digits)");
+            updateBtn();
+          });
+          inp.addEventListener("blur", function () {
+            if (!inp.value) showErr(inp, inp === nameIn ? "Name is required" : "Phone is required");
+            else if (!(inp === nameIn ? validName : validPhone)(inp.value)) showErr(inp, inp === nameIn ? "Please enter your full name (at least 2 characters)" : "Please enter a valid phone number (+ and 7-15 digits)");
+            updateBtn();
+          });
+        });
+      }
+      function placeOption(sel: HTMLSelectElement, text: string): void {
+        while (sel.firstChild) sel.removeChild(sel.firstChild);
+        const o = document.createElement("option");
+        o.value = ""; o.disabled = true; o.hidden = true; o.selected = true; o.textContent = text;
+        sel.appendChild(o);
+      }
+      function uS(): void {
+        if (!S) return;
+        const l = L?.value ?? "";
+        const s = l && R[l] ? R[l].services : [];
+        placeOption(S, l ? SS : CL);
+        S.disabled = !l; S.required = !S.disabled;
+        for (let i = 0; i < s.length; i++) { const o = document.createElement("option"); o.value = s[i].name; o.textContent = s[i].name; S.appendChild(o); }
+        uD();
+      }
+      function uD(): void {
+        if (!D || !S) return;
+        const l = L?.value ?? "";
+        const sn = S.value;
+        let rt: (string | { route: string; price?: string })[] = [];
+        if (l && sn && R[l]) {
+          const sv = R[l].services;
+          for (let i = 0; i < sv.length; i++) if (sv[i].name === sn) { rt = sv[i].routes; break; }
+        }
+        placeOption(D, sn ? SR : CS);
+        D.disabled = !sn; D.required = !D.disabled;
+        for (let j = 0; j < rt.length; j++) {
+          const r2 = rt[j];
+          const o2 = document.createElement("option");
+          o2.value = typeof r2 === "string" ? r2 : r2.route;
+          o2.textContent = typeof r2 === "string" ? r2 : r2.route;
+          D.appendChild(o2);
+        }
+        upP();
+      }
+      function upP(): void {
+        if (!PV || !S) return;
+        const l = L?.value ?? "";
+        const sn = S.value;
+        const dn = D?.value ?? "";
+        if (!l || !sn || !dn || !R[l]) { PV.textContent = SP; PV.dataset.state = "placeholder"; return; }
+        const sv = R[l].services;
+        for (let i = 0; i < sv.length; i++) if (sv[i].name === sn) {
+          const rt = sv[i].routes;
+          for (let j = 0; j < rt.length; j++) {
+            const r = rt[j];
+            const rn = typeof r === "string" ? r : r.route;
+            if (rn === dn) { PV.textContent = typeof r === "string" ? "" : (r.price ?? ""); delete PV.dataset.state; return; }
+          }
+        }
+        PV.textContent = SP; PV.dataset.state = "placeholder";
+      }
+      function updateBtn(): void {
+        const base = !!nameIn && !!nameIn.value.trim() && validName(nameIn.value) && !!phoneIn && !!phoneIn.value.trim() && validPhone(phoneIn.value) && !!pickUpDate && !!pickUpDate.value;
+        const allFilled = HB
+          ? base && !!L && !!L.value && !!S && !S.disabled && !!S.value && !!D && !D.disabled && !!D.value
+          : base && (!!S && !!S.value || !!PSV);
+        submitBtn.disabled = !allFilled;
+        submitBtn.style.opacity = allFilled ? "1" : "0.5";
+        submitBtn.style.cursor = allFilled ? "pointer" : "not-allowed";
+      }
+      L?.addEventListener("change", () => { updateBtn(); uS(); });
+      S?.addEventListener("change", () => { updateBtn(); uD(); });
+      D?.addEventListener("change", updateBtn);
+      pickUpDate?.addEventListener("change", updateBtn);
+      msgIn?.addEventListener("input", updateBtn);
+      updateBtn();
+
+      // ----- Garage dynamic service-fields -----
+      const isGarageHome = !!d.IS_GARAGE_HOME;
+      const svcLeft = document.getElementById("svc-fields-left");
+      const svcRight = document.getElementById("svc-fields-right");
+      function rebalance(): void {
+        // Balanced rows: choose cols so the grid packs evenly with no empty cells.
+        // No-service home has 6 units (5 fields + submit) → 3+3 (3 cols). With service,
+        // 7-11 units → pick cols where units % cols === 0 when possible; otherwise wrap
+        // 1 field from row 1 to row 2 so the trailing empty cell disappears (your fix).
+        const gforms = Array.from(document.querySelectorAll<HTMLElement>(".garage-form"));
+        const isDesktop = window.matchMedia("(min-width: 992px)").matches;
+        if (!isDesktop) {
+          for (const gform of gforms) {
+            gform.style.removeProperty("grid-template-columns");
+            const sb0 = gform.querySelector<HTMLElement>(".booking-button-wrapper");
+            if (sb0) { sb0.style.removeProperty("grid-column"); sb0.style.removeProperty("max-width"); sb0.style.removeProperty("justify-self"); }
+          }
+          return;
+        }
+        const gap = 44;
+        const MIN_COL = 210;
+        for (const gform of gforms) {
+          const avail = gform.clientWidth || 0;
+          const maxFit = avail ? Math.max(1, Math.floor((avail + gap) / (MIN_COL + gap))) : 3;
+          const units = gform.querySelectorAll(".booking-form-label-field").length + 1;
+          let cols: number;
+          if (units === 7) {
+            cols = 3; // 3+4 handled as 12-col special below
+          } else {
+            let best = -1;
+            for (let c = 2; c <= maxFit; c++) if (units % c === 0 && c > best) best = c;
+            if (best !== -1) cols = best;
+            else {
+              let alt = -1;
+              for (let c = Math.min(maxFit, 4); c >= 2; c--) if ((units) % c === 0) { alt = c; break; }
+              if (alt !== -1 && alt >= 2) cols = alt;
+              else {
+                cols = Math.min(maxFit, units <= 6 ? 3 : 3);
+                if (units === 6 && maxFit >= 3) cols = 3;
+              }
+            }
+          }
+          cols = Math.max(1, Math.min(cols, maxFit));
+          // 7-unit special: 3+4 rows → 12-col grid (first row 3 items span 4, second row 4 items span 3)
+          // All other counts use uniform cols; the 7-unit case is the only one needing non-uniform rows.
+          if (units === 7 && maxFit >= 4) {
+            gform.style.setProperty("grid-template-columns", `repeat(12, minmax(0, 1fr))`);
+            const items = Array.from(gform.querySelectorAll<HTMLElement>(".booking-form-label-field, .booking-button-wrapper"));
+            items.forEach((el, i) => { el.style.gridColumn = i < 3 ? "span 4" : "span 3"; el.style.maxWidth = ""; el.style.justifySelf = ""; });
+            continue;
+          } else {
+            Array.from(gform.querySelectorAll<HTMLElement>(".booking-form-label-field, .booking-button-wrapper")).forEach(el => { el.style.removeProperty("grid-column"); el.style.removeProperty("max-width"); el.style.removeProperty("justify-self"); });
+          }
+          const span = cols - ((units - 1) % cols);
+          const submit = gform.querySelector<HTMLElement>(".booking-button-wrapper");
+          if (submit) {
+            const isFullRow = units % cols === 0;
+            const maxSpan = Math.max(1, Math.floor(cols / 2));
+            let effSpan = span;
+            if (effSpan > maxSpan) effSpan = maxSpan;
+            submit.style.gridColumn = isFullRow ? "" : `span ${effSpan}`;
+            submit.style.maxWidth = "";
+            submit.style.justifySelf = "";
+          }
+          gform.style.setProperty("grid-template-columns", `repeat(${cols}, minmax(0, 1fr))`);
+        }
+      }
+      let rebalanceT: number | undefined;
+      window.addEventListener("resize", () => { clearTimeout(rebalanceT); rebalanceT = window.setTimeout(() => rebalance(), 80); });
+      function createTextField(f: FieldDef): HTMLElement {
+        const wrap = document.createElement("div");
+        wrap.className = "booking-form-label-field";
+        const lab = document.createElement("label");
+        lab.className = "booking-form-label";
+        lab.htmlFor = `form-${f.name}`;
+        lab.textContent = f.label;
+        const inp = document.createElement("input");
+        inp.className = "booking-form-field";
+        inp.id = `form-${f.name}`;
+        inp.name = f.name;
+        inp.type = "text";
+        if (f.placeholder) inp.placeholder = f.placeholder;
+        inp.setAttribute("aria-label", f.label);
+        inp.setAttribute("data-custom-field", "");
+        wrap.appendChild(lab); wrap.appendChild(inp);
+        return wrap;
+      }
+      function createLocationField(f: FieldDef): HTMLElement {
+        const wrap = document.createElement("div");
+        wrap.className = "booking-form-label-field";
+        const lab = document.createElement("label");
+        lab.className = "booking-form-label";
+        lab.htmlFor = `form-${f.name}`;
+        lab.textContent = f.label;
+        const inp = document.createElement("input");
+        inp.className = "booking-form-field";
+        inp.id = `form-${f.name}`;
+        inp.name = f.name;
+        inp.type = "text";
+        if (f.placeholder) inp.placeholder = f.placeholder;
+        inp.autocomplete = "off";
+        inp.setAttribute("data-photon-location", "");
+        inp.setAttribute("data-custom-field", "");
+        inp.setAttribute("data-custom-location", "");
+        inp.setAttribute("aria-label", f.label);
+        if (f.type === "country") inp.setAttribute("data-country-location", "");
+        const hid = document.createElement("input");
+        hid.type = "hidden";
+        hid.id = `form-${f.name}-location`;
+        hid.name = `${f.name}-address`;
+        wrap.appendChild(lab); wrap.appendChild(inp); wrap.appendChild(hid);
+        return wrap;
+      }
+      function createVehicleField(f: FieldDef): HTMLElement {
+        const outer = document.createElement("div");
+        outer.className = "vehicle-fields";
+        const mk = (idSuf: string, lbl: string, ph: string, extra: Record<string, string>) => {
+          const w = document.createElement("div");
+          w.className = "booking-form-label-field";
+          const lab = document.createElement("label");
+          lab.className = "booking-form-label";
+          lab.htmlFor = `form-${f.name}-${idSuf}`;
+          lab.textContent = lbl;
+          const inp = document.createElement("input");
+          inp.className = "booking-form-field";
+          inp.id = `form-${f.name}-${idSuf}`;
+          Object.entries(extra).forEach(([k, v]) => inp.setAttribute(k, v));
+          if (ph) inp.placeholder = ph;
+          inp.autocomplete = "off";
+          w.appendChild(lab); w.appendChild(inp);
+          return w;
+        };
+        const selWrap = document.createElement("div");
+        selWrap.className = "booking-form-label-field";
+        const selLab = document.createElement("label");
+        selLab.className = "booking-form-label";
+        selLab.htmlFor = `form-${f.name}-type`;
+        selLab.textContent = "Vehicle type";
+        const sel = document.createElement("select");
+        sel.className = "booking-form-field";
+        sel.id = `form-${f.name}-type`;
+        sel.name = `${f.name}-type`;
+        sel.setAttribute("data-vehicle-type", "");
+        const optC = document.createElement("option"); optC.value = "car"; optC.textContent = "Car";
+        const optM = document.createElement("option"); optM.value = "motorcycle"; optM.textContent = "Motorcycle";
+        sel.appendChild(optC); sel.appendChild(optM);
+        selWrap.appendChild(selLab); selWrap.appendChild(sel);
+
+        const makeW = mk("make", "Make", f.placeholder || "Select make...", { "data-vehicle-make": "", "aria-label": `${f.label} make`, "name": `${f.name}-make` });
+        const modelW = mk("model", "Model", "Select model...", { "data-vehicle-model": "", "aria-label": `${f.label} model`, "name": `${f.name}-model`, "disabled": "" });
+        const yearW = mk("year", "Year", "Select year...", { "data-vehicle-year": "", "aria-label": `${f.label} year`, "name": `${f.name}-year`, "disabled": "", "inputmode": "numeric", "pattern": "\\d{4}", "maxlength": "4" });
+        // hidden summary
+        const hid = document.createElement("input");
+        hid.type = "hidden";
+        hid.name = f.name;
+        hid.setAttribute("data-vehicle-summary", "");
+        hid.setAttribute("data-custom-field", "");
+        hid.setAttribute("aria-label", f.label);
+
+        outer.appendChild(selWrap); outer.appendChild(makeW); outer.appendChild(modelW); outer.appendChild(yearW); outer.appendChild(hid);
+        return outer;
+      }
+
+      // Photon + Vehicle attach helpers (lazy import autoComplete once)
+      let photonReady: Promise<typeof import("@tarekraafat/autocomplete.js").default> | null = null;
+      function getAC() {
+        if (!photonReady) photonReady = import("@tarekraafat/autocomplete.js").then((m) => m.default);
+        return photonReady;
+      }
+      const PHOTON_COUNTRIES = ["AL","AD","AT","BY","BE","BA","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IS","IE","IT","XK","LV","LI","LT","LU","MT","MD","MC","ME","NL","MK","NO","PL","PT","RO","RU","SM","RS","SK","SI","ES","SE","CH","TR","UA","GB","US"];
+      const PHOTON_COUNTRY_ALLOW = new Set(PHOTON_COUNTRIES);
+      const PHOTON_BASE = "https://photon.komoot.io/api?limit=6&layer=street&layer=house";
+      const PHOTON_COUNTRY_BASE = "https://photon.komoot.io/api?limit=6&layer=country";
+
+      async function attachPhoton(input: HTMLInputElement): Promise<void> {
+        const AC = await getAC();
+        const hidden = document.getElementById(input.id + "-location") as HTMLInputElement | null;
+        const isCountry = input.hasAttribute("data-country-location");
+        const queryUrl = isCountry ? PHOTON_COUNTRY_BASE : PHOTON_BASE + "&" + PHOTON_COUNTRIES.map((cc) => "countrycode=" + cc).join("&");
+        new (AC as unknown as new (o: unknown) => unknown)({
+          selector: () => input,
+          threshold: 2,
+          debounce: 250,
+          data: {
+            src: async (query: string) => {
+              if (!query || query.trim().length < 2) return [];
+              const ac = new AbortController();
+              const tid = setTimeout(() => ac.abort(), 5000);
+              let res: Response;
+              let json: { features?: { properties?: Record<string, string> }[] };
+              try {
+                res = await fetch(`${queryUrl}&q=${encodeURIComponent(query.trim())}`, { signal: ac.signal } as RequestInit);
+                if (!res.ok) return [];
+                json = (await res.json()) as typeof json;
+              } catch { return []; } finally { clearTimeout(tid); }
+              const rows = (json.features ?? []).map((feat: { properties?: { name?: string; street?: string; city?: string; country?: string; countrycode?: string; housenumber?: string } }) => ({
+                name: feat.properties?.name ?? "",
+                street: feat.properties?.street ?? "",
+                city: feat.properties?.city ?? "",
+                country: feat.properties?.country ?? "",
+                ...(isCountry ? { _q: query.trim() } : {}),
+                _feature: feat,
+              }));
+              return isCountry
+                ? rows.filter((r, i, a) => a.findIndex((x) => x.country === r.country) === i).filter((r) => PHOTON_COUNTRY_ALLOW.has((r as unknown as { _feature: { properties: { countrycode: string } } })._feature.properties.countrycode))
+                : rows;
+            },
+            keys: isCountry ? ["_q"] : ["name", "street"],
+            cache: false,
+          },
+          resultsList: {
+            element: (list: HTMLUListElement) => { list.classList.add("dropdown-panel"); },
+            maxResults: 6,
+          },
+          resultItem: {
+            highlight: false,
+            element: (item: HTMLElement, data: { value: Record<string, string> }) => {
+              const v = data.value as unknown as Record<string, string>;
+              item.classList.add("dropdown-panel-item");
+              const label = isCountry ? v.name || v.country || "" : [v.name, v.street, v.city, v.country].filter(Boolean).join(", ");
+              item.textContent = label;
+            },
+          },
+          events: {
+            input: {
+              selection: (e: Event) => {
+                const feedback = (e as CustomEvent).detail;
+                const v = feedback?.selection?.value ?? {};
+                const p = (v as unknown as { _feature?: { properties: Record<string, string> } })._feature?.properties ?? v;
+                const full = isCountry ? (p as Record<string, string>).name || (p as Record<string, string>).country || "" : [p.name, p.street, (p as Record<string, string>).housenumber, p.city, p.country].filter(Boolean).join(", ");
+                input.value = full;
+                if (hidden) hidden.value = full;
+              },
+            },
+          },
+        });
+      }
+
+      // Vehicle cascade for a single .vehicle-fields block
+      async function attachVehicle(block: HTMLElement): Promise<void> {
+        const AC = await getAC();
+        const makeInput = block.querySelector<HTMLInputElement>("[data-vehicle-make]")!;
+        const modelInput = block.querySelector<HTMLInputElement>("[data-vehicle-model]")!;
+        const yearInput = block.querySelector<HTMLInputElement>("[data-vehicle-year]")!;
+        const typeInput = block.querySelector<HTMLSelectElement>("[data-vehicle-type]")!;
+        const summary = block.querySelector<HTMLInputElement>("[data-vehicle-summary]")!;
+        if (!makeInput || !modelInput || !yearInput || !typeInput) return;
+        const NHTSA = "https://vpic.nhtsa.dot.gov/api/vehicles";
+        const YEARS: number[] = [];
+        for (let y = 1992; y <= new Date().getFullYear() + 1; y++) YEARS.push(y);
+        const makesByType: Record<string, string[]> = {};
+        let activeType: string = typeInput.value || "car";
+        let modelNames: string[] = [];
+        let modelYears: Record<string, number[]> = {};
+        let activeMakeId: number | null = null;
+        const jf = (r: Response) => r.json();
+        async function getMakes(): Promise<string[]> {
+          const vt = activeType;
+          if (makesByType[vt]) return makesByType[vt];
+          const ids = new Map<string, number>();
+          try {
+            const d = await fetch(`${NHTSA}/GetMakesForVehicleType/${vt}?format=json`).then(jf);
+            for (const r of d.Results || []) if (!ids.has(r.MakeName)) ids.set(r.MakeName, r.MakeId);
+          } catch {}
+          makesByType[vt] = [...ids.keys()].sort();
+          return makesByType[vt];
+        }
+        async function loadModels(makeName: string): Promise<void> {
+          let id = activeMakeId;
+          if (!id) {
+            const d = await fetch(`${NHTSA}/GetMakesForVehicleType/${activeType}?format=json`).then(jf).catch(() => null);
+            const hit = (d?.Results || []).find((r: { MakeName: string; MakeId: number }) => r.MakeName === makeName);
+            id = hit?.MakeId ?? null;
+            activeMakeId = id;
+          }
+          modelNames = []; modelYears = {};
+          if (!id) return;
+          const modelP = fetch(`${NHTSA}/GetModelsForMakeId/${id}?format=json`).then(jf).catch(() => ({ Results: [] }));
+          const yearP = Promise.all(YEARS.map((y) => fetch(`${NHTSA}/GetModelsForMakeIdYear/makeId/${id}/modelyear/${y}?format=json`).then(jf).then((dd) => ({ y, names: (dd.Results || []).map((m: { Model_Name: string }) => m.Model_Name) })).catch(() => ({ y, names: [] as string[] }))));
+          const [md, yrRows] = await Promise.all([modelP, yearP]);
+          for (const row of yrRows) for (const nm of row.names) { if (!modelYears[nm]) modelYears[nm] = []; modelYears[nm].push(row.y); }
+          modelNames = Array.from(new Set<string>((md.Results || []).map((m: { Model_Name: string }) => m.Model_Name))).sort();
+        }
+        const SENTINEL = "::";
+        const MAX = 500;
+        function initAC(input: HTMLInputElement, getCandidates: () => string[] | Promise<string[]>, onPick: (v: string) => void, threshold = 2): InstanceType<typeof AC> {
+          return new (AC as unknown as new (o: unknown) => InstanceType<typeof AC>)({
+            selector: () => input,
+            threshold,
+            debounce: 250,
+            data: {
+              src: async (query: string) => {
+                if (query === SENTINEL) {
+                  const all = await getCandidates();
+                  return all.slice(0, MAX).map((c) => ({ value: c, _q: SENTINEL }));
+                }
+                const q = (query || "").trim().toLowerCase();
+                const candidates = await getCandidates();
+                return candidates.filter((c) => c.toLowerCase().includes(q)).slice(0, MAX).map((c) => ({ value: c, _q: query || "" }));
+              },
+              cache: false,
+              keys: ["_q"],
+            },
+            resultsList: { element: (list: HTMLUListElement) => { list.classList.add("dropdown-panel"); }, maxResults: MAX },
+            resultItem: { highlight: false, element: (item: HTMLElement, data: { value: { value: string } }) => { item.classList.add("dropdown-panel-item"); item.textContent = String(data.value.value); } },
+            events: { input: { selection: (e: Event) => {
+              const feedback = (e as CustomEvent).detail;
+              const picked = feedback?.selection?.value ?? {};
+              const val = typeof picked === "string" ? picked : String((picked as { value: string }).value ?? "");
+              if (!val) return;
+              input.value = val;
+              onPick(val);
+            } } },
+          });
+        }
+        function updateSummary(): void {
+          if (!summary) return;
+          const parts = [makeInput.value, modelInput.value, yearInput.value ? `(${yearInput.value})` : ""].filter(Boolean);
+          summary.value = parts.join(" ");
+        }
+        function openAll(ac: InstanceType<typeof AC>, input: HTMLInputElement): void { input.focus(); (ac as unknown as { start: (q: string) => void }).start(SENTINEL); }
+        function onMakePick(makeName: string): void {
+          activeMakeId = null; modelInput.value = ""; yearInput.value = ""; modelInput.disabled = true; yearInput.disabled = true; updateSummary();
+          loadModels(makeName).then(() => {
+            modelInput.disabled = !modelNames.length;
+            modelInput.placeholder = modelNames.length ? "Select model..." : "No models available";
+            updateSummary();
+            if (modelNames.length) setTimeout(() => openAll(modelAC, modelInput), 0);
+          });
+        }
+        function onModelPick(modelName: string): void {
+          yearInput.value = ""; yearInput.disabled = true; updateSummary();
+          const years = activeMakeId != null ? (modelYears[modelName] || []) : [];
+          yearInput.disabled = !years.length;
+          yearInput.placeholder = years.length ? "Select year..." : "No years available";
+          updateSummary();
+          if (years.length) setTimeout(() => openAll(yearAC, yearInput), 0);
+        }
+        const makeAC = initAC(makeInput, getMakes, onMakePick);
+        const modelAC = initAC(modelInput, () => modelNames, onModelPick);
+        const yearAC = initAC(yearInput, () => {
+          const mdl = modelInput.value;
+          const years = activeMakeId != null ? (modelYears[mdl] || []) : [];
+          return years.slice().sort((a, b) => a - b).map((y) => String(y));
+        }, () => { updateSummary(); });
+        function openOnEmpty(ac: InstanceType<typeof AC>, input: HTMLInputElement): void {
+          input.addEventListener("focus", () => { if (input.disabled || input.value) return; openAll(ac, input); });
+          let reopen: number | undefined;
+          input.addEventListener("input", () => {
+            if (input.disabled || input.value || document.activeElement !== input) return;
+            if (reopen) return;
+            reopen = window.setTimeout(() => { reopen = undefined; if (!input.value && document.activeElement === input) openAll(ac, input); }, 300);
+          });
+        }
+        openOnEmpty(makeAC, makeInput); openOnEmpty(modelAC, modelInput); openOnEmpty(yearAC, yearInput);
+        [makeInput, modelInput, yearInput].forEach((inp) => inp.addEventListener("input", updateSummary));
+        typeInput.addEventListener("change", () => {
+          activeType = typeInput.value; activeMakeId = null; modelNames = []; modelYears = {}; makeInput.value = ""; modelInput.value = ""; yearInput.value = ""; modelInput.disabled = true; yearInput.disabled = true; updateSummary();
+          getMakes().then(() => { if (!makeInput.value && document.activeElement === makeInput) openAll(makeAC, makeInput); });
+        });
+        getMakes();
+      }
+
+      // Dynamic service-fields rendering
+      // svcLeft/svcRight are non-null here (guarded by the `if`); capture into
+      // definite locals so the narrowing survives inside the async closure.
+      if (isGarageHome && S && svcLeft && svcRight) {
+        const svcLeftEl = svcLeft as HTMLElement;
+        const svcRightEl = svcRight as HTMLElement;
+        async function renderForService(title: string): Promise<void> {
+          const fields: FieldDef[] = (d.SVC_FIELDS as Record<string, FieldDef[]>)[title] || [];
+          // clear previous
+          svcLeftEl.replaceChildren();
+          svcRightEl.replaceChildren();
+          // remove any vehicle wrappers that might have been counted before? already cleared
+          for (const f of fields) {
+            let el: HTMLElement;
+            if (f.type === "vehicle") el = createVehicleField(f);
+            else if (f.type === "location" || f.type === "country") el = createLocationField(f);
+            else el = createTextField(f);
+            const host = f.side === "right" ? svcRightEl : svcLeftEl;
+            host.appendChild(el);
+          }
+          // attach autocomplete for newly injected fields
+          const newLocs = [...svcLeftEl.querySelectorAll<HTMLInputElement>("[data-photon-location]"), ...svcRightEl.querySelectorAll<HTMLInputElement>("[data-photon-location]")];
+          for (const inp of newLocs) attachPhoton(inp);
+          const newVehicles = [...svcLeftEl.querySelectorAll<HTMLElement>(".vehicle-fields"), ...svcRightEl.querySelectorAll<HTMLElement>(".vehicle-fields")];
+          for (const b of newVehicles) attachVehicle(b);
+          rebalance();
+          updateBtn();
+        }
+        S.addEventListener("change", () => {
+          const t = S.value;
+          if (t) renderForService(t);
+          else { svcLeftEl.replaceChildren(); svcRightEl.replaceChildren(); rebalance(); updateBtn(); }
+        });
+        // if service pre-selected via URL hash or back navigation
+        if (S.value) renderForService(S.value);
+      }
+
+      form.addEventListener("submit", (e: Event) => {
+        e.preventDefault();
+        if (!form.checkValidity() || btn.disabled) return;
+        const n = nameIn?.value ?? "";
+        const p = phoneIn?.value ?? "";
+        const dt = pickUpDate?.value ?? "";
+        let msg: string; let pn: string; let cn: string;
+        if (HB && L && S && D) {
+          const lt = L.options[L.selectedIndex].text;
+          const st = S.options[S.selectedIndex].text;
+          const dst = D.options[D.selectedIndex].value;
+          pn = L.value === "italy" ? PI : PS;
+          msg = "Hi " + d.SN + "! I would like to book a ride.\n\n*Name:* " + n + "\n*Phone:* " + p + "\n*Location:* " + lt + "\n*Service:* " + st + "\n*Date:* " + dt + "\n*Destination:* " + dst;
+        } else {
+          pn = PS || PI;
+          msg = "Hi " + d.SN + "! I would like to get a quote.\n\n*Name:* " + n + "\n*Phone:* " + p + "\n*Date:* " + dt + "\n*Service:* " + (S && S.value ? S.options[S.selectedIndex].text : PSV);
+          document.querySelectorAll<HTMLInputElement>("[data-custom-field]").forEach((el) => {
+            let v = el.value.trim();
+            if (el.hasAttribute("data-custom-location")) {
+              const hid = document.getElementById(el.id + "-location") as HTMLInputElement | null;
+              if (hid && hid.value) v = hid.value.trim();
+            }
+            if (v) {
+              const lbl = (el.getAttribute("aria-label") || el.name).trim();
+              msg += "\n*" + lbl + ":* " + v;
+            }
+          });
+          if (msgIn && msgIn.value.trim()) msg += "\n*Message:* " + msgIn.value.trim();
+        }
+        cn = pn.replace(/[\s+]/g, "");
+        const digits = cn.replace(/\D/g, "");
+        if (!digits) { if (formError) formError.style.display = "block"; return; }
+        window.open("https://wa.me/" + digits + "?text=" + encodeURIComponent(msg), "_blank", "noopener,noreferrer");
+      });
+      rebalance();
+    })();
+  }
+</script>
+<script>
+  // Legacy Photon/ Vehicle init for statically rendered fields (service detail pages).
+  // Kept as a no-op fallback — the main script above already handles dynamic hosts.
+  // This block ensures fields rendered via FormField.astro (static) still get autocomplete
+  // when this component is used on detail pages (presetService) where IS_GARAGE_HOME is false.
+  import autoComplete from "@tarekraafat/autocomplete.js";
+  const locationInputs = Array.from(document.querySelectorAll<HTMLInputElement>("[data-photon-location]"));
+  // Only wire inputs that haven't already been handled (dynamic path sets a marker).
+  const unwired = locationInputs.filter((inp) => !(inp as unknown as { _acWired?: boolean })._acWired);
+  if (unwired.length && !document.getElementById("svc-fields-left")) {
+    const PHOTON_COUNTRIES = ["AL","AD","AT","BY","BE","BA","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IS","IE","IT","XK","LV","LI","LT","LU","MT","MD","MC","ME","NL","MK","NO","PL","PT","RO","RU","SM","RS","SK","SI","ES","SE","CH","TR","UA","GB","US"];
+    const PHOTON_COUNTRY_ALLOW = new Set(PHOTON_COUNTRIES);
+    const PHOTON_BASE = "https://photon.komoot.io/api?limit=6&layer=street&layer=house";
+    const PHOTON_COUNTRY_BASE = "https://photon.komoot.io/api?limit=6&layer=country";
+    unwired.forEach((input) => {
+      const hidden = document.getElementById(input.id + "-location") as HTMLInputElement | null;
+      const isCountry = input.hasAttribute("data-country-location");
+      const queryUrl = isCountry ? PHOTON_COUNTRY_BASE : PHOTON_BASE + "&" + PHOTON_COUNTRIES.map((cc) => "countrycode=" + cc).join("&");
+      new autoComplete({
+        selector: () => input,
+        threshold: 2,
+        debounce: 250,
+        data: {
+          src: async (query: string) => {
+            if (!query || query.trim().length < 2) return [];
+            const ac = new AbortController();
+            const tid = setTimeout(() => ac.abort(), 5000);
+            let res: Response;
+            let json: { features?: { properties?: Record<string, string> }[] };
+            try {
+              res = await fetch(`${queryUrl}&q=${encodeURIComponent(query.trim())}`, { signal: ac.signal } as RequestInit);
+              if (!res.ok) return [];
+              json = (await res.json()) as typeof json;
+            } catch { return []; } finally { clearTimeout(tid); }
+            const rows = (json.features ?? []).map((f: { properties?: { name?: string; street?: string; city?: string; country?: string; countrycode?: string; housenumber?: string } }) => ({
+              name: f.properties?.name ?? "",
+              street: f.properties?.street ?? "",
+              city: f.properties?.city ?? "",
+              country: f.properties?.country ?? "",
+              ...(isCountry ? { _q: query.trim() } : {}),
+              _feature: f,
+            }));
+            return isCountry ? rows.filter((r, i, a) => a.findIndex((x) => x.country === r.country) === i).filter((r) => PHOTON_COUNTRY_ALLOW.has((r as unknown as { _feature: { properties: { countrycode: string } } })._feature.properties.countrycode)) : rows;
+          },
+          keys: isCountry ? ["_q"] : ["name", "street"],
+          cache: false,
+        },
+        resultsList: { element: (list: HTMLUListElement) => { list.classList.add("dropdown-panel"); }, maxResults: 6 },
+        resultItem: { highlight: false, element: (item: HTMLElement, data: { value: Record<string, string> }) => {
+          const v = data.value;
+          item.classList.add("dropdown-panel-item");
+          const label = isCountry ? v.name || v.country || "" : [v.name, v.street, v.city, v.country].filter(Boolean).join(", ");
+          item.textContent = label;
+        } },
+        events: { input: { selection: (e: Event) => {
+          const feedback = (e as CustomEvent).detail;
+          const v = feedback?.selection?.value ?? {};
+          const p = (v as unknown as { _feature?: { properties: Record<string, string> } })._feature?.properties ?? v;
+          const full = isCountry ? (p as Record<string, string>).name || (p as Record<string, string>).country || "" : [p.name, p.street, (p as Record<string, string>).housenumber, p.city, p.country].filter(Boolean).join(", ");
+          input.value = full;
+          if (hidden) hidden.value = full;
+        } } },
+      });
+      (input as unknown as { _acWired?: boolean })._acWired = true;
+    });
+  }
+</script>

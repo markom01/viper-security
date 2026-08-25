@@ -16,7 +16,10 @@ declare module "@tarekraafat/autocomplete.js" {
   interface AutoCompleteOptions<T = unknown> {
     selector: string | (() => Element);
     data: {
-      src: (query: string) => Promise<T[]> | T[];
+      // Photon results carry `_feature` metadata beyond the displayed record,
+      // so the return type is widened from `T[]` to `Record<string, unknown>[]`.
+      // Callbacks (resultItem/events) narrow `value` via `as` casts at call sites.
+      src: (query: string) => Promise<Record<string, unknown>[]> | Record<string, unknown>[];
       keys?: string[];
       cache?: boolean;
     };

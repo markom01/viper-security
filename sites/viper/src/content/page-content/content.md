@@ -96,7 +96,7 @@ fleet:
 stats:
   subheading: Every pickup flight-tracked, every route priced upfront, and every
     journey driven to one standard — 24/7.
-  image: /images/cms/stats-bg.jpg
+  image: /images/cms/stats-bg.webp
   items:
     - label: 15+
       title: Years Driving Experience

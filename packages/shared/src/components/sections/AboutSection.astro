@@ -4,14 +4,17 @@ import ZoomImage from "./ZoomImage.astro";
 import ImageCarousel from "./ImageCarousel.astro";
 interface Props {
   pageContent?: PageContent;
+  /** Explicit carousel images — overrides pageContent.about.images when provided. Lets DBC service pages show 5 category-picked gallery images. */
+  images?: string[];
 }
-const { pageContent } = Astro.props as Props;
+const { pageContent, images: imagesProp } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 import { ICONS } from "../../config/icons";
 const s = resolveLabels(pageContent, STRINGS);
 const about = pageContent?.about;
-const aboutGallery = about?.images?.length ? about.images : null;
+// Explicit prop wins; otherwise fall back to CMS about.images
+const aboutGallery = imagesProp?.length ? imagesProp : about?.images?.length ? about.images : null;
 ---
 
 <section id="about" class="section home-about-section">

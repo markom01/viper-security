@@ -72,6 +72,8 @@ interface Props {
   hourly?: { rates?: { name: string; price: string }[] };
   showMembership?: boolean;
   membershipTiers?: MembershipTier[];
+  /** DBC category carousel — 5 gallery images for the service's category. */
+  aboutCarouselImages?: string[];
 }
 
 const {
@@ -88,6 +90,7 @@ const {
   hourly,
   showMembership = false,
   membershipTiers = [],
+  aboutCarouselImages,
 } = Astro.props as Props;
 
 // Membership value line — derived from live pricing + tier data, never
@@ -150,7 +153,14 @@ const serviceAbout = hasAbout
   )
 }
 {offering.marquee && <Marquee pageContent={pageContent} text={offering.marquee} />}
-{hasAbout && <AboutSection pageContent={{ ...pageContent, about: serviceAbout }} />}
+{
+  hasAbout && (
+    <AboutSection
+      pageContent={{ ...pageContent, about: serviceAbout }}
+      images={aboutCarouselImages}
+    />
+  )
+}
 {hasIncludes ? (
   <Services pageContent={pageContent} marbella={includes} milano={includes} />
 ) : defaultServices ? (

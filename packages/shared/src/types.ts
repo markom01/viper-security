@@ -190,7 +190,8 @@ export interface PageContent {
   about?: { heading?: string; text?: string; image?: SiteImage; images?: SiteImage[] };
   stats?: {
     subheading?: string;
-    image: SiteImage;
+    /** Optional: service pages may omit (falls back to theme). */
+    image?: SiteImage;
     items?: Array<{ label: string; title: string }>;
   };
   cta?: { heading?: string; text?: string; image?: SiteImage };
@@ -203,9 +204,23 @@ export interface PageContent {
     professional_discreet_reliable?: string;
   };
   map_embed_url?: string;
-  /** VIPER-only: booking_data used for {placeholder} templates. */
+  /**
+   * VIPER-only: booking_data used for {placeholder} templates AND Pricing regional
+   * cards. Mirrors the `page-content` Zod schema: each region carries label/short/
+   * region plus the `services` array (name + route list) that Pricing renders.
+   */
   booking_data?: {
-    spain?: { short_label?: string; label?: string; region?: string };
-    italy?: { short_label?: string; label?: string; region?: string };
+    spain?: {
+      short_label?: string;
+      label?: string;
+      region?: string;
+      services?: BookingService[];
+    };
+    italy?: {
+      short_label?: string;
+      label?: string;
+      region?: string;
+      services?: BookingService[];
+    };
   };
 }
