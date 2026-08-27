@@ -20,10 +20,10 @@ offerings:
     include:
       - title: Enclosed Trailers & Trucks
         text: Fully enclosed, never open-deck — full insurance on every move.
-        image: /images/cms/gallery/supercars-transport.webp
+        image: /images/cms/gallery/17865778411891254.webp
       - title: EU, UK & USA Routes
         text: Door-to-door supercar transport across Europe and worldwide.
-        image: /images/cms/gallery/17865778411891254.webp
+        image: /images/cms/gallery/17875396738808884.webp
       - title: Door-to-Door Delivery
         text: Origin collection to final destination, tracked throughout.
         image: /images/cms/gallery/f26-db-custom-garage.webp
