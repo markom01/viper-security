@@ -1,0 +1,70 @@
+title: Enclosed Supercar Transport
+slug: supercar-transport
+description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe and worldwide.
+seo:
+  title: DB Custom Garage — Enclosed Supercar Transport
+  description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe and worldwide.
+  image: /images/from-wix/hero.webp
+hero:
+  subtitle: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs — across Europe and worldwide.
+  cta_text: Get A Quote
+  tagline: Supercars & Classics, No Limits
+  image: /images/cms/supercar transport hero.jpeg
+about_text: Enclosed transport with our own trucks and enclosed vehicles — fully insured, secure, safe and clean — all over Europe and the USA.
+about_image: /images/cms/from-wix/hero.webp
+marquee: Enclosed Transport · Insured · Tracked · Europe & USA
+include:
+  - title: Enclosed Trailers & Trucks
+    text: Fully enclosed, never open-deck — full insurance on every move.
+    image: /images/cms/gallery/17865778411891254.webp
+  - title: EU, UK & USA Routes
+    text: Door-to-door supercar transport across Europe and worldwide.
+    image: /images/cms/gallery/17875396738808884.webp
+  - title: Door-to-Door Delivery
+    text: Origin collection to final destination, tracked throughout.
+    image: /images/cms/gallery/f26-db-custom-garage.webp
+  - title: Transparent Pricing
+    text: Quoted per route — price from €1/km, calculated both directions.
+    image: /images/cms/gallery/17919567229428928.webp
+bottomcta:
+  heading: Transport, Handled End to End
+  values:
+    - title: Fully Enclosed
+      text: Never open-deck — your car is sealed and secure in transit.
+    - title: Fully Insured
+      text: Every move covered on our own trucks and trailers.
+    - title: Tracked Door-to-Door
+      text: Origin to destination, with updates along the way.
+steps: []
+form_fields:
+  - label: Origin
+    placeholder: Pick-up location
+    name: origin
+    type: location
+  - label: Destination
+    placeholder: Delivery location
+    name: destination
+    type: location
+fleet:
+  - name: Hummer H2 with Enclosed Trailer
+    type: Heavy-Duty Hauler
+    year: ''
+    seats: ''
+    baggage: ''
+    specs:
+      - label: Year
+        value: '2008'
+      - label: Capacity
+        value: 2 cars
+      - label: Trailer
+        value: Fully enclosed
+      - label: Liftgate
+        value: Hydraulic
+      - label: Tracking
+        value: GPS live
+    image: /images/cms/from-wix/hummer-project.webp
+    features:
+      - Enclosed trailer
+      - Hydraulic liftgate
+      - GPS tracking
+      - Fully insured transport

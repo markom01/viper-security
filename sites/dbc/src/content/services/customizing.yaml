@@ -1,0 +1,46 @@
+title: Automotive Customizing & Design Projects
+slug: customizing
+description: Bespoke design and build projects — restomod, widebody, interior and show-grade finishing.
+seo:
+  title: DB Custom Garage — Automotive Customizing & Design Projects
+  description: Bespoke design and build — from restomod to show-grade.
+  image: /images/from-wix/hummer-project.webp
+hero:
+  subtitle: Bespoke design and build — from restomod to show-grade.
+  cta_text: Get A Quote
+  tagline: Customize · Design · Build
+  image: /images/cms/custom design hero.jpeg
+about_text: An in-house design studio and build shop for custom cars and motorcycles — restomod, widebody, interior and show-grade finishing — plus general repair and maintenance.
+about_image: /images/cms/gallery/jeep-wrangler-body-kit-2.webp
+marquee: Custom Builds · Design · Repair · Motorcycles
+include:
+  - title: Custom Builds
+    text: Complete builds from vision to show floor.
+    image: /images/cms/gallery/screenshot-2025-08-16-alle-14-03-21.webp
+  - title: Body Kits
+    text: Fabricated in metal, powder-coated — e.g. Jeep Wrangler bumpers.
+    image: /images/cms/gallery/jeep-wrangler-body-kit.webp
+  - title: Design Projects
+    text: Concept, industrial and interior design from our in-house studio.
+    image: /images/cms/gallery/design.webp
+  - title: Repair & Maintenance
+    text: General service and maintenance for cars and motorcycles.
+    image: /images/cms/gallery/car-service-and-repair.webp
+bottomcta:
+  heading: Your Dream Build, Done
+  values:
+    - title: In-House Studio
+      text: Design and fabrication under one roof.
+    - title: Fabricate in Metal
+      text: Real parts, built by hand — not off the shelf.
+    - title: Cars & Motorcycles
+      text: Customizing and repair for both.
+steps: []
+form_fields:
+  - label: Project type
+    placeholder: Restomod, widebody, interior, design
+    name: project_type
+  - label: Budget
+    placeholder: Approximate budget
+    name: budget
+fleet: []

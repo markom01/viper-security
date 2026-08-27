@@ -1,0 +1,43 @@
+title: Off-Market Sourcing & Consulting
+slug: off-market-sourcing
+description: Research, consulting and legal support to find your dream car — or make an investment off the open market.
+seo:
+  title: DB Custom Garage — Off-Market Sourcing & Consulting
+  description: Find your dream car or invest off the open market, with research, consulting and legal support.
+  image: /images/from-wix/classic-hero.webp
+hero:
+  subtitle: Find your dream car or invest off the open market — with research, consulting and legal support.
+  cta_text: Get A Quote
+  tagline: Supercars & Classics, No Limits
+  image: /images/cms/from-wix/classic-hero.webp
+about_text: Research, consulting and legal support to find your dream car — or make an investment off the open market, with deep market knowledge built since 2010.
+about_image: /images/cms/from-wix/classic-hero.webp
+marquee: Sourcing · Consulting · Off-Market · Investments
+include:
+  - title: Off-Market Sourcing
+    text: Access to vehicles never listed publicly.
+    image: /images/cms/gallery/7cdcbfe3-cb87-4056-bbcd-86cdab0f5943.webp
+  - title: Market Research
+    text: Valuation and provenance research before you buy.
+    image: /images/cms/gallery/neo.webp
+  - title: Consulting & Legal Support
+    text: Guidance through the buying process, paperwork included.
+    image: /images/cms/gallery/motorcycle-transport.webp
+  - title: Investment Advisory
+    text: Building collectible portfolios off the open market.
+    image: /images/cms/gallery/2017-shelby-f-150-super-snake-01-copia.webp
+bottomcta:
+  heading: Your Dream Car, Sourced
+  values:
+    - title: Off-Market Access
+      text: Find cars the rest of the world never sees listed.
+    - title: Market Knowledge
+      text: Research and valuation from deep industry experience.
+    - title: Full Support
+      text: Consulting and legal backing through the whole buy.
+steps: []
+form_fields:
+  - label: Target vehicle
+    placeholder: Make, model, year, budget
+    name: target_vehicle
+fleet: []

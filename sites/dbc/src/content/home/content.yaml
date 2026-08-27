@@ -1,0 +1,33 @@
+hero:
+  brand_name: DB Custom Garage
+  tagline: Supercars & Classics, No Limits
+  subtitle: Enclosed supercar transport, import/export logistics, and off-market buying and selling across Europe and the USA. Flat per-route quotes — what you see is what you pay.
+  cta_text: View Our Fleet
+  hero_image: /images/cms/home hero.jpg
+services:
+  offerings:
+    - region: Garage
+      title: Enclosed Supercar Transport
+      description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe and worldwide.
+      image: ''
+      slug: supercar-transport
+    - region: Garage
+      title: Classic Cars & Motorcycles Sale & Auction
+      description: Auction preparation and representation on Catawiki, Proxibid, Silverstone, Heritage, Bonhams and more — consignment without leaving your garage.
+      image: ''
+      slug: auction
+    - region: Garage
+      title: Off-Market Sourcing & Consulting
+      description: Research, consulting and legal support to find your dream car — or make an investment off the open market.
+      image: ''
+      slug: off-market-sourcing
+    - region: Garage
+      title: Import & Export Logistics
+      description: Full-service vehicle import and export — paperwork, customs, shipping and delivery handled end to end.
+      image: ''
+      slug: import-export
+    - region: Garage
+      title: Automotive Customizing & Design Projects
+      description: Bespoke design and build projects — restomod, widebody, interior and show-grade finishing.
+      image: ''
+      slug: customizing
