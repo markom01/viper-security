@@ -19,8 +19,17 @@ const { offering } = Astro.props as { offering: import("@garage/shared/content/t
 const siteGlobals = (await getEntry("site", "content"))!.data;
 const galleryEntries = await getCollection("gallery");
 
+// Per-service fleet vehicles — mapped from offering.fleet[] to shared FleetEntry shape.
+// Built before assembleService so the assembler can derive fleetFeaturesText (VIPER symmetry).
+const fleetVehicles = (offering.fleet || []).map((f) => ({
+  id: `${offering.slug ?? offering.title}-${f.name}`,
+  collection: "fleet" as const,
+  data: f,
+}));
+
 const a = assembleService({
   offering, siteGlobals, siteName: SITE_NAME,
+  fleetVehicles,
   hasFleet: !!offering.fleet?.length,
   howItWorksSteps: siteGlobals.howItWorksSteps,
   aboutCarouselImages: [], // filled below
@@ -31,13 +40,6 @@ if (offering.fleet_section?.heading) {
 }
 
 const pageContent = a.pageContent;
-
-// Per-service fleet vehicles — mapped from offering.fleet[] to shared FleetEntry shape
-const fleetVehicles = (offering.fleet || []).map((f) => ({
-  id: `${offering.slug ?? offering.title}-${f.name}`,
-  collection: "fleet" as const,
-  data: f,
-}));
 const hasFleet = !!offering.fleet?.length;
 const fleetFeaturesText = a.fleetFeaturesText;
 
