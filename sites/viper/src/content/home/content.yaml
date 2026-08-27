@@ -1,0 +1,35 @@
+hero:
+  brand_name: VIPER SECURITY
+  tagline: VIP CHAUFFEUR & LUXURY TRANSPORT SERVICES
+  subtitle: >-
+    Travel in comfort, style and complete privacy in our {vehicle}.
+    Available for airport transfers, business travel, private events, VIP
+    transportation, yacht transfers, villa transfers and exclusive experiences
+    across {location1}, {location2}, and beyond. Every transfer quoted upfront —
+    fixed price, driver included.
+  cta_text: Book Your Transfer
+  phone_italy: +39 349 663 8171
+  hero_image: /images/cms/hero-image_upscaled.webp
+  phone_spain: +34 670 038 541
+services:
+  offerings:
+    - region: Universal
+      title: Airport Transfers
+      description: Seamless airport transfers in a luxury vehicle with a professional chauffeur from Malaga Airport to Marbella, and from Milano Malpensa, Linate and Bergamo to the Alps and beyond.
+      image: /images/cms/airport-transfer.webp
+      slug: airport-transfers
+    - region: Universal
+      title: Corporate Travel
+      description: Executive transportation for meetings, conferences, and corporate events in {location1_name}. Professional chauffeur service for meetings and conferences across {location2_name}.
+      image: /images/cms/corporate-travel.webp
+      slug: corporate-travel
+    - region: Universal
+      title: VIP & Villa Transfers
+      description: Luxury transportation between villas, hotels, beach clubs, restaurants, and exclusive venues.
+      image: /images/cms/city-tour.webp
+      slug: vip-villa-transfers
+    - region: Universal
+      title: Nightlife & Events
+      description: Exclusive transportation to restaurants, beach clubs, nightclubs, and private events in {location2}. Available with waiting service.
+      image: /images/cms/security-chauffeur.webp
+      slug: nightlife-events
