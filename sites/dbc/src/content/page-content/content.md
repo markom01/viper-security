@@ -26,7 +26,7 @@ stats:
 cta:
   heading: Ready to Move, Sell, or Build?
   text: Tell us what you are buying, selling, or transporting and we will handle the rest.
-  image: /images/cms/gallery/supercars-and-classic-cars-provider.webp
+  image: /images/cms/gallery/whatsapp-image-2025-11-14-at-21-33-53.webp
 bottomcta:
   heading: Your Dream Car Starts Here
   values:
