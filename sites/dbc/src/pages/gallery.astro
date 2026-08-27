@@ -1,24 +1,24 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { getImage } from "astro:assets";
 import { Image } from "astro:assets";
 import { imageDims } from "@garage/shared/lib/imageDims.ts";
 import SiteLayout from "../layouts/SiteLayout.astro";
-import { site } from "../config/site";
 import STRINGS from "@garage/shared/config/strings";
 import { resolveLabels } from "@garage/shared/config/labels";
 
-// Full CMS page-content (jsonld, labels, booking_data) so Nav/Footer/JSON-LD
+// Full CMS site globals (jsonld, labels, booking_data) so Nav/Footer/JSON-LD
 // carry dbc identity — NOT the shared VIPER fallbacks. Gallery-specific SEO
 // overrides the CMS title/description for this page.
-const [pageContentEntry] = await getCollection("page-content");
+const [siteEntry] = [await getEntry("site", "content")];
+const siteGlobals = siteEntry?.data;
 const pageContent = {
-  ...(pageContentEntry?.data || {}),
+  ...(siteGlobals || {}),
   seo: {
     title: "DB Custom Garage — Gallery",
     description:
       "Browse our latest custom builds, restorations, and performance projects.",
-    theme_color: site.themeColor,
+    theme_color: siteGlobals?.seo?.theme_color ?? "#000000",
     image: "/images/og-dbc.webp",
   },
 };
