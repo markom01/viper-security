@@ -1,8 +1,7 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { site } from "../config/site";
-
 import Hero from "@garage/shared/sections/Hero.astro";
 import StatsSection from "@garage/shared/sections/StatsSection.astro";
 import AboutSection from "@garage/shared/sections/AboutSection.astro";
@@ -10,21 +9,21 @@ import Services from "@garage/shared/sections/Services.astro";
 import HowItWorks from "@garage/shared/sections/HowItWorks.astro";
 import CtaBanner from "@garage/shared/sections/CtaBanner.astro";
 import BottomCta from "@garage/shared/sections/BottomCta.astro";
+import { assembleHome } from "@garage/shared/lib/assemble";
+import { SITE_NAME } from "@garage/shared/config/strings";
 
-const [heroEntry] = await getCollection("hero");
-const [pageContentEntry] = await getCollection("page-content");
-const [howItWorksEntry] = await getCollection("how-it-works");
-const [servicesEntry] = await getCollection("services");
+const home = (await getEntry("home", "content"))!.data;
+const siteGlobals = (await getEntry("site", "content"))!.data;
 const galleryEntries = await getCollection("gallery");
 
-const hero = heroEntry?.data || {};
-const pageContent = pageContentEntry?.data || {};
+const a = assembleHome({ home, siteGlobals, siteName: SITE_NAME });
 
-const howItWorks = howItWorksEntry?.data || {};
-const services = servicesEntry?.data?.offerings || [];
+const hero = a.hero;
+const pageContent = a.pageContent;
+const services = a.services.offerings;
 
-// Home carousel: 5 images from gallery — prefer all-builds, fill from supercar+customizing
-const galleryImages = galleryEntries.map((e) => ({ cat: (e.data as { category?: string }).category, img: (e.data as { image: string }).image }));
+// Home carousel: 5 gallery images — prefer all-builds, fill supercar+customizing
+const galleryImages = galleryEntries.map((e) => ({ cat: e.data.category, img: e.data.image }));
 const homeCarousel = [
   ...galleryImages.filter((g) => g.cat === "all-builds").map((g) => g.img),
   ...galleryImages.filter((g) => g.cat === "supercar").map((g) => g.img),
@@ -46,7 +45,7 @@ const homeCarousel = [
   <AboutSection pageContent={pageContent} images={homeCarousel} />
   <Services pageContent={pageContent} marbella={services} milano={services} />
   <StatsSection pageContent={pageContent} />
-  <HowItWorks steps={howItWorks.steps} pageContent={pageContent} />
+  <HowItWorks steps={siteGlobals.howItWorksSteps} pageContent={pageContent} />
   <CtaBanner pageContent={pageContent} />
   <BottomCta pageContent={pageContent} fleetHref="/gallery" />
 </SiteLayout>

@@ -1,132 +1,76 @@
 ---
-// DBC service detail pages — thin data-collector. All rendering lives in the
-// shared ServicePage renderer (@garage/shared), so VIPER + DBC service pages
-// cannot drift. This file only gathers DBC-specific collections and passes
-// them through with DBC's chrome/identity.
-import { getCollection } from "astro:content";
-import { resolveTemplates } from "@garage/shared/config/templates";
-import { slugify } from "@garage/shared/lib/slugify";
+import { getCollection, getEntry } from "astro:content";
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { site } from "../../config/site";
-
 import ServicePage from "@garage/shared/sections/ServicePage.astro";
+import { assembleService } from "@garage/shared/lib/assemble";
+import { SITE_NAME } from "@garage/shared/config/strings";
+import { slugify } from "@garage/shared/lib/slugify";
 
 export async function getStaticPaths() {
-  const [servicesEntry] = await getCollection("services");
-  const offerings = servicesEntry?.data?.offerings || [];
-  return offerings.map((o) => ({
-    params: { slug: o.slug ?? slugify(o.title) },
-    props: { offering: o },
+  const serviceEntries = await getCollection("service");
+  return serviceEntries.map((entry) => ({
+    params: { slug: entry.data.slug ?? slugify(entry.data.title) },
+    props: { offering: entry.data },
   }));
 }
 
-const { offering } = Astro.props as { offering: Record<string, unknown> & { title: string; slug?: string; hero?: Record<string, string>; seo?: Record<string, string>; description?: string } };
+const { offering } = Astro.props as { offering: import("@garage/shared/content/types").ServiceDetailData };
+const siteGlobals = (await getEntry("site", "content"))!.data;
+const galleryEntries = await getCollection("gallery");
 
-const [pageContentEntry] = await getCollection("page-content");
-const [howItWorksEntry] = await getCollection("how-it-works");
-
-const howItWorks = howItWorksEntry?.data || {};
-type DbcPageContent = import("@garage/shared/types").PageContent & Record<string, unknown>;
-const baseContent = (pageContentEntry?.data || {}) as unknown as DbcPageContent;
-const bd = baseContent.booking_data as import("@garage/shared/config/templates").BookingData | undefined;
-const vehicleName = baseContent.vehicle_name;
-
-// Site-global chrome + identity only. Per-service stats/cta overrides +
-// hero image are merged in the shared ServicePage renderer.
-// Per-service Fleet heading/subheadline override (import/export: "Currently
-// Selling" instead of the site-global "Our Fleet") — merged only when the
-// offering provides it; other services keep the site-wide fleet copy.
-const fleetSection = (offering as { fleet_section?: { heading?: string; subheadline?: string } }).fleet_section || {};
-const pageContent = {
-  ...baseContent,
-  seo: offering.seo
-    ? { ...((baseContent as { seo?: Record<string, string> })?.seo || {}), ...offering.seo }
-    : (baseContent as { seo?: Record<string, string> })?.seo ? { ...((baseContent as { seo?: Record<string, string> }).seo as Record<string, string>) } : undefined,
-  jsonld: (baseContent as { jsonld?: Record<string, string> })?.jsonld ? { ...((baseContent as { jsonld?: Record<string, string> }).jsonld as Record<string, string>) } : undefined,
-  ...((fleetSection.heading || fleetSection.subheadline) && {
-    fleet: {
-      ...((baseContent as { fleet?: Record<string, string> })?.fleet || {}),
-      ...(fleetSection.heading ? { heading: fleetSection.heading } : {}),
-    },
-    labels: {
-      ...((baseContent as { labels?: Record<string, string> })?.labels || {}),
-      ...(fleetSection.subheadline
-        ? { "fleet.subheadline": fleetSection.subheadline }
-        : {}),
-    },
-  }),
-};
-
-// Per-service fleet vehicles — mapped to the shared FleetEntry shape.
-const fleetVehicles = ((offering as { fleet?: { name: string; features?: string[] }[] }).fleet || []).map((f) => ({
+// Per-service fleet vehicles — mapped from offering.fleet[] to shared FleetEntry shape.
+// Built before assembleService so the assembler can derive fleetFeaturesText (VIPER symmetry).
+const fleetVehicles = (offering.fleet || []).map((f) => ({
   id: `${offering.slug ?? offering.title}-${f.name}`,
   collection: "fleet" as const,
   data: f,
 }));
-const allFleetFeatures = [...new Set(((offering as { fleet?: { features?: string[] }[] }).fleet || []).flatMap((f) => f.features || []))];
-const fleetFeaturesText =
-  allFleetFeatures.length > 0
-    ? allFleetFeatures.length === 1
-      ? allFleetFeatures[0] + "."
-      : allFleetFeatures.slice(0, -1).join(", ") + ", and " + allFleetFeatures.slice(-1)[0] + "."
-    : "";
-const hasFleet = !!((offering as { fleet?: unknown[] }).fleet?.length);
+
+const a = assembleService({
+  offering, siteGlobals, siteName: SITE_NAME,
+  fleetVehicles,
+  hasFleet: !!offering.fleet?.length,
+  howItWorksSteps: siteGlobals.howItWorksSteps,
+  aboutCarouselImages: [], // filled below
+});
+// Apply DBC per-service fleet heading override (assembler leaves this to the template)
+if (offering.fleet_section?.heading) {
+  a.pageContent.fleet = { ...(a.pageContent.fleet || {}), heading: offering.fleet_section.heading };
+}
+
+const pageContent = a.pageContent;
+const hasFleet = !!offering.fleet?.length;
+const fleetFeaturesText = a.fleetFeaturesText;
 
 // Category carousel: 5 gallery images matching this service's category
 const slugToCategory: Record<string, string> = {
-  "supercar-transport": "supercar",
-  "customizing": "customizing",
-  "auction": "customizing",
-  "off-market-sourcing": "supercar",
-  "import-export": "supercar",
+  "supercar-transport": "supercar", "customizing": "customizing", "auction": "customizing",
+  "off-market-sourcing": "supercar", "import-export": "supercar",
 };
-const activeSlug = (offering.slug ?? (offering as { slug?: string }).slug ?? "") as string;
+const activeSlug = (offering.slug ?? slugify(offering.title)) as string;
 const serviceCategory = slugToCategory[activeSlug] ?? "supercar";
-const galleryEntries2 = await getCollection("gallery");
-const catImages = galleryEntries2
-  .filter((e) => (e.data as { category?: string }).category === serviceCategory)
-  .map((e) => (e.data as { image: string }).image);
-const fallbackImages = galleryEntries2
-  .filter((e) => (e.data as { category?: string }).category !== serviceCategory)
-  .map((e) => (e.data as { image: string }).image);
+const catImages = galleryEntries.filter((e) => e.data.category === serviceCategory).map((e) => e.data.image);
+const fallbackImages = galleryEntries.filter((e) => e.data.category !== serviceCategory).map((e) => e.data.image);
 const aboutCarouselImages = [...catImages, ...fallbackImages].slice(0, 5);
-// Clone — never mutate Astro.props offering.hero
-const heroFields = { ...((offering as { hero?: Record<string, unknown> }).hero || {}) } as NonNullable<typeof offering.hero> & Record<string, unknown>;
-const _heroSubtitle = heroFields.subtitle as string | undefined;
-if (_heroSubtitle) heroFields.subtitle = resolveTemplates(_heroSubtitle, bd, site.name, vehicleName);
-// offering.description is Astro.props data — resolve on a clone
-const _offeringDesc = (offering as { description?: string }).description;
-const _resolvedDesc = _offeringDesc ? resolveTemplates(_offeringDesc, bd, site.name, vehicleName) : _offeringDesc;
-const offeringResolved = _resolvedDesc !== _offeringDesc ? { ...offering, description: _resolvedDesc as string } : offering;
-// pageContent seo/jsonld are clones above, safe to resolve in place
-if ((pageContent as unknown as { seo?: { title?: string } }).seo?.title)
-  (pageContent as unknown as { seo: { title: string } }).seo.title = resolveTemplates((pageContent as unknown as { seo: { title: string } }).seo.title, bd, site.name, vehicleName);
-if ((pageContent as unknown as { seo?: { description?: string } }).seo?.description)
-  (pageContent as unknown as { seo: { description: string } }).seo.description = resolveTemplates((pageContent as unknown as { seo: { description: string } }).seo.description, bd, site.name, vehicleName);
-if ((pageContent as unknown as { jsonld?: { org_description?: string } }).jsonld?.org_description)
-  (pageContent as unknown as { jsonld: { org_description: string } }).jsonld.org_description = resolveTemplates((pageContent as unknown as { jsonld: { org_description: string } }).jsonld.org_description, bd, site.name, vehicleName);
-if ((pageContent as unknown as { jsonld?: { org_name?: string } }).jsonld?.org_name)
-  (pageContent as unknown as { jsonld: { org_name: string } }).jsonld.org_name = resolveTemplates((pageContent as unknown as { jsonld: { org_name: string } }).jsonld.org_name, bd, site.name, vehicleName);
 ---
 
-<SiteLayout pageContent={pageContent} ogLocale="en_US" preloadImage={heroFields.image as string | undefined}>
+<SiteLayout pageContent={pageContent} ogLocale="en_US" preloadImage={a.hero.image}>
   <ServicePage
-    offering={offeringResolved}
+    offering={a.offering}
     pageContent={pageContent}
     region="Garage"
     hero={{
-      subtitle: heroFields.subtitle as string | undefined,
-      cta_text: heroFields.cta_text as string | undefined,
-      tagline: offering.title || (heroFields.tagline as string | undefined),
-      image: heroFields.image as string | undefined,
-      phoneSpain: site.whatsappNumber,
-      fleetHref: "/gallery",
-      presetService: offering.title,
+      subtitle: a.hero.subtitle, cta_text: a.hero.cta_text,
+      tagline: offering.title || a.hero.tagline, image: a.hero.image,
+      phoneSpain: site.whatsappNumber, fleetHref: "/gallery", presetService: offering.title,
     }}
     fleetVehicles={fleetVehicles}
     fleetFeaturesText={fleetFeaturesText}
     hasFleet={hasFleet}
-    howItWorksSteps={howItWorks.steps}
+    howItWorksSteps={a.howItWorksSteps}
     aboutCarouselImages={aboutCarouselImages}
+    showPricing={false}
+    showMembership={false}
   />
 </SiteLayout>

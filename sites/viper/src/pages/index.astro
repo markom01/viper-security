@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "@garage/shared/layouts/BaseLayout.astro";
-
 import Hero from "@garage/shared/sections/Hero.astro";
 import Marquee from "@garage/shared/sections/Marquee.astro";
 import AboutSection from "@garage/shared/sections/AboutSection.astro";
@@ -14,116 +13,25 @@ import CtaBanner from "@garage/shared/sections/CtaBanner.astro";
 import BottomCta from "@garage/shared/sections/BottomCta.astro";
 
 import { getCollection, getEntry } from "astro:content";
-import { resolveTemplates } from "@garage/shared/config/templates";
+import { assembleHome } from "@garage/shared/lib/assemble";
 import { SITE_NAME } from "@garage/shared/config/strings";
 import { membershipValueNote } from "@garage/shared/config/membership";
 
-const [heroEntry] = await getCollection("hero");
-const [howItWorksEntry] = await getCollection("how-it-works");
-const [servicesEntry] = await getCollection("services");
+const home = (await getEntry("home", "content"))!.data;
+const siteGlobals = (await getEntry("site", "content"))!.data;
 const fleetEntries = await getCollection("fleet");
-const [membershipEntry] = await getCollection("membership");
-const [pageContentEntry] = await getCollection("page-content");
+const hourly = (await getEntry("pricing", "hourly"))?.data || {};
+const membership = (await getEntry("membership", "tiers"))?.data ?? { tiers: [] };
 
-const _pcRaw = pageContentEntry?.data || {};
-const pageContent = {
-  ..._pcRaw,
-  seo: _pcRaw.seo ? { ..._pcRaw.seo } : undefined,
-  jsonld: _pcRaw.jsonld ? { ..._pcRaw.jsonld } : undefined,
-  about: _pcRaw.about ? { ..._pcRaw.about } : undefined,
-  cta: _pcRaw.cta ? { ..._pcRaw.cta } : undefined,
-  bottomcta: _pcRaw.bottomcta ? { ..._pcRaw.bottomcta, values: _pcRaw.bottomcta.values ? [..._pcRaw.bottomcta.values] : undefined } : undefined,
-} as typeof _pcRaw;
-const bd = pageContent?.booking_data;
-const siteName = SITE_NAME;
-const vehicleName = pageContent?.vehicle_name;
-const allOfferings = (servicesEntry?.data?.offerings || []).map((o) => ({
-  ...o,
-  description: resolveTemplates(o.description, bd, siteName, vehicleName),
-}));
-
-const hourlyEntry = await getEntry("pricing", "hourly");
-
-const _heroRaw = heroEntry?.data || {};
-const hero = { ..._heroRaw };
-if (hero.subtitle)
-  hero.subtitle = resolveTemplates(hero.subtitle, bd, siteName, vehicleName);
-const _hiwRaw = howItWorksEntry?.data || {};
-const howItWorks = { ..._hiwRaw, steps: _hiwRaw.steps ? [..._hiwRaw.steps] : undefined };
-if (howItWorks.steps) {
-  howItWorks.steps = howItWorks.steps.map((s) => ({
-    ...s,
-    description: resolveTemplates(s.description, bd, siteName, vehicleName),
-  }));
-}
-const universalServices = { services: allOfferings };
-
-// Resolve location templates in page-content prose fields
-if (pageContent.seo?.title)
-  pageContent.seo.title = resolveTemplates(
-    pageContent.seo.title,
-    bd,
-    siteName,
-    vehicleName,
-  );
-if (pageContent.seo?.description)
-  pageContent.seo.description = resolveTemplates(
-    pageContent.seo.description,
-    bd,
-    siteName,
-    vehicleName,
-  );
-if (pageContent.jsonld?.org_description)
-  pageContent.jsonld.org_description = resolveTemplates(
-    pageContent.jsonld.org_description,
-    bd,
-    siteName,
-    vehicleName,
-  );
-if (pageContent.jsonld?.org_name)
-  pageContent.jsonld.org_name = resolveTemplates(
-    pageContent.jsonld.org_name,
-    bd,
-    siteName,
-    vehicleName,
-  );
-if (pageContent.about?.text)
-  pageContent.about.text = resolveTemplates(
-    pageContent.about.text,
-    bd,
-    siteName,
-    vehicleName,
-  );
-if (pageContent.cta?.text)
-  pageContent.cta.text = resolveTemplates(
-    pageContent.cta.text,
-    bd,
-    siteName,
-    vehicleName,
-  );
-if (pageContent.bottomcta?.values) {
-  pageContent.bottomcta.values = pageContent.bottomcta.values.map((v) => ({
-    ...v,
-    text: resolveTemplates(v.text, bd, siteName, vehicleName),
-  }));
-}
-const fleetVehicles = fleetEntries;
-// Collect all features from all vehicles, deduplicate, format as sentence
-const allFleetFeatures = [
-  ...new Set(fleetEntries.flatMap((e) => e.data.features || [])),
-];
-const fleetFeaturesText =
-  allFleetFeatures.length > 0
-    ? allFleetFeatures.length === 1
-      ? allFleetFeatures[0] + "."
-      : allFleetFeatures.slice(0, -1).join(", ") +
-        ", and " +
-        allFleetFeatures.slice(-1)[0] +
-        "."
-    : "";
-const hourly = hourlyEntry?.data || {};
-const membership = membershipEntry?.data || {};
+const a = assembleHome({ home, siteGlobals, siteName: SITE_NAME, fleetEntries });
 const membershipNote = membershipValueNote(membership.tiers, hourly.rates);
+
+const hero = a.hero;
+const howItWorks = { steps: siteGlobals.howItWorksSteps };
+const universalServices = { services: a.services.offerings };
+const fleetVehicles = a.fleetVehicles || [];
+const fleetFeaturesText = a.fleetFeaturesText || "";
+const pageContent = a.pageContent;
 ---
 
 <BaseLayout pageContent={pageContent} brandName={hero.brand_name} ogLocale="en_US" preloadImage={hero.hero_image}>

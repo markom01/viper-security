@@ -1,6 +1,0 @@
----
-name: "DB Custom Garage Supercars And Classic Cars Provider 5"
-alt: "DB Custom Garage Supercars And Classic Cars Provider 5"
-category: "supercar"
-image: /images/cms/gallery/supercars-and-classic-cars-provider-5.webp
----

@@ -1,0 +1,50 @@
+title: Classic Cars & Motorcycles Sale & Auction
+slug: auction
+description: Auction preparation and representation on Catawiki, Proxibid, Silverstone, Heritage, Bonhams and more — consignment without leaving your garage.
+seo:
+  title: DB Custom Garage — Classic Cars & Motorcycles Sale & Auction
+  description: We sell your classic or supercar at auction — without you leaving your garage.
+  image: /images/from-wix/auction-hero.webp
+hero:
+  subtitle: We sell your classic or supercar — without you leaving your garage.
+  cta_text: Get A Quote
+  tagline: Supercars & Classics, No Limits
+  image: /images/cms/auction hero.jpeg
+about_text: "Active since 2010 in classic and supercar auctions. We prepare your car for auction — complete description and photography — and register it on several online auctions: Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's."
+about_image: /images/cms/from-wix/auction-hero.webp
+marquee: Auction · Catawiki · Proxibid · Silverstone · Heritage · Sotheby's
+include:
+  - title: Car & Motorcycle Auctions
+    text: Classic cars, supercars and motorcycles — consignment, you stay home.
+    image: /images/cms/gallery/2016-ford-mustang-shelby-gt350-gt350r-te.webp
+  - title: Full Auction Preparation
+    text: Complete description and professional photography before listing.
+    image: /images/cms/gallery/2020-ford-mustang-shelby-gt500-first-dri.webp
+  - title: Multi-Platform Listing
+    text: Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's.
+    image: /images/cms/gallery/ford-shelby-gt500-grabber-lime.webp
+  - title: Representation & Sale
+    text: We handle the auction process end to end — sold, funds to you.
+    image: /images/cms/gallery/shelby-gt-500.webp
+bottomcta:
+  heading: From Your Garage to the Auction Block
+  values:
+    - title: Active Since 2010
+      text: Deep experience in classic and supercar auctions.
+    - title: Multi-Platform Reach
+      text: Your car listed across the leading online auction houses.
+    - title: You Stay Home
+      text: Consignment handled entirely for you.
+steps: []
+form_fields:
+  - label: Details
+    placeholder: Year, condition, mileage
+    name: vehicle_details
+  - label: Target price
+    placeholder: Estimated value or target sale price
+    name: target_price
+  - label: Vehicle (make & model)
+    placeholder: Start typing — e.g. Ferrari 812
+    name: vehicle_model
+    type: vehicle
+fleet: []

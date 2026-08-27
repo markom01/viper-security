@@ -1,6 +1,0 @@
----
-name: "DB Custom Garage Design 8"
-alt: "DB Custom Garage Design 8"
-category: "customizing"
-image: /images/cms/gallery/design-8.webp
----

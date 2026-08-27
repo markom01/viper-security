@@ -13,6 +13,8 @@
     "./pwa": "./src/config/pwa.ts",
     "./lib/*": "./src/lib/*",
     "./styles/*": "./src/styles/*",
+    "./content/*": "./src/content/*",
+    "./content/schemas": "./src/content/schemas.ts",
     "./types": "./src/types.ts"
   },
   "peerDependencies": {

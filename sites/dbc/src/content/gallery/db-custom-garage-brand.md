@@ -1,6 +1,0 @@
----
-name: DB Custom Garage Db Custom Garage Brand
-alt: DB Custom Garage Db Custom Garage Brand
-category: supercar
-image: /images/cms/gallery/db-custom-garage-brand.webp
----

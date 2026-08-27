@@ -1,24 +1,24 @@
 ---
 import BaseLayout from "@garage/shared/layouts/BaseLayout.astro";
 import { SITE_NAME } from "@garage/shared/config/strings";
-import { site } from "../config/site";
-import { getCollection, render } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 
 const [policy] = await getCollection("privacy");
 const { Content } = policy ? await render(policy) : { Content: undefined };
 
+const siteGlobals = (await getEntry("site", "content"))?.data;
 const pageContent = {
   jsonld: {
     org_name: SITE_NAME,
-    org_url: site.url,
+    org_url: siteGlobals?.jsonld?.org_url ?? "",
     webSiteName: SITE_NAME,
-    webSiteUrl: site.url,
+    webSiteUrl: siteGlobals?.jsonld?.webSiteUrl ?? "",
   },
   seo: {
     title: `Privacy Policy | ${SITE_NAME}`,
     description:
       "How VIPER Security collects, uses, and protects your personal data when you use our website or book our chauffeur service.",
-    theme_color: site.themeColor,
+    theme_color: siteGlobals?.seo?.theme_color ?? "#000000",
     image: "/images/og-viper.webp",
   },
 };

@@ -3,8 +3,8 @@
 // Body is CMS-editable markdown (src/content/privacy/content.md); this page
 // renders it through the per-site SiteLayout.
 import SiteLayout from "../layouts/SiteLayout.astro";
-import { site } from "../config/site";
-import { getCollection, render } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
+import { SITE_NAME } from "@garage/shared/config/strings";
 import AboutSection from "@garage/shared/sections/AboutSection.astro";
 
 const [policy] = await getCollection("privacy");
@@ -13,18 +13,19 @@ const { Content } = policy ? await render(policy) : { Content: undefined };
 const galleryEntries = await getCollection("gallery");
 const privacyCarousel = galleryEntries.slice(0, 5).map((e) => (e.data as { image: string }).image);
 
+const siteGlobals = (await getEntry("site", "content"))?.data;
 const pageContent = {
   jsonld: {
-    org_name: site.name,
-    org_url: site.url,
-    webSiteName: site.name,
-    webSiteUrl: site.url,
+    org_name: SITE_NAME,
+    org_url: siteGlobals?.jsonld?.org_url ?? "",
+    webSiteName: SITE_NAME,
+    webSiteUrl: siteGlobals?.jsonld?.webSiteUrl ?? "",
   },
   seo: {
-    title: `Privacy Policy | ${site.name}`,
+    title: `Privacy Policy | ${SITE_NAME}`,
     description:
       "How DB Custom Garage collects, uses, and protects your personal data when you use our website or contact us.",
-    theme_color: site.themeColor,
+    theme_color: siteGlobals?.seo?.theme_color ?? "#000000",
     image: "/images/og-dbc.webp",
   },
 };
