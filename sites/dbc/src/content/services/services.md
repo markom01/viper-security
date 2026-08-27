@@ -23,13 +23,13 @@ offerings:
         image: /images/cms/gallery/supercars-transport.webp
       - title: EU, UK & USA Routes
         text: Door-to-door supercar transport across Europe and worldwide.
-        image: /images/cms/gallery/supercars-transport-1.webp
+        image: /images/cms/gallery/17865778411891254.webp
       - title: Door-to-Door Delivery
         text: Origin collection to final destination, tracked throughout.
-        image: /images/cms/gallery/supercars-transport-2.webp
+        image: /images/cms/gallery/f26-db-custom-garage.webp
       - title: Transparent Pricing
         text: Quoted per route — price from €1/km, calculated both directions.
-        image: /images/cms/gallery/supercars-transport-3.webp
+        image: /images/cms/gallery/17919567229428928.webp
     bottomcta:
       heading: Transport, Handled End to End
       values:
@@ -158,13 +158,13 @@ offerings:
     include:
       - title: Off-Market Sourcing
         text: Access to vehicles never listed publicly.
-        image: /images/cms/gallery/gt500.webp
+        image: /images/cms/gallery/7cdcbfe3-cb87-4056-bbcd-86cdab0f5943.webp
       - title: Market Research
         text: Valuation and provenance research before you buy.
         image: /images/cms/gallery/neo.webp
       - title: Consulting & Legal Support
         text: Guidance through the buying process, paperwork included.
-        image: /images/cms/gallery/ford-shelby-gt500-1920-2.webp
+        image: /images/cms/gallery/motorcycle-transport.webp
       - title: Investment Advisory
         text: Building collectible portfolios off the open market.
         image: /images/cms/gallery/2017-shelby-f-150-super-snake-01-copia.webp
@@ -200,23 +200,23 @@ offerings:
       subtitle: Full-service vehicle import and export — cars and motorcycles — paperwork, customs, shipping and delivery handled end to end.
       cta_text: Get A Quote
       tagline: Supercars & Classics, No Limits
-      image: /images/cms/from-wix/import-export.webp
+      image: /images/cms/from-wix/auction-hero.webp
     about_text: Complete support and logistics in buying and selling supercars, classic cars, other vehicles and motorcycles, in the EU and other continents.
-    about_image: /images/cms/from-wix/import-export.webp
+    about_image: /images/cms/gallery/2e95eecc-3bd2-4375-987e-dedf95b3f1c2.webp
     marquee: Import · Export · Customs · Logistics
     include:
       - title: Import & Export Paperwork
         text: Full documentation for cars and motorcycles.
-        image: /images/cms/from-wix/import-export.webp
+        image: /images/cms/gallery/supercars-and-classic-cars-provider-10.webp
       - title: Customs Clearance
         text: Duties, registration and compliance handled for you.
-        image: /images/cms/gallery/supercars-transport-4.webp
+        image: /images/cms/gallery/gallery-14.webp
       - title: Shipping
         text: Enclosed where required, across the EU and worldwide.
-        image: /images/cms/gallery/supercars-and-classic-cars-provider.webp
+        image: /images/cms/gallery/supercars-and-classic-cars-provider-2.webp
       - title: Final Delivery
         text: End-to-end, to your door.
-        image: /images/cms/gallery/f150-hd-2020.webp
+        image: /images/cms/gallery/gallery-13.webp
     bottomcta:
       heading: Cross-Border, Handled End to End
       values:
@@ -261,12 +261,12 @@ offerings:
       tagline: Customize · Design · Build
       image: /images/cms/custom design hero.jpeg
     about_text: An in-house design studio and build shop for custom cars and motorcycles — restomod, widebody, interior and show-grade finishing — plus general repair and maintenance.
-    about_image: /images/cms/from-wix/hummer-project.webp
+    about_image: /images/cms/gallery/jeep-wrangler-body-kit-2.webp
     marquee: Custom Builds · Design · Repair · Motorcycles
     include:
       - title: Custom Builds
         text: Complete builds from vision to show floor.
-        image: /images/cms/from-wix/hummer-project.webp
+        image: /images/cms/gallery/screenshot-2025-08-16-alle-14-03-21.webp
       - title: Body Kits
         text: Fabricated in metal, powder-coated — e.g. Jeep Wrangler bumpers.
         image: /images/cms/gallery/jeep-wrangler-body-kit.webp
