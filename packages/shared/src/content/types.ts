@@ -24,6 +24,7 @@ export interface ServiceDetailData {
   form_fields?: { label: string; placeholder?: string; name: string;
     type?: "text" | "location" | "country" | "vehicle"; side?: "left" | "right" }[];
   bottomcta?: { heading?: string; values?: { title: string; text: string }[] };
+  fleet_section?: { heading?: string; subheadline?: string };
   fleet?: {
     name: string; type?: string; year?: string; seats?: string; baggage?: string;
     capacity_passengers?: number; capacity_suitcases?: number; capacity_carryon?: number;

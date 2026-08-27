@@ -15,13 +15,7 @@ export async function getStaticPaths() {
   }));
 }
 
-// `fleet`/`fleet_section` live on the Zod schema but not on the shared
-// ServiceDetailData type, so extend the prop type locally (no shared edit).
-type DbcOffering = import("@garage/shared/content/types").ServiceDetailData & {
-  fleet?: import("@garage/shared/types").FleetVehicleData[];
-  fleet_section?: { heading?: string; subheadline?: string };
-};
-const { offering } = Astro.props as { offering: DbcOffering };
+const { offering } = Astro.props as { offering: import("@garage/shared/content/types").ServiceDetailData };
 const siteGlobals = (await getEntry("site", "content"))!.data;
 const galleryEntries = await getCollection("gallery");
 
