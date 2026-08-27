@@ -131,6 +131,13 @@ export function assembleService(args: AssembleServiceArgs): AssembleServiceResul
     cta,
     bottomcta,
     stats: siteGlobals.stats,
+    // Site-global chrome carried over from assembleHome so shared Fleet/HowItWorks/
+    // Footer consumers (Fleet.astro fleet.heading, HowItWorks.astro howitworks.heading,
+    // Footer.astro map_embed_url) keep working on service pages — the old page-content
+    // collection supplied all three and service pages render them today.
+    fleet: siteGlobals.fleetHeading ? { heading: siteGlobals.fleetHeading } : undefined,
+    howitworks: siteGlobals.howItWorksHeading ? { heading: siteGlobals.howItWorksHeading } : undefined,
+    map_embed_url: siteGlobals.map_embed_url,
   };
 
   // Per-offering SEO/JSON-LD merges over site globals (clone, never mutate).
