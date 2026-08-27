@@ -2,6 +2,11 @@
   command = "rm -rf .astro node_modules/.astro && npm run build --workspace=@garage/dbc"
   publish = "sites/dbc/dist-dbc"
 
+  # Match .nvmrc — Astro 7 requires Node >= 22.12. Pin so a build-image
+  # Node bump can't silently break the build (netlify.toml is read at build time).
+  [build.environment]
+    NODE_VERSION = "22.12.0"
+
 # Runs Lighthouse on every deploy (push + API-triggered).
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
