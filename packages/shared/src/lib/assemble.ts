@@ -56,8 +56,12 @@ export function assembleHome(args: AssembleHomeArgs): AssembleHomeResult {
   const bottomcta = siteGlobals.bottomcta ? { ...siteGlobals.bottomcta } : undefined;
   if (bottomcta?.values) bottomcta.values = bottomcta.values.map((v) => ({ ...v, text: resolveTemplates(v.text, bd, siteName, vehicleName) }));
 
+  const jsonld = siteGlobals.jsonld ? { ...siteGlobals.jsonld } : undefined;
+  if (jsonld?.org_name) jsonld.org_name = resolveTemplates(jsonld.org_name, bd, siteName, vehicleName);
+  if (jsonld?.org_description) jsonld.org_description = resolveTemplates(jsonld.org_description, bd, siteName, vehicleName);
+
   const pageContent: PageContent = {
-    jsonld: siteGlobals.jsonld,
+    jsonld,
     booking_data: siteGlobals.booking_data,
     vehicle_name: siteGlobals.vehicle_name,
     labels: siteGlobals.labels,
@@ -120,8 +124,12 @@ export function assembleService(args: AssembleServiceArgs): AssembleServiceResul
   const bottomcta = siteGlobals.bottomcta ? { ...siteGlobals.bottomcta } : undefined;
   if (bottomcta?.values) bottomcta.values = bottomcta.values.map((v) => ({ ...v, text: resolveTemplates(v.text, bd, siteName, vehicleName) }));
 
+  const jsonld = siteGlobals.jsonld ? { ...siteGlobals.jsonld } : undefined;
+  if (jsonld?.org_name) jsonld.org_name = resolveTemplates(jsonld.org_name, bd, siteName, vehicleName);
+  if (jsonld?.org_description) jsonld.org_description = resolveTemplates(jsonld.org_description, bd, siteName, vehicleName);
+
   const pageContent: PageContent = {
-    jsonld: siteGlobals.jsonld,
+    jsonld,
     booking_data: siteGlobals.booking_data,
     vehicle_name: siteGlobals.vehicle_name,
     labels: siteGlobals.labels,
