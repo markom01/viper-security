@@ -1,129 +1,60 @@
 ---
-// VIPER service detail pages — thin data-collector. All rendering lives in the
-// shared ServicePage renderer (@garage/shared), so VIPER + DBC service pages
-// cannot drift. This file only gathers VIPER-specific collections and passes
-// them through with VIPER's chrome/identity.
 import BaseLayout from "@garage/shared/layouts/BaseLayout.astro";
 import ServicePage from "@garage/shared/sections/ServicePage.astro";
 
 import { getCollection, getEntry } from "astro:content";
+import { assembleService } from "@garage/shared/lib/assemble";
 import { SITE_NAME } from "@garage/shared/config/strings";
-import { resolveTemplates } from "@garage/shared/config/templates";
 import { slugify } from "@garage/shared/lib/slugify";
 
 export async function getStaticPaths() {
-  const [servicesEntry] = await getCollection("services");
-  const offerings = servicesEntry?.data?.offerings || [];
-  return offerings.map((o) => ({
-    params: { slug: o.slug ?? slugify(o.title) },
-    props: { offering: o },
+  const serviceEntries = await getCollection("service");
+  return serviceEntries.map((entry) => ({
+    params: { slug: entry.data.slug ?? slugify(entry.data.title) },
+    props: { offering: entry.data },
   }));
 }
 
-const { offering } = Astro.props as { offering: Record<string, unknown> & { title: string; slug?: string; hero?: Record<string, string>; seo?: Record<string, string>; description?: string } };
+const { offering } = Astro.props as { offering: import("@garage/shared/content/types").ServiceDetailData };
 
-const [heroEntry] = await getCollection("hero");
-const [howItWorksEntry] = await getCollection("how-it-works");
+const siteGlobals = (await getEntry("site", "content"))!.data;
+const home = (await getEntry("home", "content"))!.data;
 const fleetEntries = await getCollection("fleet");
-const [membershipEntry] = await getCollection("membership");
-const [pageContentEntry] = await getCollection("page-content");
+const hourly = (await getEntry("pricing", "hourly"))?.data || {};
+const membership = (await getEntry("membership", "tiers"))?.data ?? { tiers: [] };
 
-const pageContent = pageContentEntry?.data || {};
-const bd = (pageContent as { booking_data?: unknown })?.booking_data as import("@garage/shared/config/templates").BookingData | undefined;
-const vehicleName = (pageContent as { vehicle_name?: string })?.vehicle_name;
+const a = assembleService({
+  offering,
+  siteGlobals,
+  siteName: SITE_NAME,
+  fleetVehicles: fleetEntries,
+  hasFleet: true,
+  howItWorksSteps: siteGlobals.howItWorksSteps,
+  hourly,
+  membershipTiers: membership.tiers,
+});
 
-const hourlyEntry = await getEntry("pricing", "hourly");
-
-const hero = heroEntry?.data || {};
-const howItWorks = howItWorksEntry?.data || {};
-const hourly = hourlyEntry?.data || {};
-const membership = membershipEntry?.data || {};
-
-const allFleetFeatures = [
-  ...new Set(fleetEntries.flatMap((e) => e.data.features || [])),
-];
-const fleetFeaturesText =
-  allFleetFeatures.length > 0
-    ? allFleetFeatures.length === 1
-      ? allFleetFeatures[0] + "."
-      : allFleetFeatures.slice(0, -1).join(", ") +
-        ", and " +
-        allFleetFeatures.slice(-1)[0] +
-        "."
-    : "";
-
-// Site-global chrome + per-offering seo. VIPER always renders the full fleet
-// collection (RHS), so hasFleet=true.
-type MergedSeo = { title?: string; description?: string; image?: string; theme_color?: string };
-type MergedJsonLd = { org_name?: string; org_description?: string };
-// Clone so template resolution never mutates the content-collection entries
-const mergedContent: Record<string, unknown> & { seo?: MergedSeo; jsonld?: MergedJsonLd } = {
-  ...pageContent,
-  seo: offering.seo
-    ? { ...((pageContent as { seo?: MergedSeo })?.seo || {}), ...(offering.seo as MergedSeo) }
-    : (pageContent as { seo?: MergedSeo })?.seo ? { ...((pageContent as { seo?: MergedSeo }).seo as MergedSeo) } : undefined,
-  jsonld: (pageContent as { jsonld?: MergedJsonLd })?.jsonld ? { ...((pageContent as { jsonld?: MergedJsonLd }).jsonld as MergedJsonLd) } : undefined,
-};
-const heroFields = { ...(offering.hero || {}) } as NonNullable<typeof offering.hero> & Record<string, unknown>;
-// Ensure og:image is never an SVG (BaseLayout skips SVG preload/meta). Prefer
-// offering hero image (raster), else fall back to site og (og-viper.webp).
-if (!mergedContent.seo) mergedContent.seo = {};
-if (!mergedContent.seo.image || mergedContent.seo.image.endsWith(".svg")) {
-  mergedContent.seo.image = (heroFields as { image?: string }).image || (pageContent as { seo?: { image?: string } })?.seo?.image || "/images/og-viper.webp";
-}
-
-// Resolve {placeholders} in service-specific prose + SEO/JSON-LD — work on clones only
-if (heroFields.subtitle)
-  if (typeof heroFields.subtitle === "string") heroFields.subtitle = resolveTemplates(heroFields.subtitle, bd, SITE_NAME, vehicleName);
-// offering.description is Astro.props data — clone before resolving
-const offeringDescription = (offering as { description?: string }).description
-  ? resolveTemplates((offering as { description: string }).description, bd, SITE_NAME, vehicleName)
-  : (offering as { description?: string }).description;
-const offeringResolved = offeringDescription !== (offering as { description?: string }).description
-  ? { ...offering, description: offeringDescription as string }
-  : offering;
-if (mergedContent.seo?.title)
-  mergedContent.seo.title = resolveTemplates(mergedContent.seo.title, bd, SITE_NAME, vehicleName);
-if (mergedContent.seo?.description)
-  mergedContent.seo.description = resolveTemplates(mergedContent.seo.description, bd, SITE_NAME, vehicleName);
-if (mergedContent.jsonld?.org_description)
-  mergedContent.jsonld.org_description = resolveTemplates(
-    mergedContent.jsonld.org_description,
-    bd,
-    SITE_NAME,
-    vehicleName,
-  );
-if (mergedContent.jsonld?.org_name)
-  mergedContent.jsonld.org_name = resolveTemplates(
-    mergedContent.jsonld.org_name,
-    bd,
-    SITE_NAME,
-    vehicleName,
-  );
+const pageContent = a.pageContent;
+const hero = a.hero;
+const phoneItaly = home.hero?.phone_italy;
+const phoneSpain = home.hero?.phone_spain;
 ---
 
 <BaseLayout
-  pageContent={mergedContent}
-  brandName={hero.brand_name || SITE_NAME}
+  pageContent={pageContent}
+  brandName={home.hero?.brand_name || SITE_NAME}
   ogLocale="en_US"
-  preloadImage={heroFields.image as string | undefined}
+  preloadImage={hero.image}
 >
   <ServicePage
-    offering={offeringResolved}
-    pageContent={mergedContent}
+    offering={a.offering}
+    pageContent={pageContent}
     region="VIPER"
-    hero={{
-      subtitle: heroFields.subtitle as string | undefined,
-      cta_text: heroFields.cta_text as string | undefined,
-      tagline: (offering.title as string) || (heroFields.tagline as string | undefined),
-      image: heroFields.image as string | undefined,
-      phoneItaly: hero.phone_italy,
-      phoneSpain: hero.phone_spain,
-    }}
-    fleetVehicles={fleetEntries}
-    fleetFeaturesText={fleetFeaturesText}
+    hero={{ ...hero, phoneItaly, phoneSpain }}
+    fleetVehicles={a.fleetVehicles || []}
+    fleetFeaturesText={a.fleetFeaturesText}
     hasFleet
-    howItWorksSteps={howItWorks.steps}
+    howItWorksSteps={a.howItWorksSteps}
     showPricing
     hourly={hourly}
     showMembership
