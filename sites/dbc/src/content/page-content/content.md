@@ -88,13 +88,6 @@ labels:
   form_error: Sorry — we could not send your enquiry. Please email us or try again.
   cta_imageAlt: DB Custom Garage automotive projects
   footer_pagesHeading: Links
-  gallery:
-    brand: Brand & Home
-    supercar: Supercar Transport
-    customizing: Customizing & Design
-    auction: Auction & Sale
-    import-export: Import & Export
-    all-builds: All Builds
 howitworks:
   heading: How We Build Your Dream
 fleet:

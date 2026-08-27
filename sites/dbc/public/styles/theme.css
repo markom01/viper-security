@@ -20,11 +20,11 @@
    treatment as the hero subheadline above. */
 .marketing-section .marketing-heading,
 .marketing-section .pure-text {
-  color: var(--colors--onyx);
+  color: var(--colors--pure);
 }
 .marketing-section .secondary-button {
-  border-color: var(--colors--onyx);
-  color: var(--colors--onyx);
+  border-color: var(--colors--pure);
+  color: var(--colors--pure);
 }
 .marketing-section .secondary-button:hover {
   background-color: rgba(0, 0, 0, 0.08);
