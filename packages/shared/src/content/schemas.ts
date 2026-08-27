@@ -51,12 +51,26 @@ export const serviceDetailSchema = z.object({
   cta: z.object({ heading: z.string().optional(), text: z.string().optional() }).optional(),
   form_fields: z.array(z.object({
     label: z.string(), placeholder: z.string().optional(), name: z.string(),
-    type: z.enum(["text", "location", "country", "vehicle"]).optional(),
-    side: z.enum(["left", "right"]).optional(),
+    // "" from CMS means "plain text / unset" — DBC carries the narrow enum; the
+    // preprocess keeps the shared schema tolerant of empty strings from YAML.
+    type: z.preprocess(
+      (v) => (v === "" || v == null ? undefined : v),
+      z.enum(["text", "location", "country", "vehicle"]).optional(),
+    ).optional(),
+    side: z.preprocess(
+      (v) => (v === "" || v == null ? undefined : v),
+      z.enum(["left", "right"]).optional(),
+    ).optional(),
   })).optional(),
   bottomcta: z.object({
     heading: z.string().optional(),
     values: z.array(z.object({ title: z.string(), text: z.string() })).optional(),
+  }).optional(),
+  // DBC per-service sale-fleet heading override (import/export "Currently Selling"
+  // vs site-global "Our Fleet"). Consumed by DBC [slug].astro → assembleService.
+  fleet_section: z.object({
+    heading: z.string().optional(),
+    subheadline: z.string().optional(),
   }).optional(),
   fleet: z.array(z.object({
     name: z.string(), type: z.string().optional(), year: z.string().optional(),
