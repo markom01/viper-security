@@ -13,6 +13,8 @@ export interface HomeData {
 
 export interface ServiceDetailData {
   title: string; slug?: string; description?: string; marquee?: string;
+  /** Per-page SEO (title/description/og image URL) for the generated service page. */
+  seo?: { title?: string; description?: string; image?: string };
   about_text?: string; about_image?: string;
   hero?: { subtitle?: string; cta_text?: string; tagline?: string; image?: string };
   steps?: { title: string; description: string }[];

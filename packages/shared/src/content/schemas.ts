@@ -27,6 +27,11 @@ export const serviceDetailSchema = z.object({
   slug: z.string().optional(),
   description: z.string().optional(),
   marquee: z.string().optional(),
+  seo: z.object({
+    title: z.string().optional(),
+    description: z.string().optional(),
+    image: z.string().optional(),
+  }).optional(),
   about_text: z.string().optional(),
   about_image: z.string().optional(),
   hero: z.object({
