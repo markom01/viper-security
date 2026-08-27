@@ -41,7 +41,7 @@ Sections are stateless `.astro` templates — no client JS except Nav menu + Her
 - **All sections** are `.astro` files in `src/components/sections/`. Only `PageNotFound.jsx` is React (used by `pages/404.astro`).
 - **Content collection data is fetched only in `.astro` page frontmatter**, passed as props to sections. Sections never call `getCollection`.
 - **All copy from CMS collections** — no hardcoded business text in components. Non-CMS technical strings go in `src/config/strings.js`, inline SVGs in `src/config/icons.js`.
-- **Template placeholders** (`{location1}`, `{site_name}`, `{vehicle}`) are resolved in `index.astro` via `resolveTemplates`, not inside sections.
+- **Template placeholders** (`{location1}`, `{site_name}`, `{vehicle}`) are resolved by the shared assembler (`assembleHome`/`assembleService` in `@garage/shared/lib/assemble`) via `resolveTemplates`, not inside sections or page templates. Page templates must not re-run `resolveTemplates`.
 - **CSS**: Tailwind v4 utilities + class hooks into `public/styles/global.css` design tokens (`--colors--*`, `--font-families--*`). No CSS modules, no CSS-in-JS.
 - **Aria labels** on interactive sections, `aria-hidden="true"` on decorative, `role="list"`/`role="listitem"` for collection grids.
 - **Motion**: CSS transitions/keyframes + `[data-scroll-reveal]` attribute — `BaseLayout` observes, adds `data-scroll-reveal-visible` when in view. Respect `prefers-reduced-motion`.
