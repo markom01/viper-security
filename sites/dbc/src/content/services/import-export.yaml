@@ -55,6 +55,8 @@ stats:
       title: Enclosed transport fleet
     - label: "1"
       title: Service, start to finish
+    - label: Customs
+      title: Clearance handled
 cta:
   heading: Ready to Ship Across Borders?
   text: Full-service import and export — we take care of paperwork, customs, shipping and delivery so you don't.

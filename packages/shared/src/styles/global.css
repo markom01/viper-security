@@ -796,6 +796,13 @@ blockquote {
   line-height: var(--line-height-sizes--small);
   text-align: center;
   font-weight: 500;
+  overflow-wrap: break-word;
+  /* match the card's min-width:0 so a long label shrinks + wraps instead of
+     forcing the column wider than its 1fr share. */
+  min-width: 0;
+  /* fill the card width (parent is align-items:center, so without this the
+     number sizes to its max-content and never wraps). */
+  width: 100%;
 }
 .metric-item {
   column-gap: 10px;
@@ -808,11 +815,18 @@ blockquote {
   align-items: center;
   padding: 32px 20px 40px;
   display: flex;
+  /* allow the grid column to shrink to 1fr instead of expanding to the
+     longest unbreakable label (e.g. "Cars & Motorcycles"), which otherwise
+     makes the columns uneven on the home/stats section. */
+  min-width: 0;
 }
 .metric-title {
   color: var(--colors--pure);
   text-align: center;
   font-weight: 400;
+  overflow-wrap: break-word;
+  min-width: 0;
+  width: 100%;
 }
 .metrics-heading-wrapper {
   column-gap: 10px;

@@ -1,443 +1,287 @@
-# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
-
-backend:
-  name: github
-  repo: markom01/viper-security
-  branch: main
-
-media_folder: sites/viper/public/images/cms
-public_folder: /images/cms
-
-collections:
-  - name: home
-    label: Home Page
-    description: Homepage hero banner + services summary grid
-    files:
-      - name: content
-        label: Home Content
-        file: sites/viper/src/content/home/content.yaml
-        fields:
-          - label: Hero
-            name: hero
-            widget: object
-            collapsed: true
-            fields:
-              - { name: brand_name, label: Brand Name, widget: string, required: false }
-              - { name: tagline, label: Tagline, widget: string, required: false }
-              - { name: subtitle, label: Subtitle, widget: text, required: false }
-              - { name: cta_text, label: CTA Button Text, widget: string, required: false }
-              - { name: hero_image, label: "Hero Background Image", widget: image, required: false }
-              - { name: phone_italy, label: "Phone (Italy)", widget: string, required: false }
-              - { name: phone_spain, label: "Phone (Spain)", widget: string, required: false }
-          - label: Services
-            name: services
-            widget: object
-            collapsed: true
-            fields:
-              - label: Offerings
-                name: offerings
-                widget: list
-                summary: "{{fields.title}}"
-                fields:
-                  - { name: region, label: "Region (Marbella or Milano)", widget: string }
-                  - { name: title, label: Service Title, widget: string }
-                  - { name: description, label: Description, widget: text }
-                  - { name: image, label: "Service Image", widget: image, required: false }
-                  - { name: slug, label: "Slug (URL path)", widget: string, required: false }
-
-  - name: service
-    label: Services
-    description: Per-service detail pages (one file per service)
-    folder: sites/viper/src/content/services
-    extension: yaml
-    create: true
-    slug: "{{fields.title}}"
-    fields:
-      - { name: title, label: Service Title, widget: string }
-      - { name: slug, label: "Slug (URL path override)", widget: string, required: false }
-      - { name: description, label: Description, widget: text, required: false }
-      - { name: marquee, label: "Marquee Text", widget: string, required: false }
-      - label: SEO
-        name: seo
-        widget: object
-        collapsed: true
-        required: false
-        fields:
-          - { name: title, label: "SEO Title", widget: string, required: false }
-          - { name: description, label: "SEO Description", widget: text, required: false }
-          - { name: image, label: "SEO Image", widget: image, required: false }
-      - { name: about_text, label: "About Text", widget: text, required: false }
-      - { name: about_image, label: "About Image", widget: image, required: false }
-      - label: Hero
-        name: hero
-        widget: object
-        collapsed: true
-        required: false
-        fields:
-          - { name: subtitle, label: Subtitle, widget: text, required: false }
-          - { name: cta_text, label: "CTA Button Text", widget: string, required: false }
-          - { name: tagline, label: Tagline, widget: string, required: false }
-          - { name: image, label: "Hero Image", widget: image, required: false }
-      - label: "How It Works Steps"
-        name: steps
-        widget: list
-        summary: "{{fields.title}}"
-        collapsed: true
-        required: false
-        fields:
-          - { name: title, label: Title, widget: string }
-          - { name: description, label: Description, widget: text }
-      - label: "Include (service cards)"
-        name: include
-        widget: list
-        summary: "{{fields.title}}"
-        collapsed: true
-        required: false
-        fields:
-          - { name: title, label: Title, widget: string }
-          - { name: text, label: Text, widget: text }
-          - { name: image, label: Image, widget: image, required: false }
-      - label: "Form Fields"
-        name: form_fields
-        widget: list
-        summary: "{{fields.label}}"
-        collapsed: true
-        required: false
-        fields:
-          - { name: label, label: Label, widget: string }
-          - { name: placeholder, label: Placeholder, widget: string, required: false }
-          - { name: name, label: "Field Name", widget: string }
-          - { name: type, label: Type, widget: select, options: [text, location, country, vehicle], required: false }
-          - { name: side, label: Side, widget: select, options: [left, right], required: false }
-      - label: "Stats (per-service)"
-        name: stats
-        widget: object
-        collapsed: true
-        required: false
-        fields:
-          - { name: heading, label: "Section Heading (optional)", widget: string, required: false }
-          - { name: subheading, label: Subheading, widget: text, required: false }
-          - { name: image, label: "Background Image (optional)", widget: image, required: false }
-          - label: Items
-            name: items
-            widget: list
-            summary: "{{fields.label}}: {{fields.title}}"
-            required: false
-            fields:
-              - { name: label, label: "Label (e.g. 99%)", widget: string }
-              - { name: title, label: "Title", widget: string }
-      - label: "CTA (per-service)"
-        name: cta
-        widget: object
-        collapsed: true
-        required: false
-        fields:
-          - { name: heading, label: Heading, widget: string, required: false }
-          - { name: text, label: Text, widget: text, required: false }
-          - { name: image, label: "Image (optional, overrides hero fallback)", widget: image, required: false }
-      - label: "How It Works Heading (per-service)"
-        name: howitworks
-        widget: object
-        collapsed: true
-        required: false
-        fields:
-          - { name: heading, label: "Section Heading (optional)", widget: string, required: false }
-      - label: "Bottom CTA"
-        name: bottomcta
-        widget: object
-        collapsed: true
-        required: false
-        fields:
-          - { name: heading, label: Heading, widget: string, required: false }
-          - label: Values
-            name: values
-            widget: list
-            summary: "{{fields.title}}"
-            required: false
-            fields:
-              - { name: title, label: Title, widget: string }
-              - { name: text, label: Text, widget: text }
-      - label: "Fleet Section Heading"
-        name: fleet_section
-        widget: object
-        collapsed: true
-        required: false
-        fields:
-          - { name: heading, label: Heading, widget: string, required: false }
-          - { name: subheadline, label: Subheadline, widget: string, required: false }
-      - label: "Fleet Vehicles"
-        name: fleet
-        widget: list
-        summary: "{{fields.name}}"
-        collapsed: true
-        required: false
-        fields:
-          - { name: name, label: Vehicle Name, widget: string }
-          - { name: type, label: Type, widget: string, required: false }
-          - { name: year, label: Year, widget: string, required: false }
-          - { name: seats, label: Seats, widget: string, required: false }
-          - { name: baggage, label: Baggage, widget: string, required: false }
-          - { name: capacity_passengers, label: "Capacity (Passengers)", widget: number, required: false }
-          - { name: capacity_suitcases, label: "Capacity (Suitcases)", widget: number, required: false }
-          - { name: capacity_carryon, label: "Capacity (Carry-on)", widget: number, required: false }
-          - label: Specs
-            name: specs
-            widget: list
-            summary: "{{fields.label}}: {{fields.value}}"
-            collapsed: true
-            required: false
-            fields:
-              - { name: label, label: Label, widget: string }
-              - { name: value, label: Value, widget: string }
-          - { name: image, label: "Vehicle Image", widget: image, required: false }
-          - { name: features, label: Features, widget: list, field: { name: feature, label: Feature, widget: string }, required: false }
-
-  - name: fleet
-    label: Fleet
-    description: Vehicle fleet (one file per vehicle)
-    folder: sites/viper/src/content/fleet
-    extension: yaml
-    create: true
-    slug: "{{fields.name}}"
-    fields:
-      - { name: name, label: Vehicle Name, widget: string }
-      - { name: image, label: "Vehicle Image", widget: image, required: false }
-      - { name: type, label: Vehicle Type, widget: string, required: false }
-      - { name: year, label: Year, widget: string, required: false }
-      - { name: seats, label: Seats, widget: string, required: false }
-      - { name: baggage, label: Baggage Capacity, widget: string, required: false }
-      - { name: capacity_passengers, label: Max Passengers, widget: number, value_type: int, required: false }
-      - { name: capacity_suitcases, label: Max Suitcases, widget: number, value_type: int, required: false }
-      - { name: capacity_carryon, label: Max Carry-On Bags, widget: number, value_type: int, required: false }
-      - label: Specs
-        name: specs
-        widget: list
-        summary: "{{fields.label}}: {{fields.value}}"
-        required: false
-        fields:
-          - { name: label, label: Label, widget: string }
-          - { name: value, label: Value, widget: string }
-      - label: Features
-        name: features
-        widget: list
-        field: { label: Feature, name: feature, widget: string }
-        required: false
-
-  - name: pricing
-    label: Hourly Pricing
-    description: Hourly chauffeur service rates
-    files:
-      - name: hourly
-        label: Hourly Rates
-        file: sites/viper/src/content/pricing/hourly.yaml
-        fields:
-          - { name: type, widget: hidden, default: hourly }
-          - label: Rates
-            name: rates
-            widget: list
-            summary: "{{fields.name}}"
-            fields:
-              - { name: name, label: Duration, widget: string }
-              - { name: price, label: Price, widget: string }
-
-  - name: membership
-    label: VIP Membership
-    description: VIP membership program tiers
-    files:
-      - name: tiers
-        label: Membership Tiers
-        file: sites/viper/src/content/membership/tiers.yaml
-        fields:
-          - label: Tiers
-            name: tiers
-            widget: list
-            summary: "{{fields.name}}"
-            fields:
-              - { name: name, label: Tier Name, widget: string }
-              - { name: price, label: Annual Price, widget: string }
-              - { name: hours, label: "Included Hours / Year", widget: number, required: false }
-              - label: Benefits
-                name: benefits
-                widget: list
-                field: { label: Benefit, name: benefit, widget: string }
-              - { name: is_featured, label: Featured Tier, widget: boolean, default: false }
-
-  - name: privacy
-    label: Privacy Policy
-    description: Legal / GDPR privacy policy page content
-    files:
-      - name: content
-        label: Privacy Policy Body
-        file: sites/viper/src/content/privacy/content.md
-        fields:
-          - { name: heading, label: Heading, widget: string, required: false }
-          - { name: body, label: Policy Body (Markdown), widget: markdown }
-
-  - name: site
-    label: Site Globals
-    description: Site-wide labels, SEO, JSON-LD, booking routes, and shared sections
-    files:
-      - name: content
-        label: Site Content
-        file: sites/viper/src/content/site/content.yaml
-        fields:
-          - name: jsonld
-            label: JSON-LD / Structured Data
-            widget: object
-            collapsed: true
-            fields:
-              - { name: org_name, label: Organization Name, widget: string, required: false }
-              - { name: org_url, label: Organization URL, widget: string, required: false }
-              - { name: org_logo, label: Logo URL, widget: string, required: false }
-              - { name: org_description, label: Description, widget: text, required: false }
-              - { name: phoneSpain, label: "Phone (Spain)", widget: string, required: false }
-              - { name: phoneItaly, label: "Phone (Italy)", widget: string, required: false }
-              - { name: webSiteName, label: "Website Name", widget: string, required: false }
-              - { name: webSiteUrl, label: "Website URL", widget: string, required: false }
-              - { name: privacy_policy, label: "Privacy Policy URL", widget: string, required: false }
-          - name: booking_data
-            label: Booking Routes
-            widget: object
-            collapsed: true
-            fields:
-              - label: Spain
-                name: spain
-                widget: object
-                fields:
-                  - { name: label, label: "Region Label", widget: string, required: false }
-                  - { name: short_label, label: "Short Region Name", widget: string, required: false }
-                  - { name: region, label: Region, widget: string, required: false }
-                  - label: Services
-                    name: services
-                    widget: list
-                    summary: "{{fields.name}}"
-                    fields:
-                      - { name: name, label: "Service Name", widget: string }
-                      - label: Routes
-                        name: routes
-                        widget: list
-                        summary: "{{fields.route}}"
-                        fields:
-                          - { name: route, label: Route, widget: string }
-                          - { name: price, label: "Price (optional)", widget: string, required: false }
-              - label: Italy
-                name: italy
-                widget: object
-                fields:
-                  - { name: label, label: "Region Label", widget: string, required: false }
-                  - { name: short_label, label: "Short Region Name", widget: string, required: false }
-                  - { name: region, label: Region, widget: string, required: false }
-                  - label: Services
-                    name: services
-                    widget: list
-                    summary: "{{fields.name}}"
-                    fields:
-                      - { name: name, label: "Service Name", widget: string }
-                      - label: Routes
-                        name: routes
-                        widget: list
-                        summary: "{{fields.route}}"
-                        fields:
-                          - { name: route, label: Route, widget: string }
-                          - { name: price, label: "Price (optional)", widget: string, required: false }
-          - { name: vehicle_name, label: "Vehicle Name (placeholder)", widget: string, required: false }
-          - name: labels
-            label: UI Labels (nav, buttons, headings)
-            widget: object
-            collapsed: true
-            fields:
-              - { name: nav_home, label: "Nav: Home", widget: string, required: false }
-              - { name: nav_about, label: "Nav: About", widget: string, required: false }
-              - { name: nav_services, label: "Nav: Services", widget: string, required: false }
-              - { name: nav_fleet, label: "Nav: Fleet", widget: string, required: false }
-              - { name: nav_howItWorks, label: "Nav: How It Works", widget: string, required: false }
-              - { name: nav_pricing, label: "Nav: Pricing", widget: string, required: false }
-              - { name: nav_contact, label: "Nav: Contact", widget: string, required: false }
-              - { name: hero_learnMore, label: "Hero: Learn More", widget: string, required: false }
-              - { name: hero_exploreFleet, label: "Hero: Explore Fleet", widget: string, required: false }
-              - { name: form_bookNow, label: "Form: Book Now", widget: string, required: false }
-              - { name: form_name, label: "Form: Name", widget: string, required: false }
-              - { name: form_phone, label: "Form: Phone", widget: string, required: false }
-              - { name: form_date, label: "Form: Date", widget: string, required: false }
-              - { name: form_success, label: "Form: Success Message", widget: text, required: false }
-              - { name: form_error, label: "Form: Error Message", widget: text, required: false }
-          - name: howItWorksSteps
-            label: How It Works Steps
-            widget: list
-            summary: "{{fields.title}}"
-            collapsed: true
-            required: false
-            fields:
-              - { name: title, label: Title, widget: string }
-              - { name: description, label: Description, widget: text }
-              - { name: image, label: "Step Image", widget: image, required: false }
-          - name: branding
-            label: Branding
-            widget: object
-            collapsed: true
-            required: false
-            fields:
-              - { name: luxury_without_limits, label: "Luxury Without Limits Text", widget: string, required: false }
-              - { name: professional_discreet_reliable, label: "Professional Discreet Reliable Text", widget: string, required: false }
-          - name: stats
-            label: Stats Section
-            widget: object
-            collapsed: true
-            required: false
-            fields:
-              - { name: subheading, label: Subheading, widget: text, required: false }
-              - { name: image, label: Background Image, widget: image, required: false }
-              - label: Items
-                name: items
-                widget: list
-                summary: "{{fields.label}}: {{fields.title}}"
-                required: false
-                fields:
-                  - { name: label, label: "Label (e.g. 15+)", widget: string }
-                  - { name: title, label: "Title (e.g. Years Experience)", widget: string }
-          - name: cta
-            label: CTA Banner
-            widget: object
-            collapsed: true
-            required: false
-            fields:
-              - { name: heading, label: Heading, widget: string, required: false }
-              - { name: text, label: Body Text, widget: text, required: false }
-              - { name: image, label: CTA Image, widget: image, required: false }
-          - name: bottomcta
-            label: Bottom CTA
-            widget: object
-            collapsed: true
-            required: false
-            fields:
-              - { name: heading, label: Heading, widget: string, required: false }
-              - label: Values
-                name: values
-                widget: list
-                summary: "{{fields.title}}"
-                required: false
-                fields:
-                  - { name: title, label: Title, widget: string }
-                  - { name: text, label: Text, widget: text }
-          - name: about
-            label: About Section
-            widget: object
-            collapsed: true
-            required: false
-            fields:
-              - { name: heading, label: Heading, widget: string, required: false }
-              - { name: text, label: Body Text, widget: text, required: false }
-              - { name: image, label: About Image, widget: image, required: false }
-          - name: seo
-            label: SEO / Meta
-            widget: object
-            collapsed: true
-            required: false
-            fields:
-              - { name: title, label: Page Title, widget: string, required: false }
-              - { name: description, label: Meta Description, widget: text, required: false }
-              - { name: theme_color, label: Theme Color, widget: string, required: false }
-              - { name: image, label: "Share / OG Image", widget: image, required: false }
-          - { name: map_embed_url, label: "Map Embed URL (Google Maps iframe src)", widget: string, required: false }
-          - { name: fleetHeading, label: "Fleet Section Heading", widget: string, required: false }
-          - { name: howItWorksHeading, label: "How It Works Heading", widget: string, required: false }
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+backend:
+  name: github
+  repo: markom01/viper-security
+  branch: main
+
+media_folder: sites/viper/public/images/cms
+public_folder: /images/cms
+
+collections:
+  - name: home
+    label: Home Page
+    description: Homepage hero banner + services summary grid
+    files:
+      - name: content
+        label: Home Content
+        file: sites/viper/src/content/home/content.yaml
+        fields:
+          - label: Hero
+            name: hero
+            widget: object
+            collapsed: true
+            fields:
+              - { name: brand_name, label: Brand Name, widget: string, required: false }
+              - { name: tagline, label: Tagline, widget: string, required: false }
+              - { name: subtitle, label: Subtitle, widget: text, required: false }
+              - { name: cta_text, label: CTA Button Text, widget: string, required: false }
+              - { name: hero_image, label: "Hero Background Image", widget: image, required: false }
+              - { name: phone_italy, label: "Phone (Italy)", widget: string, required: false }
+              - { name: phone_spain, label: "Phone (Spain)", widget: string, required: false }
+          - label: Services
+            name: services
+            widget: object
+            collapsed: true
+            fields:
+              - label: Offerings
+                name: offerings
+                widget: list
+                summary: "{{fields.title}}"
+                fields:
+                  - { name: region, label: "Region (Marbella or Milano)", widget: string }
+                  - { name: title, label: Service Title, widget: string }
+                  - { name: description, label: Description, widget: text }
+                  - { name: image, label: "Service Image", widget: image, required: false }
+                  - { name: slug, label: "Slug (URL path)", widget: string, required: false }
+
+
+  - name: fleet
+    label: Fleet
+    description: Vehicle fleet (one file per vehicle)
+    folder: sites/viper/src/content/fleet
+    extension: yaml
+    create: true
+    slug: "{{fields.name}}"
+    fields:
+      - { name: name, label: Vehicle Name, widget: string }
+      - { name: image, label: "Vehicle Image", widget: image, required: false }
+      - { name: type, label: Vehicle Type, widget: string, required: false }
+      - { name: year, label: Year, widget: string, required: false }
+      - { name: seats, label: Seats, widget: string, required: false }
+      - { name: baggage, label: Baggage Capacity, widget: string, required: false }
+      - { name: capacity_passengers, label: Max Passengers, widget: number, value_type: int, required: false }
+      - { name: capacity_suitcases, label: Max Suitcases, widget: number, value_type: int, required: false }
+      - { name: capacity_carryon, label: Max Carry-On Bags, widget: number, value_type: int, required: false }
+      - label: Specs
+        name: specs
+        widget: list
+        summary: "{{fields.label}}: {{fields.value}}"
+        required: false
+        fields:
+          - { name: label, label: Label, widget: string }
+          - { name: value, label: Value, widget: string }
+      - label: Features
+        name: features
+        widget: list
+        field: { label: Feature, name: feature, widget: string }
+        required: false
+
+  - name: pricing
+    label: Hourly Pricing
+    description: Hourly chauffeur service rates
+    files:
+      - name: hourly
+        label: Hourly Rates
+        file: sites/viper/src/content/pricing/hourly.yaml
+        fields:
+          - { name: type, widget: hidden, default: hourly }
+          - label: Rates
+            name: rates
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { name: name, label: Duration, widget: string }
+              - { name: price, label: Price, widget: string }
+
+  - name: membership
+    label: VIP Membership
+    description: VIP membership program tiers
+    files:
+      - name: tiers
+        label: Membership Tiers
+        file: sites/viper/src/content/membership/tiers.yaml
+        fields:
+          - label: Tiers
+            name: tiers
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { name: name, label: Tier Name, widget: string }
+              - { name: price, label: Annual Price, widget: string }
+              - { name: hours, label: "Included Hours / Year", widget: number, required: false }
+              - label: Benefits
+                name: benefits
+                widget: list
+                field: { label: Benefit, name: benefit, widget: string }
+              - { name: is_featured, label: Featured Tier, widget: boolean, default: false }
+
+
+  - name: site
+    label: Site Globals
+    description: Site-wide labels, SEO, JSON-LD, booking routes, and shared sections
+    files:
+      - name: content
+        label: Site Content
+        file: sites/viper/src/content/site/content.yaml
+        fields:
+          - name: jsonld
+            label: JSON-LD / Structured Data
+            widget: object
+            collapsed: true
+            fields:
+              - { name: org_name, label: Organization Name, widget: string, required: false }
+              - { name: org_url, label: Organization URL, widget: string, required: false }
+              - { name: org_logo, label: Logo URL, widget: string, required: false }
+              - { name: org_description, label: Description, widget: text, required: false }
+              - { name: phoneSpain, label: "Phone (Spain)", widget: string, required: false }
+              - { name: phoneItaly, label: "Phone (Italy)", widget: string, required: false }
+              - { name: webSiteName, label: "Website Name", widget: string, required: false }
+              - { name: webSiteUrl, label: "Website URL", widget: string, required: false }
+              - { name: privacy_policy, label: "Privacy Policy URL", widget: string, required: false }
+          - name: booking_data
+            label: Booking Routes
+            widget: object
+            collapsed: true
+            fields:
+              - label: Spain
+                name: spain
+                widget: object
+                fields:
+                  - { name: label, label: "Region Label", widget: string, required: false }
+                  - { name: short_label, label: "Short Region Name", widget: string, required: false }
+                  - { name: region, label: Region, widget: string, required: false }
+                  - label: Services
+                    name: services
+                    widget: list
+                    summary: "{{fields.name}}"
+                    fields:
+                      - { name: name, label: "Service Name", widget: string }
+                      - label: Routes
+                        name: routes
+                        widget: list
+                        summary: "{{fields.route}}"
+                        fields:
+                          - { name: route, label: Route, widget: string }
+                          - { name: price, label: "Price (optional)", widget: string, required: false }
+              - label: Italy
+                name: italy
+                widget: object
+                fields:
+                  - { name: label, label: "Region Label", widget: string, required: false }
+                  - { name: short_label, label: "Short Region Name", widget: string, required: false }
+                  - { name: region, label: Region, widget: string, required: false }
+                  - label: Services
+                    name: services
+                    widget: list
+                    summary: "{{fields.name}}"
+                    fields:
+                      - { name: name, label: "Service Name", widget: string }
+                      - label: Routes
+                        name: routes
+                        widget: list
+                        summary: "{{fields.route}}"
+                        fields:
+                          - { name: route, label: Route, widget: string }
+                          - { name: price, label: "Price (optional)", widget: string, required: false }
+          - { name: vehicle_name, label: "Vehicle Name (placeholder)", widget: string, required: false }
+          - name: labels
+            label: UI Labels (nav, buttons, headings)
+            widget: object
+            collapsed: true
+            fields:
+              - { name: nav_home, label: "Nav: Home", widget: string, required: false }
+              - { name: nav_about, label: "Nav: About", widget: string, required: false }
+              - { name: nav_services, label: "Nav: Services", widget: string, required: false }
+              - { name: nav_fleet, label: "Nav: Fleet", widget: string, required: false }
+              - { name: nav_howItWorks, label: "Nav: How It Works", widget: string, required: false }
+              - { name: nav_pricing, label: "Nav: Pricing", widget: string, required: false }
+              - { name: nav_contact, label: "Nav: Contact", widget: string, required: false }
+              - { name: hero_learnMore, label: "Hero: Learn More", widget: string, required: false }
+              - { name: hero_exploreFleet, label: "Hero: Explore Fleet", widget: string, required: false }
+              - { name: form_bookNow, label: "Form: Book Now", widget: string, required: false }
+              - { name: form_name, label: "Form: Name", widget: string, required: false }
+              - { name: form_phone, label: "Form: Phone", widget: string, required: false }
+              - { name: form_date, label: "Form: Date", widget: string, required: false }
+              - { name: form_success, label: "Form: Success Message", widget: text, required: false }
+              - { name: form_error, label: "Form: Error Message", widget: text, required: false }
+          - name: howItWorksSteps
+            label: How It Works Steps
+            widget: list
+            summary: "{{fields.title}}"
+            collapsed: true
+            required: false
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: description, label: Description, widget: text }
+              - { name: image, label: "Step Image", widget: image, required: false }
+          - name: branding
+            label: Branding
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - { name: luxury_without_limits, label: "Luxury Without Limits Text", widget: string, required: false }
+              - { name: professional_discreet_reliable, label: "Professional Discreet Reliable Text", widget: string, required: false }
+          - name: stats
+            label: Stats Section
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - { name: subheading, label: Subheading, widget: text, required: false }
+              - { name: image, label: Background Image, widget: image, required: false }
+              - label: Items
+                name: items
+                widget: list
+                summary: "{{fields.label}}: {{fields.title}}"
+                required: false
+                fields:
+                  - { name: label, label: "Label (e.g. 15+)", widget: string }
+                  - { name: title, label: "Title (e.g. Years Experience)", widget: string }
+          - name: cta
+            label: CTA Banner
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - { name: heading, label: Heading, widget: string, required: false }
+              - { name: text, label: Body Text, widget: text, required: false }
+              - { name: image, label: CTA Image, widget: image, required: false }
+          - name: bottomcta
+            label: Bottom CTA
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - { name: heading, label: Heading, widget: string, required: false }
+              - label: Values
+                name: values
+                widget: list
+                summary: "{{fields.title}}"
+                required: false
+                fields:
+                  - { name: title, label: Title, widget: string }
+                  - { name: text, label: Text, widget: text }
+          - name: about
+            label: About Section
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - { name: heading, label: Heading, widget: string, required: false }
+              - { name: text, label: Body Text, widget: text, required: false }
+              - { name: image, label: About Image, widget: image, required: false }
+          - name: seo
+            label: SEO / Meta
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - { name: title, label: Page Title, widget: string, required: false }
+              - { name: description, label: Meta Description, widget: text, required: false }
+              - { name: theme_color, label: Theme Color, widget: string, required: false }
+              - { name: image, label: "Share / OG Image", widget: image, required: false }
+          - { name: map_embed_url, label: "Map Embed URL (Google Maps iframe src)", widget: string, required: false }
+          - { name: fleetHeading, label: "Fleet Section Heading", widget: string, required: false }
+          - { name: howItWorksHeading, label: "How It Works Heading", widget: string, required: false }

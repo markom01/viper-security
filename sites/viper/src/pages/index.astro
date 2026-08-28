@@ -16,6 +16,7 @@ import { getCollection, getEntry } from "astro:content";
 import { assembleHome } from "@garage/shared/lib/assemble";
 import { SITE_NAME } from "@garage/shared/config/strings";
 import { membershipValueNote } from "@garage/shared/config/membership";
+import { buildNav, buildFooterNav } from "../data/nav";
 
 const home = (await getEntry("home", "content"))!.data;
 const siteGlobals = (await getEntry("site", "content"))!.data;
@@ -26,6 +27,15 @@ const membership = (await getEntry("membership", "tiers"))?.data ?? { tiers: [] 
 const a = assembleHome({ home, siteGlobals, siteName: SITE_NAME, fleetEntries });
 const membershipNote = membershipValueNote(membership.tiers, hourly.rates);
 
+// Sveltia writes label keys with underscores (nav_contact); normalize to the
+// dot-path form buildNav and shared-section resolveLabels expect.
+const labels: Record<string, string> = Object.fromEntries(
+  Object.entries(siteGlobals.labels ?? {}).map(([k, v]) => [k.replace(/_/g, "."), String(v)]),
+);
+
+const navItems = buildNav(labels);
+const footerItems = buildFooterNav(labels);
+
 const hero = a.hero;
 const howItWorks = { steps: siteGlobals.howItWorksSteps };
 const universalServices = { services: a.services.offerings };
@@ -34,7 +44,7 @@ const fleetFeaturesText = a.fleetFeaturesText || "";
 const pageContent = a.pageContent;
 ---
 
-<BaseLayout pageContent={pageContent} brandName={hero.brand_name} ogLocale="en_US" preloadImage={hero.hero_image}>
+<BaseLayout pageContent={pageContent} brandName={hero.brand_name} ogLocale="en_US" preloadImage={hero.hero_image} navItems={navItems} footerItems={footerItems}>
   <Hero
     subtitle={hero.subtitle}
     cta_text={hero.cta_text}

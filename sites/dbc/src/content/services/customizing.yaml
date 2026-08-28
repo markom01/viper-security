@@ -55,6 +55,8 @@ stats:
       title: Fabricated, not bought
     - label: Both
       title: Cars & motorcycles
+    - label: Show
+      title: Grade finishing
 cta:
   heading: Ready to Build Your Dream?
   text: From restomod to show-grade — tell us the vision and we take it from sketch to street.

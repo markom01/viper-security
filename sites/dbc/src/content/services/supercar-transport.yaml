@@ -55,6 +55,8 @@ stats:
       title: Transparent per-route pricing
     - label: GPS
       title: Live tracked door-to-door
+    - label: EU & USA
+      title: Europe & worldwide routes
 cta:
   heading: Ready to Move Your Supercar?
   text: Book enclosed, insured transport across Europe and the USA — quoted per route, tracked end to end.

@@ -37,18 +37,13 @@ form_fields:
   - label: Details
     placeholder: Year, condition, mileage
     name: vehicle_details
-    type: ''
-    side: ''
   - label: Target price
     placeholder: Estimated value or target sale price
     name: target_price
-    type: ''
-    side: ''
   - label: Vehicle (make & model)
     placeholder: Start typing — e.g. Ferrari 812
     name: vehicle_model
     type: vehicle
-    side: ''
 stats:
   heading: Sold Without Leaving Your Garage
   subheading: Since 2010 — preparation, multi-platform reach, you stay home.
@@ -60,6 +55,8 @@ stats:
       title: Auction houses we list on
     - label: 0€
       title: Upfront fees to you
+    - label: Global
+      title: Bidder network reach
 cta:
   heading: Ready to Sell Your Classic?
   text: Consign with us and we prepare, list and represent your car across the leading auction houses — funds to you.
@@ -75,5 +72,4 @@ bottomcta:
       text: Your car listed across the leading online auction houses.
     - title: You Stay Home
       text: Consignment handled entirely for you.
-fleet_section: null
 fleet: []
