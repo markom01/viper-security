@@ -35,7 +35,30 @@ bottomcta:
       text: Every move covered on our own trucks and trailers.
     - title: Tracked Door-to-Door
       text: Origin to destination, with updates along the way.
-steps: []
+steps:
+  - title: Quote & Book
+    description: Tell us origin, destination and vehicle. We quote per route — from €1/km, both directions — and lock your slot.
+  - title: Enclosed Collection
+    description: We collect in our own fully enclosed, liftgate-equipped trucks. Your car is sealed, insured and logged before it moves.
+  - title: Tracked Delivery
+    description: GPS-tracked door-to-door across Europe and the USA, with updates until handover.
+howitworks:
+  heading: How Your Supercar Gets There
+stats:
+  heading: Transport, Built Around the Car
+  subheading: Enclosed, insured and tracked — every single move.
+  image: /images/cms/gallery/supercars-transport.webp
+  items:
+    - label: "100%"
+      title: Enclosed, never open-deck
+    - label: "€1/km"
+      title: Transparent per-route pricing
+    - label: GPS
+      title: Live tracked door-to-door
+cta:
+  heading: Ready to Move Your Supercar?
+  text: Book enclosed, insured transport across Europe and the USA — quoted per route, tracked end to end.
+  image: /images/cms/gallery/supercars-transport.webp
 form_fields:
   - label: Origin
     placeholder: Pick-up location

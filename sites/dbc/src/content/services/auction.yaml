@@ -35,7 +35,30 @@ bottomcta:
       text: Your car listed across the leading online auction houses.
     - title: You Stay Home
       text: Consignment handled entirely for you.
-steps: []
+steps:
+  - title: Consign & Valuate
+    description: Hand us the car from your garage. We research, photograph and write the listing — no upfront fees.
+  - title: List Across Platforms
+    description: Your car goes live on Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's — reaching global bidders.
+  - title: Represent & Settle
+    description: We handle the auction end to end and transfer the funds to you. You stay home.
+howitworks:
+  heading: How We Sell Your Classic
+stats:
+  heading: Sold Without Leaving Your Garage
+  subheading: Since 2010 — preparation, multi-platform reach, you stay home.
+  image: /images/cms/gallery/supercars-and-classic-cars-provider-7.webp
+  items:
+    - label: "2010"
+      title: Active in auctions since
+    - label: "6+"
+      title: Auction houses we list on
+    - label: "0€"
+      title: Upfront fees to you
+cta:
+  heading: Ready to Sell Your Classic?
+  text: Consign with us and we prepare, list and represent your car across the leading auction houses — funds to you.
+  image: /images/cms/gallery/supercars-and-classic-cars-provider-7.webp
 form_fields:
   - label: Details
     placeholder: Year, condition, mileage

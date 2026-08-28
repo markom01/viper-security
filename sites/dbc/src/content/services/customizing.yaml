@@ -35,7 +35,30 @@ bottomcta:
       text: Real parts, built by hand — not off the shelf.
     - title: Cars & Motorcycles
       text: Customizing and repair for both.
-steps: []
+steps:
+  - title: Vision & Scope
+    description: We sit down and define the build — restomod, widebody, interior or show-grade — plus budget and timeline.
+  - title: Design & Fabrication
+    description: In-house studio draws it, then metal is fabricated and powder-coated by hand. No off-the-shelf parts.
+  - title: Finish & Delivery
+    description: Paint, trim and final assembly, then a shakedown so the car leaves show-ready.
+howitworks:
+  heading: How Your Build Comes Together
+stats:
+  heading: Crafted In-House, End to End
+  subheading: Design, fabrication and finish — one roof, by hand.
+  image: /images/cms/gallery/concept-design.webp
+  items:
+    - label: "1"
+      title: In-house design studio
+    - label: Metal
+      title: Fabricated, not bought
+    - label: Both
+      title: Cars & motorcycles
+cta:
+  heading: Ready to Build Your Dream?
+  text: From restomod to show-grade — tell us the vision and we take it from sketch to street.
+  image: /images/cms/gallery/db-custom-garage-hero.webp
 form_fields:
   - label: Project type
     placeholder: Restomod, widebody, interior, design

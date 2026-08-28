@@ -35,7 +35,30 @@ bottomcta:
       text: Full coverage across Europe and other continents.
     - title: Own Transport Fleet
       text: Enclosed shipping where your vehicle needs it.
-steps: []
+steps:
+  - title: Paperwork & Compliance
+    description: We handle documentation, duties and registration for cars and motorcycles — EU and worldwide.
+  - title: Customs & Shipping
+    description: Customs clearance and enclosed shipping where required, across the EU and other continents.
+  - title: Door-to-Door Delivery
+    description: End-to-end logistics delivered to your door, fully tracked.
+howitworks:
+  heading: How Cross-Border Logistics Work
+stats:
+  heading: Import & Export, Handled End to End
+  subheading: Paperwork, customs, shipping and delivery — in one service.
+  image: /images/cms/gallery/supercars-and-classic-cars-provider-2.webp
+  items:
+    - label: "EU+"
+      title: Europe & worldwide cover
+    - label: Own
+      title: Enclosed transport fleet
+    - label: "1"
+      title: Service, start to finish
+cta:
+  heading: Ready to Ship Across Borders?
+  text: Full-service import and export — we take care of paperwork, customs, shipping and delivery so you don't.
+  image: /images/cms/gallery/supercars-and-classic-cars-provider-2.webp
 form_fields:
   - label: From
     placeholder: Where is the vehicle now?

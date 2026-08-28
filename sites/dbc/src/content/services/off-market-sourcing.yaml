@@ -35,7 +35,30 @@ bottomcta:
       text: Research and valuation from deep industry experience.
     - title: Full Support
       text: Consulting and legal backing through the whole buy.
-steps: []
+steps:
+  - title: Define the Target
+    description: Make, model, year and budget — or the investment profile you want. We turn it into a search brief.
+  - title: Off-Market Search
+    description: We tap private collector networks for cars never listed publicly, with provenance and valuation research.
+  - title: Advisory & Close
+    description: Consulting and legal support through the buy, so the deal closes clean and discreet.
+howitworks:
+  heading: How We Source Off-Market
+stats:
+  heading: Your Dream Car, Found Off-Market
+  subheading: Access, research and legal backing — built since 2010.
+  image: /images/cms/gallery/neo.webp
+  items:
+    - label: Private
+      title: Off-market networks
+    - label: "2010"
+      title: Market knowledge since
+    - label: Legal
+      title: Support through the buy
+cta:
+  heading: Ready to Find Your Dream Car?
+  text: Off-market sourcing and consulting — we research, advise and back the buy with legal support, off the open market.
+  image: /images/cms/gallery/7cdcbfe3-cb87-4056-bbcd-86cdab0f5943.webp
 form_fields:
   - label: Target vehicle
     placeholder: Make, model, year, budget
