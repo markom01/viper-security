@@ -230,6 +230,8 @@ collections:
               - { name: phoneSpain, label: "Phone (Spain)", widget: string, required: false }
               - { name: phoneItaly, label: "Phone (Italy)", widget: string, required: false }
           - { name: map_embed_url, label: "Map Embed URL (Google Maps iframe src)", widget: string, required: false }
+          - { name: fleetHeading, label: "Fleet Section Heading", widget: string, required: false }
+          - { name: howItWorksHeading, label: "How It Works Heading", widget: string, required: false }
           - name: seo
             label: SEO / Meta
             widget: object
@@ -288,6 +290,7 @@ collections:
               - { name: heading, label: Heading, widget: string, required: false }
               - { name: text, label: Body Text, widget: text, required: false }
               - { name: image, label: About Image, widget: image, required: false }
+              - { name: images, label: "About Carousel Images", widget: list, field: { name: image, label: Image URL, widget: string }, required: false }
           - name: branding
             label: Branding
             widget: object
@@ -331,3 +334,15 @@ collections:
               - { name: gallery_group_auction, label: "Gallery Group: Auction", widget: string, required: false }
               - { name: gallery_group_import-export, label: "Gallery Group: Import/Export", widget: string, required: false }
               - { name: gallery_group_all-builds, label: "Gallery Group: All Builds", widget: string, required: false }
+              - { name: howItWorks_subheadline, label: "How It Works Subheadline", widget: string, required: false }
+              - { name: form_date, label: "Form: Date Label", widget: string, required: false }
+              - { name: form_name, label: "Form: Name Label", widget: string, required: false }
+              - { name: form_phone, label: "Form: Phone Label", widget: string, required: false }
+              - { name: form_namePlaceholder, label: "Form: Name Placeholder", widget: string, required: false }
+              - { name: form_phonePlaceholder, label: "Form: Phone Placeholder", widget: string, required: false }
+              - { name: form_selectLocation, label: "Form: Select Location Label", widget: string, required: false }
+              - { name: form_pricePlaceholder, label: "Form: Price/Details Placeholder", widget: string, required: false }
+              - { name: form_success, label: "Form: Success Message", widget: text, required: false }
+              - { name: form_error, label: "Form: Error Message", widget: text, required: false }
+              - { name: cta_imageAlt, label: "CTA Image Alt Text", widget: string, required: false }
+              - { name: footer_pagesHeading, label: "Footer: Pages Heading", widget: string, required: false }

@@ -197,6 +197,14 @@ collections:
       - { name: capacity_passengers, label: Max Passengers, widget: number, value_type: int, required: false }
       - { name: capacity_suitcases, label: Max Suitcases, widget: number, value_type: int, required: false }
       - { name: capacity_carryon, label: Max Carry-On Bags, widget: number, value_type: int, required: false }
+      - label: Specs
+        name: specs
+        widget: list
+        summary: "{{fields.label}}: {{fields.value}}"
+        required: false
+        fields:
+          - { name: label, label: Label, widget: string }
+          - { name: value, label: Value, widget: string }
       - label: Features
         name: features
         widget: list
