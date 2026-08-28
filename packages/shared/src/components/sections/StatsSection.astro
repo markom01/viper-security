@@ -28,7 +28,7 @@ const statsBg = stats?.image
   <div class="content-wrapper">
     <div class="metrics-content-wrapper">
       <div data-scroll-reveal class="metrics-heading-wrapper">
-        <h2 class="metrics-heading">{s.stats.heading}</h2>
+        <h2 class="metrics-heading">{stats?.heading || s.stats.heading}</h2>
         <div class="metrics-subheading">{stats?.subheading}</div>
       </div>
       <div data-scroll-reveal class="metrics-button-wrapper">

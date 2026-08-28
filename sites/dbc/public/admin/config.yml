@@ -134,7 +134,9 @@ collections:
         collapsed: true
         required: false
         fields:
+          - { name: heading, label: "Section Heading (optional)", widget: string, required: false }
           - { name: subheading, label: Subheading, widget: text, required: false }
+          - { name: image, label: "Background Image (optional)", widget: image, required: false }
           - label: Items
             name: items
             widget: list
@@ -151,6 +153,14 @@ collections:
         fields:
           - { name: heading, label: Heading, widget: string, required: false }
           - { name: text, label: Text, widget: text, required: false }
+          - { name: image, label: "Image (optional, overrides hero fallback)", widget: image, required: false }
+      - label: "How It Works Heading (per-service)"
+        name: howitworks
+        widget: object
+        collapsed: true
+        required: false
+        fields:
+          - { name: heading, label: "Section Heading (optional)", widget: string, required: false }
       - label: "Bottom CTA"
         name: bottomcta
         widget: object

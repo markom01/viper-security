@@ -19,8 +19,9 @@ export interface ServiceDetailData {
   hero?: { subtitle?: string; cta_text?: string; tagline?: string; image?: string };
   steps?: { title: string; description: string }[];
   include?: { title: string; text: string; image?: string }[];
-  stats?: { subheading?: string; items?: { label: string; title: string }[] };
-  cta?: { heading?: string; text?: string };
+  stats?: { heading?: string; subheading?: string; image?: string; items?: { label: string; title: string }[] };
+  cta?: { heading?: string; text?: string; image?: string };
+  howitworks?: { heading?: string };
   form_fields?: { label: string; placeholder?: string; name: string;
     type?: "text" | "location" | "country" | "vehicle"; side?: "left" | "right" }[];
   bottomcta?: { heading?: string; values?: { title: string; text: string }[] };

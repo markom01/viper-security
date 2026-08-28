@@ -35,8 +35,10 @@ interface ServiceOffering {
   form_fields?: { label: string; placeholder?: string; name: string; side?: string; type?: string }[];
   bottomcta?: { heading?: string; values?: { title: string; text: string }[] };
   /** Per-service overrides for the site-global Stats + CTA sections. */
-  stats?: { subheading?: string; items?: { label: string; title: string }[] };
-  cta?: { heading?: string; text?: string };
+  stats?: { heading?: string; subheading?: string; image?: string; items?: { label: string; title: string }[] };
+  cta?: { heading?: string; text?: string; image?: string };
+  /** Per-service How-It-Works heading override (site-global is the fallback). */
+  howitworks?: { heading?: string };
 }
 
 interface Props {
@@ -103,21 +105,30 @@ const hasIncludes = !!offering.include?.length;
 const hasBottomCta = !!offering.bottomcta?.heading || !!offering.bottomcta?.values?.length;
 
 // Per-service Stats + CTA sections: offering overrides spread over the
-// site-global values. Image falls back to the offering hero image so the
-// section stays matched to the service without a separate field.
+// site-global values. Image priority: explicit per-service image → site-global
+// image (from pageContent) → offering hero image as last resort. This keeps the
+// site-global background unless a service sets its own, and only falls back to
+// the hero when nothing else is configured.
 const mergedStats = {
   ...(pageContent?.stats || {}),
   ...(offering.stats || {}),
-  ...(offering.hero?.image ? { image: offering.hero.image } : {}),
 };
+if (offering.stats?.image) mergedStats.image = offering.stats.image;
+else if (offering.hero?.image && !mergedStats.image) mergedStats.image = offering.hero.image;
+
 const mergedCta = {
   ...(pageContent?.cta || {}),
   ...(offering.cta || {}),
-  ...(offering.hero?.image ? { image: offering.hero.image } : {}),
 };
+if (offering.cta?.image) mergedCta.image = offering.cta.image;
+else if (offering.hero?.image && !mergedCta.image) mergedCta.image = offering.hero.image;
 
 // Per-service How-It-Works steps take precedence over the site-global steps.
 const steps = offering.steps?.length ? offering.steps : howItWorksSteps;
+// Per-service How-It-Works heading overrides the site-global heading.
+const serviceHowItWorks = offering.howitworks?.heading
+  ? { ...(pageContent?.howitworks || {}), heading: offering.howitworks.heading }
+  : pageContent?.howitworks;
 
 // "What falls under this service" — the offering's include list as service cards.
 const includes = (offering.include || []).map((i) => ({
@@ -170,7 +181,7 @@ const serviceAbout = hasAbout
   <Fleet vehicles={fleetVehicles} pageContent={pageContent} fleetFeatures={fleetFeaturesText} />
 )}
 <StatsSection pageContent={{ ...pageContent, stats: mergedStats }} />
-<HowItWorks steps={steps} pageContent={pageContent} />
+<HowItWorks steps={steps} pageContent={{ ...pageContent, howitworks: serviceHowItWorks }} />
 {showPricing && <Pricing hourly={hourly} pageContent={pageContent} />}
 {showMembership && (
   <Membership tiers={membershipTiers} pageContent={pageContent} note={membershipNote} />

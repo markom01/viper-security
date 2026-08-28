@@ -45,10 +45,19 @@ export const serviceDetailSchema = z.object({
     title: z.string(), text: z.string(), image: z.string().optional(),
   })).optional(),
   stats: z.object({
+    heading: z.string().optional(),
     subheading: z.string().optional(),
+    image: z.string().optional(),
     items: z.array(z.object({ label: z.string(), title: z.string() })).optional(),
   }).optional(),
-  cta: z.object({ heading: z.string().optional(), text: z.string().optional() }).optional(),
+  cta: z.object({
+    heading: z.string().optional(),
+    text: z.string().optional(),
+    image: z.string().optional(),
+  }).optional(),
+  // Per-service How-It-Works heading override (site-global howItWorksHeading is
+  // the fallback). Steps come from serviceDetailSchema.steps.
+  howitworks: z.object({ heading: z.string().optional() }).optional(),
   form_fields: z.array(z.object({
     label: z.string(), placeholder: z.string().optional(), name: z.string(),
     // "" from CMS means "plain text / unset" — DBC carries the narrow enum; the
