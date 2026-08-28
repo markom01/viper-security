@@ -49,6 +49,7 @@ collections:
     label: Services
     description: Per-service detail pages (one file per service)
     folder: sites/viper/src/content/services
+    extension: yaml
     create: true
     slug: "{{fields.title}}"
     fields:
@@ -185,6 +186,7 @@ collections:
     label: Fleet
     description: Vehicle fleet (one file per vehicle)
     folder: sites/viper/src/content/fleet
+    extension: yaml
     create: true
     slug: "{{fields.name}}"
     fields:

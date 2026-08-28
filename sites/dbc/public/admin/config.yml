@@ -13,6 +13,7 @@ collections:
     label: Gallery
     description: Site gallery images (one entry per photo)
     folder: sites/dbc/src/content/gallery
+    extension: yaml
     create: true
     slug: "{{slug}}"
     fields:
@@ -67,6 +68,7 @@ collections:
     label: Services
     description: Garage services (one file per service; fleet nested per-service)
     folder: sites/dbc/src/content/services
+    extension: yaml
     create: true
     slug: "{{fields.title}}"
     fields:
