@@ -9,6 +9,13 @@ export interface HomeData {
     region: string; title: string; description: string;
     image?: string; slug?: string;
   }[] };
+  seo?: { title?: string; description?: string; theme_color?: string; image?: string };
+  stats?: { subheading?: string; image?: string; items?: { label: string; title: string }[] };
+  cta?: { heading?: string; text?: string; image?: string };
+  bottomcta?: { heading?: string; values?: { title: string; text: string }[] };
+  about?: { heading?: string; text?: string; image?: string; images?: string[] };
+  branding?: { luxury_without_limits?: string; professional_discreet_reliable?: string };
+  labels?: Record<string, string>;
 }
 
 export interface ServiceDetailData {

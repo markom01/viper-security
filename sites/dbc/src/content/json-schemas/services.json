@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "db-custom-garage/services",
+  "title": "DBC Service CMS page",
+  "description": "Canonical DBC page structure. services pages share the same section blocks (seo, stats, cta, bottomcta, about, branding, labels) on top of per-service fields. gallery + privacy are exempt.",
+  "type": "object",
+  "properties": {
+    "title": { "type": "string" },
+    "slug": { "type": "string" },
+    "description": { "type": "string" },
+    "marquee": { "type": "string" },
+    "seo": {
+      "type": ["object", "null"],
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "about_text": { "type": "string" },
+    "about_image": { "type": "string" },
+    "hero": {
+      "type": ["object", "null"],
+      "properties": {
+        "subtitle": { "type": "string" },
+        "cta_text": { "type": "string" },
+        "tagline": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "steps": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "properties": { "title": { "type": "string" }, "description": { "type": "string" } },
+        "required": ["title", "description"],
+        "additionalProperties": false
+      }
+    },
+    "include": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "text": { "type": "string" },
+          "image": { "type": "string" }
+        },
+        "required": ["title", "text"],
+        "additionalProperties": false
+      }
+    },
+    "stats": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "subheading": { "type": "string" },
+        "image": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": { "label": { "type": "string" }, "title": { "type": "string" } },
+            "required": ["label", "title"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "cta": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "text": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "howitworks": {
+      "type": ["object", "null"],
+      "properties": { "heading": { "type": "string" } },
+      "additionalProperties": false
+    },
+    "form_fields": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": { "type": "string" },
+          "placeholder": { "type": "string" },
+          "name": { "type": "string" },
+          "type": { "type": ["string", "null"], "enum": ["text", "location", "country", "vehicle", null] },
+          "side": { "type": ["string", "null"], "enum": ["left", "right", null] }
+        },
+        "required": ["label", "name"],
+        "additionalProperties": false
+      }
+    },
+    "bottomcta": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": { "title": { "type": "string" }, "text": { "type": "string" } },
+            "required": ["title", "text"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "fleet_section": {
+      "type": ["object", "null"],
+      "properties": { "heading": { "type": "string" }, "subheadline": { "type": "string" } },
+      "additionalProperties": false
+    },
+    "fleet": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "year": { "type": "string" },
+          "seats": { "type": "string" },
+          "baggage": { "type": "string" },
+          "capacity_passengers": { "type": "number" },
+          "capacity_suitcases": { "type": "number" },
+          "capacity_carryon": { "type": "number" },
+          "specs": {
+            "type": ["array", "null"],
+            "items": {
+              "type": "object",
+              "properties": { "label": { "type": "string" }, "value": { "type": "string" } },
+              "required": ["label", "value"],
+              "additionalProperties": false
+            }
+          },
+          "features": { "type": ["array", "null"], "items": { "type": "string" } },
+          "image": { "type": "string" }
+        },
+        "required": ["name"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["title"],
+  "additionalProperties": false
+}

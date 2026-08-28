@@ -92,6 +92,7 @@ export const serviceDetailSchema = z.object({
 });
 
 export const statsSchema = z.object({
+  heading: z.string().optional(),
   subheading: z.string().optional(),
   image: z.string(),
   items: z.array(z.object({ label: z.string(), title: z.string() })).optional(),
@@ -110,6 +111,26 @@ export const aboutSchema = z.object({
   heading: z.string().optional(), text: z.string().optional(),
   image: z.string().optional(), images: z.array(z.string()).optional(),
 }).optional();
+
+// Canonical, reusable section-block group. home / service / site each carry the
+// SAME shape (seo, stats, cta, bottomcta, about, branding, labels) so every CMS
+// page shares one structure. serviceSchema defines its own copy of these inline
+// (per-offering fields differ); this is the shared home/site variant.
+export const homePageBlocksSchema = {
+  seo: z.object({
+    title: z.string().optional(), description: z.string().optional(),
+    theme_color: z.string().optional(), image: z.string().optional(),
+  }).optional(),
+  stats: statsSchema,
+  cta: ctaSchema,
+  bottomcta: bottomCtaSchema,
+  about: aboutSchema,
+  branding: z.object({
+    luxury_without_limits: z.string().optional(),
+    professional_discreet_reliable: z.string().optional(),
+  }).optional(),
+  labels: z.record(z.string(), z.string()).optional(),
+};
 
 export const siteGlobalsSchema = z.object({
   jsonld: z.object({
@@ -187,6 +208,15 @@ export const homeSchema = ({ image: _image }: SchemaContext) =>
   z.object({
     hero: heroSchema({ image: _image }),
     services: z.object({ offerings: z.array(offeringSummarySchema) }),
+    // Canonical section blocks — mirror service/site so every DBC page shares
+    // the same CMS structure. Empty object / omitted → siteGlobals fallback.
+    seo: homePageBlocksSchema.seo,
+    stats: homePageBlocksSchema.stats,
+    cta: homePageBlocksSchema.cta,
+    bottomcta: homePageBlocksSchema.bottomcta,
+    about: homePageBlocksSchema.about,
+    branding: homePageBlocksSchema.branding,
+    labels: homePageBlocksSchema.labels,
   });
 
 export const serviceSchema = ({ image: _image }: SchemaContext) => serviceDetailSchema;

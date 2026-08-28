@@ -3,6 +3,18 @@
     "https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json": [
       "/sites/dbc/public/admin/config.yml",
       "/sites/viper/public/admin/config.yml"
+    ],
+    "sites/dbc/src/content/json-schemas/home.json": [
+      "/sites/dbc/src/content/home/content.yaml"
+    ],
+    "sites/dbc/src/content/json-schemas/services.json": [
+      "/sites/dbc/src/content/services/*.yaml"
+    ],
+    "sites/dbc/src/content/json-schemas/site.json": [
+      "/sites/dbc/src/content/site/content.yaml"
+    ],
+    "sites/viper/src/content/json-schemas/home.json": [
+      "/sites/viper/src/content/home/content.yaml"
     ]
   }
 }

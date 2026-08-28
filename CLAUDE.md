@@ -41,7 +41,7 @@ Astro 7 static site (no SSR, no adapter, no routing beyond `/`, `/404`, `/admin`
   - `templates.js` — `resolveTemplates` substitutes `{location1}/{location1_full}/{location1_name}`, `{location2...}`, `{site_name}`, `{vehicle}` using `booking_data`. Owned by the assembler; page templates must not re-run it.
   - `strings.js` — technical UI strings with no CMS path (STRINGS default export + `SITE_NAME`).
   - `icons.js` — inline SVG strings injected via `set:html`.
-- **CMS**: Decap at `/admin/` ([src/pages/admin.astro](src/pages/admin.astro) + [public/admin/config.yml](public/admin/config.yml)), git-gateway backend, repo `markom01/viper-security`, writes to `main` → deploys on save.
+- **CMS**: [Sveltia CMS](https://github.com/sveltia/sveltia-cms) at `/admin/` ([src/pages/admin.astro](src/pages/admin.astro) boots `@sveltia/cms`, [public/admin/config.yml](public/admin/config.yml)), **github backend** (not git-gateway), repo `markom01/viper-security`, branch `main` → deploys on save. Each site has its own `public/admin/config.yml` (separate `media_folder`/`public_folder`/collections).
 - **Hero booking form** ([src/components/sections/Hero.astro](src/components/sections/Hero.astro)): client JS in `define:vars` `SCRIPT_DATA` populates location→service→destination selects from `booking_data`, validates name/phone (Unicode regex), opens WhatsApp `wa.me/<phone>?text=...` on submit. Also carries `data-netlify="true"` for Netlify Forms.
 - **Layout** ([src/layouts/BaseLayout.astro](src/layouts/BaseLayout.astro)): SEO meta, JSON-LD Organization/WebSite from `pageContent.jsonld`, fonts, skip-link, IntersectionObserver scroll-reveal on `[data-scroll-reveal]`.
 - **Styles**: [public/styles/global.css](public/styles/global.css) — Webflow-normalized, design tokens `--colors--*` (onyx/gold/amber/cloud/ivory), `--font-families--*` (Work Sans / Noto Serif / Playfair Display).
@@ -57,6 +57,8 @@ Astro 7 static site (no SSR, no adapter, no routing beyond `/`, `/404`, `/admin`
 - **After editing `src/content.config.ts` schemas or collection files**: dev server may serve stale content. Press `s` then Enter in the dev terminal to re-sync the content layer (README-documented).
 - **Fleet capacity fields are mixed types**: `seats`/`baggage`/`year` are strings from CMS ("3"), `capacity_passengers`/`capacity_suitcases`/`capacity_carryon` are numbers. Both rendered in Fleet.astro.
 - CSP is defined only in `netlify.toml` (sole source of truth) — `public/_headers` carries non-CSP headers only. Edit CSP in `netlify.toml` only.
+- **DBC CMS stores label keys with underscores** (`nav_contact`), not dots (`nav.contact`) — Sveltia rejects dotted field names. `SiteLayout.astro` (and `gallery.astro`) normalize `_`→`.` before passing labels to `resolveLabels`. VIPER's CMS does the same normalization in its own config. Add DBC labels as `foo_bar`, not `foo.bar`.
+- **`fleetSection` arg is declared but NOT consumed by `assembleService`.** DBC's `[slug].astro` monkeypatches `a.pageContent.fleet.heading` post-assembly (the source notes this as "Task 8" — the assembler side was never wired). Don't assume `fleetSection` flows through the assembler; it does not today.
 
 ## graphify
 

@@ -91,6 +91,7 @@ about:
     punctuality at our core."
   image: /images/cms/about-image-v2.webp
 stats:
+  heading: "Why Choose VIPER Security"
   subheading: >-
     Every pickup flight-tracked, every route priced upfront, and every
     journey driven to one standard — 24/7.
@@ -132,6 +133,7 @@ branding:
 vehicle_name: Mercedes-Benz S-Class
 labels:
   nav_contact: Contact Us
+  marquee_text: Luxury Chauffeur & VIP Transport
 fleetHeading: Ride Luxury, Every Time
 howItWorksHeading: How We Simplify Your Experience
 howItWorksSteps:

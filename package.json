@@ -13,6 +13,7 @@
     "dev:viper": "npm run dev -w @garage/viper",
     "dev:dbc": "npm run dev -w @garage/dbc",
     "check": "npm run check --workspaces",
+    "validate:cms": "node scripts/validate-cms.mjs",
     "format:check": "prettier --check .",
     "format:write": "prettier --write ."
   },

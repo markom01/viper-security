@@ -43,17 +43,21 @@ export function assembleHome(args: AssembleHomeArgs): AssembleHomeResult {
     })),
   };
 
-  const seo = siteGlobals.seo ? { ...siteGlobals.seo } : undefined;
+  let seo = siteGlobals.seo ? { ...siteGlobals.seo } : undefined;
+  if (home.seo) seo = { ...(seo || {}), ...home.seo };
   if (seo?.title) seo.title = resolveTemplates(seo.title, bd, siteName, vehicleName);
   if (seo?.description) seo.description = resolveTemplates(seo.description, bd, siteName, vehicleName);
 
-  const about = siteGlobals.about ? { ...siteGlobals.about } : undefined;
+  let about = siteGlobals.about ? { ...siteGlobals.about } : undefined;
+  if (home.about) about = { ...(about || {}), ...home.about };
   if (about?.text) about.text = resolveTemplates(about.text, bd, siteName, vehicleName);
 
-  const cta = siteGlobals.cta ? { ...siteGlobals.cta } : undefined;
+  let cta = siteGlobals.cta ? { ...siteGlobals.cta } : undefined;
+  if (home.cta) cta = { ...(cta || {}), ...home.cta };
   if (cta?.text) cta.text = resolveTemplates(cta.text, bd, siteName, vehicleName);
 
-  const bottomcta = siteGlobals.bottomcta ? { ...siteGlobals.bottomcta } : undefined;
+  let bottomcta = siteGlobals.bottomcta ? { ...siteGlobals.bottomcta } : undefined;
+  if (home.bottomcta) bottomcta = { ...(bottomcta || {}), ...home.bottomcta };
   if (bottomcta?.values) bottomcta.values = bottomcta.values.map((v) => ({ ...v, text: resolveTemplates(v.text, bd, siteName, vehicleName) }));
 
   const jsonld = siteGlobals.jsonld ? { ...siteGlobals.jsonld } : undefined;
@@ -64,10 +68,10 @@ export function assembleHome(args: AssembleHomeArgs): AssembleHomeResult {
     jsonld,
     booking_data: siteGlobals.booking_data,
     vehicle_name: siteGlobals.vehicle_name,
-    labels: siteGlobals.labels,
-    branding: siteGlobals.branding,
+    labels: { ...(siteGlobals.labels || {}), ...(home.labels || {}) },
+    branding: home.branding ? { ...(siteGlobals.branding || {}), ...home.branding } : siteGlobals.branding,
     seo, about, cta, bottomcta,
-    stats: siteGlobals.stats,
+    stats: home.stats ?? siteGlobals.stats,
     fleet: siteGlobals.fleetHeading ? { heading: siteGlobals.fleetHeading } : undefined,
     howitworks: siteGlobals.howItWorksHeading ? { heading: siteGlobals.howItWorksHeading } : undefined,
     map_embed_url: siteGlobals.map_embed_url,
@@ -75,7 +79,7 @@ export function assembleHome(args: AssembleHomeArgs): AssembleHomeResult {
 
   const fleetFeaturesText = fleetEntries ? fleetFeaturesTextFrom(fleetEntries) : undefined;
 
-  return { hero, services, stats: siteGlobals.stats, cta, bottomcta, about, pageContent, fleetFeaturesText, fleetVehicles: fleetEntries };
+  return { hero, services, stats: home.stats ?? siteGlobals.stats, cta, bottomcta, about, pageContent, fleetFeaturesText, fleetVehicles: fleetEntries };
 }
 
 export interface AssembleServiceArgs {

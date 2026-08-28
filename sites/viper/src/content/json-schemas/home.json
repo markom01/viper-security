@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "viper-security/home",
+  "title": "VIPER Home CMS page (permissive)",
+  "description": "Shares the canonical DBC block shapes (seo, stats, cta, bottomcta, about, branding, labels) so the SAME structure is enforced, but additionalProperties is true at the top level because VIPER may carry extra site-specific sections beyond what DBC home has. Block inner shapes are checked; stray top-level keys are tolerated.",
+  "type": "object",
+  "properties": {
+    "hero": {
+      "type": "object",
+      "properties": {
+        "brand_name": { "type": "string" },
+        "tagline": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "cta_text": { "type": "string" },
+        "hero_image": { "type": "string" },
+        "phone_italy": { "type": "string" },
+        "phone_spain": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "services": {
+      "type": "object",
+      "properties": {
+        "offerings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "region": { "type": "string" },
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "image": { "type": "string" },
+              "slug": { "type": "string" }
+            },
+            "required": ["region", "title", "description"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["offerings"],
+      "additionalProperties": false
+    },
+    "seo": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "theme_color": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "stats": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "subheading": { "type": "string" },
+        "image": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": { "label": { "type": "string" }, "title": { "type": "string" } },
+            "required": ["label", "title"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "cta": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "text": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "bottomcta": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": { "title": { "type": "string" }, "text": { "type": "string" } },
+            "required": ["title", "text"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "about": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "text": { "type": "string" },
+        "image": { "type": "string" },
+        "images": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "branding": {
+      "type": ["object", "null"],
+      "properties": {
+        "luxury_without_limits": { "type": "string" },
+        "professional_discreet_reliable": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "labels": {
+      "type": ["object", "null"],
+      "additionalProperties": { "type": "string" }
+    }
+  },
+  "required": ["hero", "services"],
+  "additionalProperties": true
+}

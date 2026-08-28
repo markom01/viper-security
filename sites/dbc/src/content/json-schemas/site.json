@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "db-custom-garage/site",
+  "title": "DBC Site Globals CMS page",
+  "description": "Canonical DBC page structure. site globals carry the same section blocks (seo, stats, cta, bottomcta, about, branding, labels) that home/services share. gallery + privacy are exempt.",
+  "type": "object",
+  "properties": {
+    "jsonld": {
+      "type": ["object", "null"],
+      "properties": {
+        "org_name": { "type": "string" },
+        "org_url": { "type": "string" },
+        "org_logo": { "type": "string" },
+        "org_description": { "type": "string" },
+        "phoneSpain": { "type": "string" },
+        "phoneItaly": { "type": "string" },
+        "webSiteName": { "type": "string" },
+        "webSiteUrl": { "type": "string" },
+        "privacy_policy": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "booking_data": { "type": ["object", "null"] },
+    "vehicle_name": { "type": "string" },
+    "labels": { "type": ["object", "null"], "additionalProperties": { "type": "string" } },
+    "howItWorksSteps": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "image": { "type": "string" }
+        },
+        "required": ["title", "description"],
+        "additionalProperties": false
+      }
+    },
+    "branding": {
+      "type": ["object", "null"],
+      "properties": {
+        "luxury_without_limits": { "type": "string" },
+        "professional_discreet_reliable": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "stats": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "subheading": { "type": "string" },
+        "image": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": { "label": { "type": "string" }, "title": { "type": "string" } },
+            "required": ["label", "title"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "cta": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "text": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "bottomcta": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": { "title": { "type": "string" }, "text": { "type": "string" } },
+            "required": ["title", "text"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "about": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "text": { "type": "string" },
+        "image": { "type": "string" },
+        "images": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "seo": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "theme_color": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "map_embed_url": { "type": "string" },
+    "fleetHeading": { "type": "string" },
+    "howItWorksHeading": { "type": "string" }
+  },
+  "additionalProperties": false
+}
