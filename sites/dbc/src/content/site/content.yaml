@@ -14,37 +14,6 @@ seo:
   description: Supercar and classic car enclosed transport, import/export logistics, auction representation, and off-market buying and selling, across Europe.
   theme_color: '#ea580c'
   image: /images/og-dbc.webp
-stats:
-  subheading: Three bases, one standard — precision logistics and deep market knowledge for collectors, dealers, and enthusiasts.
-  image: /images/cms/gallery/gallery-16.webp
-  items:
-    - label: '2010'
-      title: Serving Collectors Since
-    - label: Marbella · Milan · New Jersey
-      title: Three Bases, One Standard
-    - label: Cars & Motorcycles
-      title: Transport, Sale & Build
-    - label: Worldwide
-      title: EU, UK & USA Coverage
-cta:
-  heading: Ready to Move, Sell, or Build?
-  text: Tell us what you are buying, selling, or transporting and we will handle the rest.
-  image: /images/cms/gallery/whatsapp-image-2025-11-14-at-21-33-53.webp
-bottomcta:
-  heading: Your Dream Car Starts Here
-  values:
-    - title: Transport & Logistics
-      text: Enclosed supercar transport, import/export, and paperwork handled end to end.
-    - title: Buy, Sell & Auction
-      text: Off-market sourcing and auction representation for classics and supercars.
-about:
-  heading: About DB Custom Garage
-  text: Founded by Dragan Meseldzija, DB Custom Garage brings together decades of automotive design, customizing for Harley-Davidson and Indian motorcycles, industrial design, and enclosed supercar and classic car transport. Active since 2010 and operating from Marbella, Milan, and New Jersey, we combine precision logistics with deep market knowledge for collectors, dealers, and enthusiasts.
-  image: ''
-  images:
-    - /images/cms/gallery/supercars-and-classic-cars-provider-1.webp
-    - /images/cms/gallery/jeep-wrangler-body-kit.webp
-    - /images/cms/gallery/gt500.webp
 branding:
   luxury_without_limits: Supercars & Classics, No Limits
   professional_discreet_reliable: Professional • Discreet • Reliable
@@ -93,10 +62,3 @@ labels:
   footer_pagesHeading: Links
 howItWorksHeading: How We Build Your Dream
 fleetHeading: Our Fleet
-howItWorksSteps:
-  - title: Share Your Goal
-    description: Whether it is transporting a supercar, selling at auction, importing, or building — tell us what you want and we plan the route, price, and timeline.
-  - title: We Handle It
-    description: Enclosed transport, auction prep, customs paperwork, or fabrication — our team handles every step, with updates along the way.
-  - title: Delivered
-    description: Your car arrives safe, your sale closes, or your build is ready for the road or the show floor.

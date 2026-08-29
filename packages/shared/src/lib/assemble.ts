@@ -94,6 +94,13 @@ export function assembleHome(args: AssembleHomeArgs): AssembleHomeResult {
 export interface AssembleServiceArgs {
   offering: ServiceDetailData;
   siteGlobals: SiteGlobalsData;
+  // Optional DBC homepage content. When present, the shared page sections
+  // (stats/cta/bottomcta/about/seo + howitworks heading/steps) base on `home`
+  // and fall back to siteGlobals for any gap — so DBC service pages render the
+  // SAME sections as the DBC home without the data being duplicated in the
+  // site-globals content file. Only DBC calls this with `home`; VIPER has no
+  // service pages.
+  home?: HomeData;
   siteName: string;
   fleetVehicles?: FleetEntry[];
   hasFleet?: boolean;
@@ -118,23 +125,26 @@ export interface AssembleServiceResult {
 }
 
 export function assembleService(args: AssembleServiceArgs): AssembleServiceResult {
-  const { offering, siteGlobals, siteName, fleetVehicles, hasFleet, howItWorksSteps, hourly, membershipTiers, aboutCarouselImages, fleetSection } = args;
+  const { offering, siteGlobals, home, siteName, fleetVehicles, hasFleet, howItWorksSteps, hourly, membershipTiers, aboutCarouselImages, fleetSection } = args;
   const bd = siteGlobals.booking_data;
   const vehicleName = siteGlobals.vehicle_name;
 
-  // Site-global page copy (stats/cta/bottomcta/about/seo) carries {placeholders}
-  // and is the BASE for the shared ServicePage (which spreads per-offering overrides).
-  const seo = siteGlobals.seo ? { ...siteGlobals.seo } : undefined;
+  // Site-global page copy (stats/cta/bottomcta/about/seo) carries {placeholders}.
+  // For DBC, `home` is the BASE (it already owns these sections, keeping them out
+  // of the site-globals duplicate), falling back to siteGlobals for any gap — then
+  // ServicePage spreads the per-offering overrides on top. VIPER passes no `home`,
+  // so it falls back entirely to siteGlobals (unchanged behavior).
+  const seo = home?.seo ? { ...home.seo } : siteGlobals.seo ? { ...siteGlobals.seo } : undefined;
   if (seo?.title) seo.title = resolveTemplates(seo.title, bd, siteName, vehicleName);
   if (seo?.description) seo.description = resolveTemplates(seo.description, bd, siteName, vehicleName);
 
-  const about = siteGlobals.about ? { ...siteGlobals.about } : undefined;
+  const about = home?.about ? { ...home.about } : siteGlobals.about ? { ...siteGlobals.about } : undefined;
   if (about?.text) about.text = resolveTemplates(about.text, bd, siteName, vehicleName);
 
-  const cta = siteGlobals.cta ? { ...siteGlobals.cta } : undefined;
+  const cta = home?.cta ? { ...home.cta } : siteGlobals.cta ? { ...siteGlobals.cta } : undefined;
   if (cta?.text) cta.text = resolveTemplates(cta.text, bd, siteName, vehicleName);
 
-  const bottomcta = siteGlobals.bottomcta ? { ...siteGlobals.bottomcta } : undefined;
+  const bottomcta = home?.bottomcta ? { ...home.bottomcta } : siteGlobals.bottomcta ? { ...siteGlobals.bottomcta } : undefined;
   if (bottomcta?.values) bottomcta.values = bottomcta.values.map((v) => ({ ...v, text: resolveTemplates(v.text, bd, siteName, vehicleName) }));
 
   const jsonld = siteGlobals.jsonld ? { ...siteGlobals.jsonld } : undefined;
@@ -145,19 +155,22 @@ export function assembleService(args: AssembleServiceArgs): AssembleServiceResul
     jsonld,
     booking_data: siteGlobals.booking_data,
     vehicle_name: siteGlobals.vehicle_name,
-    labels: siteGlobals.labels,
-    branding: siteGlobals.branding,
+    labels: home?.labels ? { ...(siteGlobals.labels || {}), ...home.labels } : siteGlobals.labels,
+    branding: home?.branding ? { ...(siteGlobals.branding || {}), ...home.branding } : siteGlobals.branding,
     seo,
     about,
     cta,
     bottomcta,
-    stats: siteGlobals.stats,
+    stats: home?.stats ?? siteGlobals.stats,
     // Site-global chrome carried over from assembleHome so shared Fleet/HowItWorks/
     // Footer consumers (Fleet.astro fleet.heading, HowItWorks.astro howitworks.heading,
-    // Footer.astro map_embed_url) keep working on service pages — the old page-content
-    // collection supplied all three and service pages render them today.
+    // Footer.astro map_embed_url) keep working on service pages. HowItWorks heading/steps
+    // come from `home` when present (DBC), else siteGlobals (VIPER).
     fleet: siteGlobals.fleetHeading ? { heading: siteGlobals.fleetHeading } : undefined,
-    howitworks: siteGlobals.howItWorksHeading ? { heading: siteGlobals.howItWorksHeading } : undefined,
+    howitworks: {
+      heading: home?.howitworks?.heading ?? siteGlobals.howItWorksHeading,
+      steps: home?.howitworks?.steps ?? howItWorksSteps,
+    },
     map_embed_url: siteGlobals.map_embed_url,
   };
 

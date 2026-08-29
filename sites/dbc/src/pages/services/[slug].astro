@@ -17,6 +17,7 @@ export async function getStaticPaths() {
 
 const { offering } = Astro.props as { offering: import("@garage/shared/content/types").ServiceDetailData };
 const siteGlobals = (await getEntry("site", "content"))!.data;
+const homeContent = (await getEntry("home", "content"))!.data;
 const galleryEntries = await getCollection("gallery");
 
 // Per-service fleet vehicles — mapped from offering.fleet[] to shared FleetEntry shape.
@@ -28,7 +29,7 @@ const fleetVehicles = (offering.fleet || []).map((f) => ({
 }));
 
 const a = assembleService({
-  offering, siteGlobals, siteName: SITE_NAME,
+  offering, siteGlobals, home: homeContent, siteName: SITE_NAME,
   fleetVehicles,
   hasFleet: !!offering.fleet?.length,
   howItWorksSteps: siteGlobals.howItWorksSteps,
