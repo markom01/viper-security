@@ -179,6 +179,21 @@ collections:
                   - { name: form_error, label: "Form: Error Message", widget: text, required: false }
                   - { name: cta_imageAlt, label: "CTA Image Alt Text", widget: string, required: false }
                   - { name: footer_pagesHeading, label: "Footer: Pages Heading", widget: string, required: false }
+              - name: howitworks
+                label: How It Works Section
+                widget: object
+                collapsed: true
+                required: false
+                fields:
+                  - { name: heading, label: "Section Heading", widget: string, required: false }
+                  - label: Steps
+                    name: steps
+                    widget: list
+                    summary: "{{fields.title}}"
+                    required: false
+                    fields:
+                      - { name: title, label: Title, widget: string }
+                      - { name: description, label: Description, widget: text }
 
   - name: service
     label: Services

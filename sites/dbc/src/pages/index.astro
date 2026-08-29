@@ -45,7 +45,7 @@ const homeCarousel = [
   <AboutSection pageContent={pageContent} images={homeCarousel} />
   <Services pageContent={pageContent} marbella={services} milano={services} />
   <StatsSection pageContent={pageContent} />
-  <HowItWorks steps={siteGlobals.howItWorksSteps} pageContent={pageContent} />
+  <HowItWorks steps={pageContent.howitworks?.steps ?? siteGlobals.howItWorksSteps} pageContent={pageContent} />
   <CtaBanner pageContent={pageContent} />
   <BottomCta pageContent={pageContent} fleetHref="/gallery" />
 </SiteLayout>

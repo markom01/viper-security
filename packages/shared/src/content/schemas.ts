@@ -130,6 +130,14 @@ export const homePageBlocksSchema = {
     professional_discreet_reliable: z.string().optional(),
   }).optional(),
   labels: z.record(z.string(), z.string()).optional(),
+  // Home-page How It Works (heading + steps). Omitted/empty → siteGlobals
+  // howItWorksHeading / howItWorksSteps fallback. (serviceDetailSchema carries
+  // its own per-service `howitworks.heading` override only — steps come from its
+  // own `steps` field — so this home-only block does not collide with it.)
+  howitworks: z.object({
+    heading: z.string().optional(),
+    steps: z.array(z.object({ title: z.string(), description: z.string() })).optional(),
+  }).optional(),
 };
 
 export const siteGlobalsSchema = z.object({
@@ -217,6 +225,7 @@ export const homeSchema = ({ image: _image }: SchemaContext) =>
     about: homePageBlocksSchema.about,
     branding: homePageBlocksSchema.branding,
     labels: homePageBlocksSchema.labels,
+    howitworks: homePageBlocksSchema.howitworks,
   });
 
 export const serviceSchema = ({ image: _image }: SchemaContext) => serviceDetailSchema;

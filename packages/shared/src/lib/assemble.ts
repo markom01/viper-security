@@ -13,7 +13,9 @@ export interface AssembleHomeArgs {
 export interface AssembleHomeResult {
   hero: HomeData["hero"];
   services: { offerings: HomeData["services"]["offerings"] };
-  stats?: SiteGlobalsData["stats"];
+  // `home.stats ?? siteGlobals.stats` — home's image is optional, site's required,
+  // so the return type is the looser home shape both StatsSection consumers read.
+  stats?: HomeData["stats"];
   cta?: SiteGlobalsData["cta"];
   bottomcta?: SiteGlobalsData["bottomcta"];
   about?: SiteGlobalsData["about"];
@@ -73,7 +75,14 @@ export function assembleHome(args: AssembleHomeArgs): AssembleHomeResult {
     seo, about, cta, bottomcta,
     stats: home.stats ?? siteGlobals.stats,
     fleet: siteGlobals.fleetHeading ? { heading: siteGlobals.fleetHeading } : undefined,
-    howitworks: siteGlobals.howItWorksHeading ? { heading: siteGlobals.howItWorksHeading } : undefined,
+    // HowItWorks: home.howitworks (heading + steps) overrides siteGlobals; each
+    // field falls back independently so a home with only a heading/steps still
+    // inherits the other from siteGlobals. VIPER home omits howitworks entirely
+    // → falls back to siteGlobals (as before).
+    howitworks: {
+      heading: home.howitworks?.heading ?? siteGlobals.howItWorksHeading,
+      steps: home.howitworks?.steps ?? siteGlobals.howItWorksSteps,
+    },
     map_embed_url: siteGlobals.map_embed_url,
   };
 

@@ -184,7 +184,7 @@ export interface PageContent {
     privacy_policy?: string;
   };
   fleet?: { heading?: string };
-  howitworks?: { heading?: string };
+  howitworks?: { heading?: string; steps?: { title: string; description: string; image?: string }[] };
   /** Vehicle brand/model (VIPER: "Mercedes-Benz S-Class"), from {vehicle} template. */
   vehicle_name?: string;
   about?: { heading?: string; text?: string; image?: SiteImage; images?: SiteImage[] };

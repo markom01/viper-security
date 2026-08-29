@@ -16,6 +16,7 @@ export interface HomeData {
   about?: { heading?: string; text?: string; image?: string; images?: string[] };
   branding?: { luxury_without_limits?: string; professional_discreet_reliable?: string };
   labels?: Record<string, string>;
+  howitworks?: { heading?: string; steps?: { title: string; description: string }[] };
 }
 
 export interface ServiceDetailData {
