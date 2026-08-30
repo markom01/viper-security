@@ -1,0 +1,98 @@
+title: Sourcing & Logistics
+slug: sourcing-logistics
+description: Off-market sourcing, consulting, and full-service vehicle import/export — from finding your dream car to door-to-door delivery across borders.
+seo:
+  title: DB Custom Garage — Sourcing & Logistics
+  description: Off-market sourcing, consulting, and full-service vehicle import/export — research, legal support, customs, and shipping handled end to end.
+  image: /images/from-wix/classic-hero.webp
+hero:
+  subtitle: Off-market sourcing, consulting, and full-service vehicle import/export — from finding your dream car to door-to-door delivery across borders.
+  cta_text: Get A Quote
+  tagline: Supercars & Classics, No Limits
+  image: /images/cms/from-wix/classic-hero.webp
+about_text: Research, consulting, and legal support to find your dream car off the open market — plus full-service import and export logistics across Europe and worldwide.
+about_image: /images/cms/gallery/2e95eecc-3bd2-4375-987e-dedf95b3f1c2.webp
+marquee: Sourcing · Consulting · Legal · Import · Export · Logistics
+include:
+  - title: Off-Market Sourcing
+    text: Access to vehicles never listed publicly.
+    image: /images/cms/gallery/7cdcbfe3-cb87-4056-bbcd-86cdab0f5943.webp
+  - title: Market Research
+    text: Valuation and provenance research before you buy.
+    image: /images/cms/gallery/neo.webp
+  - title: Consulting & Legal Support
+    text: Guidance through the buying process, paperwork included.
+    image: /images/cms/gallery/motorcycle-transport.webp
+  - title: Import & Export Paperwork
+    text: Full documentation for cars and motorcycles.
+    image: /images/cms/gallery/supercars-and-classic-cars-provider-10.webp
+  - title: Customs Clearance
+    text: Duties, registration and compliance handled for you.
+    image: /images/cms/gallery/gallery-14.webp
+  - title: Enclosed Shipping
+    text: Enclosed transport where required, across the EU and worldwide.
+    image: /images/cms/gallery/supercars-and-classic-cars-provider-2.webp
+  - title: Door-to-Door Delivery
+    text: End-to-end logistics delivered to your door, fully tracked.
+    image: /images/cms/gallery/gallery-13.webp
+  - title: Investment Advisory
+    text: Building collectible portfolios off the open market.
+    image: /images/cms/gallery/2017-shelby-f-150-super-snake-01-copia.webp
+bottomcta:
+  heading: Your Dream Car, Sourced & Shipped
+  values:
+    - title: Off-Market Access
+      text: Find cars the rest of the world never sees listed.
+    - title: Market Knowledge
+      text: Research and valuation from deep industry experience.
+    - title: End-to-End Logistics
+      text: Paperwork, customs, shipping and delivery in one service.
+    - title: EU + Worldwide
+      text: Full coverage across Europe and other continents.
+    - title: Full Support
+      text: Consulting and legal backing through the whole buy.
+steps:
+  - title: Define the Target
+    description: Make, model, year and budget — or the investment profile you want. We turn it into a search brief.
+  - title: Off-Market Search & Logistics
+    description: We tap private collector networks for cars never listed publicly, with provenance and valuation research.
+  - title: Advisory & Close
+    description: Consulting and legal support through the buy, so the deal closes clean and discreet.
+  - title: Import, Customs & Delivery
+    description: Documentation, customs clearance, enclosed shipping, and door-to-door delivery — fully tracked.
+howitworks:
+  heading: How We Source & Ship
+stats:
+  heading: Your Dream Car, Found & Delivered
+  subheading: Research, legal support, and logistics — from off-market access to door-to-door delivery across borders.
+  image: /images/cms/gallery/neo.webp
+  items:
+    - label: Private
+      title: Off-market networks
+    - label: "2010"
+      title: Market knowledge since
+    - label: Legal
+      title: Support through the buy
+    - label: Discreet
+      title: Never publicly listed
+    - label: "EU+"
+      title: Worldwide cover
+    - label: Customs
+      title: Clearance handled
+cta:
+  heading: Ready to Source & Ship Your Dream Car?
+  text: Off-market sourcing and consulting plus full-service import/export — from finding your car to delivering it to your door.
+  image: /images/cms/gallery/7cdcbfe3-cb87-4056-bbcd-86cdab0f5943.webp
+form_fields:
+  - label: Target vehicle
+    placeholder: Make, model, year, budget
+    name: target_vehicle
+  - label: From
+    placeholder: Where is the vehicle now?
+    name: origin_country
+    type: country
+  - label: To
+    placeholder: Where is it going?
+    name: destination_country
+    type: country
+fleet: []

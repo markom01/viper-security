@@ -47,7 +47,7 @@ const fleetFeaturesText = a.fleetFeaturesText;
 // Category carousel: 5 gallery images matching this service's category
 const slugToCategory: Record<string, string> = {
   "supercar-transport": "supercar", "customizing": "customizing", "auction": "customizing",
-  "off-market-sourcing": "supercar", "import-export": "supercar",
+  "sourcing-logistics": "supercar",
 };
 const activeSlug = (offering.slug ?? slugify(offering.title)) as string;
 const serviceCategory = slugToCategory[activeSlug] ?? "supercar";

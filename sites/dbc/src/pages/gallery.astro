@@ -60,14 +60,13 @@ const galleryItems = await Promise.all(
   }),
 );
 
-// Ordered gallery sections. Empty groups (e.g. auction, import-export before
+// Ordered gallery sections. Empty groups (e.g. auction before
 // photos exist) are skipped so the page doesn't show a bare heading.
 const sections = [
   { key: "brand", title: s.gallery.brand },
   { key: "supercar", title: s.gallery.supercar },
   { key: "customizing", title: s.gallery.customizing },
   { key: "auction", title: s.gallery.auction },
-  { key: "import-export", title: s.gallery["import-export"] },
   { key: "all-builds", title: s.gallery["all-builds"] },
 ].map((section) => ({
   ...section,

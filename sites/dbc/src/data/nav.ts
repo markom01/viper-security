@@ -14,7 +14,7 @@ export function buildFooterNav(labels: Record<string, string>): NavLink[] {
     { label: labels["nav.howItWorks"] ?? "How It Works", href: "/#how-it-works" },
     { label: "Supercar Transport", href: "/services/supercar-transport" },
     { label: "Auction & Sale", href: "/services/auction" },
-    { label: "Import & Export", href: "/services/import-export" },
+    { label: "Sourcing & Logistics", href: "/services/sourcing-logistics" },
     { label: "Customizing & Design", href: "/services/customizing" },
     { label: labels["nav.gallery"] ?? "Gallery", href: "/gallery" },
     { label: labels["nav.fleet"] ?? "Our Fleet", href: "/gallery#fleet" },
@@ -41,7 +41,7 @@ export function buildNav(labels: Record<string, string>): NavLink[] {
       children: [
         { label: "Supercar Transport", href: "/services/supercar-transport" },
         { label: "Auction & Sale", href: "/services/auction" },
-        { label: "Import & Export", href: "/services/import-export" },
+        { label: "Sourcing & Logistics", href: "/services/sourcing-logistics" },
         { label: "Customizing & Design", href: "/services/customizing" },
       ],
     },
