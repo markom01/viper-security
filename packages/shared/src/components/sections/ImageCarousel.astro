@@ -45,7 +45,7 @@ const baseId = "about-carousel";
               alt={alt}
               class="carousel-image"
               anchorClass="carousel-zoom"
-              group="about"
+              group="about-carousel"
               widths={[480, 768, 1200]}
               sizes="(max-width: 991px) 100vw, 50vw"
             />
@@ -108,6 +108,16 @@ const baseId = "about-carousel";
     const next = root.querySelector("[data-carousel-next]");
     prev?.addEventListener("click", () => step(-1));
     next?.addEventListener("click", () => step(1));
+
+    // Scoped PhotoSwipe lightbox — only carousel images, not the full page gallery.
+    import("photoswipe/lightbox").then(({ default: PhotoSwipeLightbox }) => {
+      const lb = new PhotoSwipeLightbox({
+        gallery: root as HTMLElement,
+        children: "a[data-lightbox]",
+        pswpModule: () => import("photoswipe").catch(() => null),
+      });
+      lb.init();
+    }).catch(() => {});
   }
 </script>
 

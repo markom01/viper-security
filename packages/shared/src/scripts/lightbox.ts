@@ -1,10 +1,10 @@
 /**
  * Page-level PhotoSwipe lightbox. Every `a[data-lightbox]` on the page (rendered
  * by the shared ZoomImage) joins one gallery, so arrows navigate across all
- * body images. PhotoSwipeLightbox needs a gallery CONTAINER + children selector
- * (it binds clicks on the container and resolves items from children) — passing
- * a bare array of anchors makes each anchor its own single-item gallery, so we
- * use the page as the container and the anchors as children.
+ * body images — EXCEPT carousel slides, which own a scoped instance inside
+ * ImageCarousel.astro (`.carousel-zoom` anchors). Excluding them here avoids
+ * double-binding the same anchor in two galleries (page-level would win and
+ * leak hero/services/CTA images into the carousel's "1 of 5").
  *
  * DBC's gallery page uses `data-gallery` (its own per-group instances) — those
  * anchors are not `data-lightbox`, so this never double-binds them.
@@ -16,7 +16,7 @@ function initLightbox(): void {
   if (!document.querySelector("a[data-lightbox]")) return;
   const lightbox = new PhotoSwipeLightbox({
     gallery: "body",
-    children: "a[data-lightbox]",
+    children: "a[data-lightbox]:not(.carousel-zoom)",
     pswpModule: () =>
       import("photoswipe").catch((err) => {
         console.warn("[lightbox] failed to load photoswipe", err);
