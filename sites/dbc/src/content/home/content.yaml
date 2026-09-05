@@ -6,6 +6,14 @@ hero:
   hero_image: /images/cms/home hero.jpg
   phone_italy: ''
   phone_spain: ''
+about:
+  heading: About DB Custom Garage
+  text: Founded by Dragan Meseldzija, DB Custom Garage brings together decades of automotive design, customizing for Harley-Davidson and Indian motorcycles, industrial design, and enclosed supercar and classic car transport. Active since 2010 and operating from Marbella, Milan, and New Jersey, we combine precision logistics with deep market knowledge for collectors, dealers, and enthusiasts.
+  image: ''
+  images:
+    - /images/cms/gallery/2e95eecc-3bd2-4375-987e-dedf95b3f1c2.webp
+    - /images/cms/gallery/jeep-wrangler-body-kit.webp
+    - /images/cms/gallery/17893265884587428.webp
 services:
   offerings:
     - region: Garage
@@ -28,11 +36,6 @@ services:
       description: Bespoke design and build projects — restomod, widebody, interior and show-grade finishing.
       image: /images/cms/gallery/jeep-wrangler-body-kit-3.webp
       slug: customizing
-seo:
-  title: DB Custom Garage — Supercar Transport & Logistics
-  description: Supercar and classic car enclosed transport, import/export logistics, auction representation, and off-market buying and selling, across Europe.
-  theme_color: '#ea580c'
-  image: /images/og-dbc.webp
 stats:
   heading: ''
   subheading: Three bases, one standard — precision logistics and deep market knowledge for collectors, dealers, and enthusiasts.
@@ -40,12 +43,21 @@ stats:
   items:
     - label: '2010'
       title: Serving Collectors Since
-    - label: Marbella · Milan · New Jersey
+    - label: '3'
       title: Three Bases, One Standard
-    - label: Cars & Motorcycles
+    - label: '3'
       title: Transport, Sale & Build
-    - label: Worldwide
+    - label: '150'
       title: EU, UK & USA Coverage
+howitworks:
+  heading: How We Build Your Dream
+  steps:
+    - title: Share Your Goal
+      description: Whether it is transporting a supercar, selling at auction, importing, or building — tell us what you want and we plan the route, price, and timeline.
+    - title: We Handle It
+      description: Enclosed transport, auction prep, customs paperwork, or fabrication — our team handles every step, with updates along the way.
+    - title: Delivered
+      description: Your car arrives safe, your sale closes, or your build is ready for the road or the show floor.
 cta:
   heading: Ready to Move, Sell, or Build?
   text: Tell us what you are buying, selling, or transporting and we will handle the rest.
@@ -57,65 +69,13 @@ bottomcta:
       text: Enclosed supercar transport, import/export, and paperwork handled end to end.
     - title: Buy, Sell & Auction
       text: Off-market sourcing and auction representation for classics and supercars.
-about:
-  heading: About DB Custom Garage
-  text: Founded by Dragan Meseldzija, DB Custom Garage brings together decades of automotive design, customizing for Harley-Davidson and Indian motorcycles, industrial design, and enclosed supercar and classic car transport. Active since 2010 and operating from Marbella, Milan, and New Jersey, we combine precision logistics with deep market knowledge for collectors, dealers, and enthusiasts.
-  image: ''
-  images:
-    - /images/cms/gallery/2e95eecc-3bd2-4375-987e-dedf95b3f1c2.webp
-    - /images/cms/gallery/jeep-wrangler-body-kit.webp
-    - /images/cms/gallery/17893265884587428.webp
+    - title: Custom Design & Build
+      text: Bespoke restomod, widebody and show-grade finishing.
+seo:
+  title: DB Custom Garage — Supercar Transport & Logistics
+  description: Supercar and classic car enclosed transport, import/export logistics, auction representation, and off-market buying and selling, across Europe.
+  theme_color: '#ea580c'
+  image: /images/og-dbc.webp
 branding:
   luxury_without_limits: Supercars & Classics, No Limits
   professional_discreet_reliable: Professional • Discreet • Reliable
-labels:
-  fleet_subheadline: Our Fleet
-  stats_heading: Field-Proven, Industry-Wide
-  stats_button: Book Your Build
-  cta_button: Start A Build
-  bottomCta_buttonServices: Our services
-  bottomCta_buttonFleet: View Our Fleet
-  hero_learnMore: Learn More
-  hero_exploreFleet: View Our Fleet
-  hero_formName: Get A Quote
-  form_bookNow: Send Enquiry
-  marquee_text: Supercars & Classics
-  nav_contact: Get A Quote
-  nav_home: Home
-  nav_about: About
-  nav_services: Services
-  nav_howItWorks: How It Works
-  nav_fleet: Our Fleet
-  nav_gallery: Gallery
-  nav_homeAria: DB Custom Garage home
-  hero_imageAlt: DB Custom Garage supercar transport
-  hero_bookingFormAria: Get A Quote Form
-  fleet_vehicleAltFallback: DB Custom Garage vehicle
-  gallery_heading: Gallery
-  gallery_subheadline: Selected builds from our garage.
-  gallery_group_brand: /
-  gallery_group_supercar: /
-  gallery_group_customizing: /
-  gallery_group_auction: /
-  gallery_group_all-builds: /
-  howItWorks_subheadline: How It Works
-  form_date: Deadline
-  form_name: Name
-  form_phone: Phone
-  form_namePlaceholder: Your full name
-  form_phonePlaceholder: Your phone number
-  form_selectLocation: Choose a location
-  form_pricePlaceholder: Tell us what you need
-  form_success: Thanks! We will get back to you shortly.
-  form_error: Sorry — we could not send your enquiry. Please email us or try again.
-  cta_imageAlt: DB Custom Garage automotive projects
-  footer_pagesHeading: Links
-howitworks:
-  heading: How We Build Your Dream
-  steps:
-    - title: Share Your Goal
-      description: Whether it is transporting a supercar, selling at auction, importing, or building — tell us what you want and we plan the route, price, and timeline.
-    - title: We Handle It
-      description: Enclosed transport, auction prep, customs paperwork, or fabrication — our team handles every step, with updates along the way.
-    - title: Delivered
-      description: Your car arrives safe, your sale closes, or your build is ready for the road or the show floor.

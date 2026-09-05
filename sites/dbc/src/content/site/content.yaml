@@ -8,7 +8,6 @@ jsonld:
   privacy_policy: https://dbcustomgarage.netlify.app/privacy-policy
   webSiteUrl: https://dbcustomgarage.netlify.app
   webSiteName: DB Custom Garage
-map_embed_url: "https://www.google.com/maps?q=Camino+de+Campanales+6,+29651+Mijas,+Malaga,+Spain&output=embed"
 seo:
   title: DB Custom Garage — Supercar Transport & Logistics
   description: Supercar and classic car enclosed transport, import/export logistics, auction representation, and off-market buying and selling, across Europe.
@@ -36,6 +35,14 @@ labels:
   nav_howItWorks: How It Works
   nav_fleet: Our Fleet
   nav_gallery: Gallery
+  nav_stats: Why Choose Us
+  nav_ctaBanner: Start A Build
+  nav_bottomCta: Your Dream Car
+  nav_supercarTransport: Supercar Transport
+  nav_auctionSale: Auction & Sale
+  nav_sourcingLogistics: Sourcing & Logistics
+  nav_customizingDesign: Customizing & Design
+  nav_privacy: Privacy Policy
   nav_homeAria: DB Custom Garage home
   hero_imageAlt: DB Custom Garage supercar transport
   hero_bookingFormAria: Get A Quote Form
@@ -59,5 +66,6 @@ labels:
   form_error: Sorry — we could not send your enquiry. Please email us or try again.
   cta_imageAlt: DB Custom Garage automotive projects
   footer_pagesHeading: Links
-howItWorksHeading: How We Build Your Dream
+map_embed_url: "https://www.google.com/maps?q=Camino+de+Campanales+6,+29651+Mijas,+Malaga,+Spain&output=embed"
 fleetHeading: Our Fleet
+howItWorksHeading: How We Build Your Dream

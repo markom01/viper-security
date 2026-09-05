@@ -4,15 +4,17 @@ import ZoomImage from "./ZoomImage.astro";
 interface Props {
   pageContent?: PageContent;
   ctaHref?: string;
+  /** Section anchor id (per-site purpose name). Defaults to the legacy id. */
+  id?: string;
 }
-const { pageContent, ctaHref = "/#contact" } = Astro.props as Props;
+const { pageContent, ctaHref = "/#contact", id = "cta" } = Astro.props as Props;
 import { ICONS } from "../../config/icons";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
 ---
 
-<section class="section marketing-section">
+<section id={id} class="section marketing-section">
   <div class="content-wrapper">
     <div class="marketing-content-wrapper">
       <div data-scroll-reveal class="marketing-text">

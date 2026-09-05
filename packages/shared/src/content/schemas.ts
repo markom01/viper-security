@@ -33,7 +33,7 @@ export const serviceDetailSchema = z.object({
     image: z.string().optional(),
   }).optional(),
   about_text: z.string().optional(),
-  about_image: z.string().optional(),
+  about_images: z.array(z.string()).optional(),
   hero: z.object({
     subtitle: z.string().optional(),
     cta_text: z.string().optional(),

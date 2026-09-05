@@ -56,8 +56,5 @@ export default defineConfig({
         bgColor: site.bgColor,
       }),
     ),
-  ],
-  server: {
-    port: 4322,
-  },
+  ]
 });

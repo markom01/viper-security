@@ -18,7 +18,6 @@ export async function getStaticPaths() {
 const { offering } = Astro.props as { offering: import("@garage/shared/content/types").ServiceDetailData };
 const siteGlobals = (await getEntry("site", "content"))!.data;
 const homeContent = (await getEntry("home", "content"))!.data;
-const galleryEntries = await getCollection("gallery");
 
 // Per-service fleet vehicles — mapped from offering.fleet[] to shared FleetEntry shape.
 // Built before assembleService so the assembler can derive fleetFeaturesText (VIPER symmetry).
@@ -33,7 +32,6 @@ const a = assembleService({
   fleetVehicles,
   hasFleet: !!offering.fleet?.length,
   howItWorksSteps: siteGlobals.howItWorksSteps,
-  aboutCarouselImages: [], // filled below
 });
 // Apply DBC per-service fleet heading override (assembler leaves this to the template)
 if (offering.fleet_section?.heading) {
@@ -43,17 +41,6 @@ if (offering.fleet_section?.heading) {
 const pageContent = a.pageContent;
 const hasFleet = !!offering.fleet?.length;
 const fleetFeaturesText = a.fleetFeaturesText;
-
-// Category carousel: 5 gallery images matching this service's category
-const slugToCategory: Record<string, string> = {
-  "supercar-transport": "supercar", "customizing": "customizing", "auction": "customizing",
-  "sourcing-logistics": "supercar",
-};
-const activeSlug = (offering.slug ?? slugify(offering.title)) as string;
-const serviceCategory = slugToCategory[activeSlug] ?? "supercar";
-const catImages = galleryEntries.filter((e) => e.data.category === serviceCategory).map((e) => e.data.image);
-const fallbackImages = galleryEntries.filter((e) => e.data.category !== serviceCategory).map((e) => e.data.image);
-const aboutCarouselImages = [...catImages, ...fallbackImages].slice(0, 5);
 ---
 
 <SiteLayout pageContent={pageContent} ogLocale="en_US" preloadImage={a.hero.image}>
@@ -69,8 +56,9 @@ const aboutCarouselImages = [...catImages, ...fallbackImages].slice(0, 5);
     fleetVehicles={fleetVehicles}
     fleetFeaturesText={fleetFeaturesText}
     hasFleet={hasFleet}
+    ctaAnchorId="start-a-build"
+    bottomCtaAnchorId="your-dream-car"
     howItWorksSteps={a.howItWorksSteps}
-    aboutCarouselImages={aboutCarouselImages}
     showPricing={false}
     showMembership={false}
   />

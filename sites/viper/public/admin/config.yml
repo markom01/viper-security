@@ -185,6 +185,24 @@ collections:
                           - { name: route, label: Route, widget: string }
                           - { name: price, label: "Price (optional)", widget: string, required: false }
           - { name: vehicle_name, label: "Vehicle Name (placeholder)", widget: string, required: false }
+          - name: seo
+            label: SEO / Meta
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - { name: title, label: Page Title, widget: string, required: false }
+              - { name: description, label: Meta Description, widget: text, required: false }
+              - { name: theme_color, label: Theme Color, widget: string, required: false }
+              - { name: image, label: "Share / OG Image", widget: image, required: false }
+          - name: branding
+            label: Branding
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - { name: luxury_without_limits, label: "Luxury Without Limits Text", widget: string, required: false }
+              - { name: professional_discreet_reliable, label: "Professional Discreet Reliable Text", widget: string, required: false }
           - name: labels
             label: UI Labels (nav, buttons, headings)
             widget: object
@@ -197,6 +215,10 @@ collections:
               - { name: nav_howItWorks, label: "Nav: How It Works", widget: string, required: false }
               - { name: nav_pricing, label: "Nav: Pricing", widget: string, required: false }
               - { name: nav_contact, label: "Nav: Contact", widget: string, required: false }
+              - { name: nav_stats, label: "Nav: Why VIPER (Stats)", widget: string, required: false }
+              - { name: nav_membership, label: "Nav: Membership", widget: string, required: false }
+              - { name: nav_ctaBanner, label: "Nav: First Experience", widget: string, required: false }
+              - { name: nav_bottomCta, label: "Nav: Begin Your Journey", widget: string, required: false }
               - { name: marquee_text, label: "Marquee Text (scrolling band)", widget: string, required: false }
               - { name: hero_learnMore, label: "Hero: Learn More", widget: string, required: false }
               - { name: hero_exploreFleet, label: "Hero: Explore Fleet", widget: string, required: false }
@@ -206,24 +228,15 @@ collections:
               - { name: form_date, label: "Form: Date", widget: string, required: false }
               - { name: form_success, label: "Form: Success Message", widget: text, required: false }
               - { name: form_error, label: "Form: Error Message", widget: text, required: false }
-          - name: howItWorksSteps
-            label: How It Works Steps
-            widget: list
-            summary: "{{fields.title}}"
-            collapsed: true
-            required: false
-            fields:
-              - { name: title, label: Title, widget: string }
-              - { name: description, label: Description, widget: text }
-              - { name: image, label: "Step Image", widget: image, required: false }
-          - name: branding
-            label: Branding
+          - name: about
+            label: About Section
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: luxury_without_limits, label: "Luxury Without Limits Text", widget: string, required: false }
-              - { name: professional_discreet_reliable, label: "Professional Discreet Reliable Text", widget: string, required: false }
+              - { name: heading, label: Heading, widget: string, required: false }
+              - { name: text, label: Body Text, widget: text, required: false }
+              - { name: image, label: About Image, widget: image, required: false }
           - name: stats
             label: Stats Section
             widget: object
@@ -241,8 +254,18 @@ collections:
                 fields:
                   - { name: label, label: "Label (e.g. 15+)", widget: string }
                   - { name: title, label: "Title (e.g. Years Experience)", widget: string }
+          - name: howItWorksSteps
+            label: How It Works Steps
+            widget: list
+            summary: "{{fields.title}}"
+            collapsed: true
+            required: false
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: description, label: Description, widget: text }
+              - { name: image, label: "Step Image", widget: image, required: false }
           - name: cta
-            label: CTA Banner
+            label: First Experience
             widget: object
             collapsed: true
             required: false
@@ -251,7 +274,7 @@ collections:
               - { name: text, label: Body Text, widget: text, required: false }
               - { name: image, label: CTA Image, widget: image, required: false }
           - name: bottomcta
-            label: Bottom CTA
+            label: Begin Your Journey
             widget: object
             collapsed: true
             required: false
@@ -265,25 +288,6 @@ collections:
                 fields:
                   - { name: title, label: Title, widget: string }
                   - { name: text, label: Text, widget: text }
-          - name: about
-            label: About Section
-            widget: object
-            collapsed: true
-            required: false
-            fields:
-              - { name: heading, label: Heading, widget: string, required: false }
-              - { name: text, label: Body Text, widget: text, required: false }
-              - { name: image, label: About Image, widget: image, required: false }
-          - name: seo
-            label: SEO / Meta
-            widget: object
-            collapsed: true
-            required: false
-            fields:
-              - { name: title, label: Page Title, widget: string, required: false }
-              - { name: description, label: Meta Description, widget: text, required: false }
-              - { name: theme_color, label: Theme Color, widget: string, required: false }
-              - { name: image, label: "Share / OG Image", widget: image, required: false }
           - { name: map_embed_url, label: "Map Embed URL (Google Maps iframe src)", widget: string, required: false }
           - { name: fleetHeading, label: "Fleet Section Heading", widget: string, required: false }
           - { name: howItWorksHeading, label: "How It Works Heading", widget: string, required: false }

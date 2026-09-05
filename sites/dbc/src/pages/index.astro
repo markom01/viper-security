@@ -20,7 +20,16 @@ const a = assembleHome({ home, siteGlobals, siteName: SITE_NAME });
 
 const hero = a.hero;
 const pageContent = a.pageContent;
-const services = a.services.offerings;
+// Merge per-service form_fields (service/*.yaml) into home offerings so the
+// hero BookingForm can inject service-specific fields on service select.
+// Home offerings carry only title/slug; the field defs live in the service collection.
+const serviceEntries = await getCollection("service");
+const fieldsBySlug = new Map(serviceEntries.map((e) => [e.data.slug ?? e.id.replace(/\.yaml$/, ""), e.data.form_fields ?? []]));
+const fieldsByTitle = new Map(serviceEntries.map((e) => [e.data.title, e.data.form_fields ?? []]));
+const services = a.services.offerings.map((o) => ({
+  ...o,
+  form_fields: fieldsBySlug.get(o.slug ?? "") ?? fieldsByTitle.get(o.title) ?? [],
+}));
 
 // Home carousel: 5 gallery images — prefer all-builds, fill supercar+customizing
 const galleryImages = galleryEntries.map((e) => ({ cat: e.data.category, img: e.data.image }));
@@ -46,6 +55,6 @@ const homeCarousel = [
   <Services pageContent={pageContent} marbella={services} milano={services} />
   <StatsSection pageContent={pageContent} />
   <HowItWorks steps={pageContent.howitworks?.steps ?? siteGlobals.howItWorksSteps} pageContent={pageContent} />
-  <CtaBanner pageContent={pageContent} />
-  <BottomCta pageContent={pageContent} fleetHref="/gallery" />
+  <CtaBanner pageContent={pageContent} id="start-a-build" />
+  <BottomCta pageContent={pageContent} fleetHref="/gallery" id="your-dream-car" />
 </SiteLayout>

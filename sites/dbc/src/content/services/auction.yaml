@@ -1,25 +1,30 @@
 title: Classic Cars & Motorcycles Sale & Auction
 slug: auction
 description: Auction preparation and representation on Catawiki, Proxibid, Silverstone, Heritage, Bonhams and more — consignment without leaving your garage.
-marquee: Auction · Catawiki · Proxibid · Silverstone · Heritage · Sotheby's
-seo:
-  title: DB Custom Garage — Classic Cars & Motorcycles Sale & Auction
-  description: We sell your classic or supercar at auction — without you leaving your garage.
-  image: /images/from-wix/auction-hero.webp
-about_text: "Active since 2010 in classic and supercar auctions. We prepare your car for auction — complete description and photography — and register it on several online auctions: Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's."
-about_image: /images/cms/from-wix/auction-hero.webp
 hero:
   subtitle: We sell your classic or supercar — without you leaving your garage.
   cta_text: Get A Quote
   tagline: Supercars & Classics, No Limits
   image: /images/cms/auction hero.jpeg
-steps:
-  - title: Consign & Valuate
-    description: Hand us the car from your garage. We research, photograph and write the listing — no upfront fees.
-  - title: List Across Platforms
-    description: Your car goes live on Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's — reaching global bidders.
-  - title: Represent & Settle
-    description: We handle the auction end to end and transfer the funds to you. You stay home.
+form_fields:
+  - label: Details
+    placeholder: Year, condition, mileage
+    name: vehicle_details
+  - label: Target price
+    placeholder: Estimated value or target sale price
+    name: target_price
+  - label: Vehicle (make & model)
+    placeholder: Start typing — e.g. Ferrari 812
+    name: vehicle_model
+    type: vehicle
+marquee: Auction · Catawiki · Proxibid · Silverstone · Heritage · Sotheby's
+about_text: "Active since 2010 in classic and supercar auctions. We prepare your car for auction — complete description and photography — and register it on several online auctions: Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's."
+about_images:
+  - /images/cms/gallery/screenshot-20200411-153756.webp
+  - /images/cms/gallery/motorcycle-transport.webp
+  - /images/cms/gallery/supercars-and-classic-cars-provider-2.webp
+  - /images/cms/gallery/supercars-and-classic-cars-provider-8.webp
+  - /images/cms/gallery/supercars-and-classic-cars-provider-7.webp
 include:
   - title: Car & Motorcycle Auctions
     text: Classic cars, supercars and motorcycles — consignment, you stay home.
@@ -33,17 +38,7 @@ include:
   - title: Representation & Sale
     text: We handle the auction process end to end — sold, funds to you.
     image: /images/cms/gallery/supercars-and-classic-cars-provider-8.webp
-form_fields:
-  - label: Details
-    placeholder: Year, condition, mileage
-    name: vehicle_details
-  - label: Target price
-    placeholder: Estimated value or target sale price
-    name: target_price
-  - label: Vehicle (make & model)
-    placeholder: Start typing — e.g. Ferrari 812
-    name: vehicle_model
-    type: vehicle
+fleet: []
 stats:
   heading: Sold Without Leaving Your Garage
   subheading: Since 2010 — preparation, multi-platform reach, you stay home.
@@ -51,18 +46,25 @@ stats:
   items:
     - label: '2010'
       title: Active in auctions since
-    - label: 6+
+    - label: '6'
       title: Auction houses we list on
-    - label: 0€
+    - label: '0'
       title: Upfront fees to you
-    - label: Global
+    - label: '15'
       title: Bidder network reach
+steps:
+  - title: Consign & Valuate
+    description: Hand us the car from your garage. We research, photograph and write the listing — no upfront fees.
+  - title: List Across Platforms
+    description: Your car goes live on Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's — reaching global bidders.
+  - title: Represent & Settle
+    description: We handle the auction end to end and transfer the funds to you. You stay home.
+howitworks:
+  heading: How We Sell Your Classic
 cta:
   heading: Ready to Sell Your Classic?
   text: Consign with us and we prepare, list and represent your car across the leading auction houses — funds to you.
   image: /images/cms/gallery/supercars-and-classic-cars-provider-7.webp
-howitworks:
-  heading: How We Sell Your Classic
 bottomcta:
   heading: From Your Garage to the Auction Block
   values:
@@ -72,4 +74,7 @@ bottomcta:
       text: Your car listed across the leading online auction houses.
     - title: You Stay Home
       text: Consignment handled entirely for you.
-fleet: []
+seo:
+  title: DB Custom Garage — Classic Cars & Motorcycles Sale & Auction
+  description: We sell your classic or supercar at auction — without you leaving your garage.
+  image: /images/from-wix/auction-hero.webp

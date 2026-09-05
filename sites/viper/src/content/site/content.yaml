@@ -8,7 +8,6 @@ jsonld:
   phoneSpain: +34 670 038 541
   phoneItaly: +39 349 663 8171
   privacy_policy: https://viper-security.netlify.app/privacy-policy
-map_embed_url: "https://www.google.com/maps?q=Costa+del+Sol,+Marbella,+Spain&output=embed"
 booking_data:
   spain:
     label: Costa del Sol — Marbella
@@ -75,11 +74,22 @@ booking_data:
       - name: Nightlife & Events
         routes:
           - route: Milano — Nightlife & Events
+vehicle_name: Mercedes-Benz S-Class
 seo:
   title: "{site_name} — Luxury Chauffeur & VIP Transport in {location1} & {location2}"
   description: "{site_name} — luxury chauffeur & VIP transfers in {location1} and {location2}. Malaga, Malpensa & Bergamo airport transfers in a Mercedes-Benz S-Class, door to door."
   image: /images/og-viper.webp
   theme_color: "#000000"
+branding:
+  luxury_without_limits: LUXURY WITHOUT LIMITS
+  professional_discreet_reliable: Professional • Discreet • Reliable
+labels:
+  nav_contact: Contact Us
+  nav_stats: Why VIPER
+  nav_membership: Membership
+  nav_ctaBanner: First Experience
+  nav_bottomCta: Begin Your Journey
+  marquee_text: Luxury Chauffeur & VIP Transport
 about:
   heading: Discreet Luxury, Tailored to Every Journey
   text: >-
@@ -90,6 +100,12 @@ about:
     Every journey is tailored to your schedule with privacy, comfort, and
     punctuality at our core."
   image: /images/cms/about-image-v2.webp
+  images:
+    - /images/cms/about-image-v2.webp
+    - /images/cms/stats-bg.webp
+    - /images/cms/gallery/2e95eecc-3bd2-4375-987e-dedf95b3f1c2.webp
+    - /images/cms/gallery/neo.webp
+    - /images/cms/gallery/7cdcbfe3-cb87-4056-bbcd-86cdab0f5943.webp
 stats:
   heading: "Why Choose VIPER Security"
   subheading: >-
@@ -97,14 +113,21 @@ stats:
     journey driven to one standard — 24/7.
   image: /images/cms/stats-bg.webp
   items:
-    - label: 15+
+    - label: '15'
       title: Years Driving Experience
-    - label: 100+
+    - label: '100'
       title: Happy Clients
-    - label: "1"
+    - label: '1'
       title: Trusted Hand
-    - label: 24/7
+    - label: '24'
       title: Availability
+howItWorksSteps:
+  - title: "Choose Location"
+    description: "Select your region — {location1_name} or {location2_name} — to see available services and routes."
+  - title: "Pick a Service"
+    description: "Choose from airport transfers, corporate travel, villa transfers, nightlife events, and more."
+  - title: "Select Destination"
+    description: "Pick your specific route and get an instant price estimate before booking your ride."
 cta:
   heading: Your First Chauffeur Experience Just Got Better
   text: >-
@@ -127,19 +150,6 @@ bottomcta:
       text: >-
         From yacht transfers in Puerto Banús to corporate travel in {location2},
         every itinerary is customized to your schedule and preferences.
-branding:
-  luxury_without_limits: LUXURY WITHOUT LIMITS
-  professional_discreet_reliable: Professional • Discreet • Reliable
-vehicle_name: Mercedes-Benz S-Class
-labels:
-  nav_contact: Contact Us
-  marquee_text: Luxury Chauffeur & VIP Transport
+map_embed_url: "https://www.google.com/maps?q=Costa+del+Sol,+Marbella,+Spain&output=embed"
 fleetHeading: Ride Luxury, Every Time
 howItWorksHeading: How We Simplify Your Experience
-howItWorksSteps:
-  - title: "Choose Location"
-    description: "Select your region — {location1_name} or {location2_name} — to see available services and routes."
-  - title: "Pick a Service"
-    description: "Choose from airport transfers, corporate travel, villa transfers, nightlife events, and more."
-  - title: "Select Destination"
-    description: "Pick your specific route and get an instant price estimate before booking your ride."

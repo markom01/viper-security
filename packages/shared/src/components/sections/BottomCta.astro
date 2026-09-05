@@ -3,8 +3,10 @@ import type { PageContent } from "../../types";
 interface Props {
   pageContent?: PageContent;
   fleetHref?: string;
+  /** Section anchor id (per-site purpose name). Defaults to the legacy id. */
+  id?: string;
 }
-const { pageContent, fleetHref = "/#fleet" } = Astro.props as Props;
+const { pageContent, fleetHref = "/#fleet", id = "bottom-cta" } = Astro.props as Props;
 import { ICONS } from "../../config/icons";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
@@ -12,7 +14,7 @@ const s = resolveLabels(pageContent, STRINGS);
 const v = pageContent?.bottomcta?.values;
 ---
 
-<section id="bottom-cta" class="section banner-section">
+<section id={id} class="section banner-section">
   <div class="content-wrapper">
     <div class="home-banner-wrapper">
       <div data-scroll-reveal class="banner">

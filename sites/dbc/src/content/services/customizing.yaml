@@ -1,18 +1,26 @@
 title: Automotive Customizing & Design Projects
 slug: customizing
 description: Bespoke design and build projects — restomod, widebody, interior and show-grade finishing.
-seo:
-  title: DB Custom Garage — Automotive Customizing & Design Projects
-  description: Bespoke design and build — from restomod to show-grade.
-  image: /images/from-wix/hummer-project.webp
 hero:
   subtitle: Bespoke design and build — from restomod to show-grade.
   cta_text: Get A Quote
   tagline: Customize · Design · Build
   image: /images/cms/custom design hero.jpeg
-about_text: An in-house design studio and build shop for custom cars and motorcycles — restomod, widebody, interior and show-grade finishing — plus general repair and maintenance.
-about_image: /images/cms/gallery/jeep-wrangler-body-kit-2.webp
+form_fields:
+  - label: Project type
+    placeholder: Restomod, widebody, interior, design
+    name: project_type
+  - label: Budget
+    placeholder: Approximate budget
+    name: budget
 marquee: Custom Builds · Design · Repair · Motorcycles
+about_text: An in-house design studio and build shop for custom cars and motorcycles — restomod, widebody, interior and show-grade finishing — plus general repair and maintenance.
+about_images:
+  - /images/cms/gallery/screenshot-2025-08-16-alle-14-03-21.webp
+  - /images/cms/gallery/jeep-wrangler-body-kit.webp
+  - /images/cms/gallery/design.webp
+  - /images/cms/gallery/car-service-and-repair.webp
+  - /images/cms/gallery/hummer-project.webp
 include:
   - title: Custom Builds
     text: Complete builds from vision to show floor.
@@ -26,15 +34,20 @@ include:
   - title: Repair & Maintenance
     text: General service and maintenance for cars and motorcycles.
     image: /images/cms/gallery/car-service-and-repair.webp
-bottomcta:
-  heading: Your Dream Build, Done
-  values:
-    - title: In-House Studio
-      text: Design and fabrication under one roof.
-    - title: Fabricate in Metal
-      text: Real parts, built by hand — not off the shelf.
-    - title: Cars & Motorcycles
-      text: Customizing and repair for both.
+fleet: []
+stats:
+  heading: Crafted In-House, End to End
+  subheading: Design, fabrication and finish — one roof, by hand.
+  image: /images/cms/gallery/concept-design.webp
+  items:
+    - label: '1'
+      title: In-house design studio
+    - label: '100'
+      title: Fabricated, not bought
+    - label: '2'
+      title: Cars & motorcycles
+    - label: '5'
+      title: Show-grade finishing
 steps:
   - title: Vision & Scope
     description: We sit down and define the build — restomod, widebody, interior or show-grade — plus budget and timeline.
@@ -44,28 +57,20 @@ steps:
     description: Paint, trim and final assembly, then a shakedown so the car leaves show-ready.
 howitworks:
   heading: How Your Build Comes Together
-stats:
-  heading: Crafted In-House, End to End
-  subheading: Design, fabrication and finish — one roof, by hand.
-  image: /images/cms/gallery/concept-design.webp
-  items:
-    - label: "1"
-      title: In-house design studio
-    - label: Metal
-      title: Fabricated, not bought
-    - label: Both
-      title: Cars & motorcycles
-    - label: Show
-      title: Grade finishing
 cta:
   heading: Ready to Build Your Dream?
   text: From restomod to show-grade — tell us the vision and we take it from sketch to street.
   image: /images/cms/gallery/db-custom-garage-hero.webp
-form_fields:
-  - label: Project type
-    placeholder: Restomod, widebody, interior, design
-    name: project_type
-  - label: Budget
-    placeholder: Approximate budget
-    name: budget
-fleet: []
+bottomcta:
+  heading: Your Dream Build, Done
+  values:
+    - title: In-House Studio
+      text: Design and fabrication under one roof.
+    - title: Fabricate in Metal
+      text: Real parts, built by hand — not off the shelf.
+    - title: Cars & Motorcycles
+      text: Customizing and repair for both.
+seo:
+  title: DB Custom Garage — Automotive Customizing & Design Projects
+  description: Bespoke design and build — from restomod to show-grade.
+  image: /images/from-wix/hummer-project.webp
