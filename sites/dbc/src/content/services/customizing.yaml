@@ -10,17 +10,16 @@ form_fields:
   - label: Project type
     placeholder: Restomod, widebody, interior, design
     name: project_type
+    type: ''
+    side: ''
   - label: Budget
     placeholder: Approximate budget
     name: budget
+    type: ''
+    side: ''
 marquee: Custom Builds · Design · Repair · Motorcycles
 about_text: An in-house design studio and build shop for custom cars and motorcycles — restomod, widebody, interior and show-grade finishing — plus general repair and maintenance.
-about_images:
-  - /images/cms/gallery/screenshot-2025-08-16-alle-14-03-21.webp
-  - /images/cms/gallery/jeep-wrangler-body-kit.webp
-  - /images/cms/gallery/design.webp
-  - /images/cms/gallery/car-service-and-repair.webp
-  - /images/cms/gallery/hummer-project.webp
+about_image: ''
 include:
   - title: Custom Builds
     text: Complete builds from vision to show floor.
@@ -34,11 +33,12 @@ include:
   - title: Repair & Maintenance
     text: General service and maintenance for cars and motorcycles.
     image: /images/cms/gallery/car-service-and-repair.webp
+fleet_section: null
 fleet: []
 stats:
   heading: Crafted In-House, End to End
   subheading: Design, fabrication and finish — one roof, by hand.
-  image: /images/cms/gallery/concept-design.webp
+  image: /images/cms/gallery/gallery-18.webp
   items:
     - label: '1'
       title: In-house design studio
@@ -74,3 +74,9 @@ seo:
   title: DB Custom Garage — Automotive Customizing & Design Projects
   description: Bespoke design and build — from restomod to show-grade.
   image: /images/from-wix/hummer-project.webp
+about_images:
+  - /images/cms/gallery/screenshot-2025-08-16-alle-14-03-21.webp
+  - /images/cms/gallery/jeep-wrangler-body-kit.webp
+  - /images/cms/gallery/design.webp
+  - /images/cms/gallery/car-service-and-repair.webp
+  - /images/cms/gallery/hummer-project.webp
