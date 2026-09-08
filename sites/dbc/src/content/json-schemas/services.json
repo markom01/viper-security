@@ -92,7 +92,8 @@
           "label": { "type": "string" },
           "placeholder": { "type": "string" },
           "name": { "type": "string" },
-          "type": { "type": ["string", "null"], "enum": ["text", "location", "country", "vehicle", "", null] },
+          "type": { "type": ["string", "null"], "enum": ["text", "location", "country", "vehicle", "select", "number", "", null] },
+          "options": { "type": ["array", "null"], "items": { "type": "string" } },
           "side": { "type": ["string", "null"], "enum": ["left", "right", "", null] }
         },
         "required": ["label", "name"],
@@ -127,9 +128,9 @@
         "properties": {
           "name": { "type": "string" },
           "type": { "type": "string" },
-          "year": { "type": "string" },
-          "seats": { "type": "string" },
-          "baggage": { "type": "string" },
+        "year": { "type": ["string", "number", "null"] },
+        "seats": { "type": ["string", "number", "null"] },
+        "baggage": { "type": ["string", "number", "null"] },
           "capacity_passengers": { "type": "number" },
           "capacity_suitcases": { "type": "number" },
           "capacity_carryon": { "type": "number" },
