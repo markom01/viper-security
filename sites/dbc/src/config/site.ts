@@ -5,7 +5,7 @@
  */
 export const site = {
   name: "DB Custom Garage",
-  shortName: "DB Garage",
+  shortName: "DB Custom Garage",
   description:
     "DB Custom Garage — supercar and classic car transport, sale & auction, import/export logistics, and bespoke customizing and design.",
   url: "https://dbcustomgarage.netlify.app",
