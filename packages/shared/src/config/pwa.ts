@@ -17,6 +17,7 @@ export function pwaPluginOptions({
   display = "standalone",
   startUrl = "/",
   scope = "/",
+  maskableSrc = "/icon-512.png",
 }: {
   name: string;
   shortName: string;
@@ -26,6 +27,8 @@ export function pwaPluginOptions({
   display?: "standalone" | "fullscreen" | "minimal-ui" | "browser";
   startUrl?: string;
   scope?: string;
+  /** Maskable icon src (safe-zone padded variant); defaults to the 512 icon. */
+  maskableSrc?: string;
 }): Partial<VitePWAOptions> {
   return {
     registerType: "autoUpdate",
@@ -75,7 +78,7 @@ export function pwaPluginOptions({
         { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
         { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
         {
-          src: "/icon-512.png",
+          src: maskableSrc,
           sizes: "512x512",
           type: "image/png",
           purpose: "maskable",

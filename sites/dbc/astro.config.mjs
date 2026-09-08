@@ -54,6 +54,7 @@ export default defineConfig({
         description: site.description,
         themeColor: site.themeColor,
         bgColor: site.bgColor,
+        maskableSrc: "/icon-maskable.png",
       }),
     ),
   ]
