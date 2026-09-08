@@ -1,14 +1,14 @@
 hero:
   brand_name: DB Custom Garage
   tagline: Supercars & Classics, No Limits
-  subtitle: Enclosed supercar transport, import/export logistics, and off-market buying and selling across Europe and the USA. Flat per-route quotes — what you see is what you pay.
+  subtitle: Enclosed supercar transport, import/export logistics, and off-market buying and selling across Europe. Flat per-route quotes — what you see is what you pay.
   cta_text: View Our Fleet
   hero_image: /images/cms/home hero.jpg
   phone_italy: ''
   phone_spain: ''
 about:
   heading: About DB Custom Garage
-  text: Founded by Dragan Meseldzija, DB Custom Garage brings together decades of automotive design, customizing for Harley-Davidson and Indian motorcycles, industrial design, and enclosed supercar and classic car transport. Active since 2010 and operating from Marbella, Milan, and New Jersey, we combine precision logistics with deep market knowledge for collectors, dealers, and enthusiasts.
+  text: Founded by Dragan Meseldzija, DB Custom Garage brings together decades of automotive design, customizing for Harley-Davidson and Indian motorcycles, industrial design, and enclosed supercar and classic car transport. Active since 2010 and operating from Marbella and Milan, we combine precision logistics with deep market knowledge for collectors, dealers, and enthusiasts.
   image: ''
   images:
     - /images/cms/gallery/2e95eecc-3bd2-4375-987e-dedf95b3f1c2.webp
@@ -18,12 +18,12 @@ services:
   offerings:
     - region: Garage
       title: Enclosed Supercar Transport
-      description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe and worldwide.
+      description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe.
       image: /images/cms/gallery/17938274953373973.webp
       slug: supercar-transport
     - region: Garage
       title: Classic Cars & Motorcycles Sale & Auction
-      description: Auction preparation and representation on Catawiki, Proxibid, Silverstone, Heritage, Bonhams and more — consignment without leaving your garage.
+      description: Auction preparation and representation on Catawiki — consignment without leaving your garage.
       image: /images/cms/gallery/screenshot-2025-04-09-alle-22-35-43.webp
       slug: auction
     - region: Garage
@@ -38,17 +38,17 @@ services:
       slug: customizing
 stats:
   heading: ''
-  subheading: Three bases, one standard — precision logistics and deep market knowledge for collectors, dealers, and enthusiasts.
+  subheading: Two bases, one standard — precision logistics and deep market knowledge for collectors, dealers, and enthusiasts.
   image: /images/cms/gallery/gallery-16.webp
   items:
     - label: '2010'
       title: Serving Collectors Since
-    - label: '3'
-      title: Three Bases, One Standard
-    - label: '3'
-      title: Transport, Sale & Build
-    - label: '150'
-      title: EU, UK & USA Coverage
+    - label: '2'
+      title: Two Bases — Marbella & Milan
+    - label: '4'
+      title: Transport, Auction, Sourcing & Build
+    - label: '30+'
+      title: European Countries Covered
 howitworks:
   heading: How We Build Your Dream
   steps:

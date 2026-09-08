@@ -14,6 +14,7 @@ import { pwaInfo } from "virtual:pwa-info";
 interface Props {
   pageContent?: PageContent;
   brandName?: string;
+  brandLogoSrc?: string;
   subtitle?: string;
   navItems?: NavLink[];
   footerItems?: NavLink[];
@@ -31,6 +32,7 @@ interface Props {
 const {
   pageContent,
   brandName,
+  brandLogoSrc,
   subtitle,
   navItems,
   footerItems,
@@ -197,9 +199,6 @@ const jsonLdWebSite = jd.webSiteName || jd.webSiteUrl
       body {
         font-display: swap !important;
       }
-      main {
-        padding-top: 56px;
-      }
     </style>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -210,6 +209,7 @@ const jsonLdWebSite = jd.webSiteName || jd.webSiteUrl
     <a href="#main-content" class="skip-link">{s.accessibility.skipLink}</a>
     <Nav
       brandName={brandName ?? jd.orgName}
+      brandLogoSrc={brandLogoSrc}
       pageContent={pageContent}
       navItems={navItems}
       ctaLabel={ctaLabel}
@@ -220,6 +220,7 @@ const jsonLdWebSite = jd.webSiteName || jd.webSiteUrl
     </main>
     <Footer
       brandName={brandName ?? jd.orgName}
+      brandLogoSrc={brandLogoSrc}
       pageContent={pageContent}
       footerItems={footerItems}
       social={social}

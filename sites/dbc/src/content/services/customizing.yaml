@@ -8,18 +8,22 @@ hero:
   image: /images/cms/custom design hero.jpeg
 form_fields:
   - label: Project type
-    placeholder: Restomod, widebody, interior, design
+    placeholder: Select project type...
     name: project_type
-    type: ''
+    type: select
+    options:
+      - Restomod
+      - Widebody
+      - Interior
+      - Design
     side: ''
   - label: Budget
     placeholder: Approximate budget
     name: budget
-    type: ''
+    type: number
     side: ''
 marquee: Custom Builds · Design · Repair · Motorcycles
 about_text: An in-house design studio and build shop for custom cars and motorcycles — restomod, widebody, interior and show-grade finishing — plus general repair and maintenance.
-about_image: ''
 include:
   - title: Custom Builds
     text: Complete builds from vision to show floor.
@@ -33,7 +37,6 @@ include:
   - title: Repair & Maintenance
     text: General service and maintenance for cars and motorcycles.
     image: /images/cms/gallery/car-service-and-repair.webp
-fleet_section: null
 fleet: []
 stats:
   heading: Crafted In-House, End to End
@@ -41,13 +44,13 @@ stats:
   image: /images/cms/gallery/gallery-18.webp
   items:
     - label: '1'
-      title: In-house design studio
-    - label: '100'
-      title: Fabricated, not bought
+      title: In-house design studio & build shop
+    - label: '100%'
+      title: Fabricated in-house — not bought off the shelf
     - label: '2'
-      title: Cars & motorcycles
+      title: Cars & motorcycles covered
     - label: '5'
-      title: Show-grade finishing
+      title: Stage process — sketch to street
 steps:
   - title: Vision & Scope
     description: We sit down and define the build — restomod, widebody, interior or show-grade — plus budget and timeline.

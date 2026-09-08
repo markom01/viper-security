@@ -120,7 +120,9 @@ const sections = [
 
 <style>
   .gallery-section {
-    padding: 80px 0 100px;
+    /* Navbar is absolute, so the first section must clear it (same offset as
+       the home hero: 180px desktop / 140px mobile). */
+    padding: 180px 0 100px;
   }
   .gallery-header {
     text-align: center;
@@ -177,6 +179,9 @@ const sections = [
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
   }
   @media (max-width: 991px) {
+    .gallery-section {
+      padding: 140px 0 80px;
+    }
     .masonry-item {
       width: 50%;
     }

@@ -9,13 +9,15 @@ interface Props {
     label: string;
     placeholder?: string;
     name: string;
-    type?: "text" | "location" | "country" | "vehicle";
+    type?: "text" | "location" | "country" | "vehicle" | "select" | "number";
+    options?: string[];
     side?: "left" | "right";
   };
 }
 
 const { f } = Astro.props as Props;
 const id = `form-${f.name}`;
+const selectPrompt = f.placeholder || `Select ${f.label.toLowerCase()}...`;
 ---
 
 {f.type === "location" || f.type === "country" ? (
@@ -31,6 +33,40 @@ const id = `form-${f.name}`;
   />
 ) : f.type === "vehicle" ? (
   <DropdownInput kind="vehicle" id={id} label={f.label} placeholder={f.placeholder} name={f.name} />
+) : f.type === "select" ? (
+  <div class="booking-form-label-field">
+    <label class="booking-form-label" for={id}
+      >{f.label}</label
+    >
+    <select
+      class="booking-form-field"
+      id={id}
+      name={f.name}
+      aria-label={f.label}
+      data-custom-field
+    >
+      <option value="" disabled selected hidden>{selectPrompt}</option>
+      {(f.options ?? []).map((opt) => (
+        <option value={opt}>{opt}</option>
+      ))}
+    </select>
+  </div>
+) : f.type === "number" ? (
+  <div class="booking-form-label-field">
+    <label class="booking-form-label" for={id}
+      >{f.label}</label
+    >
+    <input
+      class="booking-form-field"
+      id={id}
+      name={f.name}
+      type="number"
+      inputmode="decimal"
+      placeholder={f.placeholder}
+      aria-label={f.label}
+      data-custom-field
+    />
+  </div>
 ) : (
   <div class="booking-form-label-field">
     <label class="booking-form-label" for={id}

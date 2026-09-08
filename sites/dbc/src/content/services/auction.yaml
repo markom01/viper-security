@@ -1,6 +1,6 @@
 title: Classic Cars & Motorcycles Sale & Auction
 slug: auction
-description: Auction preparation and representation on Catawiki, Proxibid, Silverstone, Heritage, Bonhams and more — consignment without leaving your garage.
+description: Auction preparation and representation on Catawiki — consignment without leaving your garage.
 hero:
   subtitle: We sell your classic or supercar — without you leaving your garage.
   cta_text: Get A Quote
@@ -13,12 +13,13 @@ form_fields:
   - label: Target price
     placeholder: Estimated value or target sale price
     name: target_price
+    type: number
   - label: Vehicle (make & model)
     placeholder: Start typing — e.g. Ferrari 812
     name: vehicle_model
     type: vehicle
-marquee: Auction · Catawiki · Proxibid · Silverstone · Heritage · Sotheby's
-about_text: "Active since 2010 in classic and supercar auctions. We prepare your car for auction — complete description and photography — and register it on several online auctions: Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's."
+marquee: Auction · Catawiki Specialists
+about_text: "Active since 2010 in classic and supercar auctions. We prepare your car for auction — complete description and photography — and register it on Catawiki."
 about_images:
   - /images/cms/gallery/screenshot-20200411-153756.webp
   - /images/cms/gallery/motorcycle-transport.webp
@@ -32,8 +33,8 @@ include:
   - title: Full Auction Preparation
     text: Complete description and professional photography before listing.
     image: /images/cms/gallery/motorcycle-transport.webp
-  - title: Multi-Platform Listing
-    text: Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's.
+  - title: Catawiki Listing
+    text: Listed on Catawiki, Europe's leading online auction.
     image: /images/cms/gallery/supercars-and-classic-cars-provider-2.webp
   - title: Representation & Sale
     text: We handle the auction process end to end — sold, funds to you.
@@ -41,37 +42,37 @@ include:
 fleet: []
 stats:
   heading: Sold Without Leaving Your Garage
-  subheading: Since 2010 — preparation, multi-platform reach, you stay home.
+  subheading: Since 2010 — preparation, Catawiki reach, you stay home.
   image: /images/cms/gallery/supercars-and-classic-cars-provider-7.webp
   items:
     - label: '2010'
       title: Active in auctions since
-    - label: '6'
-      title: Auction houses we list on
-    - label: '0'
-      title: Upfront fees to you
-    - label: '15'
-      title: Bidder network reach
+    - label: '1'
+      title: Auction house — Catawiki specialists
+    - label: '€0'
+      title: Upfront fees — consignment only
+    - label: '100%'
+      title: Handled end to end — funds to you
 steps:
   - title: Consign & Valuate
     description: Hand us the car from your garage. We research, photograph and write the listing — no upfront fees.
   - title: List Across Platforms
-    description: Your car goes live on Catawiki, Proxibid, Silverstone, Heritage, Bonhams or Sotheby's — reaching global bidders.
+    description: Your car goes live on Catawiki — reaching bidders across Europe.
   - title: Represent & Settle
     description: We handle the auction end to end and transfer the funds to you. You stay home.
 howitworks:
   heading: How We Sell Your Classic
 cta:
   heading: Ready to Sell Your Classic?
-  text: Consign with us and we prepare, list and represent your car across the leading auction houses — funds to you.
+  text: Consign with us and we prepare, list and represent your car on Catawiki — funds to you.
   image: /images/cms/gallery/supercars-and-classic-cars-provider-7.webp
 bottomcta:
   heading: From Your Garage to the Auction Block
   values:
     - title: Active Since 2010
       text: Deep experience in classic and supercar auctions.
-    - title: Multi-Platform Reach
-      text: Your car listed across the leading online auction houses.
+    - title: Catawiki Reach
+      text: Your car listed on Europe's leading online auction.
     - title: You Stay Home
       text: Consignment handled entirely for you.
 seo:

@@ -32,8 +32,7 @@ const pageContent = {
 ---
 
 <SiteLayout pageContent={pageContent} ogLocale="en_US">
-  <AboutSection pageContent={pageContent} images={privacyCarousel} />
-  <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "4rem 24px" }}>
+  <div class="privacy-wrapper">
     <article>
       {Content ? (
         <>
@@ -51,6 +50,18 @@ const pageContent = {
 </SiteLayout>
 
 <style>
+  /* Navbar is absolute, so the page must clear it (same offset as the home
+     hero: 180px desktop / 140px mobile). */
+  .privacy-wrapper {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 180px 24px 4rem;
+  }
+  @media (max-width: 991px) {
+    .privacy-wrapper {
+      padding-top: 140px;
+    }
+  }
   article :global(h1) {
     font-family: var(--font-families--accent-font);
     color: var(--colors--ivory);

@@ -57,9 +57,9 @@ collections:
       - { name: name, label: Vehicle Name, widget: string }
       - { name: image, label: "Vehicle Image", widget: image, required: false }
       - { name: type, label: Vehicle Type, widget: string, required: false }
-      - { name: year, label: Year, widget: string, required: false }
-      - { name: seats, label: Seats, widget: string, required: false }
-      - { name: baggage, label: Baggage Capacity, widget: string, required: false }
+      - { name: year, label: Year, widget: number, value_type: int, required: false }
+      - { name: seats, label: Seats, widget: number, value_type: int, required: false }
+      - { name: baggage, label: Baggage Capacity, widget: number, value_type: int, required: false }
       - { name: capacity_passengers, label: Max Passengers, widget: number, value_type: int, required: false }
       - { name: capacity_suitcases, label: Max Suitcases, widget: number, value_type: int, required: false }
       - { name: capacity_carryon, label: Max Carry-On Bags, widget: number, value_type: int, required: false }
@@ -201,6 +201,7 @@ collections:
             collapsed: true
             required: false
             fields:
+              - { name: logo, label: Site Logo (header + footer), widget: image, required: false }
               - { name: luxury_without_limits, label: "Luxury Without Limits Text", widget: string, required: false }
               - { name: professional_discreet_reliable, label: "Professional Discreet Reliable Text", widget: string, required: false }
           - name: labels

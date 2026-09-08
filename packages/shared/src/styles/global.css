@@ -350,6 +350,7 @@ blockquote {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  background-color: transparent;
 }
 .navbar {
   z-index: 999;
@@ -402,6 +403,7 @@ blockquote {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  background-color: transparent;
 }
 .nav-list-item.nav-list-brand,
 .nav-list-item.tablet-mobile-button {
@@ -1055,7 +1057,7 @@ blockquote {
 .footer-map-wrapper iframe {
   display: block;
   width: 100%;
-  height: 220px;
+  height: 300px;
   filter: grayscale(1) contrast(1.1);
   opacity: 0.9;
   border-radius: 12px;
@@ -1075,7 +1077,7 @@ blockquote {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 44px;
+  min-width: 30px;
   min-height: 44px;
   transition: transform 0.3s;
 }
@@ -1480,7 +1482,6 @@ blockquote {
   }
   .hero-content-wrapper {
     border-radius: 34px;
-    padding: 24px;
   }
   .hero-button-left {
     display: none;
@@ -1674,7 +1675,6 @@ blockquote {
   }
   .hero-content-wrapper {
     border-radius: 28px;
-    padding: 20px;
   }
   .subheadline-wrapper {
     column-gap: 16px;

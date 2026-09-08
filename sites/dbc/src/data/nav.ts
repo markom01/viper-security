@@ -14,13 +14,13 @@ function navTree(labels: Record<string, string>): NavLink[] {
       label: labels["nav.home"] ?? "Home",
       href: "/",
       children: [
-        { label: labels["nav.about"] ?? "About", href: "/#about" },
-        { label: labels["nav.services"] ?? "Services", href: "/#services" },
-        { label: labels["nav.stats"] ?? "Why Choose Us", href: "/#stats" },
-        { label: labels["nav.howItWorks"] ?? "How It Works", href: "/#how-it-works" },
-        { label: labels["nav.ctaBanner"] ?? "Start A Build", href: "/#start-a-build" },
-        { label: labels["nav.contact"] ?? "Get A Quote", href: "/#contact" },
-        { label: labels["nav.bottomCta"] ?? "Your Dream Car", href: "/#your-dream-car" },
+        { label: labels["nav.about"] ?? "About", href: "#about" },
+        { label: labels["nav.services"] ?? "Services", href: "#services" },
+        { label: labels["nav.stats"] ?? "Why Choose Us", href: "#stats" },
+        { label: labels["nav.howItWorks"] ?? "How It Works", href: "#how-it-works" },
+        { label: labels["nav.ctaBanner"] ?? "Start A Build", href: "#start-a-build" },
+        { label: labels["nav.contact"] ?? "Get A Quote", href: "#contact" },
+        { label: labels["nav.bottomCta"] ?? "Your Dream Car", href: "#your-dream-car" },
       ],
     },
     {
@@ -49,7 +49,7 @@ export function buildNav(labels: Record<string, string>): NavLink[] {
 // a plain item stays as-is, "/" keeps itself plus its sections, and any
 // other dropdown trigger contributes only its children (e.g. the Services
 // trigger links at its first service page, so the footer lists the pages).
-// Footer-only destinations (fleet anchor, privacy) are appended here —
+// Footer-only destinations (privacy) are appended here —
 // everything else comes from navTree, never duplicated.
 export function buildFooterNav(labels: Record<string, string>): NavLink[] {
   const flat: NavLink[] = [];
@@ -68,7 +68,6 @@ export function buildFooterNav(labels: Record<string, string>): NavLink[] {
     if (item.href === "/") push(item);
     item.children.forEach(push);
   }
-  push({ label: labels["nav.fleet"] ?? "Our Fleet", href: "/gallery#fleet" });
   push({ label: labels["nav.privacy"] ?? "Privacy Policy", href: "/privacy-policy" });
   return flat;
 }

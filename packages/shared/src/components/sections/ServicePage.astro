@@ -32,7 +32,7 @@ interface ServiceOffering {
   steps?: { title: string; description: string }[];
   include?: { title: string; text: string; image?: string }[];
   hero?: { subtitle?: string; cta_text?: string; tagline?: string; image?: string };
-  form_fields?: { label: string; placeholder?: string; name: string; side?: string; type?: string }[];
+  form_fields?: { label: string; placeholder?: string; name: string; side?: string; type?: string; options?: string[] }[];
   bottomcta?: { heading?: string; values?: { title: string; text: string }[] };
   /** Per-service overrides for the site-global Stats + CTA sections. */
   stats?: { heading?: string; subheading?: string; image?: string; items?: { label: string; title: string }[] };

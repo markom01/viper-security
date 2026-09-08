@@ -6,7 +6,7 @@ interface Props {
   /** Section anchor id (per-site purpose name). Defaults to the legacy id. */
   id?: string;
 }
-const { pageContent, fleetHref = "/#fleet", id = "bottom-cta" } = Astro.props as Props;
+const { pageContent, fleetHref = "#about", id = "bottom-cta" } = Astro.props as Props;
 import { ICONS } from "../../config/icons";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
@@ -21,7 +21,7 @@ const v = pageContent?.bottomcta?.values;
         <div class="banner-heading-wrapper">
           <h2 class="banner-heading">{pageContent?.bottomcta?.heading}</h2>
           <div class="banner-buttons">
-            <a href="/#services" class="primary-button">
+            <a href="#services" class="primary-button">
               <div class="button-text">{s.bottomCta.buttonServices}</div>
               <span
                 aria-hidden="true"

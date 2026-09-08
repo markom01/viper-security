@@ -11,11 +11,11 @@ interface Props {
   phoneItaly?: string;
   phoneSpain?: string;
   fleetHref?: string;
-  services?: { title: string; slug?: string; form_fields?: { label: string; placeholder?: string; name: string; side?: string; type?: string }[] }[];
+  services?: { title: string; slug?: string; form_fields?: { label: string; placeholder?: string; name: string; side?: string; type?: string; options?: string[] }[] }[];
   presetService?: string;
-  form_fields?: { label: string; placeholder?: string; name: string; side?: string; type?: string }[];
+  form_fields?: { label: string; placeholder?: string; name: string; side?: string; type?: string; options?: string[] }[];
 }
-const { pageContent, subtitle, cta_text, tagline, hero_image, phoneItaly, phoneSpain, fleetHref = "/#fleet", services, presetService = "", form_fields = [] } = Astro.props as Props;
+const { pageContent, subtitle, cta_text, tagline, hero_image, phoneItaly, phoneSpain, fleetHref = "#services", services, presetService = "", form_fields = [] } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 import { ICONS } from "../../config/icons";
@@ -35,7 +35,7 @@ const s = resolveLabels(pageContent, STRINGS);
       <div class="hero-content-wrapper">
         <div class="hero-buttons-wrapper">
           <div class="hero-button-left">
-            <a href="/#about" class="secondary-button small"><div class="button-text">{s.hero.learnMore}</div><span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrowPure} /></a>
+            <a href="#about" class="secondary-button small"><div class="button-text">{s.hero.learnMore}</div><span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrowPure} /></a>
           </div>
           <div class="hero-button-right">
             <a href={fleetHref} class="secondary-button small"><div class="button-text">{s.hero.exploreFleet}</div><span aria-hidden="true" class="button-arrow" set:html={ICONS.rightArrowPure} /></a>

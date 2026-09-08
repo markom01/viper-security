@@ -1,5 +1,8 @@
 [build]
-  command = "rm -rf .astro node_modules/.astro && npm run build --workspace=@garage/dbc"
+  # validate:cms gates the deploy: CMS (Sveltia) writes straight to main, so
+  # catch schema-hostile values here with a readable message instead of a
+  # cryptic Zod failure mid-build. Runs from repo root (workspace cwd).
+  command = "npm run validate:cms && rm -rf .astro node_modules/.astro && npm run build --workspace=@garage/dbc"
   publish = "sites/dbc/dist-dbc"
 
   # Match .nvmrc — Astro 7 requires Node >= 22.12. Pin so a build-image

@@ -38,7 +38,19 @@ if (offering.fleet_section?.heading) {
   a.pageContent.fleet = { ...(a.pageContent.fleet || {}), heading: offering.fleet_section.heading };
 }
 
-const pageContent = a.pageContent;
+const pageContent = {
+  ...a.pageContent,
+  // Sveltia CMS rejects dotted field names — normalize underscore keys to
+  // dot-path so shared-section resolveLabels lookups work (same as SiteLayout
+  // and gallery.astro). Without this, CMS labels are silently ignored and
+  // sections fall back to shared STRINGS defaults.
+  labels: Object.fromEntries(
+    Object.entries(a.pageContent?.labels ?? {}).map(([k, v]) => [
+      k.replace(/_/g, "."),
+      String(v),
+    ]),
+  ),
+};
 const hasFleet = !!offering.fleet?.length;
 const fleetFeaturesText = a.fleetFeaturesText;
 ---
@@ -51,7 +63,7 @@ const fleetFeaturesText = a.fleetFeaturesText;
     hero={{
       subtitle: a.hero.subtitle, cta_text: a.hero.cta_text,
       tagline: offering.title || a.hero.tagline, image: a.hero.image,
-      phoneSpain: site.whatsappNumber, fleetHref: "/gallery", presetService: offering.title,
+      phoneSpain: site.whatsappNumber, fleetHref: "#about", presetService: offering.title,
     }}
     fleetVehicles={fleetVehicles}
     fleetFeaturesText={fleetFeaturesText}

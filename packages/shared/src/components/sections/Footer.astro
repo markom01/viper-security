@@ -5,6 +5,7 @@ interface Props {
   pageContent?: PageContent;
   footerItems?: NavLink[];
   brandName?: string;
+  brandLogoSrc?: string;
   tagline?: string;
   phoneItaly?: string;
   phoneSpain?: string;
@@ -12,7 +13,7 @@ interface Props {
   social?: { icon: string; href: string; label: string }[];
 }
 
-const { pageContent, footerItems, brandName, tagline, phoneItaly, phoneSpain, social } = Astro.props as Props;
+const { pageContent, footerItems, brandName, brandLogoSrc, tagline, phoneItaly, phoneSpain, social } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
@@ -23,12 +24,12 @@ const links = footerItems ?? [
   { label: s.nav.chauffeur, href: "/" },
   { label: s.nav.luxuryCars, href: "/luxury-cars" },
   { label: s.nav.armouredVehicles, href: "/armoured-vehicles" },
-  { label: s.nav.about, href: "/#about" },
-  { label: s.nav.services, href: "/#services" },
-  { label: s.nav.fleet, href: "/#fleet" },
-  { label: s.nav.howItWorks, href: "/#how-it-works" },
-  { label: s.nav.pricing, href: "/#pricing" },
-  { label: s.nav.contact, href: "/#contact" },
+  { label: s.nav.about, href: "#about" },
+  { label: s.nav.services, href: "#services" },
+  { label: s.nav.fleet, href: "#fleet" },
+  { label: s.nav.howItWorks, href: "#how-it-works" },
+  { label: s.nav.pricing, href: "#pricing" },
+  { label: s.nav.contact, href: "#contact" },
   { label: "Privacy Policy", href: "/privacy-policy" },
 ];
 
@@ -48,8 +49,12 @@ const isAllowedMapUrl = (u?: string) => {
     <div class="footer-content-wrapper">
       <div class="footer-middle">
         <div class="footer-text-wrapper">
-          <a href="/" class="logo-link">
-            <span class="brand-text">{brandName}</span>
+          <a href="/" class="logo-link" aria-label={brandName ? `${brandName} home` : "Home"}>
+            {brandLogoSrc ? (
+              <img class="brand-logo" src={brandLogoSrc} alt={brandName ? `${brandName} logo` : "Site logo"} width="48" height="48" loading="lazy" decoding="async" />
+            ) : (
+              <span class="brand-text">{brandName}</span>
+            )}
           </a>
           <p class="pure-text">
             {
@@ -122,7 +127,6 @@ const isAllowedMapUrl = (u?: string) => {
               <iframe
                 src={mapEmbedUrl}
                 width="100%"
-                height="220"
                 style="border:0"
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
@@ -151,6 +155,17 @@ const isAllowedMapUrl = (u?: string) => {
     letter-spacing: 0.08em;
     color: var(--colors--gold-bright);
     white-space: nowrap;
+  }
+  .logo-link {
+    display: inline-flex;
+    align-items: center;
+  }
+  .brand-logo {
+    display: block;
+    height: 100%;
+    width: auto;
+    max-width: 150px;
+    object-fit: contain;
   }
   .footer-motto {
     font-size: 1rem;

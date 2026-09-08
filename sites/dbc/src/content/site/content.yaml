@@ -14,6 +14,7 @@ seo:
   theme_color: '#ea580c'
   image: /images/og-dbc.webp
 branding:
+  logo: /images/cms/Logo.png
   luxury_without_limits: Supercars & Classics, No Limits
   professional_discreet_reliable: Professional • Discreet • Reliable
 labels:
@@ -22,9 +23,9 @@ labels:
   stats_button: Book Your Build
   cta_button: Start A Build
   bottomCta_buttonServices: Our services
-  bottomCta_buttonFleet: View Our Fleet
+  bottomCta_buttonFleet: Learn More
   hero_learnMore: Learn More
-  hero_exploreFleet: View Our Fleet
+  hero_exploreFleet: Our Services
   hero_formName: Get A Quote
   form_bookNow: Send Enquiry
   marquee_text: Supercars & Classics

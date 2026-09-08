@@ -3,12 +3,13 @@ import type { NavLink, PageContent } from "../../types";
 
 interface Props {
   brandName?: string;
+  brandLogoSrc?: string;
   pageContent?: PageContent;
   navItems?: NavLink[];
   ctaLabel?: string;
 }
 
-const { brandName, pageContent, navItems, ctaLabel } = Astro.props as Props;
+const { brandName, brandLogoSrc, pageContent, navItems, ctaLabel } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 import { ICONS } from "../../config/icons";
@@ -21,11 +22,11 @@ const items = navItems ?? [
     label: s.nav.chauffeur,
     href: "/",
     children: [
-      { label: s.nav.about, href: "/#about" },
-      { label: s.nav.services, href: "/#services" },
-      { label: s.nav.fleet, href: "/#fleet" },
-      { label: s.nav.howItWorks, href: "/#how-it-works" },
-      { label: s.nav.pricing, href: "/#pricing" },
+      { label: s.nav.about, href: "#about" },
+      { label: s.nav.services, href: "#services" },
+      { label: s.nav.fleet, href: "#fleet" },
+      { label: s.nav.howItWorks, href: "#how-it-works" },
+      { label: s.nav.pricing, href: "#pricing" },
     ],
   },
   { label: s.nav.luxuryCars, href: "/luxury-cars" },
@@ -37,13 +38,21 @@ const items = navItems ?? [
   <div class="content-wrapper">
     <div class="navbar-wrapper">
       <a href="/" class="logo-link" aria-label={s.nav.homeAria}>
-        <span class="brand-text">{brandName}</span>
+        {brandLogoSrc ? (
+          <img class="brand-logo" src={brandLogoSrc} alt={brandName ? `${brandName} logo` : s.nav.homeAria} width="40" height="40" loading="eager" decoding="async" fetchpriority="high" />
+        ) : (
+          <span class="brand-text">{brandName}</span>
+        )}
       </a>
       <nav class="nav-menu-wrapper" aria-label="Primary">
         <ul class="nav-menu-list">
           <li class="nav-list-item nav-list-brand">
             <a href="/" class="logo-link" aria-label={s.nav.homeAria}>
-              <span class="brand-text">{brandName}</span>
+              {brandLogoSrc ? (
+                <img class="brand-logo" src={brandLogoSrc} alt={brandName ? `${brandName} logo` : s.nav.homeAria} width="40" height="40" loading="eager" decoding="async" />
+              ) : (
+                <span class="brand-text">{brandName}</span>
+              )}
             </a>
           </li>
           {
@@ -89,7 +98,7 @@ const items = navItems ?? [
             cta && (
               <>
                 <li class="nav-list-item desktop-button">
-                  <a href="/#contact" class="primary-button small">
+                  <a href="#contact" class="primary-button small">
                     <div class="button-text">{cta}</div>
                     <span
                       aria-hidden="true"
@@ -99,7 +108,7 @@ const items = navItems ?? [
                   </a>
                 </li>
                 <li class="nav-list-item tablet-mobile-button">
-                  <a href="/#contact" class="secondary-button">
+                  <a href="#contact" class="secondary-button">
                     <div class="button-text">{cta}</div>
                     <span
                       aria-hidden="true"
@@ -127,7 +136,7 @@ const items = navItems ?? [
         {
           cta && (
             <div class="tablet-button">
-              <a href="/#contact" class="primary-button small">
+              <a href="#contact" class="primary-button small">
                 <div class="button-text">{cta}</div>
                 <span
                   aria-hidden="true"
@@ -162,6 +171,18 @@ const items = navItems ?? [
     letter-spacing: 0.08em;
     color: var(--colors--gold);
     white-space: nowrap;
+  }
+  .logo-link {
+    display: inline-flex;
+    align-items: center;
+    align-self: stretch;
+  }
+  .brand-logo {
+    display: block;
+    height: 100%;
+    width: auto;
+    max-width: 100px;
+    object-fit: contain;
   }
   .nav-menu-list {
     list-style: none;

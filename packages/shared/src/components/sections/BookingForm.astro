@@ -5,7 +5,7 @@ import type { PageContent } from "../../types";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 
-interface FieldDef { label: string; placeholder?: string; name: string; type?: string; side?: string }
+      interface FieldDef { label: string; placeholder?: string; name: string; type?: string; options?: string[]; side?: string }
 interface Props {
   pageContent?: PageContent;
   phoneItaly?: string;
@@ -225,7 +225,7 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
   if (raw) {
     (() => {
       interface Region { label?: string; services: { name: string; routes: (string | { route: string; price?: string })[] }[] }
-      interface FieldDef { label: string; placeholder?: string; name: string; type?: string; side?: string }
+interface FieldDef { label: string; placeholder?: string; name: string; type?: string; options?: string[]; side?: string }
       interface HeroData {
         spain: Region; italy: Region;
         SS: string; SR: string; CL: string; CS: string; SP: string;
@@ -450,11 +450,37 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
         inp.className = "booking-form-field";
         inp.id = `form-${f.name}`;
         inp.name = f.name;
-        inp.type = "text";
+        inp.type = f.type === "number" ? "number" : "text";
+        if (f.type === "number") inp.inputMode = "decimal";
         if (f.placeholder) inp.placeholder = f.placeholder;
         inp.setAttribute("aria-label", f.label);
         inp.setAttribute("data-custom-field", "");
         wrap.appendChild(lab); wrap.appendChild(inp);
+        return wrap;
+      }
+      function createSelectField(f: FieldDef): HTMLElement {
+        const wrap = document.createElement("div");
+        wrap.className = "booking-form-label-field";
+        const lab = document.createElement("label");
+        lab.className = "booking-form-label";
+        lab.htmlFor = `form-${f.name}`;
+        lab.textContent = f.label;
+        const sel = document.createElement("select");
+        sel.className = "booking-form-field";
+        sel.id = `form-${f.name}`;
+        sel.name = f.name;
+        sel.setAttribute("aria-label", f.label);
+        sel.setAttribute("data-custom-field", "");
+        const prompt = document.createElement("option");
+        prompt.value = ""; prompt.disabled = true; prompt.hidden = true; prompt.selected = true;
+        prompt.textContent = f.placeholder || `Select ${f.label.toLowerCase()}...`;
+        sel.appendChild(prompt);
+        for (const opt of f.options ?? []) {
+          const o = document.createElement("option");
+          o.value = opt; o.textContent = opt;
+          sel.appendChild(o);
+        }
+        wrap.appendChild(lab); wrap.appendChild(sel);
         return wrap;
       }
       function createLocationField(f: FieldDef): HTMLElement {
@@ -749,6 +775,7 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
             let el: HTMLElement;
             if (f.type === "vehicle") el = createVehicleField(f);
             else if (f.type === "location" || f.type === "country") el = createLocationField(f);
+            else if (f.type === "select") el = createSelectField(f);
             else el = createTextField(f);
             const host = f.side === "right" ? svcRightEl : svcLeftEl;
             host.appendChild(el);

@@ -14,7 +14,7 @@ export interface HomeData {
   cta?: { heading?: string; text?: string; image?: string };
   bottomcta?: { heading?: string; values?: { title: string; text: string }[] };
   about?: { heading?: string; text?: string; image?: string; images?: string[] };
-  branding?: { luxury_without_limits?: string; professional_discreet_reliable?: string };
+  branding?: { logo?: string; luxury_without_limits?: string; professional_discreet_reliable?: string };
   labels?: Record<string, string>;
   howitworks?: { heading?: string; steps?: { title: string; description: string }[] };
 }
@@ -56,7 +56,7 @@ export interface SiteGlobalsData {
   vehicle_name?: string;
   labels?: Record<string, string>;
   howItWorksSteps?: { title: string; description: string; image?: string }[];
-  branding?: { luxury_without_limits?: string; professional_discreet_reliable?: string };
+  branding?: { logo?: string; luxury_without_limits?: string; professional_discreet_reliable?: string };
   stats?: { subheading?: string; image: string; items?: { label: string; title: string }[] };
   cta?: { heading?: string; text?: string; image?: string };
   bottomcta?: { heading?: string; values?: { title: string; text: string }[] };

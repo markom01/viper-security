@@ -39,6 +39,7 @@
     "branding": {
       "type": ["object", "null"],
       "properties": {
+        "logo": { "type": "string" },
         "luxury_without_limits": { "type": "string" },
         "professional_discreet_reliable": { "type": "string" }
       },

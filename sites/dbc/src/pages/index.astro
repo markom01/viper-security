@@ -19,7 +19,20 @@ const galleryEntries = await getCollection("gallery");
 const a = assembleHome({ home, siteGlobals, siteName: SITE_NAME });
 
 const hero = a.hero;
-const pageContent = a.pageContent;
+// Sveltia CMS rejects dotted field names — normalize underscore keys to
+// dot-path so shared-section resolveLabels lookups work (same as SiteLayout
+// and gallery.astro). Without this, CMS labels are silently ignored and
+// sections fall back to shared STRINGS defaults.
+const normalizeKey = (k: string) => k.replace(/_/g, ".");
+const pageContent = {
+  ...a.pageContent,
+  labels: Object.fromEntries(
+    Object.entries(a.pageContent?.labels ?? {}).map(([k, v]) => [
+      normalizeKey(k),
+      String(v),
+    ]),
+  ),
+};
 // Merge per-service form_fields (service/*.yaml) into home offerings so the
 // hero BookingForm can inject service-specific fields on service select.
 // Home offerings carry only title/slug; the field defs live in the service collection.
@@ -47,7 +60,7 @@ const homeCarousel = [
     tagline={hero.tagline}
     hero_image={hero.hero_image}
     pageContent={pageContent}
-    fleetHref="/gallery"
+    fleetHref="#services"
     phoneSpain={site.whatsappNumber}
     services={services}
   />
@@ -56,5 +69,5 @@ const homeCarousel = [
   <StatsSection pageContent={pageContent} />
   <HowItWorks steps={pageContent.howitworks?.steps ?? siteGlobals.howItWorksSteps} pageContent={pageContent} />
   <CtaBanner pageContent={pageContent} id="start-a-build" />
-  <BottomCta pageContent={pageContent} fleetHref="/gallery" id="your-dream-car" />
+  <BottomCta pageContent={pageContent} fleetHref="#about" id="your-dream-car" />
 </SiteLayout>

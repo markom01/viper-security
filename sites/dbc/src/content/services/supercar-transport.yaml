@@ -1,8 +1,8 @@
 title: Enclosed Supercar Transport
 slug: supercar-transport
-description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe and worldwide.
+description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe.
 hero:
-  subtitle: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs — across Europe and worldwide.
+  subtitle: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs — across Europe.
   cta_text: Get A Quote
   tagline: Supercars & Classics, No Limits
   image: /images/cms/supercar transport hero.jpeg
@@ -15,8 +15,8 @@ form_fields:
     placeholder: Delivery location
     name: destination
     type: location
-marquee: Enclosed Transport · Insured · Tracked · Europe & USA
-about_text: Enclosed transport with our own trucks and enclosed vehicles — fully insured, secure, safe and clean — all over Europe and the USA.
+marquee: Enclosed Transport · Insured · Tracked · Across Europe
+about_text: Enclosed transport with our own trucks and enclosed vehicles — fully insured, secure, safe and clean — across Europe.
 about_images:
   - /images/cms/gallery/17865778411891254.webp
   - /images/cms/gallery/17875396738808884.webp
@@ -27,8 +27,8 @@ include:
   - title: Enclosed Trailers & Trucks
     text: Fully enclosed, never open-deck — full insurance on every move.
     image: /images/cms/gallery/17865778411891254.webp
-  - title: EU, UK & USA Routes
-    text: Door-to-door supercar transport across Europe and worldwide.
+  - title: EU & UK Routes
+    text: Door-to-door supercar transport across Europe.
     image: /images/cms/gallery/17875396738808884.webp
   - title: Door-to-Door Delivery
     text: Origin collection to final destination, tracked throughout.
@@ -64,26 +64,26 @@ stats:
   subheading: Enclosed, insured and tracked — every single move.
   image: /images/cms/gallery/supercars-transport.webp
   items:
-    - label: '100'
-      title: Enclosed, never open-deck
-    - label: '1'
+    - label: '100%'
+      title: Enclosed — never open-deck
+    - label: '€1/km'
       title: Transparent per-route pricing
-    - label: '24'
-      title: Live tracked door-to-door
-    - label: '2'
-      title: Europe & worldwide routes
+    - label: '24/7'
+      title: Live-tracked door to door
+    - label: '30+'
+      title: European countries covered
 steps:
   - title: Quote & Book
     description: Tell us origin, destination and vehicle. We quote per route — from €1/km, both directions — and lock your slot.
   - title: Enclosed Collection
     description: We collect in our own fully enclosed, liftgate-equipped trucks. Your car is sealed, insured and logged before it moves.
   - title: Tracked Delivery
-    description: GPS-tracked door-to-door across Europe and the USA, with updates until handover.
+    description: GPS-tracked door-to-door across Europe, with updates until handover.
 howitworks:
   heading: How Your Supercar Gets There
 cta:
   heading: Ready to Move Your Supercar?
-  text: Book enclosed, insured transport across Europe and the USA — quoted per route, tracked end to end.
+  text: Book enclosed, insured transport across Europe — quoted per route, tracked end to end.
   image: /images/cms/gallery/supercars-transport.webp
 bottomcta:
   heading: Transport, Handled End to End
@@ -96,5 +96,5 @@ bottomcta:
       text: Origin to destination, with updates along the way.
 seo:
   title: DB Custom Garage — Enclosed Supercar Transport
-  description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe and worldwide.
+  description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe.
   image: /images/from-wix/hero.webp

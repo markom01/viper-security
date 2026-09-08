@@ -81,12 +81,15 @@ export interface ServiceOffering {
   /** Service-specific lead-form extra fields (name/phone/date/message are fixed).
    *  `type: "location"` renders a Photon address-autocomplete input (Origin,
    *  Destination, ...); `type: "country"` restricts the dropdown to countries
-   *  (Photon layer=country, worldwide); `type: "text"` (default) is a plain input. */
+   *  (Photon layer=country, worldwide); `type: "select"` renders a dropdown
+   *  from `options`; `type: "number"` renders a numeric input;
+   *  `type: "text"` (default) is a plain input. */
   form_fields?: {
     label: string;
     placeholder?: string;
     name: string;
-    type?: "text" | "location" | "country" | "vehicle";
+    type?: "text" | "location" | "country" | "vehicle" | "select" | "number";
+    options?: string[];
     /** Which side of the form the field renders on. Default "left" (after
      *  Phone, before the date/message block). "right" places it after the
      *  date field on the right column — used to balance rows so e.g. a
@@ -200,6 +203,7 @@ export interface PageContent {
     values?: Array<{ title: string; text: string }>;
   };
   branding?: {
+    logo?: string;
     luxury_without_limits?: string;
     professional_discreet_reliable?: string;
   };

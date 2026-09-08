@@ -106,6 +106,7 @@
     "branding": {
       "type": ["object", "null"],
       "properties": {
+        "logo": { "type": "string" },
         "luxury_without_limits": { "type": "string" },
         "professional_discreet_reliable": { "type": "string" }
       },
@@ -114,6 +115,22 @@
     "labels": {
       "type": ["object", "null"],
       "additionalProperties": { "type": "string" }
+    },
+    "howitworks": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": { "title": { "type": "string" }, "description": { "type": "string" } },
+            "required": ["title", "description"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
     }
   },
   "required": ["hero", "services"],

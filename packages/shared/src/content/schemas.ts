@@ -3,6 +3,12 @@ import type { SchemaContext } from "astro:content";
 
 const imagePath = z.string().optional();
 
+// Sveltia CMS "complete output" writes `null` for untouched optional objects.
+// Normalize null → undefined so a CMS round-trip can never fail the build;
+// valid objects pass through untouched, output type unchanged (T | undefined).
+const nullToUndefined = <T extends z.ZodTypeAny>(schema: T) =>
+  z.preprocess((v) => (v == null ? undefined : v), schema.optional());
+
 export const heroSchema = ({ image: _image }: SchemaContext) =>
   z.object({
     brand_name: z.string().optional(),
@@ -27,63 +33,70 @@ export const serviceDetailSchema = z.object({
   slug: z.string().optional(),
   description: z.string().optional(),
   marquee: z.string().optional(),
-  seo: z.object({
+  seo: nullToUndefined(z.object({
     title: z.string().optional(),
     description: z.string().optional(),
     image: z.string().optional(),
-  }).optional(),
+  })),
   about_text: z.string().optional(),
   about_images: z.array(z.string()).optional(),
-  hero: z.object({
+  hero: nullToUndefined(z.object({
     subtitle: z.string().optional(),
     cta_text: z.string().optional(),
     tagline: z.string().optional(),
     image: z.string().optional(),
-  }).optional(),
+  })),
   steps: z.array(z.object({ title: z.string(), description: z.string() })).optional(),
   include: z.array(z.object({
     title: z.string(), text: z.string(), image: z.string().optional(),
   })).optional(),
-  stats: z.object({
+  stats: nullToUndefined(z.object({
     heading: z.string().optional(),
     subheading: z.string().optional(),
     image: z.string().optional(),
     items: z.array(z.object({ label: z.string(), title: z.string() })).optional(),
-  }).optional(),
-  cta: z.object({
+  })),
+  cta: nullToUndefined(z.object({
     heading: z.string().optional(),
     text: z.string().optional(),
     image: z.string().optional(),
-  }).optional(),
+  })),
   // Per-service How-It-Works heading override (site-global howItWorksHeading is
   // the fallback). Steps come from serviceDetailSchema.steps.
-  howitworks: z.object({ heading: z.string().optional() }).optional(),
+  howitworks: nullToUndefined(z.object({ heading: z.string().optional() })),
   form_fields: z.array(z.object({
     label: z.string(), placeholder: z.string().optional(), name: z.string(),
     // "" from CMS means "plain text / unset" — DBC carries the narrow enum; the
     // preprocess keeps the shared schema tolerant of empty strings from YAML.
     type: z.preprocess(
       (v) => (v === "" || v == null ? undefined : v),
-      z.enum(["text", "location", "country", "vehicle"]).optional(),
+      z.enum(["text", "location", "country", "vehicle", "select", "number"]).optional(),
     ).optional(),
+    // Dropdown choices for `type: "select"` (e.g. project type). Free-form
+    // text list in CMS; rendered as <option> elements in order.
+    options: z.array(z.string()).optional(),
     side: z.preprocess(
       (v) => (v === "" || v == null ? undefined : v),
       z.enum(["left", "right"]).optional(),
     ).optional(),
   })).optional(),
-  bottomcta: z.object({
+  bottomcta: nullToUndefined(z.object({
     heading: z.string().optional(),
     values: z.array(z.object({ title: z.string(), text: z.string() })).optional(),
-  }).optional(),
+  })),
   // DBC per-service sale-fleet heading override (import/export "Currently Selling"
   // vs site-global "Our Fleet"). Consumed by DBC [slug].astro → assembleService.
-  fleet_section: z.object({
+  fleet_section: nullToUndefined(z.object({
     heading: z.string().optional(),
     subheadline: z.string().optional(),
-  }).optional(),
+  })),
   fleet: z.array(z.object({
-    name: z.string(), type: z.string().optional(), year: z.string().optional(),
-    seats: z.string().optional(), baggage: z.string().optional(),
+    name: z.string(), type: z.string().optional(),
+    // CMS number widgets write raw numbers; legacy YAML carries quoted
+    // strings ("2024"). Coerce both to string so display code is unchanged.
+    year: z.preprocess((v) => (v === "" || v == null ? undefined : String(v)), z.string().optional()).optional(),
+    seats: z.preprocess((v) => (v === "" || v == null ? undefined : String(v)), z.string().optional()).optional(),
+    baggage: z.preprocess((v) => (v === "" || v == null ? undefined : String(v)), z.string().optional()).optional(),
     capacity_passengers: z.number().optional(), capacity_suitcases: z.number().optional(),
     capacity_carryon: z.number().optional(),
     specs: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
@@ -91,64 +104,65 @@ export const serviceDetailSchema = z.object({
   })).optional(),
 });
 
-export const statsSchema = z.object({
+export const statsSchema = nullToUndefined(z.object({
   heading: z.string().optional(),
   subheading: z.string().optional(),
   image: z.string(),
   items: z.array(z.object({ label: z.string(), title: z.string() })).optional(),
-}).optional();
+}));
 
-export const ctaSchema = z.object({
+export const ctaSchema = nullToUndefined(z.object({
   heading: z.string().optional(), text: z.string().optional(), image: z.string().optional(),
-}).optional();
+}));
 
-export const bottomCtaSchema = z.object({
+export const bottomCtaSchema = nullToUndefined(z.object({
   heading: z.string().optional(),
   values: z.array(z.object({ title: z.string(), text: z.string() })).optional(),
-}).optional();
+}));
 
-export const aboutSchema = z.object({
+export const aboutSchema = nullToUndefined(z.object({
   heading: z.string().optional(), text: z.string().optional(),
   image: z.string().optional(), images: z.array(z.string()).optional(),
-}).optional();
+}));
 
 // Canonical, reusable section-block group. home / service / site each carry the
 // SAME shape (seo, stats, cta, bottomcta, about, branding, labels) so every CMS
 // page shares one structure. serviceSchema defines its own copy of these inline
 // (per-offering fields differ); this is the shared home/site variant.
 export const homePageBlocksSchema = {
-  seo: z.object({
+  seo: nullToUndefined(z.object({
     title: z.string().optional(), description: z.string().optional(),
     theme_color: z.string().optional(), image: z.string().optional(),
-  }).optional(),
+  })),
   stats: statsSchema,
   cta: ctaSchema,
   bottomcta: bottomCtaSchema,
   about: aboutSchema,
-  branding: z.object({
+  branding: nullToUndefined(z.object({
+    logo: z.string().optional(),
     luxury_without_limits: z.string().optional(),
     professional_discreet_reliable: z.string().optional(),
-  }).optional(),
+  })),
   labels: z.record(z.string(), z.string()).optional(),
   // Home-page How It Works (heading + steps). Omitted/empty → siteGlobals
   // howItWorksHeading / howItWorksSteps fallback. (serviceDetailSchema carries
   // its own per-service `howitworks.heading` override only — steps come from its
   // own `steps` field — so this home-only block does not collide with it.)
-  howitworks: z.object({
+  howitworks: nullToUndefined(z.object({
     heading: z.string().optional(),
     steps: z.array(z.object({ title: z.string(), description: z.string() })).optional(),
-  }).optional(),
+  })),
 };
 
 export const siteGlobalsSchema = z.object({
-  jsonld: z.object({
+  jsonld: nullToUndefined(z.object({
     org_name: z.string().optional(), org_url: z.string().optional(),
     org_logo: z.string().optional(), org_description: z.string().optional(),
     phoneSpain: z.string().optional(), phoneItaly: z.string().optional(),
     webSiteName: z.string().optional(), webSiteUrl: z.string().optional(),
     privacy_policy: z.string().optional(),
-  }).optional(),
-  booking_data: z.object({
+  })),
+  booking_data: nullToUndefined(z.object({
     spain: z.object({
       label: z.string().optional(), short_label: z.string().optional(), region: z.string().optional(),
       services: z.array(z.object({
@@ -161,32 +175,35 @@ export const siteGlobalsSchema = z.object({
         name: z.string(), routes: z.array(z.object({ route: z.string(), price: z.string().optional() })),
       })),
     }),
-  }).optional(),
+  })),
   vehicle_name: z.string().optional(),
   labels: z.record(z.string(), z.string()).optional(),
   howItWorksSteps: z.array(z.object({
     title: z.string(), description: z.string(), image: z.string().optional(),
   })).optional(),
-  branding: z.object({
+  branding: nullToUndefined(z.object({
+    logo: z.string().optional(),
     luxury_without_limits: z.string().optional(),
     professional_discreet_reliable: z.string().optional(),
-  }).optional(),
+  })),
   stats: statsSchema,
   cta: ctaSchema,
   bottomcta: bottomCtaSchema,
   about: aboutSchema,
-  seo: z.object({
+  seo: nullToUndefined(z.object({
     title: z.string().optional(), description: z.string().optional(),
     theme_color: z.string().optional(), image: z.string().optional(),
-  }).optional(),
+  })),
   map_embed_url: z.string().regex(/^https:\/\/(www\.)?google\.[a-z]{2,}(\/\S*)?$/i).optional(),
   fleetHeading: z.string().optional(),
   howItWorksHeading: z.string().optional(),
 });
 
 export const fleetVehicleSchema = z.object({
-  name: z.string(), type: z.string().optional(), year: z.string().optional(),
-  seats: z.string().optional(), baggage: z.string().optional(),
+  name: z.string(), type: z.string().optional(),
+  year: z.preprocess((v) => (v === "" || v == null ? undefined : String(v)), z.string().optional()).optional(),
+  seats: z.preprocess((v) => (v === "" || v == null ? undefined : String(v)), z.string().optional()).optional(),
+  baggage: z.preprocess((v) => (v === "" || v == null ? undefined : String(v)), z.string().optional()).optional(),
   capacity_passengers: z.number().optional(), capacity_suitcases: z.number().optional(),
   capacity_carryon: z.number().optional(),
   specs: z.array(z.object({ label: z.string(), value: z.string() })).optional(),

@@ -56,10 +56,15 @@ const normalizedContent: PageContent = {
 const navItems = buildNav(labels);
 const footerItems = buildFooterNav(labels);
 const ctaLabel = labels["nav.contact"];
+// Single CMS source for header + footer logo: site globals branding.logo
+// (editable in CMS under Site Globals → Branding). Falls back to the
+// checked-in DBC badge so pages render even if the field is empty.
+const brandLogoSrc = normalizedContent?.branding?.logo || "/images/cms/Logo.png";
 ---
 
 <BaseLayout
   pageContent={normalizedContent}
+  brandLogoSrc={brandLogoSrc}
   navItems={navItems}
   footerItems={footerItems}
   ctaLabel={ctaLabel}

@@ -19,7 +19,7 @@
       "additionalProperties": false
     },
     "about_text": { "type": "string" },
-    "about_image": { "type": "string" },
+    "about_images": { "type": "array", "items": { "type": "string" } },
     "hero": {
       "type": ["object", "null"],
       "properties": {
@@ -92,8 +92,8 @@
           "label": { "type": "string" },
           "placeholder": { "type": "string" },
           "name": { "type": "string" },
-          "type": { "type": ["string", "null"], "enum": ["text", "location", "country", "vehicle", null] },
-          "side": { "type": ["string", "null"], "enum": ["left", "right", null] }
+          "type": { "type": ["string", "null"], "enum": ["text", "location", "country", "vehicle", "", null] },
+          "side": { "type": ["string", "null"], "enum": ["left", "right", "", null] }
         },
         "required": ["label", "name"],
         "additionalProperties": false

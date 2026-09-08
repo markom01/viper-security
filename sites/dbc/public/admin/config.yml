@@ -8,6 +8,12 @@ backend:
 media_folder: sites/dbc/public/images/cms
 public_folder: /images/cms
 
+# Sveltia writes "complete output" by default: untouched optional objects
+# become `null` and cleared fields become `''`, which breaks Zod validation
+# at build time. Omit them instead so CMS round-trips stay schema-clean.
+output:
+  omit_empty_optional_fields: true
+
 collections:
   - name: gallery
     label: Gallery
@@ -23,7 +29,7 @@ collections:
           name: category,
           label: Category,
           widget: select,
-          options: [brand, supercar, customizing, auction, all-builds],
+          options: [brand, supercar, customizing, auction, import-export, all-builds],
           default: all-builds,
         }
       - { name: image, label: Image, widget: image }
@@ -178,11 +184,11 @@ collections:
           - { name: label, label: Label, widget: string }
           - { name: placeholder, label: Placeholder, widget: string, required: false }
           - { name: name, label: "Field Name", widget: string }
-          - { name: type, label: Type, widget: select, options: [text, location, country, vehicle], required: false }
+          - { name: type, label: Type, widget: select, options: [text, location, country, vehicle, select, number], required: false }
+          - { name: options, label: "Dropdown Options (only for Type = select)", widget: list, field: { name: option, label: Option, widget: string }, required: false }
           - { name: side, label: Side, widget: select, options: [left, right], required: false }
       - { name: marquee, label: "Marquee Text", widget: string, required: false }
       - { name: about_text, label: "About Text", widget: text, required: false }
-      - { name: about_image, label: "About Image", widget: image, required: false }
       - label: "Include (service cards)"
         name: include
         widget: list
@@ -210,9 +216,9 @@ collections:
         fields:
           - { name: name, label: Vehicle Name, widget: string }
           - { name: type, label: Type, widget: string, required: false }
-          - { name: year, label: Year, widget: string, required: false }
-          - { name: seats, label: Seats, widget: string, required: false }
-          - { name: baggage, label: Baggage, widget: string, required: false }
+          - { name: year, label: Year, widget: number, value_type: int, required: false }
+          - { name: seats, label: Seats, widget: number, value_type: int, required: false }
+          - { name: baggage, label: Baggage, widget: number, value_type: int, required: false }
           - { name: capacity_passengers, label: "Capacity (Passengers)", widget: number, required: false }
           - { name: capacity_suitcases, label: "Capacity (Suitcases)", widget: number, required: false }
           - { name: capacity_carryon, label: "Capacity (Carry-on)", widget: number, required: false }
@@ -339,6 +345,7 @@ collections:
             collapsed: true
             required: false
             fields:
+              - { name: logo, label: Site Logo (header + footer), widget: image, required: false }
               - { name: luxury_without_limits, label: Tagline Text, widget: string, required: false }
               - { name: professional_discreet_reliable, label: Sub Tagline Text, widget: string, required: false }
           - name: labels
@@ -353,7 +360,7 @@ collections:
               - { name: bottomCta_buttonServices, label: "Bottom CTA Services Button", widget: string, required: false }
               - { name: bottomCta_buttonFleet, label: "Bottom CTA Builds Button", widget: string, required: false }
               - { name: hero_learnMore, label: "Hero Learn More", widget: string, required: false }
-              - { name: hero_exploreFleet, label: "Hero View Builds", widget: string, required: false }
+              - { name: hero_exploreFleet, label: "Hero Services Button", widget: string, required: false }
               - { name: hero_formName, label: "Hero Form Title", widget: string, required: false }
               - { name: form_bookNow, label: "Form Submit Button", widget: string, required: false }
               - { name: marquee_text, label: "Marquee Text", widget: string, required: false }
