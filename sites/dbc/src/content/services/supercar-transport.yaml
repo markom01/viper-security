@@ -5,7 +5,7 @@ hero:
   subtitle: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs — across Europe.
   cta_text: Get A Quote
   tagline: Supercars & Classics, No Limits
-  image: /images/cms/supercar transport hero.jpeg
+  image: /images/cms/supercar transport hero.webp
 form_fields:
   - label: Origin
     placeholder: Pick-up location

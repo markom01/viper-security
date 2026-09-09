@@ -5,7 +5,7 @@ hero:
   subtitle: We sell your classic or supercar — without you leaving your garage.
   cta_text: Get A Quote
   tagline: Supercars & Classics, No Limits
-  image: /images/cms/auction hero.jpeg
+  image: /images/cms/auction hero.webp
 form_fields:
   - label: Details
     placeholder: Year, condition, mileage

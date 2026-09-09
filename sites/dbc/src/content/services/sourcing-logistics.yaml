@@ -5,7 +5,7 @@ hero:
   subtitle: Off-market sourcing, consulting, and full-service vehicle import/export — from finding your dream car to door-to-door delivery across borders.
   cta_text: Get A Quote
   tagline: Supercars & Classics, No Limits
-  image: /images/cms/import hero.jpg
+  image: /images/cms/import hero.webp
 form_fields:
   - label: Target vehicle
     placeholder: Make, model, year, budget

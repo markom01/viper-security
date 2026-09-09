@@ -14,6 +14,7 @@
         "org_description": { "type": "string" },
         "phoneSpain": { "type": "string" },
         "phoneItaly": { "type": "string" },
+        "phoneSpainWhatsapp": { "type": "string" },
         "webSiteName": { "type": "string" },
         "webSiteUrl": { "type": "string" },
         "privacy_policy": { "type": "string" }

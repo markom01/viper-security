@@ -182,6 +182,7 @@ export interface PageContent {
     org_description?: string;
     phoneSpain?: string;
     phoneItaly?: string;
+    phoneSpainWhatsapp?: string;
     webSiteName?: string;
     webSiteUrl?: string;
     privacy_policy?: string;

@@ -159,6 +159,7 @@ export const siteGlobalsSchema = z.object({
     org_name: z.string().optional(), org_url: z.string().optional(),
     org_logo: z.string().optional(), org_description: z.string().optional(),
     phoneSpain: z.string().optional(), phoneItaly: z.string().optional(),
+    phoneSpainWhatsapp: z.string().optional(),
     webSiteName: z.string().optional(), webSiteUrl: z.string().optional(),
     privacy_policy: z.string().optional(),
   })),

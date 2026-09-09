@@ -5,7 +5,7 @@ hero:
   subtitle: Bespoke design and build — from restomod to show-grade.
   cta_text: Get A Quote
   tagline: Customize · Design · Build
-  image: /images/cms/custom design hero.jpeg
+  image: /images/cms/custom design hero.webp
 form_fields:
   - label: Project type
     placeholder: Select project type...

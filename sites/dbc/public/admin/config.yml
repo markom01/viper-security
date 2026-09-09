@@ -328,8 +328,9 @@ collections:
               - { name: org_url, label: Organization URL, widget: string, required: false }
               - { name: org_logo, label: Logo URL, widget: string, required: false }
               - { name: org_description, label: Description, widget: text, required: false }
-              - { name: phoneSpain, label: "Phone (Spain)", widget: string, required: false }
+              - { name: phoneSpain, label: "Phone (Spain, footer display only)", widget: string, required: false }
               - { name: phoneItaly, label: "Phone (Italy)", widget: string, required: false }
+              - { name: phoneSpainWhatsapp, label: "Phone (Spain, WhatsApp — footer + form enquiries)", widget: string, required: false }
           - name: seo
             label: SEO / Meta
             widget: object

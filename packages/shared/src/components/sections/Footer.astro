@@ -9,11 +9,13 @@ interface Props {
   tagline?: string;
   phoneItaly?: string;
   phoneSpain?: string;
+  /** Third display number (e.g. the WhatsApp line that receives form enquiries). */
+  phoneSpainWhatsapp?: string;
   /** Social profiles. Verified real handles per site; bare roots disabled. */
   social?: { icon: string; href: string; label: string }[];
 }
 
-const { pageContent, footerItems, brandName, brandLogoSrc, tagline, phoneItaly, phoneSpain, social } = Astro.props as Props;
+const { pageContent, footerItems, brandName, brandLogoSrc, tagline, phoneItaly, phoneSpain, phoneSpainWhatsapp, social } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
@@ -58,27 +60,18 @@ const isAllowedMapUrl = (u?: string) => {
           </a>
           <p class="pure-text">
             {
-              phoneItaly && (
-                <a
-                  href={`https://wa.me/${cleanPhone(phoneItaly)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`WhatsApp ${phoneItaly}`}
-                  class="phone-wa-link">{phoneItaly}</a
-                >
-              )
-            }
-            {phoneItaly && phoneSpain ? phoneSep : null}
-            {
-              phoneSpain && (
-                <a
-                  href={`https://wa.me/${cleanPhone(phoneSpain)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`WhatsApp ${phoneSpain}`}
-                  class="phone-wa-link">{phoneSpain}</a
-                >
-              )
+              [phoneItaly, phoneSpain, phoneSpainWhatsapp].filter(Boolean).map((phone, i) => (
+                <>
+                  {i > 0 ? phoneSep : null}
+                  <a
+                    href={`https://wa.me/${cleanPhone(phone)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`WhatsApp ${phone}`}
+                    class="phone-wa-link">{phone}</a
+                  >
+                </>
+              ))
             }
           </p>
           {

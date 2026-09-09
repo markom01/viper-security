@@ -85,6 +85,7 @@ const jd = {
   privacyPolicy: cmsJd?.privacy_policy,
   phoneItaly: cmsJd?.phoneItaly,
   phoneSpain: cmsJd?.phoneSpain,
+  phoneSpainWhatsapp: cmsJd?.phoneSpainWhatsapp,
   spainLocality: bd?.spain?.short_label,
   italyLocality: bd?.italy?.short_label,
   hasAddress: !!(bd?.spain?.short_label || bd?.italy?.short_label || false),
@@ -100,7 +101,7 @@ const addressJson = (() => {
   if (jd.italyLocality) addrs.push({ "@type": "PostalAddress", addressLocality: jd.italyLocality, addressCountry: "IT" });
   return addrs.length ? addrs : undefined;
 })();
-const jdPhones = [jd.phoneSpain, jd.phoneItaly].filter(Boolean);
+const jdPhones = [jd.phoneSpain, jd.phoneItaly, jd.phoneSpainWhatsapp].filter(Boolean);
 const jsonLdOrg = cmsJd?.org_name
   ? jsonEscape(
       JSON.stringify({
@@ -226,6 +227,7 @@ const jsonLdWebSite = jd.webSiteName || jd.webSiteUrl
       social={social}
       phoneItaly={jd.phoneItaly}
       phoneSpain={jd.phoneSpain}
+      phoneSpainWhatsapp={jd.phoneSpainWhatsapp}
     />
     <script>
       import Lenis from "lenis";
