@@ -6,7 +6,7 @@ import { pwaPluginOptions } from "@garage/shared/pwa";
 import { site } from "./src/config/site";
 import sitemap from "@astrojs/sitemap";
 
-// DB custom garage (https://dbcustomgarage.netlify.app) — reuses @garage/shared
+// DB custom garage (https://dbcustomgarage.com) — reuses @garage/shared
 // layout + sections. Own content collections + single-source site config.
 export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),

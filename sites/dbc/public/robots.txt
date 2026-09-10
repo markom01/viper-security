@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Sitemap: https://dbcustomgarage.netlify.app/sitemap-index.xml
+Sitemap: https://dbcustomgarage.com/sitemap-index.xml

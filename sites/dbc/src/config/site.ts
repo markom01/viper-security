@@ -8,7 +8,7 @@ export const site = {
   shortName: "DB Custom Garage",
   description:
     "DB Custom Garage — supercar and classic car transport, sale & auction, import/export logistics, and bespoke customizing and design.",
-  url: "https://dbcustomgarage.netlify.app",
+  url: "https://dbcustomgarage.com",
   themeColor: "#ea580c",
   bgColor: "#000000",
   /**

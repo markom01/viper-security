@@ -1,13 +1,13 @@
 jsonld:
   org_name: DB Custom Garage
-  org_url: https://dbcustomgarage.netlify.app
-  org_logo: https://dbcustomgarage.netlify.app/favicon.svg
+  org_url: https://dbcustomgarage.com
+  org_logo: https://dbcustomgarage.com/favicon.svg
   org_description: Supercar and classic car transport, import/export logistics, auction services, and off-market buying and selling across Europe.
   phoneSpain: +34 637 137 730
   phoneItaly: +39 349 663 8171
   phoneSpainWhatsapp: +34 670 038 541
-  privacy_policy: https://dbcustomgarage.netlify.app/privacy-policy
-  webSiteUrl: https://dbcustomgarage.netlify.app
+  privacy_policy: https://dbcustomgarage.com/privacy-policy
+  webSiteUrl: https://dbcustomgarage.com
   webSiteName: DB Custom Garage
 seo:
   title: DB Custom Garage — Supercar Transport & Logistics
