@@ -34,10 +34,10 @@ include:
     text: Origin collection to final destination, tracked throughout.
     image: /images/cms/gallery/f26-db-custom-garage.webp
   - title: Transparent Pricing
-    text: Quoted per route — price from €1/km, calculated both directions.
+    text: Quoted per route — price from €2/km, calculated both directions.
     image: /images/cms/gallery/17919567229428928.webp
 fleet:
-  - name: Hummer H2 with Enclosed Trailer
+  - name: Hummer H3 Alpha with Enclosed Trailer
     type: Heavy-Duty Hauler
     year: ''
     seats: ''
@@ -46,7 +46,7 @@ fleet:
       - label: Year
         value: '2008'
       - label: Capacity
-        value: 2 cars
+        value: 1 car
       - label: Trailer
         value: Fully enclosed
       - label: Liftgate
@@ -66,7 +66,7 @@ stats:
   items:
     - label: '100%'
       title: Enclosed — never open-deck
-    - label: '€1/km'
+    - label: '€2/km'
       title: Transparent per-route pricing
     - label: '24/7'
       title: Live-tracked door to door
@@ -74,7 +74,7 @@ stats:
       title: European countries covered
 steps:
   - title: Quote & Book
-    description: Tell us origin, destination and vehicle. We quote per route — from €1/km, both directions — and lock your slot.
+    description: Tell us origin, destination and vehicle. We quote per route — from €2/km, both directions — and lock your slot.
   - title: Enclosed Collection
     description: We collect in our own fully enclosed, liftgate-equipped trucks. Your car is sealed, insured and logged before it moves.
   - title: Tracked Delivery
