@@ -290,5 +290,6 @@ collections:
                   - { name: title, label: Title, widget: string }
                   - { name: text, label: Text, widget: text }
           - { name: map_embed_url, label: "Map Embed URL (Google Maps iframe src)", widget: string, required: false }
+          - { name: footer_company_info, label: "Footer Company Info (under logo, blank hides it)", widget: text, required: false }
           - { name: fleetHeading, label: "Fleet Section Heading", widget: string, required: false }
           - { name: howItWorksHeading, label: "How It Works Heading", widget: string, required: false }

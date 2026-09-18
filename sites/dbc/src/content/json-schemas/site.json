@@ -110,6 +110,7 @@
       "additionalProperties": false
     },
     "map_embed_url": { "type": "string" },
+    "footer_company_info": { "type": "string" },
     "fleetHeading": { "type": "string" },
     "howItWorksHeading": { "type": "string" }
   },

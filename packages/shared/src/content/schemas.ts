@@ -196,6 +196,9 @@ export const siteGlobalsSchema = z.object({
     theme_color: z.string().optional(), image: z.string().optional(),
   })),
   map_embed_url: z.string().regex(/^https:\/\/(www\.)?google\.[a-z]{2,}(\/\S*)?$/i).optional(),
+  /** CMS-editable company/address block rendered under the footer logo.
+   *  Multiline plain text; empty/omitted → block hidden (e.g. VIPER until data exists). */
+  footer_company_info: z.string().optional(),
   fleetHeading: z.string().optional(),
   howItWorksHeading: z.string().optional(),
 });

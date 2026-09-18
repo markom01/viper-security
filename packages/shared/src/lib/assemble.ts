@@ -84,6 +84,7 @@ export function assembleHome(args: AssembleHomeArgs): AssembleHomeResult {
       steps: home.howitworks?.steps ?? siteGlobals.howItWorksSteps,
     },
     map_embed_url: siteGlobals.map_embed_url,
+    footer_company_info: siteGlobals.footer_company_info,
   };
 
   const fleetFeaturesText = fleetEntries ? fleetFeaturesTextFrom(fleetEntries) : undefined;
@@ -172,6 +173,7 @@ export function assembleService(args: AssembleServiceArgs): AssembleServiceResul
       steps: home?.howitworks?.steps ?? howItWorksSteps,
     },
     map_embed_url: siteGlobals.map_embed_url,
+    footer_company_info: siteGlobals.footer_company_info,
   };
 
   // Per-offering SEO/JSON-LD merges over site globals (clone, never mutate).

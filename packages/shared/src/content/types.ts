@@ -44,7 +44,8 @@ export interface ServiceDetailData {
 export interface SiteGlobalsData {
   jsonld?: {
     org_name?: string; org_url?: string; org_logo?: string; org_description?: string;
-    phoneSpain?: string; phoneItaly?: string; webSiteName?: string; webSiteUrl?: string;
+    phoneSpain?: string; phoneItaly?: string; phoneSpainWhatsapp?: string;
+    webSiteName?: string; webSiteUrl?: string;
     privacy_policy?: string;
   };
   booking_data?: {
@@ -63,6 +64,8 @@ export interface SiteGlobalsData {
   about?: { heading?: string; text?: string; image?: string; images?: string[] };
   seo?: { title?: string; description?: string; theme_color?: string; image?: string };
   map_embed_url?: string;
+  /** CMS-editable company/address block under the footer logo. Absent/empty → hidden. */
+  footer_company_info?: string;
   fleetHeading?: string;
   howItWorksHeading?: string;
 }

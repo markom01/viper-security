@@ -13,9 +13,11 @@ interface Props {
   phoneSpainWhatsapp?: string;
   /** Social profiles. Verified real handles per site; bare roots disabled. */
   social?: { icon: string; href: string; label: string }[];
+  /** CMS-editable company/address block under the logo. Falls back to pageContent.footer_company_info. */
+  footerCompanyInfo?: string;
 }
 
-const { pageContent, footerItems, brandName, brandLogoSrc, tagline, phoneItaly, phoneSpain, phoneSpainWhatsapp, social } = Astro.props as Props;
+const { pageContent, footerItems, brandName, brandLogoSrc, tagline, phoneItaly, phoneSpain, phoneSpainWhatsapp, social, footerCompanyInfo: footerCompanyInfoProp } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
@@ -37,6 +39,9 @@ const links = footerItems ?? [
 
 const cleanPhone = (phone?: string) => (phone || "").replace(/\D/g, "");
 const phoneSep = s.footer.phoneSeparator;
+// CMS-editable company/address block under the logo (shared footer: only
+// renders when the site provides data — hidden on VIPER until it has data).
+const footerCompanyInfo = (footerCompanyInfoProp ?? pageContent?.footer_company_info ?? "").trim();
 const mapEmbedUrl = pageContent?.map_embed_url;
 const isAllowedMapUrl = (u?: string) => {
   try {
@@ -58,6 +63,9 @@ const isAllowedMapUrl = (u?: string) => {
               <span class="brand-text">{brandName}</span>
             )}
           </a>
+          {footerCompanyInfo ? (
+            <p class="footer-company-info">{footerCompanyInfo}</p>
+          ) : null}
           <p class="pure-text">
             {
               [phoneItaly, phoneSpain, phoneSpainWhatsapp].filter(Boolean).map((phone, i) => (
@@ -165,6 +173,14 @@ const isAllowedMapUrl = (u?: string) => {
     letter-spacing: 0.08em;
     color: var(--colors--slate);
     margin-top: 4px;
+  }
+  .footer-company-info {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    color: var(--colors--slate);
+    margin: 0;
+    white-space: pre-line;
   }
   .phone-wa-link {
     color: inherit;

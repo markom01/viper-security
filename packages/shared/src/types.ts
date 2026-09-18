@@ -209,6 +209,9 @@ export interface PageContent {
     professional_discreet_reliable?: string;
   };
   map_embed_url?: string;
+  /** CMS-editable company/address block rendered under the footer logo.
+   *  Absent/empty → hidden (shared footer stays clean on sites without data). */
+  footer_company_info?: string;
   /**
    * VIPER-only: booking_data used for {placeholder} templates AND Pricing regional
    * cards. Mirrors the `page-content` Zod schema: each region carries label/short/
