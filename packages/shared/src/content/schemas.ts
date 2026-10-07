@@ -196,8 +196,12 @@ export const siteGlobalsSchema = z.object({
     theme_color: z.string().optional(), image: z.string().optional(),
   })),
   map_embed_url: z.string().regex(/^https:\/\/(www\.)?google\.[a-z]{2,}(\/\S*)?$/i).optional(),
-  /** CMS-editable company/address block rendered under the footer logo.
-   *  Multiline plain text; empty/omitted → block hidden (e.g. VIPER until data exists). */
+  /** Structured footer identity. Address lines are derived from `map_embed_url`
+   *  (`addressLinesFromMapEmbedUrl`) — only the company name and VAT live here. */
+  footer_company_name: z.string().optional(),
+  footer_vat_number: z.string().optional(),
+  /** Legacy CMS-editable company/address block rendered under the footer logo.
+   *  Used only when neither structured field is set; empty/omitted → block hidden. */
   footer_company_info: z.string().optional(),
   fleetHeading: z.string().optional(),
   howItWorksHeading: z.string().optional(),

@@ -209,8 +209,11 @@ export interface PageContent {
     professional_discreet_reliable?: string;
   };
   map_embed_url?: string;
-  /** CMS-editable company/address block rendered under the footer logo.
-   *  Absent/empty → hidden (shared footer stays clean on sites without data). */
+  /** Structured footer identity; address lines derive from `map_embed_url`. */
+  footer_company_name?: string;
+  footer_vat_number?: string;
+  /** Legacy company/address block rendered under the footer logo.
+   *  Used only when neither structured field is set; absent/empty → hidden. */
   footer_company_info?: string;
   /**
    * VIPER-only: booking_data used for {placeholder} templates AND Pricing regional

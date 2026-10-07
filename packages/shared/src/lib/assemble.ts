@@ -84,6 +84,8 @@ export function assembleHome(args: AssembleHomeArgs): AssembleHomeResult {
       steps: home.howitworks?.steps ?? siteGlobals.howItWorksSteps,
     },
     map_embed_url: siteGlobals.map_embed_url,
+    footer_company_name: siteGlobals.footer_company_name,
+    footer_vat_number: siteGlobals.footer_vat_number,
     footer_company_info: siteGlobals.footer_company_info,
   };
 
@@ -173,6 +175,8 @@ export function assembleService(args: AssembleServiceArgs): AssembleServiceResul
       steps: home?.howitworks?.steps ?? howItWorksSteps,
     },
     map_embed_url: siteGlobals.map_embed_url,
+    footer_company_name: siteGlobals.footer_company_name,
+    footer_vat_number: siteGlobals.footer_vat_number,
     footer_company_info: siteGlobals.footer_company_info,
   };
 

@@ -64,7 +64,10 @@ export interface SiteGlobalsData {
   about?: { heading?: string; text?: string; image?: string; images?: string[] };
   seo?: { title?: string; description?: string; theme_color?: string; image?: string };
   map_embed_url?: string;
-  /** CMS-editable company/address block under the footer logo. Absent/empty → hidden. */
+  /** Structured footer identity; address lines derive from `map_embed_url`. */
+  footer_company_name?: string;
+  footer_vat_number?: string;
+  /** Legacy company/address block under the footer logo. Absent/empty → hidden. */
   footer_company_info?: string;
   fleetHeading?: string;
   howItWorksHeading?: string;

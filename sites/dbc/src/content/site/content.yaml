@@ -68,11 +68,8 @@ labels:
   form_error: Sorry — we could not send your enquiry. Please email us or try again.
   cta_imageAlt: DB Custom Garage automotive projects
   footer_pagesHeading: Links
-map_embed_url: "https://www.google.com/maps?q=Camino+de+Campanales+6,+29651+Mijas,+Malaga,+Spain&output=embed"
-footer_company_info: |-
-  DB Custom Garage Design SL
-  Camino de Campanales 6
-  29651 Mijas (Malaga) - Spain
-  VAT number : ESB93658136
+map_embed_url: "https://www.google.com/maps?q=DB+Custom+Garage+Design,+Cam.+de+Campanales,+6,+29651+M%C3%A1laga,+Spain&output=embed"
+footer_company_name: "DB Custom Garage Design SL"
+footer_vat_number: "ESB93658136"
 fleetHeading: Our Fleet
 howItWorksHeading: How We Build Your Dream
