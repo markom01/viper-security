@@ -241,7 +241,7 @@ on:
 
 concurrency:
   group: deploy-viper
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:

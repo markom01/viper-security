@@ -6,7 +6,8 @@ on:
 
 concurrency:
   group: deploy-viper
-  cancel-in-progress: true
+  # Serialize: FTP mirror --delete is non-atomic; cancelling mid-mirror can leave a transient gap.
+  cancel-in-progress: false
 
 jobs:
   deploy:
