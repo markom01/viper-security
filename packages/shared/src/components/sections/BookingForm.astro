@@ -55,12 +55,9 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
     <form
       class={`booking-form${hasBooking ? "" : " garage-form"}`}
       aria-label={s.hero.bookingFormAria}
-      data-netlify="true"
-      netlify-honeypot="bot-field"
       name="booking-form"
       method="POST"
     >
-      <input type="text" name="bot-field" aria-hidden="true" tabindex="-1" autocomplete="off" class="honeypot-hidden" />
       <div class="left-side-fields">
         <div class="booking-form-label-field">
           <label class="booking-form-label" for="full-name">{s.form.name}</label>
