@@ -50,17 +50,21 @@ Move the live hosting of the VIPER Security site from Netlify (`https://viper-se
 
 ## Parts the user decided
 
-| Decision                          | Value                                                                  |
-| --------------------------------- | ---------------------------------------------------------------------- |
-| Infomaniak state                  | Domain `vipersecurity.ch` + Web Hosting package already bought         |
-| Deploy workflow                   | Auto-deploy on push via GitHub Actions (SSH-based)                     |
-| Email                             | Powered by Infomaniak on this domain                                   |
-| Old Netlify site                  | Keep as 301 redirect for ~2 months, then delete                        |
-| Booking-form Netlify Forms backup | Removed from VIPER's build output (prop opt-out); DBC keeps its backup |
+| Decision                          | Value                                                                                           |
+| --------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Infomaniak state                  | Domain `vipersecurity.ch` + Web Hosting package already bought                                  |
+| Deploy workflow                   | Auto-deploy on push via GitHub Actions (SSH-based)                                              |
+| Email                             | Powered by Infomaniak on this domain                                                            |
+| Old Netlify site                  | Keep as 301 redirect for ~2 months, then delete                                                 |
+| Booking-form Netlify Forms backup | Deleted outright from shared form (unused on both sites — verified via Netlify API + repo grep) |
 
 ## Parts I decided (builder: treat as settled; note if implementation suggests otherwise)
 
-1. **Netlify Forms markup is removed from VIPER's build output via a prop-mediated opt-out, NOT by blanket deletion.** `packages/shared/src/components/sections/BookingForm.astro` (rendered through `Hero.astro`) powers DBC's hero form too, and Netlify discovers forms by scanning deployed HTML for `data-netlify`. Blanket removal would silently break DBC's form backup on its next deploy. Therefore: BookingForm (and Hero) gain an optional `netlifyForms?: boolean` prop defaulting to `true`; the `data-netlify="true"` + `netlify-honeypot="bot-field"` attributes and the hidden `bot-field` honeypot input render only when it is set. **Only `sites/viper/src/pages/index.astro` passes `netlifyForms={false}`**; DBC's call site stays as-is, so its default preserves its backup form. Post-build verification: grep both sites' `dist/` HTML — VIPER's output must have no netlify form artifacts; DBC's must show them. (The form's `name`/`method="POST"` markup stays — it predates this change, harms nothing, and is out of scope.)
+1. **Netlify Forms markup is deleted outright from the shared `BookingForm.astro`** — `data-netlify="true"`, `netlify-honeypot="bot-field"`, and the hidden `bot-field` honeypot input. No prop machinery (verified unnecessary, 2026-10-18 via the Netlify API and repo grep):
+   - `dbcustomgarage` project has the Forms feature "not enabled" — its `data-netlify` attributes are already inert there, so removal changes nothing for DBC.
+   - `viper-security` project's current `booking-form` has **0 submissions**; the only submissions ever recorded (4, July 2026) are on the old `Booking`/`contact` form versions and are all the user's own tests using their own name/phone. No customer leads to preserve.
+   - Nothing in the code reads the honeypot input.
+   - The three registered forms and their records disappear naturally when the Netlify site is deleted at teardown; nothing needs migrating out.
 2. **No edits to `sites/dbc/*` or to shared DBC-affecting config.** Viper's `netlify.toml` stays in the repo as-is until teardown; the old-site redirect is configured on the Netlify site (Dashboard/API), never via repo-wide config.
 3. **Canonical = apex `https://vipersecurity.ch`.** Flip the four known hardcoded-URL places:
    - `sites/viper/src/config/site.ts` `url` (drives `astro.config` `site`, sitemap, PWA baseline),
