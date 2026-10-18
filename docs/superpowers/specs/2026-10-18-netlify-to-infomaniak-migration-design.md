@@ -50,17 +50,17 @@ Move the live hosting of the VIPER Security site from Netlify (`https://viper-se
 
 ## Parts the user decided
 
-| Decision                          | Value                                                          |
-| --------------------------------- | -------------------------------------------------------------- |
-| Infomaniak state                  | Domain `vipersecurity.ch` + Web Hosting package already bought |
-| Deploy workflow                   | Auto-deploy on push via GitHub Actions (SSH-based)             |
-| Email                             | Powered by Infomaniak on this domain                           |
-| Old Netlify site                  | Keep as 301 redirect for ~2 months, then delete                |
-| Booking-form Netlify Forms backup | Dropped on the new host (WhatsApp opener is the real channel)  |
+| Decision                          | Value                                                                  |
+| --------------------------------- | ---------------------------------------------------------------------- |
+| Infomaniak state                  | Domain `vipersecurity.ch` + Web Hosting package already bought         |
+| Deploy workflow                   | Auto-deploy on push via GitHub Actions (SSH-based)                     |
+| Email                             | Powered by Infomaniak on this domain                                   |
+| Old Netlify site                  | Keep as 301 redirect for ~2 months, then delete                        |
+| Booking-form Netlify Forms backup | Removed from VIPER's build output (prop opt-out); DBC keeps its backup |
 
 ## Parts I decided (builder: treat as settled; note if implementation suggests otherwise)
 
-1. **Shared `BookingForm.astro` is NOT edited.** It (`packages/shared/src/components/sections/BookingForm.astro`, via `Hero.astro`) also powers DBC's hero form on Netlify, where `data-netlify="true"` / `netlify-honeypot` matter. On Infomaniak those attributes are inert HTML: the WhatsApp submit flow works, the Netlify Forms endpoint simply doesn't exist, and flagged-form-submission spam surface disappears. Achieves the user's "drop the backup" decision with zero cross-site risk. (A prop-mediated opt-out can be a DBC-side improvement later; out of scope here.)
+1. **Netlify Forms markup is removed from VIPER's build output via a prop-mediated opt-out, NOT by blanket deletion.** `packages/shared/src/components/sections/BookingForm.astro` (rendered through `Hero.astro`) powers DBC's hero form too, and Netlify discovers forms by scanning deployed HTML for `data-netlify`. Blanket removal would silently break DBC's form backup on its next deploy. Therefore: BookingForm (and Hero) gain an optional `netlifyForms?: boolean` prop defaulting to `true`; the `data-netlify="true"` + `netlify-honeypot="bot-field"` attributes and the hidden `bot-field` honeypot input render only when it is set. **Only `sites/viper/src/pages/index.astro` passes `netlifyForms={false}`**; DBC's call site stays as-is, so its default preserves its backup form. Post-build verification: grep both sites' `dist/` HTML — VIPER's output must have no netlify form artifacts; DBC's must show them. (The form's `name`/`method="POST"` markup stays — it predates this change, harms nothing, and is out of scope.)
 2. **No edits to `sites/dbc/*` or to shared DBC-affecting config.** Viper's `netlify.toml` stays in the repo as-is until teardown; the old-site redirect is configured on the Netlify site (Dashboard/API), never via repo-wide config.
 3. **Canonical = apex `https://vipersecurity.ch`.** Flip the four known hardcoded-URL places:
    - `sites/viper/src/config/site.ts` `url` (drives `astro.config` `site`, sitemap, PWA baseline),
