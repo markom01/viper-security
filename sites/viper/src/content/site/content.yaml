@@ -1,13 +1,13 @@
 jsonld:
   org_name: "{site_name}"
-  org_url: https://viper-security.netlify.app
-  org_logo: https://viper-security.netlify.app/images/logo.svg
+  org_url: https://vipersecurity.ch
+  org_logo: https://vipersecurity.ch/images/logo.svg
   org_description: Luxury chauffeur & VIP transport services in {location1} and {location2}.
   webSiteName: VIPER Security
-  webSiteUrl: https://viper-security.netlify.app
+  webSiteUrl: https://vipersecurity.ch
   phoneSpain: +34 670 038 541
   phoneItaly: +39 349 663 8171
-  privacy_policy: https://viper-security.netlify.app/privacy-policy
+  privacy_policy: https://vipersecurity.ch/privacy-policy
 booking_data:
   spain:
     label: Costa del Sol — Marbella
@@ -113,13 +113,13 @@ stats:
     journey driven to one standard — 24/7.
   image: /images/cms/stats-bg.webp
   items:
-    - label: '15'
+    - label: "15"
       title: Years Driving Experience
-    - label: '100'
+    - label: "100"
       title: Happy Clients
-    - label: '1'
+    - label: "1"
       title: Trusted Hand
-    - label: '24'
+    - label: "24"
       title: Availability
 howItWorksSteps:
   - title: "Choose Location"

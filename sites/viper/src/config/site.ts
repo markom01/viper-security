@@ -8,7 +8,7 @@ export const site = {
   shortName: "VIPER",
   description:
     "VIPER Security — luxury chauffeur, executive transport, airport transfers & VIP travel in Spain and Italy.",
-  url: "https://viper-security.netlify.app",
+  url: "https://vipersecurity.ch",
   themeColor: "#000000",
   bgColor: "#000000",
 };

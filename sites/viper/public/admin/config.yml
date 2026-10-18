@@ -1,5 +1,9 @@
 # yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
 
+# Identifies the Netlify site for Sveltia's GitHub OAuth gateway while the CMS
+# is served from the new domain (removed at Netlify teardown).
+site_domain: viper-security.netlify.app
+
 backend:
   name: github
   repo: markom01/viper-security
@@ -22,13 +26,48 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { name: brand_name, label: Brand Name, widget: string, required: false }
-              - { name: tagline, label: Tagline, widget: string, required: false }
-              - { name: subtitle, label: Subtitle, widget: text, required: false }
-              - { name: cta_text, label: CTA Button Text, widget: string, required: false }
-              - { name: hero_image, label: "Hero Background Image", widget: image, required: false }
-              - { name: phone_italy, label: "Phone (Italy)", widget: string, required: false }
-              - { name: phone_spain, label: "Phone (Spain)", widget: string, required: false }
+              - {
+                  name: brand_name,
+                  label: Brand Name,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: tagline,
+                  label: Tagline,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: subtitle,
+                  label: Subtitle,
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: cta_text,
+                  label: CTA Button Text,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: hero_image,
+                  label: "Hero Background Image",
+                  widget: image,
+                  required: false,
+                }
+              - {
+                  name: phone_italy,
+                  label: "Phone (Italy)",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: phone_spain,
+                  label: "Phone (Spain)",
+                  widget: string,
+                  required: false,
+                }
           - label: Services
             name: services
             widget: object
@@ -39,12 +78,25 @@ collections:
                 widget: list
                 summary: "{{fields.title}}"
                 fields:
-                  - { name: region, label: "Region (Marbella or Milano)", widget: string }
+                  - {
+                      name: region,
+                      label: "Region (Marbella or Milano)",
+                      widget: string,
+                    }
                   - { name: title, label: Service Title, widget: string }
                   - { name: description, label: Description, widget: text }
-                  - { name: image, label: "Service Image", widget: image, required: false }
-                  - { name: slug, label: "Slug (URL path)", widget: string, required: false }
-
+                  - {
+                      name: image,
+                      label: "Service Image",
+                      widget: image,
+                      required: false,
+                    }
+                  - {
+                      name: slug,
+                      label: "Slug (URL path)",
+                      widget: string,
+                      required: false,
+                    }
 
   - name: fleet
     label: Fleet
@@ -57,12 +109,48 @@ collections:
       - { name: name, label: Vehicle Name, widget: string }
       - { name: image, label: "Vehicle Image", widget: image, required: false }
       - { name: type, label: Vehicle Type, widget: string, required: false }
-      - { name: year, label: Year, widget: number, value_type: int, required: false }
-      - { name: seats, label: Seats, widget: number, value_type: int, required: false }
-      - { name: baggage, label: Baggage Capacity, widget: number, value_type: int, required: false }
-      - { name: capacity_passengers, label: Max Passengers, widget: number, value_type: int, required: false }
-      - { name: capacity_suitcases, label: Max Suitcases, widget: number, value_type: int, required: false }
-      - { name: capacity_carryon, label: Max Carry-On Bags, widget: number, value_type: int, required: false }
+      - {
+          name: year,
+          label: Year,
+          widget: number,
+          value_type: int,
+          required: false,
+        }
+      - {
+          name: seats,
+          label: Seats,
+          widget: number,
+          value_type: int,
+          required: false,
+        }
+      - {
+          name: baggage,
+          label: Baggage Capacity,
+          widget: number,
+          value_type: int,
+          required: false,
+        }
+      - {
+          name: capacity_passengers,
+          label: Max Passengers,
+          widget: number,
+          value_type: int,
+          required: false,
+        }
+      - {
+          name: capacity_suitcases,
+          label: Max Suitcases,
+          widget: number,
+          value_type: int,
+          required: false,
+        }
+      - {
+          name: capacity_carryon,
+          label: Max Carry-On Bags,
+          widget: number,
+          value_type: int,
+          required: false,
+        }
       - label: Specs
         name: specs
         widget: list
@@ -109,13 +197,22 @@ collections:
             fields:
               - { name: name, label: Tier Name, widget: string }
               - { name: price, label: Annual Price, widget: string }
-              - { name: hours, label: "Included Hours / Year", widget: number, required: false }
+              - {
+                  name: hours,
+                  label: "Included Hours / Year",
+                  widget: number,
+                  required: false,
+                }
               - label: Benefits
                 name: benefits
                 widget: list
                 field: { label: Benefit, name: benefit, widget: string }
-              - { name: is_featured, label: Featured Tier, widget: boolean, default: false }
-
+              - {
+                  name: is_featured,
+                  label: Featured Tier,
+                  widget: boolean,
+                  default: false,
+                }
 
   - name: site
     label: Site Globals
@@ -130,15 +227,60 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { name: org_name, label: Organization Name, widget: string, required: false }
-              - { name: org_url, label: Organization URL, widget: string, required: false }
-              - { name: org_logo, label: Logo URL, widget: string, required: false }
-              - { name: org_description, label: Description, widget: text, required: false }
-              - { name: phoneSpain, label: "Phone (Spain)", widget: string, required: false }
-              - { name: phoneItaly, label: "Phone (Italy)", widget: string, required: false }
-              - { name: webSiteName, label: "Website Name", widget: string, required: false }
-              - { name: webSiteUrl, label: "Website URL", widget: string, required: false }
-              - { name: privacy_policy, label: "Privacy Policy URL", widget: string, required: false }
+              - {
+                  name: org_name,
+                  label: Organization Name,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: org_url,
+                  label: Organization URL,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: org_logo,
+                  label: Logo URL,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: org_description,
+                  label: Description,
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: phoneSpain,
+                  label: "Phone (Spain)",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: phoneItaly,
+                  label: "Phone (Italy)",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: webSiteName,
+                  label: "Website Name",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: webSiteUrl,
+                  label: "Website URL",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: privacy_policy,
+                  label: "Privacy Policy URL",
+                  widget: string,
+                  required: false,
+                }
           - name: booking_data
             label: Booking Routes
             widget: object
@@ -148,9 +290,24 @@ collections:
                 name: spain
                 widget: object
                 fields:
-                  - { name: label, label: "Region Label", widget: string, required: false }
-                  - { name: short_label, label: "Short Region Name", widget: string, required: false }
-                  - { name: region, label: Region, widget: string, required: false }
+                  - {
+                      name: label,
+                      label: "Region Label",
+                      widget: string,
+                      required: false,
+                    }
+                  - {
+                      name: short_label,
+                      label: "Short Region Name",
+                      widget: string,
+                      required: false,
+                    }
+                  - {
+                      name: region,
+                      label: Region,
+                      widget: string,
+                      required: false,
+                    }
                   - label: Services
                     name: services
                     widget: list
@@ -163,14 +320,34 @@ collections:
                         summary: "{{fields.route}}"
                         fields:
                           - { name: route, label: Route, widget: string }
-                          - { name: price, label: "Price (optional)", widget: string, required: false }
+                          - {
+                              name: price,
+                              label: "Price (optional)",
+                              widget: string,
+                              required: false,
+                            }
               - label: Italy
                 name: italy
                 widget: object
                 fields:
-                  - { name: label, label: "Region Label", widget: string, required: false }
-                  - { name: short_label, label: "Short Region Name", widget: string, required: false }
-                  - { name: region, label: Region, widget: string, required: false }
+                  - {
+                      name: label,
+                      label: "Region Label",
+                      widget: string,
+                      required: false,
+                    }
+                  - {
+                      name: short_label,
+                      label: "Short Region Name",
+                      widget: string,
+                      required: false,
+                    }
+                  - {
+                      name: region,
+                      label: Region,
+                      widget: string,
+                      required: false,
+                    }
                   - label: Services
                     name: services
                     widget: list
@@ -183,70 +360,240 @@ collections:
                         summary: "{{fields.route}}"
                         fields:
                           - { name: route, label: Route, widget: string }
-                          - { name: price, label: "Price (optional)", widget: string, required: false }
-          - { name: vehicle_name, label: "Vehicle Name (placeholder)", widget: string, required: false }
+                          - {
+                              name: price,
+                              label: "Price (optional)",
+                              widget: string,
+                              required: false,
+                            }
+          - {
+              name: vehicle_name,
+              label: "Vehicle Name (placeholder)",
+              widget: string,
+              required: false,
+            }
           - name: seo
             label: SEO / Meta
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: title, label: Page Title, widget: string, required: false }
-              - { name: description, label: Meta Description, widget: text, required: false }
-              - { name: theme_color, label: Theme Color, widget: string, required: false }
-              - { name: image, label: "Share / OG Image", widget: image, required: false }
+              - {
+                  name: title,
+                  label: Page Title,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: description,
+                  label: Meta Description,
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: theme_color,
+                  label: Theme Color,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: image,
+                  label: "Share / OG Image",
+                  widget: image,
+                  required: false,
+                }
           - name: branding
             label: Branding
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: logo, label: Site Logo (header + footer), widget: image, required: false }
-              - { name: luxury_without_limits, label: "Luxury Without Limits Text", widget: string, required: false }
-              - { name: professional_discreet_reliable, label: "Professional Discreet Reliable Text", widget: string, required: false }
+              - {
+                  name: logo,
+                  label: Site Logo (header + footer),
+                  widget: image,
+                  required: false,
+                }
+              - {
+                  name: luxury_without_limits,
+                  label: "Luxury Without Limits Text",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: professional_discreet_reliable,
+                  label: "Professional Discreet Reliable Text",
+                  widget: string,
+                  required: false,
+                }
           - name: labels
             label: UI Labels (nav, buttons, headings)
             widget: object
             collapsed: true
             fields:
-              - { name: nav_home, label: "Nav: Home", widget: string, required: false }
-              - { name: nav_about, label: "Nav: About", widget: string, required: false }
-              - { name: nav_services, label: "Nav: Services", widget: string, required: false }
-              - { name: nav_fleet, label: "Nav: Fleet", widget: string, required: false }
-              - { name: nav_howItWorks, label: "Nav: How It Works", widget: string, required: false }
-              - { name: nav_pricing, label: "Nav: Pricing", widget: string, required: false }
-              - { name: nav_contact, label: "Nav: Contact", widget: string, required: false }
-              - { name: nav_stats, label: "Nav: Why VIPER (Stats)", widget: string, required: false }
-              - { name: nav_membership, label: "Nav: Membership", widget: string, required: false }
-              - { name: nav_ctaBanner, label: "Nav: First Experience", widget: string, required: false }
-              - { name: nav_bottomCta, label: "Nav: Begin Your Journey", widget: string, required: false }
-              - { name: marquee_text, label: "Marquee Text (scrolling band)", widget: string, required: false }
-              - { name: hero_learnMore, label: "Hero: Learn More", widget: string, required: false }
-              - { name: hero_exploreFleet, label: "Hero: Explore Fleet", widget: string, required: false }
-              - { name: form_bookNow, label: "Form: Book Now", widget: string, required: false }
-              - { name: form_name, label: "Form: Name", widget: string, required: false }
-              - { name: form_phone, label: "Form: Phone", widget: string, required: false }
-              - { name: form_date, label: "Form: Date", widget: string, required: false }
-              - { name: form_success, label: "Form: Success Message", widget: text, required: false }
-              - { name: form_error, label: "Form: Error Message", widget: text, required: false }
+              - {
+                  name: nav_home,
+                  label: "Nav: Home",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_about,
+                  label: "Nav: About",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_services,
+                  label: "Nav: Services",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_fleet,
+                  label: "Nav: Fleet",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_howItWorks,
+                  label: "Nav: How It Works",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_pricing,
+                  label: "Nav: Pricing",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_contact,
+                  label: "Nav: Contact",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_stats,
+                  label: "Nav: Why VIPER (Stats)",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_membership,
+                  label: "Nav: Membership",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_ctaBanner,
+                  label: "Nav: First Experience",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_bottomCta,
+                  label: "Nav: Begin Your Journey",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: marquee_text,
+                  label: "Marquee Text (scrolling band)",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: hero_learnMore,
+                  label: "Hero: Learn More",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: hero_exploreFleet,
+                  label: "Hero: Explore Fleet",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_bookNow,
+                  label: "Form: Book Now",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_name,
+                  label: "Form: Name",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_phone,
+                  label: "Form: Phone",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_date,
+                  label: "Form: Date",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_success,
+                  label: "Form: Success Message",
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: form_error,
+                  label: "Form: Error Message",
+                  widget: text,
+                  required: false,
+                }
           - name: about
             label: About Section
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: heading, label: Heading, widget: string, required: false }
+              - {
+                  name: heading,
+                  label: Heading,
+                  widget: string,
+                  required: false,
+                }
               - { name: text, label: Body Text, widget: text, required: false }
-              - { name: image, label: About Image, widget: image, required: false }
+              - {
+                  name: image,
+                  label: About Image,
+                  widget: image,
+                  required: false,
+                }
           - name: stats
             label: Stats Section
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: heading, label: Heading, widget: string, required: false }
-              - { name: subheading, label: Subheading, widget: text, required: false }
-              - { name: image, label: Background Image, widget: image, required: false }
+              - {
+                  name: heading,
+                  label: Heading,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: subheading,
+                  label: Subheading,
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: image,
+                  label: Background Image,
+                  widget: image,
+                  required: false,
+                }
               - label: Items
                 name: items
                 widget: list
@@ -254,7 +601,11 @@ collections:
                 required: false
                 fields:
                   - { name: label, label: "Label (e.g. 15+)", widget: string }
-                  - { name: title, label: "Title (e.g. Years Experience)", widget: string }
+                  - {
+                      name: title,
+                      label: "Title (e.g. Years Experience)",
+                      widget: string,
+                    }
           - name: howItWorksSteps
             label: How It Works Steps
             widget: list
@@ -264,23 +615,43 @@ collections:
             fields:
               - { name: title, label: Title, widget: string }
               - { name: description, label: Description, widget: text }
-              - { name: image, label: "Step Image", widget: image, required: false }
+              - {
+                  name: image,
+                  label: "Step Image",
+                  widget: image,
+                  required: false,
+                }
           - name: cta
             label: First Experience
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: heading, label: Heading, widget: string, required: false }
+              - {
+                  name: heading,
+                  label: Heading,
+                  widget: string,
+                  required: false,
+                }
               - { name: text, label: Body Text, widget: text, required: false }
-              - { name: image, label: CTA Image, widget: image, required: false }
+              - {
+                  name: image,
+                  label: CTA Image,
+                  widget: image,
+                  required: false,
+                }
           - name: bottomcta
             label: Begin Your Journey
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: heading, label: Heading, widget: string, required: false }
+              - {
+                  name: heading,
+                  label: Heading,
+                  widget: string,
+                  required: false,
+                }
               - label: Values
                 name: values
                 widget: list
@@ -289,7 +660,27 @@ collections:
                 fields:
                   - { name: title, label: Title, widget: string }
                   - { name: text, label: Text, widget: text }
-          - { name: map_embed_url, label: "Map Embed URL (Google Maps iframe src)", widget: string, required: false }
-          - { name: footer_company_info, label: "Footer Company Info (under logo, blank hides it)", widget: text, required: false }
-          - { name: fleetHeading, label: "Fleet Section Heading", widget: string, required: false }
-          - { name: howItWorksHeading, label: "How It Works Heading", widget: string, required: false }
+          - {
+              name: map_embed_url,
+              label: "Map Embed URL (Google Maps iframe src)",
+              widget: string,
+              required: false,
+            }
+          - {
+              name: footer_company_info,
+              label: "Footer Company Info (under logo, blank hides it)",
+              widget: text,
+              required: false,
+            }
+          - {
+              name: fleetHeading,
+              label: "Fleet Section Heading",
+              widget: string,
+              required: false,
+            }
+          - {
+              name: howItWorksHeading,
+              label: "How It Works Heading",
+              widget: string,
+              required: false,
+            }
