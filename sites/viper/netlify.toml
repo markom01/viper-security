@@ -68,3 +68,10 @@
   from = "/admin/*"
   to = "/admin/index.html"
   status = 200
+
+# .htaccess is an Apache artifact (Infomaniak); don't expose it as a static file here.
+[[redirects]]
+  from = "/.htaccess"
+  to = "/404.html"
+  status = 200
+  force = true

@@ -1,0 +1,5 @@
+# /admin CMS (Sveltia, GitHub backend): laxer CSP only.
+# Everything else (XFO, HSTS, cache defaults...) inherits from the root .htaccess,
+# mirroring Netlify's netlify.toml per-path override. Child-dir Header set replaces
+# the parent's value for the same response (single CSP header expected — Task 5 Step 3).
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' https://cdn.jsdelivr.net; connect-src 'self' data: blob: https://unpkg.com https://github.com https://*.github.com https://*.githubusercontent.com https://api.github.com https://www.githubstatus.com; manifest-src 'self' blob:; frame-src 'none'; object-src 'none'"
