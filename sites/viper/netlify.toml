@@ -60,8 +60,9 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
 
 # Migration: everything must go to the new domain (60-day window; revert at teardown)
+# NOTE: source must be "/*" — "/:splat" in the FROM pattern matches one segment only.
 [[redirects]]
-  from = "/:splat"
+  from = "/*"
   to = "https://vipersecurity.ch/:splat"
   status = 301
   force = true

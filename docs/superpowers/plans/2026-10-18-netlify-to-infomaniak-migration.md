@@ -378,8 +378,9 @@ lftp -u "<user>","<pass>" "ftp://h2park-8d750cc5.infomaniak.ch" -e "
 
 ```toml
 # Migration: everything must go to the new domain (60-day window; revert at teardown)
+# (corrected 2026-10-18: source must be "/*" — "/:splat" in FROM matches one segment)
 [[redirects]]
-  from = "/:splat"
+  from = "/*"
   to = "https://vipersecurity.ch/:splat"
   status = 301
   force = true
