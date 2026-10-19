@@ -93,13 +93,13 @@ git commit -m "shared: remove inert Netlify Forms artifacts from BookingForm"
 - Modify: `sites/viper/public/robots.txt:4` — `Sitemap: https://vipersecurity.ch/sitemap-index.xml`
 - Modify: `sites/viper/src/content/site/content.yaml:3,4,7,10` — `org_url`, `org_logo` (→ `https://vipersecurity.ch/images/logo.svg`), `webSiteUrl`, `privacy_policy` (→ `https://vipersecurity.ch/privacy-policy`)
 - Modify: `sites/viper/.env.example:1,2` — `PUBLIC_SITE_URL=https://vipersecurity.ch`, `PUBLIC_ADMIN_EMAIL=admin@vipersecurity.ch`
-- Modify: `sites/viper/public/admin/config.yml` — add root-level `site_domain: viper-security.netlify.app` (Sveltia docs: Netlify's OAuth gateway identifies the site by domain; the CMS page on vipersecurity.ch must name the Netlify site domain)
+- Modify: `sites/viper/public/admin/config.yml` — add `site_domain: viper-security.netlify.app` **inside the `backend` block** (Sveltia reads it as a backend option; Netlify's OAuth gateway then receives it as `site_id`)
 
 **Interfaces:**
 
 - Produces: `astro.config` `site` (→ sitemap + PWA baseline), robots.txt, JSON-LD values all pointing at `https://vipersecurity.ch`. No component APIs change.
 
-- [ ] **Step 1: Make the five edits exactly as listed.** In the CMS yaml, place `site_domain` at the top level, just above `backend:`. Do NOT change `repo`/`branch`.
+- [ ] **Step 1: Make the five edits exactly as listed.** In the CMS yaml, place `site_domain` inside the `backend` mapping (after `branch:`). Do NOT change `repo`/`branch`.
 
 - [ ] **Step 2: Build + grep the whole dist tree for the old origin**
 
@@ -417,6 +417,7 @@ lftp -u "<user>","<pass>" "ftp://h2park-8d750cc5.infomaniak.ch" -e "
 - Deploy = lftp mirror over plain FTP (no SSH/SFTP/FTPS exists on this hosting — verified). If lftp misbehaves in CI (e.g., passive-mode issues), fallback is `SamKirkland/FTP-Deploy-Action` with `dangerous-clean-slate: true` (rsync-equivalent semantics) — same secrets.
 - `--delete` scope is safe: the FTP account is chrooted to the vipersecurity.ch docroot (verified; only stub files + `.ftpquota` present). The stub backup lives at `/tmp/opencode/infomaniak-probe/` (rollback recipe = Task 5 Step 5).
 - The FTP password is the only long-lived credential this pipeline adds (plain FTP is the hosting's constraint — accepted for a static site; rotate at teardown per Task 9 Step 5).
+- Correction (2026-10-19, live repro): `site_domain` must be nested under `backend:` — Sveltia destructures it from the backend config, so a root-level key is silently ignored and the OAuth popup 404s at `api.netlify.com/auth` with `site_id=<current hostname>`. Task 2's original "root-level" wording was wrong; fixed here and re-verified live.
 
 ## Self-Review
 

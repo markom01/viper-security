@@ -1,13 +1,12 @@
 # yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
 
-# Identifies the Netlify site for Sveltia's GitHub OAuth gateway while the CMS
-# is served from the new domain (removed at Netlify teardown).
-site_domain: viper-security.netlify.app
-
 backend:
   name: github
   repo: markom01/viper-security
   branch: main
+  # Identifies the Netlify site for Sveltia's GitHub OAuth gateway while the
+  # CMS is served from the new domain (removed at Netlify teardown).
+  site_domain: viper-security.netlify.app
 
 media_folder: sites/viper/public/images/cms
 public_folder: /images/cms
