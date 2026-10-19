@@ -4,9 +4,12 @@ backend:
   name: github
   repo: markom01/viper-security
   branch: main
-  # Identifies the Netlify site for Sveltia's GitHub OAuth gateway while the
-  # CMS is served from the new domain (removed at Netlify teardown).
-  site_domain: viper-security.netlify.app
+  # Netlify's OAuth gateway completes its popup handshake only when the CMS is
+  # served from the Netlify site's own domain, so GitHub-button login cannot
+  # work from vipersecurity.ch. Token login is Netlify-free and is the
+  # supported auth method here. To restore a GitHub button later, deploy a
+  # self-hosted OAuth client (e.g. Sveltia CMS Authenticator) and set base_url.
+  auth_methods: ["token"]
 
 media_folder: sites/viper/public/images/cms
 public_folder: /images/cms
