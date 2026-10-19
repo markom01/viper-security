@@ -1,0 +1,48 @@
+title: Yacht Transfer
+slug: yacht-transfer
+description: Chauffeur transfers to marinas and yacht berths across Marbella and Milano.
+hero:
+  subtitle: Door-to-berth chauffeur service for Puerto Banus, Marbella and lake marinas.
+  cta_text: Book Yacht Transfer
+  tagline: Shore to Ship, Seamlessly
+  image: /images/cms/city-tour.webp
+form_fields:
+  - label: Yacht name
+    placeholder: Yacht name and berth, if known
+    name: yacht_name
+  - label: Marina
+    placeholder: Pickup marina
+    name: marina
+    type: location
+    side: right
+marquee: DOOR-TO-BERTH · FIXED PRICE · Marbella — Milano
+about_text: From villa or hotel straight to the marina gate, timed to your departure. Your chauffeur handles luggage to the berth and waits on your return, in Marbella, Puerto Banus and the Italian lakes.
+about_images:
+  - /images/cms/city-tour.webp
+  - /images/cms/about-image-v2.webp
+steps:
+  - title: Share Your Berth
+    description: Message us on WhatsApp with date, marina and yacht name. We confirm a fixed price instantly.
+  - title: Timed Pickup
+    description: Your chauffeur arrives early and times the drive to your boarding slot.
+  - title: Luggage to the Berth
+    description: Bags carried to the gangway, return pickup arranged on request.
+howitworks:
+  heading: How Yacht Transfers Work
+cta:
+  heading: Book Your Yacht Transfer
+  text: Door-to-berth chauffeur service in Marbella and the Italian lakes. Message us on WhatsApp to book.
+  image: /images/cms/marketing-v2.webp
+bottomcta:
+  heading: From Driveway to Gangway
+  values:
+    - title: Marina Gate Drop
+      text: Straight to the berth, luggage carried aboard.
+    - title: Timed to Departure
+      text: Pickup scheduled around your sailing time.
+    - title: Return Pickup
+      text: Waiting chauffeur when you come back ashore.
+seo:
+  title: Yacht Transfers in Marbella & Italian Lakes | VIPER Security
+  description: Chauffeur yacht transfers with fixed pricing — door-to-berth service in Marbella, Puerto Banus and the Italian lakes.
+  image: /images/og-viper.webp

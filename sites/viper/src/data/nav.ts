@@ -1,6 +1,5 @@
-// VIPER navigation — single source for the home page.
-// Site is trimmed to home only (no service/gallery/privacy pages), so the
-// menu points at the homepage's own sections. A page passes `pageContent.labels`.
+// VIPER navigation — home sections plus service + gallery pages.
+// A page passes `pageContent.labels`.
 
 import type { NavLink } from "@garage/shared/types";
 
@@ -25,7 +24,19 @@ function navTree(labels: Record<string, string>): NavLink[] {
         { label: labels["nav.bottomCta"] ?? "Begin Your Journey", href: "/#begin-your-journey" },
       ],
     },
+    {
+      label: labels["nav.services"] ?? "Services",
+      href: "/services/armored-vehicles",
+      children: [
+        { label: labels["nav.armoredVehicles"] ?? "Armored Vehicles", href: "/services/armored-vehicles" },
+        { label: labels["nav.luxuryCarsSale"] ?? "Sale of Luxury Cars", href: "/services/luxury-cars-sale" },
+      ],
+    },
     { label: labels["nav.contact"] ?? "Contact Us", href: "/#contact" },
+    {
+      label: labels["nav.gallery"] ?? "Gallery",
+      href: "/gallery",
+    },
   ];
 }
 

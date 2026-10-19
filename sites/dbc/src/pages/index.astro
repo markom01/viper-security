@@ -10,6 +10,7 @@ import HowItWorks from "@garage/shared/sections/HowItWorks.astro";
 import CtaBanner from "@garage/shared/sections/CtaBanner.astro";
 import BottomCta from "@garage/shared/sections/BottomCta.astro";
 import { assembleHome } from "@garage/shared/lib/assemble";
+import { withServiceFields } from "@garage/shared/lib/service-fields";
 import { SITE_NAME } from "@garage/shared/config/strings";
 
 const home = (await getEntry("home", "content"))!.data;
@@ -37,12 +38,7 @@ const pageContent = {
 // hero BookingForm can inject service-specific fields on service select.
 // Home offerings carry only title/slug; the field defs live in the service collection.
 const serviceEntries = await getCollection("service");
-const fieldsBySlug = new Map(serviceEntries.map((e) => [e.data.slug ?? e.id.replace(/\.yaml$/, ""), e.data.form_fields ?? []]));
-const fieldsByTitle = new Map(serviceEntries.map((e) => [e.data.title, e.data.form_fields ?? []]));
-const services = a.services.offerings.map((o) => ({
-  ...o,
-  form_fields: fieldsBySlug.get(o.slug ?? "") ?? fieldsByTitle.get(o.title) ?? [],
-}));
+const services = withServiceFields(a.services.offerings, serviceEntries);
 
 // Home carousel: 5 gallery images — prefer all-builds, fill supercar+customizing
 const galleryImages = galleryEntries.map((e) => ({ cat: e.data.category, img: e.data.image }));

@@ -1,0 +1,58 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import { getImage } from "astro:assets";
+import { imageDims } from "@garage/shared/lib/imageDims.ts";
+import BaseLayout from "@garage/shared/layouts/BaseLayout.astro";
+import Gallery from "@garage/shared/sections/Gallery.astro";
+import {
+  resolveGalleryItems,
+  buildGallerySections,
+  serviceSectionDefs,
+} from "@garage/shared/lib/gallery.ts";
+import STRINGS, { SITE_NAME } from "@garage/shared/config/strings";
+import { resolveLabels } from "@garage/shared/config/labels";
+import { buildNav, buildFooterNav } from "../data/nav";
+
+// Full CMS site globals so Nav/Footer/JSON-LD carry VIPER identity.
+// Gallery-specific SEO overrides the CMS title/description for this page.
+const siteGlobals = (await getEntry("site", "content"))?.data;
+const homeContent = (await getEntry("home", "content"))?.data;
+const pageContent = {
+  ...(siteGlobals || {}),
+  seo: {
+    title: "VIPER Security — Gallery",
+    description: "Fleet, transfers and occasions across Marbella & Milano.",
+    theme_color: siteGlobals?.seo?.theme_color ?? "#000000",
+    image: siteGlobals?.seo?.image ?? "/images/og-viper.webp",
+  },
+};
+
+// Sveltia writes label keys with underscores (nav_gallery); normalize to the
+// dot-path form buildNav and resolveLabels expect (same as index/[slug]).
+const labels: Record<string, string> = Object.fromEntries(
+  Object.entries(pageContent?.labels ?? {}).map(([k, v]) => [k.replace(/_/g, "."), String(v)]),
+);
+const s = resolveLabels({ ...pageContent, labels }, STRINGS);
+
+const navItems = buildNav(labels);
+const footerItems = buildFooterNav(labels);
+const brandName = homeContent?.hero?.brand_name ?? SITE_NAME;
+
+// Gallery sections = service pages: defs derive from the service collection
+// (key = slug, title = CMS service title) via the shared helper, so adding a
+// service page automatically adds a gallery section. Items resolve through the
+// same shared pipeline DBC uses — zero duplicated logic.
+const services = await getCollection("service");
+const galleryItems = await resolveGalleryItems(await getCollection("gallery"), {
+  imageDims,
+  getImage,
+});
+const sections = buildGallerySections(
+  galleryItems,
+  serviceSectionDefs(services.map((entry) => entry.data)),
+);
+---
+
+<BaseLayout pageContent={{ ...pageContent, labels }} brandName={brandName} ogLocale="en_US" navItems={navItems} footerItems={footerItems}>
+  <Gallery sections={sections} heading={s.gallery.heading} subheadline={s.gallery.subheadline} />
+</BaseLayout>

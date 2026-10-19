@@ -1,9 +1,13 @@
 ---
 import { getCollection, getEntry } from "astro:content";
 import { getImage } from "astro:assets";
-import { Image } from "astro:assets";
 import { imageDims } from "@garage/shared/lib/imageDims.ts";
 import SiteLayout from "../layouts/SiteLayout.astro";
+import Gallery from "@garage/shared/sections/Gallery.astro";
+import {
+  resolveGalleryItems,
+  buildGallerySections,
+} from "@garage/shared/lib/gallery.ts";
 import STRINGS from "@garage/shared/config/strings";
 import { resolveLabels } from "@garage/shared/config/labels";
 
@@ -34,189 +38,25 @@ const normalizedLabels = Object.fromEntries(
 );
 const s = resolveLabels({ ...pageContent, labels: normalizedLabels }, STRINGS);
 
-// CMS-editable gallery images, grouped by service category. The lightbox
-// reuses the original asset (sources are already ~1600px; a separate width
-// cap only duplicates files). Each category renders its own masonry grid, so
-// PhotoSwipe nav stays within the group.
-const galleryItems = await Promise.all(
-  (await getCollection("gallery")).map(async (item) => {
-    const src = item.data.image;
-    // Served URL for the lightbox + anchor href; intrinsic dims for PhotoSwipe.
-    // `src` may be ImageMetadata (legacy) or a public path string — probe dims
-    // for the latter since Astro treats public URLs as remote.
-    let dims: { width: number; height: number };
-    try { dims = await imageDims(src); } catch { dims = { width: 800, height: 600 }; }
-    let optimized: { src: string };
-    try { optimized = await getImage({ src, width: dims.width, height: dims.height }); } catch { optimized = { src: typeof src === "string" ? src : (src as { src: string }).src }; }
-    return {
-      id: item.id,
-      category: item.data.category,
-      alt: item.data.alt || item.data.name,
-      width: dims.width,
-      height: dims.height,
-      href: optimized.src,
-      image: src,
-    };
-  }),
-);
+// CMS-editable gallery images via the shared pipeline (same helper VIPER
+// uses). Ordered sections keep the existing 5 defs verbatim — per-category
+// grids so PhotoSwipe nav stays within the group; empty groups are skipped.
+const galleryItems = await resolveGalleryItems(await getCollection("gallery"), {
+  imageDims,
+  getImage,
+});
 
 // Ordered gallery sections. Empty groups (e.g. auction before
 // photos exist) are skipped so the page doesn't show a bare heading.
-const sections = [
+const sections = buildGallerySections(galleryItems, [
   { key: "brand", title: s.gallery.brand },
   { key: "supercar", title: s.gallery.supercar },
   { key: "customizing", title: s.gallery.customizing },
   { key: "auction", title: s.gallery.auction },
   { key: "all-builds", title: s.gallery["all-builds"] },
-].map((section) => ({
-  ...section,
-  items: galleryItems.filter((item) => item.category === section.key),
-})).filter((section) => section.items.length > 0);
+]);
 ---
 
 <SiteLayout pageContent={pageContent} ogLocale="en_US">
-  <section class="gallery-section">
-    <div class="content-wrapper">
-      <header class="gallery-header">
-        <h1>{s.gallery.heading}</h1>
-        <p>{s.gallery.subheadline}</p>
-      </header>
-      {
-        sections.map((section) => (
-          <section class="gallery-group">
-            <h2 class="gallery-group-title">{section.title}</h2>
-            <div class="masonry" data-masonry data-gallery>
-              {
-                section.items.map((item) => (
-                  <div class="masonry-item">
-                    <a
-                      href={item.href}
-                      class="gallery-item"
-                      data-pswp-width={item.width}
-                      data-pswp-height={item.height}
-                      aria-label={item.alt}
-                    >
-                      <Image
-                        src={item.image}
-                        alt={item.alt}
-                        width={item.width}
-                        height={item.height}
-                        loading="lazy"
-                        decoding="async"
-                        widths={[480, 768]}
-                        sizes="(min-width: 991px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      />
-                    </a>
-                  </div>
-                ))
-              }
-            </div>
-          </section>
-        ))
-      }
-    </div>
-  </section>
+  <Gallery sections={sections} heading={s.gallery.heading} subheadline={s.gallery.subheadline} />
 </SiteLayout>
-
-<style>
-  .gallery-section {
-    /* Navbar is absolute, so the first section must clear it (same offset as
-       the home hero: 180px desktop / 140px mobile). */
-    padding: 180px 0 100px;
-  }
-  .gallery-header {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-  .gallery-header h1 {
-    font-family: var(--font-families--accent-font);
-    font-size: var(--desktop-heading-sizes--h1);
-    color: var(--colors--ivory);
-    margin-bottom: 12px;
-  }
-  .gallery-header p {
-    color: var(--colors--cloud);
-    max-width: 560px;
-    margin: 0 auto;
-  }
-  .gallery-group + .gallery-group {
-    margin-top: 56px;
-  }
-  .gallery-group-title {
-    font-family: var(--font-families--accent-font);
-    font-size: var(--desktop-heading-sizes--h3);
-    color: var(--colors--gold);
-    text-align: center;
-    margin-bottom: 24px;
-  }
-  /* Frame the grid: cap width + center, instead of edge-to-edge */
-  .masonry {
-    max-width: 1160px;
-    margin: 0 auto;
-  }
-  .masonry-item {
-    width: 33.333%;
-    /* Horizontal gap: padded inside the item so masonry's column math stays
-       exact (no `gutter` option — a px gutter fights percentage widths). */
-    padding: 0 10px;
-    margin-bottom: 20px;
-  }
-  .masonry-item a {
-    display: block;
-  }
-  .masonry-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
-  }
-  .masonry-item img:hover {
-    transform: scale(1.02);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
-  }
-  @media (max-width: 991px) {
-    .gallery-section {
-      padding: 140px 0 80px;
-    }
-    .masonry-item {
-      width: 50%;
-    }
-  }
-  @media (max-width: 767px) {
-    .masonry-item {
-      width: 100%;
-    }
-  }
-</style>
-
-<script>
-  import Masonry from "masonry-layout";
-  import PhotoSwipeLightbox from "photoswipe/lightbox";
-  import "photoswipe/dist/photoswipe.css";
-
-  document.querySelectorAll("[data-masonry]").forEach((grid) => {
-    const msnry = new Masonry(grid, {
-      itemSelector: ".masonry-item",
-      columnWidth: ".masonry-item",
-      percentPosition: true,
-    });
-    let t: ReturnType<typeof setTimeout> | undefined;
-    window.addEventListener("resize", () => {
-      clearTimeout(t);
-      t = setTimeout(() => msnry.layout(), 100);
-    });
-  });
-
-  // `gallery: "[data-gallery]"` matches every category grid; each becomes its
-  // own PhotoSwipe gallery, so arrow nav stays within the current group.
-  const lightbox = new PhotoSwipeLightbox({
-    gallery: "[data-gallery]",
-    children: "a",
-    pswpModule: () => import("photoswipe"),
-  });
-  lightbox.init();
-</script>

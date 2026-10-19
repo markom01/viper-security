@@ -1,0 +1,146 @@
+title: Armored Vehicle Hire
+slug: armored-vehicles
+description: Discreet chauffeur-driven B6 armored hire with fixed pricing in Marbella and Milano.
+hero:
+  subtitle: Discreet B6 armored chauffeur hire for airport, corporate and VIP travel in Marbella and Milano.
+  cta_text: Book Secure Transfer
+  tagline: Discreet Protection, First-Class Comfort
+  image: /images/cms/hero-image_upscaled.webp
+form_fields:
+  - label: Passengers
+    placeholder: Number of passengers
+    name: passengers
+    type: number
+  - label: Security details
+    placeholder: Close-protection officer, NDA, child seats...
+    name: security_details
+    side: right
+marquee: B6 ARMORED · DISCREET · FIXED PRICE · Marbella — Milano
+about_text: Certified B6 protection with privacy glass and run-flat tyres, driven by a trained security chauffeur. Every booking is fixed price with flight tracking included, and NDA available on request for full discretion in Marbella and Milano.
+about_images:
+  - /images/cms/about-image-v2.webp
+  - /images/cms/security-chauffeur.webp
+  - /images/cms/marketing-v2.webp
+  - /images/cms/corporate-travel.webp
+include:
+  - title: B6 Protection
+    text: Certified B6 ballistic steel and glass with run-flat tyres for discreet, real-world security.
+    image: /images/cms/security-chauffeur.webp
+  - title: Discreet Fleet
+    text: Unmarked armored sedans and SUVs that blend in — privacy glass, no plates that draw attention.
+    image: /images/cms/mercedes-s-class-v2.webp
+  - title: Trained Chauffeurs
+    text: Security-trained drivers with defensive driving, route planning and full confidentiality.
+    image: /images/cms/corporate-travel.webp
+  - title: Fixed-Price Booking
+    text: Agreed price before you ride, flight-tracked pickup and WhatsApp booking with driver included.
+    image: /images/cms/airport-transfer.webp
+fleet:
+  - name: Mercedes-Benz S-Class Guard
+    type: Armored Sedan
+    year: "2024"
+    seats: "2"
+    baggage: "2"
+    capacity_passengers: 2
+    capacity_suitcases: 2
+    capacity_carryon: 2
+    image: /images/cms/mercedes-s-class-v2.webp
+    features:
+      - Certified B6 ballistic protection
+      - Privacy glass and run-flat tyres
+      - Rear executive seating
+      - Trained security chauffeur included
+    specs:
+      - label: Protection
+        value: B6 certified
+      - label: Passengers
+        value: "2"
+      - label: Luggage
+        value: 2 suitcases
+      - label: Service
+        value: "Marbella — Milano"
+  - name: BMW 7 Series Protection
+    type: Armored Sedan
+    year: "2024"
+    seats: "2"
+    baggage: "2"
+    capacity_passengers: 2
+    capacity_suitcases: 2
+    capacity_carryon: 2
+    image: /images/cms/luxury-vip-private-security-transfer.webp
+    features:
+      - Certified B6 armored cell
+      - Intercom and privacy partition
+      - Run-flat tyres and self-sealing tank
+      - Flight-tracked airport pickup
+    specs:
+      - label: Protection
+        value: B6 certified
+      - label: Passengers
+        value: "2"
+      - label: Luggage
+        value: 2 suitcases
+      - label: Booking
+        value: Fixed price, WhatsApp
+  - name: Range Rover Sentinel
+    type: Armored SUV
+    year: "2023"
+    seats: "3"
+    baggage: "4"
+    capacity_passengers: 3
+    capacity_suitcases: 4
+    capacity_carryon: 3
+    image: /images/cms/city-tour.webp
+    features:
+      - Certified B6 full-size SUV protection
+      - Elevated seating with privacy glass
+      - Space for luggage and close-protection officer
+      - NDA available on request
+    specs:
+      - label: Protection
+        value: B6 certified
+      - label: Passengers
+        value: "3"
+      - label: Luggage
+        value: 4 suitcases
+      - label: Service
+        value: "VIPER Security chauffeur included"
+stats:
+  heading: Armored Travel, Without the Attention
+  subheading: Certified protection with chauffeur service in Costa del Sol — Marbella and Northern Italy & Alps — Milano.
+  image: /images/cms/stats-bg.webp
+  items:
+    - label: B6
+      title: Certified ballistic protection
+    - label: 24/7
+      title: Flight-tracked secure pickup
+    - label: Fixed
+      title: Agreed price, driver included
+    - label: NDA
+      title: Confidentiality on request
+steps:
+  - title: Quote & Book
+    description: Message us on WhatsApp with date, route and passengers. We confirm a fixed price and lock your armored vehicle.
+  - title: Secure Pickup
+    description: Your trained chauffeur arrives early, tracks your flight and adjusts the route for traffic and discretion.
+  - title: Discreet Arrival
+    description: Travel behind privacy glass with run-flat security, arriving calm and on time in Marbella or Milano.
+howitworks:
+  heading: How Secure Hire Works
+cta:
+  heading: Book Your Armored Transfer
+  text: Fixed-price B6 armored hire with trained chauffeur in Marbella and Milano. Message us on WhatsApp to book.
+  image: /images/cms/marketing-v2.webp
+bottomcta:
+  heading: Travel Secure, Arrive Unnoticed
+  values:
+    - title: Certified B6 Fleet
+      text: Ballistic protection, privacy glass and run-flats on every armored vehicle.
+    - title: Trained Chauffeurs
+      text: Security drivers with defensive training and full discretion, NDA on request.
+    - title: Fixed Price, Flight-Tracked
+      text: Agreed fare before you ride, live flight tracking and WhatsApp booking.
+seo:
+  title: Armored Vehicle Hire in Marbella & Milano | VIPER Security
+  description: Discreet B6 armored chauffeur hire with fixed pricing in Marbella and Milano. Trained chauffeur, flight-tracked pickup, NDA on request.
+  image: /images/og-viper.webp

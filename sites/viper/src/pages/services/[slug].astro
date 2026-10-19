@@ -1,0 +1,75 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import BaseLayout from "@garage/shared/layouts/BaseLayout.astro";
+import ServicePage from "@garage/shared/sections/ServicePage.astro";
+import { assembleService } from "@garage/shared/lib/assemble";
+import { SITE_NAME } from "@garage/shared/config/strings";
+import { slugify } from "@garage/shared/lib/slugify";
+import { buildNav, buildFooterNav } from "../../data/nav";
+
+export async function getStaticPaths() {
+  const serviceEntries = await getCollection("service");
+  return serviceEntries.map((entry) => ({
+    params: { slug: entry.data.slug ?? slugify(entry.data.title) },
+    props: { offering: entry.data },
+  }));
+}
+
+const { offering } = Astro.props as { offering: import("@garage/shared/content/types").ServiceDetailData };
+const siteGlobals = (await getEntry("site", "content"))!.data;
+const homeContent = (await getEntry("home", "content"))!.data;
+
+// Per-service fleet vehicles — mapped from offering.fleet[] to shared FleetEntry shape.
+const fleetVehicles = (offering.fleet || []).map((f) => ({
+  id: `${offering.slug ?? offering.title}-${f.name}`,
+  collection: "fleet" as const,
+  data: f,
+}));
+
+const a = assembleService({
+  offering, siteGlobals, home: homeContent, siteName: SITE_NAME,
+  fleetVehicles,
+  hasFleet: !!offering.fleet?.length,
+  howItWorksSteps: siteGlobals.howItWorksSteps,
+});
+// Apply per-service fleet heading override (assembler leaves this to the template)
+if (offering.fleet_section?.heading) {
+  a.pageContent.fleet = { ...(a.pageContent.fleet || {}), heading: offering.fleet_section.heading };
+}
+
+// Sveltia writes label keys with underscores (nav_contact); normalize to the
+// dot-path form buildNav and shared-section resolveLabels expect.
+const labels: Record<string, string> = Object.fromEntries(
+  Object.entries(a.pageContent?.labels ?? {}).map(([k, v]) => [k.replace(/_/g, "."), String(v)]),
+);
+
+const navItems = buildNav(labels);
+const footerItems = buildFooterNav(labels);
+
+const pageContent = { ...a.pageContent, labels };
+const hasFleet = !!offering.fleet?.length;
+const fleetFeaturesText = a.fleetFeaturesText;
+const brandName = homeContent.hero?.brand_name ?? SITE_NAME;
+---
+
+<BaseLayout pageContent={pageContent} brandName={brandName} ogLocale="en_US" preloadImage={a.hero.image} navItems={navItems} footerItems={footerItems}>
+  <ServicePage
+    offering={a.offering}
+    pageContent={pageContent}
+    region="VIPER"
+    hero={{
+      subtitle: a.hero.subtitle, cta_text: a.hero.cta_text,
+      tagline: offering.title || a.hero.tagline, image: a.hero.image,
+      phoneItaly: homeContent.hero?.phone_italy, phoneSpain: homeContent.hero?.phone_spain,
+      fleetHref: "#about", presetService: offering.title,
+    }}
+    fleetVehicles={fleetVehicles}
+    fleetFeaturesText={fleetFeaturesText}
+    hasFleet={hasFleet}
+    howItWorksSteps={a.howItWorksSteps}
+    showPricing={false}
+    showMembership={false}
+    ctaAnchorId="first-experience"
+    bottomCtaAnchorId="begin-your-journey"
+  />
+</BaseLayout>

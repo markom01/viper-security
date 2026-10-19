@@ -2,7 +2,7 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import {
   homeSchema, fleetVehicleSchema, pricingSchema,
-  membershipSchema, siteGlobalsSchema,
+  membershipSchema, siteGlobalsSchema, serviceSchema, galleryItemSchema,
 } from "@garage/shared/content/schemas";
 
 const home = defineCollection({
@@ -30,4 +30,14 @@ const site = defineCollection({
   schema: siteGlobalsSchema,
 });
 
-export const collections = { home, fleet, pricing, membership, site };
+const service = defineCollection({
+  loader: glob({ pattern: "*.yaml", base: "./src/content/services" }),
+  schema: serviceSchema,
+});
+
+const gallery = defineCollection({
+  loader: glob({ pattern: "*.yaml", base: "./src/content/gallery" }),
+  schema: galleryItemSchema,
+});
+
+export const collections = { home, fleet, pricing, membership, site, service, gallery };

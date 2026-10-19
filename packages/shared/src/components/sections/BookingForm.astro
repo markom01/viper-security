@@ -20,13 +20,17 @@ const bd = (pageContent as unknown as { booking_data?: { spain?: { label: string
 const hasBooking = !!(bd && (bd.spain?.services?.length || bd.italy?.services?.length));
 const isGarageHome = !hasBooking && !presetService && Array.isArray(services) && services.length > 0;
 
-// Map title -> fields for dynamic home form
+// Map title -> fields for dynamic service-specific form.
+// Built whenever `services` carries field defs (garage home AND booking
+// home): garage mode keys on the Service select, booking mode (VIPER) keys
+// on the booking cascade's Service select value.
 const svcFieldsMap: Record<string, FieldDef[]> = {};
-if (isGarageHome) {
+if (Array.isArray(services)) {
   for (const svc of services as { title: string; form_fields?: FieldDef[] }[]) {
-    if (svc?.title) svcFieldsMap[svc.title] = svc.form_fields || [];
+    if (svc?.title && Array.isArray(svc.form_fields) && svc.form_fields.length) svcFieldsMap[svc.title] = svc.form_fields;
   }
 }
+const hasDynamicFields = Object.keys(svcFieldsMap).length > 0;
 
 const SCRIPT_DATA = {
   spain: bd?.spain || { label: "", services: [] },
@@ -109,6 +113,8 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
           <label class="booking-form-label" for="pickup-date">{s.form.date}</label>
           <input class="booking-form-field" id="pickup-date" name="Pick-Up-Date" type="date" required aria-label={s.form.date} />
         </div>
+        {hasBooking && hasDynamicFields && <div id="svc-fields-left" class="svc-fields-host" aria-live="polite"></div>}
+        {hasBooking && hasDynamicFields && <div id="svc-fields-right" class="svc-fields-host" aria-live="polite"></div>}
         {
           !hasBooking && (
             <div class="booking-form-label-field">
@@ -175,7 +181,7 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
     border-radius: 8px;
     display: inline-block;
   }
-  .booking-form { flex-wrap: wrap; gap: 18px 44px; }
+  .booking-form { flex-wrap: wrap; gap: 18px 44px; flex-direction: column; /* safe fallback: any width matching no query stacks vertically instead of crushing into one row */ }
   .booking-form-wrapper--hero { opacity: 1; overflow: visible; position: relative; }
   .honeypot-hidden { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
   .booking-form-success, .form-error-message { display: none; }
@@ -185,31 +191,35 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
   .svc-fields-host { display: contents; }
   @media (min-width: 992px) {
     :is(.left-side-fields, .right-side-fields) { width: calc(50% - 22px); }
-    .garage-form { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); column-gap: 44px; row-gap: 18px; align-items: end; grid-auto-flow: row; }
-    .garage-form .left-side-fields, .garage-form .right-side-fields { display: contents; }
-    .garage-form .form-bottom-row { display: contents; }
-    :global(.garage-form .vehicle-fields) { display: contents; }
-    :global(.booking-form.garage-form .booking-form-label-field) { width: auto; min-width: 0; }
-    :global(.garage-form .booking-form-field) { width: 100%; }
-    :global(.garage-form .booking-button-wrapper) { width: 100%; align-self: end; display: flex; align-items: end; }
+    /* Unified grid system (ex garage-form): the whole form is one grid, side
+       wrappers and the bottom row dissolve via display:contents, and
+       rebalance() picks the column count from the field count. Booking and
+       garage variants share it — no per-mode layout code. */
+    .booking-form { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); column-gap: 44px; row-gap: 18px; align-items: end; grid-auto-flow: row; }
+    .booking-form .left-side-fields, .booking-form .right-side-fields { display: contents; }
+    .booking-form .form-bottom-row { display: contents; }
+    :global(.booking-form .vehicle-fields) { display: contents; }
+    :global(.booking-form .booking-form-label-field) { width: auto; min-width: 0; }
+    :global(.booking-form .booking-form-field) { width: 100%; }
+    :global(.booking-form .booking-button-wrapper) { width: 100%; align-self: end; display: flex; align-items: end; }
     .svc-fields-host { display: contents; }
   }
   .form-bottom-row { display: grid; grid-template-columns: 1fr 1fr; column-gap: 44px; align-items: end; width: 100%; }
   .form-bottom-row > .booking-button-wrapper { grid-column: auto; }
-  @media (min-width: 768px) and (max-width: 991px) {
-    .garage-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; row-gap: 18px; align-items: end; grid-auto-flow: row; }
-    .garage-form .left-side-fields, .garage-form .right-side-fields { display: contents; }
-    .garage-form .form-bottom-row { display: contents; }
-    :global(.garage-form .vehicle-fields) { display: contents; }
-    :global(.booking-form.garage-form .booking-form-label-field) { width: auto; }
-    :global(.garage-form .booking-form-field) { width: 100%; }
-    :global(.booking-form.garage-form .form-bottom-row > .booking-button-wrapper) { width: 100%; grid-column: 1 / -1; }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .booking-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; row-gap: 18px; align-items: end; grid-auto-flow: row; }
+    .booking-form .left-side-fields, .booking-form .right-side-fields { display: contents; }
+    .booking-form .form-bottom-row { display: contents; }
+    :global(.booking-form .vehicle-fields) { display: contents; }
+    :global(.booking-form .booking-form-label-field) { width: auto; }
+    :global(.booking-form .booking-form-field) { width: 100%; }
+    :global(.booking-form .form-bottom-row > .booking-button-wrapper) { width: 100%; grid-column: 1 / -1; }
   }
-  @media (max-width: 991px) {
+  @media (max-width: 991.98px) {
     .booking-form { flex-direction: column; }
     .left-side-fields, .right-side-fields { width: 100%; grid-template-columns: 1fr; column-gap: 0; }
   }
-  @media (max-width: 767px) {
+  @media (max-width: 767.98px) {
     .booking-form { flex-direction: column; }
     .form-bottom-row { grid-template-columns: 1fr; }
     .left-side-fields, .right-side-fields { width: 100%; grid-template-columns: 1fr; column-gap: 0; }
@@ -373,10 +383,12 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
       const svcRight = document.getElementById("svc-fields-right");
       function rebalance(): void {
         // Balanced rows: choose cols so the grid packs evenly with no empty cells.
+        // Shared by garage AND booking forms (same grid system, same CSS class
+        // behavior) — the only difference is the field set each page renders.
         // No-service home has 6 units (5 fields + submit) → 3+3 (3 cols). With service,
         // 7-11 units → pick cols where units % cols === 0 when possible; otherwise wrap
         // 1 field from row 1 to row 2 so the trailing empty cell disappears (your fix).
-        const gforms = Array.from(document.querySelectorAll<HTMLElement>(".garage-form"));
+        const gforms = Array.from(document.querySelectorAll<HTMLElement>(".booking-form"));
         const isDesktop = window.matchMedia("(min-width: 992px)").matches;
         if (!isDesktop) {
           for (const gform of gforms) {
@@ -756,10 +768,14 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
         getMakes();
       }
 
-      // Dynamic service-fields rendering
+      // Dynamic service-fields rendering — garage home (Service select) AND
+      // booking home (VIPER cascade Service select). On preset service-detail
+      // pages the matching service's fields already render statically, so a
+      // cascade selection equal to the preset clears the dynamic hosts instead
+      // of duplicating the same fields.
       // svcLeft/svcRight are non-null here (guarded by the `if`); capture into
       // definite locals so the narrowing survives inside the async closure.
-      if (isGarageHome && S && svcLeft && svcRight) {
+      if ((isGarageHome || HB) && S && svcLeft && svcRight && Object.keys(d.SVC_FIELDS || {}).length) {
         const svcLeftEl = svcLeft as HTMLElement;
         const svcRightEl = svcRight as HTMLElement;
         async function renderForService(title: string): Promise<void> {
@@ -785,13 +801,17 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
           rebalance();
           updateBtn();
         }
+        function clearDynamic(): void {
+          svcLeftEl.replaceChildren(); svcRightEl.replaceChildren(); rebalance(); updateBtn();
+        }
         S.addEventListener("change", () => {
           const t = S.value;
+          if (HB && PSV && t === PSV) { clearDynamic(); return; }
           if (t) renderForService(t);
-          else { svcLeftEl.replaceChildren(); svcRightEl.replaceChildren(); rebalance(); updateBtn(); }
+          else clearDynamic();
         });
         // if service pre-selected via URL hash or back navigation
-        if (S.value) renderForService(S.value);
+        if (S.value && !(HB && PSV && S.value === PSV)) renderForService(S.value);
       }
 
       form.addEventListener("submit", (e: Event) => {
@@ -807,6 +827,17 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
           const dst = D.options[D.selectedIndex].value;
           pn = L.value === "italy" ? PI : PS;
           msg = "Hi " + d.SN + "! I would like to book a ride.\n\n*Name:* " + n + "\n*Phone:* " + p + "\n*Location:* " + lt + "\n*Service:* " + st + "\n*Date:* " + dt + "\n*Destination:* " + dst;
+          document.querySelectorAll<HTMLInputElement>("[data-custom-field]").forEach((el) => {
+            let v = el.value.trim();
+            if (el.hasAttribute("data-custom-location")) {
+              const hid = document.getElementById(el.id + "-location") as HTMLInputElement | null;
+              if (hid && hid.value) v = hid.value.trim();
+            }
+            if (v) {
+              const lbl = (el.getAttribute("aria-label") || el.name).trim();
+              msg += "\n*" + lbl + ":* " + v;
+            }
+          });
         } else {
           pn = PS || PI;
           msg = "Hi " + d.SN + "! I would like to get a quote.\n\n*Name:* " + n + "\n*Phone:* " + p + "\n*Date:* " + dt + "\n*Service:* " + (S && S.value ? S.options[S.selectedIndex].text : PSV);

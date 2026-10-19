@@ -14,6 +14,7 @@ import BottomCta from "@garage/shared/sections/BottomCta.astro";
 
 import { getCollection, getEntry } from "astro:content";
 import { assembleHome } from "@garage/shared/lib/assemble";
+import { withServiceFields, bookingServiceNames } from "@garage/shared/lib/service-fields";
 import { SITE_NAME } from "@garage/shared/config/strings";
 import { membershipValueNote } from "@garage/shared/config/membership";
 import { buildNav, buildFooterNav } from "../data/nav";
@@ -38,6 +39,14 @@ const footerItems = buildFooterNav(labels);
 
 const hero = a.hero;
 const howItWorks = { steps: siteGlobals.howItWorksSteps };
+// Service-specific hero fields (shared BookingForm dynamic path, same as DBC):
+// key the services prop on booking service names so the cascade's Service
+// select loads each service's form_fields from the service collection.
+const serviceEntries = await getCollection("service");
+const services = withServiceFields(
+  bookingServiceNames(siteGlobals.booking_data).map((title) => ({ title })),
+  serviceEntries,
+);
 const universalServices = { services: a.services.offerings };
 const fleetVehicles = a.fleetVehicles || [];
 const fleetFeaturesText = a.fleetFeaturesText || "";
@@ -53,6 +62,7 @@ const pageContent = a.pageContent;
     phoneItaly={hero.phone_italy}
     phoneSpain={hero.phone_spain}
     pageContent={pageContent}
+    services={services}
   />
   <Marquee pageContent={pageContent} />
   <AboutSection pageContent={pageContent} />

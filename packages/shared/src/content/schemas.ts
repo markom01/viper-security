@@ -220,7 +220,7 @@ export const fleetVehicleSchema = z.object({
 
 export const galleryItemSchema = z.object({
   name: z.string(), alt: z.string().optional(),
-  category: z.enum(["brand", "supercar", "customizing", "auction", "import-export", "all-builds"]).default("all-builds"),
+  category: z.enum(["brand", "supercar", "customizing", "auction", "import-export", "all-builds", "fleet", "transfers", "events", "armored-vehicles", "luxury-cars-sale"]).default("all-builds"),
   image: z.string(),
 });
 

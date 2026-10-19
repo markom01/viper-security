@@ -159,6 +159,9 @@ const STRINGS = {
     auction: "Auction & Sale",
     "import-export": "Import & Export",
     "all-builds": "All Builds",
+    fleet: "Fleet",
+    transfers: "Transfers",
+    events: "Events & Occasions",
   },
 };
 

@@ -200,8 +200,8 @@ const items = navItems ?? [
     margin: 0;
     padding: 0;
   }
-  /* Mobile: dropdown items shown inline (full-screen menu), no hover panel */
-  @media (max-width: 991px) {
+  /* Mobile: dropdown items shown inline (full-screen menu), no hover panel (overlap .98 closes the fractional dead zone) */
+  @media (max-width: 991.98px) {
     .nav-menu-wrapper {
       visibility: hidden;
       opacity: 0;
