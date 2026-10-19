@@ -103,9 +103,6 @@ about:
   images:
     - /images/cms/about-image-v2.webp
     - /images/cms/stats-bg.webp
-    - /images/cms/gallery/2e95eecc-3bd2-4375-987e-dedf95b3f1c2.webp
-    - /images/cms/gallery/neo.webp
-    - /images/cms/gallery/7cdcbfe3-cb87-4056-bbcd-86cdab0f5943.webp
 stats:
   heading: "Why Choose VIPER Security"
   subheading: >-
