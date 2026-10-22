@@ -57,11 +57,28 @@ jobs:
           FTP_PASSWORD: ${{ secrets.INFOMANIAK_FTP_PASSWORD }}
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-          lftp -u "$FTP_USER","$FTP_PASSWORD" "ftp://$FTP_HOST" -e "
-            set ftp:ssl-allow false;
-            set ftp:passive-mode true;
-            set net:max-retries 3;
-            set net:timeout 20;
-            set mirror:parallel-transfer-count 4;
-            mirror -R --delete --verbose -x '.ftpquota' sites/viper/dist/ /;
-            bye"
+          # The hosting caps the server at 50 concurrent FTP logins, so a busy
+          # moment answers 421 "too many users" — a 4xx that lftp treats as
+          # permanent unless net:persist-retries is set. Retry the whole mirror,
+          # and mirror with one connection so we hold a single login slot.
+          for attempt in 1 2 3; do
+            if lftp -u "$FTP_USER","$FTP_PASSWORD" "ftp://$FTP_HOST" -e "
+              set ftp:ssl-allow false;
+              set ftp:passive-mode true;
+              set net:timeout 20;
+              set net:max-retries 3;
+              set net:persist-retries 8;
+              set net:reconnect-interval-base 10;
+              set mirror:parallel-transfer-count 1;
+              mirror -R --delete --verbose -x '.ftpquota' sites/viper/dist/ /;
+              bye"; then
+              echo "deploy attempt ${attempt} succeeded"
+              break
+            fi
+            if [ "$attempt" = 3 ]; then
+              echo "::error::FTP deploy failed after 3 attempts (hosting allows 50 concurrent FTP users; 421 means the server was busy)."
+              exit 1
+            fi
+            echo "::warning::deploy attempt ${attempt} failed — retrying in 30s"
+            sleep 30
+          done
