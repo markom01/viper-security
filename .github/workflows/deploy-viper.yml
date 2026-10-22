@@ -33,6 +33,21 @@ jobs:
           test -f sites/viper/dist/index.html
           test -f sites/viper/dist/sw.js
 
+      - name: Check deploy size against FTP quota
+        # Infomaniak FTP quota is 10240 KiB (10 MiB) for the whole account.
+        # lftp mirror --delete removes files BEFORE uploading replacements, so an
+        # overflow aborts mid-mirror and leaves the live site partially updated
+        # (that is what happened on run 39649198567: 3 gallery images 404'd).
+        # Fail here instead, with the actual numbers.
+        run: |
+          limit=9961472  # 9.5 MiB, ~0.5 MiB below the 10 MiB quota
+          bytes=$(du -sb sites/viper/dist | cut -f1)
+          echo "dist: ${bytes} bytes; limit: ${limit} bytes"
+          if [ "$bytes" -gt "$limit" ]; then
+            echo "::error::dist is ${bytes} bytes, over the ${limit}-byte deploy budget (FTP quota 10 MiB). Shrink or remove images in sites/viper/public/images before pushing — a full mirror would abort and break the live site."
+            exit 1
+          fi
+
       - name: Deploy to Infomaniak over FTP
         # This hosting offers FTP only (no SSH/SFTP/FTPS — verified 2026-10-18).
         # lftp mirror --delete = the rsync-equivalent; .ftpquota stays untouched.
