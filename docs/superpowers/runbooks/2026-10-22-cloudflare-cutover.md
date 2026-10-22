@@ -8,29 +8,34 @@ Console steps are manual. The agent has no Infomaniak or Cloudflare login. Execu
 ## Phase 0 — Prerequisites
 
 1. Cloudflare account, with `vipersecurity.ch` added as a zone (free plan).
-2. Infomaniak Manager access: DNS zone export and nameserver settings.
-3. Cloudflare API token scoped to **Workers Scripts: Edit** plus **Account: Read**.
+2. Infomaniak Manager access: nameserver settings.
+3. Cloudflare API token scoped to **Workers Scripts: Edit**, **Zone: Read**, **Zone: Edit**, **DNS: Edit**, plus **Account: Read**.
 4. GitHub repository secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
-5. Current Infomaniak zone exported as BIND/text. This is the only reliable source for the DKIM selectors.
+5. Zone export already generated: `docs/superpowers/runbooks/2026-10-22-vipersecurity-ch-zone.txt` (15 records, from the Infomaniak API on 2026-10-22). It preserves the `_domainkey` NS delegation.
 
 ## Phase 1 — Copy the zone (before any nameserver change)
 
-In the Cloudflare DNS tab, create every record from the export:
+Import `docs/superpowers/runbooks/2026-10-22-vipersecurity-ch-zone.txt` in the Cloudflare DNS tab (**Import and Export → Import DNS records**). The file contains:
 
-| Type  | Name                                     | Value                                   | Proxy                      |
-| ----- | ---------------------------------------- | --------------------------------------- | -------------------------- |
-| MX    | `@`                                      | `mta-gw.infomaniak.ch` priority 5       | n/a                        |
-| TXT   | `@`                                      | `v=spf1 include:spf.infomaniak.ch -all` | n/a                        |
-| TXT   | `_dmarc`                                 | `v=DMARC1; p=reject;`                   | n/a                        |
-| CNAME | DKIM selectors from the export           | values from the export                  | **DNS only (grey cloud)**  |
-| CNAME | `autodiscover` / `autoconfig` if present | values from the export                  | **DNS only**               |
-| A     | `@`                                      | `128.65.195.180`                        | **DNS only** until Phase 4 |
+| Type  | Name              | Value                                   | Proxy                      |
+| ----- | ----------------- | --------------------------------------- | -------------------------- |
+| A     | `@`               | `128.65.195.180`                        | **DNS only** until Phase 5 |
+| A     | `www`             | `128.65.195.180`                        | **DNS only** until Phase 5 |
+| MX    | `@`               | `mta-gw.infomaniak.ch` priority 5       | n/a                        |
+| TXT   | `@`               | `v=spf1 include:spf.infomaniak.ch -all` | n/a                        |
+| TXT   | `_dmarc`          | `v=DMARC1; p=reject;`                   | n/a                        |
+| NS    | `_domainkey`      | `nsany1.infomaniak.com`                 | **DNS only**               |
+| NS    | `_domainkey`      | `nsany2.infomaniak.com`                 | **DNS only**               |
+| SRV   | `_imap._tcp` etc. | the six Infomaniak mail SRV records     | n/a                        |
+| CNAME | `autoconfig`      | `infomaniak.com`                        | **DNS only**               |
+| CNAME | `autodiscover`    | `infomaniak.com`                        | **DNS only**               |
 
 Rules:
 
-- DKIM CNAMEs must be grey-cloud. Proxying breaks DKIM.
+- The `_domainkey` NS delegation is what serves DKIM; there are no DKIM records in the parent zone. Proxying or dropping the delegation breaks DKIM.
 - Do not delete the apex `A` record yet; it keeps the Infomaniak site live while nameservers change.
-- DMARC is `p=reject`. A missing DKIM record will reject outbound mail silently.
+- DMARC is `p=reject`. A missing DKIM delegation rejects outbound mail silently.
+- Import creates records unproxied; confirm the apex and `www` A records are grey-cloud before Phase 5.
 
 Verify the copied records from a machine with DNS access:
 
@@ -60,7 +65,7 @@ Also confirm `/`, `/gallery/`, `/services/armored-vehicles/` render and the gall
 
 1. In the Infomaniak Manager, replace `nsany1.infomaniak.com` / `nsany2.infomaniak.com` with the two Cloudflare nameservers.
 2. Wait for delegation. Check with the Node command above: `NS` must return the Cloudflare pair.
-3. Confirm MX, SPF, DMARC, and each DKIM selector still resolve. The records now come from Cloudflare.
+3. Confirm MX, SPF, DMARC, the mail SRV records, and the `_domainkey` NS delegation still resolve. The records now come from Cloudflare.
 
 At this point `https://vipersecurity.ch` still serves from Infomaniak through the grey-cloud apex `A` record. Nothing is broken yet.
 
@@ -69,7 +74,7 @@ At this point `https://vipersecurity.ch` still serves from Infomaniak through th
 1. Send a mail from a mailbox on `vipersecurity.ch` to an external address (Gmail or similar).
 2. Send a mail from that external address to a mailbox on `vipersecurity.ch`.
 3. In the received message source, confirm `spf=pass` and `dkim=pass` (and `dmarc=pass`) in `Authentication-Results`.
-4. Do not continue until both directions pass. If DKIM fails, restore the missing selector record and retest.
+4. Do not continue until both directions pass. If DKIM fails, restore the `_domainkey` NS delegation and retest.
 
 ## Phase 5 — Attach the domain
 

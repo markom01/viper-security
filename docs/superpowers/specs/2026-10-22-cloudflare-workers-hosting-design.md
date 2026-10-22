@@ -41,13 +41,13 @@ Cloudflare's free tier removes both ceilings: unlimited bandwidth for static ass
 
 Current DNS at Infomaniak (`nsany1/nsany2.infomaniak.com`):
 
-| Record           | Value                                                                                                                                         |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| apex `A`         | `128.65.195.180`                                                                                                                              |
-| `MX`             | `mta-gw.infomaniak.ch` priority 5                                                                                                             |
-| `TXT` apex (SPF) | `v=spf1 include:spf.infomaniak.ch -all`                                                                                                       |
-| `TXT _dmarc`     | `v=DMARC1; p=reject;`                                                                                                                         |
-| DKIM             | CNAMEs exist per the migration spec (3 records); selectors are **not enumerable from public DNS** — export the zone in the Infomaniak Manager |
+| Record           | Value                                                                                                                                                                                                            |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| apex `A`         | `128.65.195.180`                                                                                                                                                                                                 |
+| `MX`             | `mta-gw.infomaniak.ch` priority 5                                                                                                                                                                                |
+| `TXT` apex (SPF) | `v=spf1 include:spf.infomaniak.ch -all`                                                                                                                                                                          |
+| `TXT _dmarc`     | `v=DMARC1; p=reject;`                                                                                                                                                                                            |
+| DKIM             | Served by an `_domainkey` **NS delegation** to `nsany1/nsany2.infomaniak.com` (two NS records, TTL 300). The parent zone contains no DKIM records; copying the delegation keeps Infomaniak's keys authoritative. |
 
 Current build:
 
@@ -174,7 +174,7 @@ The FTP workflow is kept as `deploy-viper-ftp-fallback.yml` with `workflow_dispa
 Order matters because DMARC is `p=reject`.
 
 1. Export the full DNS zone from the Infomaniak Manager (text/BIND export).
-2. Add `vipersecurity.ch` to Cloudflare; copy **every** record: MX, SPF, all DKIM CNAMEs, DMARC, autodiscover/autoconfig, any verification TXT.
+2. Add `vipersecurity.ch` to Cloudflare; copy **every** record: MX, SPF, DMARC, autodiscover/autoconfig, the six mail SRV records, the two `_domainkey` NS records, and any verification TXT.
 3. Confirm all mail records exist in the Cloudflare zone before touching nameservers.
 4. Change nameservers at Infomaniak to the Cloudflare pair.
 5. Verify public DNS resolves MX/SPF/DKIM/DMARC from Cloudflare.

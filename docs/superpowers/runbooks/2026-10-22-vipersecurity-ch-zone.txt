@@ -1,0 +1,20 @@
+; vipersecurity.ch — Cloudflare import file
+; Generated from the Infomaniak zone on 2026-10-22.
+; Apex NS records are intentionally omitted: Cloudflare assigns its own.
+; _domainkey NS delegation is preserved so Infomaniak keeps serving DKIM.
+
+_dmarc 3600 IN TXT "v=DMARC1; p=reject;"
+_imap._tcp 3600 IN SRV 1 1 143 mail.infomaniak.com.
+_imaps._tcp 3600 IN SRV 1 1 993 mail.infomaniak.com.
+_pop3._tcp 3600 IN SRV 1 1 110 mail.infomaniak.com.
+@ 300 IN A 128.65.195.180
+_pop3s._tcp 3600 IN SRV 1 1 995 mail.infomaniak.com.
+_submission._tcp 3600 IN SRV 1 1 587 mail.infomaniak.com.
+www 300 IN A 128.65.195.180
+_submissions._tcp 3600 IN SRV 1 1 465 mail.infomaniak.com.
+_domainkey 300 IN NS nsany1.infomaniak.com.
+_domainkey 300 IN NS nsany2.infomaniak.com.
+autoconfig 3600 IN CNAME infomaniak.com.
+autodiscover 3600 IN CNAME infomaniak.com.
+@ 3600 IN MX 5 mta-gw.infomaniak.ch.
+@ 3600 IN TXT "v=spf1 include:spf.infomaniak.ch -all"
