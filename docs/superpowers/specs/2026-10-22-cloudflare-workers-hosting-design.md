@@ -147,8 +147,9 @@ The `!` detach lines are deliberate; without them the merged rules emit duplicat
 
 ```
 /favicon.ico  /favicon.svg  301
-/admin/*  /admin/index.html  200
 ```
+
+There is no `/admin/*` rewrite. Cloudflare rejects a 200 rule whose destination normalizes back into its own source (`/admin/index.html` → `/admin/` → matches `/admin/*`), and static assets already serve `admin/index.html` for `/admin/`. Sveltia CMS routes with the URL hash.
 
 The old-domain 301 stays on Netlify. `www → apex` and `http → https` are Cloudflare zone settings, not `_redirects` (domain-level rules are not supported there):
 
@@ -190,7 +191,7 @@ Rollback: set nameservers back to `nsany1.infomaniak.com` / `nsany2.infomaniak.c
 3. HSTS, XFO, nosniff, Referrer-Policy, Permissions-Policy present on both scopes.
 4. `/_astro/*` and `/images/*` return `Cache-Control: public, max-age=31536000, immutable`; `/sw.js` returns `no-cache`.
 5. `/manifest.webmanifest` returns `Content-Type: application/manifest+json`.
-6. `/admin/anything` returns 200 with the admin HTML (SPA rewrite).
+6. `/admin/` returns 200 with the admin HTML; Sveltia hash routes load. No `/admin/*` rewrite exists (Cloudflare rejects it as a loop).
 7. Unknown path returns `/404.html` body with status 404.
 8. `/.htaccess` is not served (404).
 9. Push to `main` deploys green; `wrangler deployments list` shows the new version; `wrangler rollback` works.

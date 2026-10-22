@@ -1,3 +1,5 @@
 # Cloudflare Workers static assets — copied into dist/ by scripts/prepare-cloudflare-dist.mjs.
+# No /admin/* rewrite: Cloudflare rejects a 200 rule whose destination matches its
+# own source (/admin/index.html normalizes back to /admin/), and static assets already
+# serve admin/index.html for /admin/. Sveltia CMS routes with the URL hash.
 /favicon.ico  /favicon.svg  301
-/admin/*  /admin/index.html  200

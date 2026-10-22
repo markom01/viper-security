@@ -51,7 +51,7 @@ BASE=https://viper-security.<account>.workers.dev
 curl -sI "$BASE/" | grep -ci '^content-security-policy'        # 1
 curl -sI "$BASE/admin/" | grep -ci '^content-security-policy'  # 1
 curl -sI "$BASE/.htaccess" | head -1                            # 404
-curl -s -o /dev/null -w '%{http_code}\n' "$BASE/admin/anything" # 200
+curl -s -o /dev/null -w '%{http_code}\n' "$BASE/admin/"         # 200
 ```
 
 Also confirm `/`, `/gallery/`, `/services/armored-vehicles/` render and the gallery images load. `wrangler deployments list` should show the deploy.
@@ -94,7 +94,7 @@ curl -sI https://vipersecurity.ch/.htaccess | head -1                           
 
 Also check:
 
-- `/admin/` loads Sveltia CMS; `/admin/anything` returns 200.
+- `/admin/` loads Sveltia CMS and its hash routes work (`/admin/#/collections/...`).
 - Unknown path returns the branded 404 with status 404.
 - `sitemap-index.xml` and `robots.txt` load over https.
 - PWA install prompt still works; `sw.js` updates after a deploy.

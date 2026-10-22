@@ -1,5 +1,6 @@
 name = "viper-security"
 compatibility_date = "2026-10-22"
+preview_urls = false
 
 [assets]
 directory = "./dist"

@@ -200,11 +200,29 @@ if (redirectsText !== null) {
     .filter((line) => line && !line.startsWith("#"))
     .map((line) => line.split(/\s+/));
 
-  const admin = rules.find(
-    ([from, to]) => from === "/admin/*" && to === "/admin/index.html",
+  const favicon = rules.find(
+    ([from, to, code]) =>
+      from === "/favicon.ico" && to === "/favicon.svg" && code === "301",
   );
-  if (!admin || admin[2] !== "200") {
-    fail("_redirects: missing `/admin/* /admin/index.html 200`");
+  if (!favicon) {
+    fail("_redirects: missing `/favicon.ico /favicon.svg 301`");
+  }
+
+  // Cloudflare rejects a rewrite whose destination normalizes back into its own
+  // source pattern (for example `/admin/* /admin/index.html 200`), so guard
+  // against reintroducing that class of rule.
+  for (const [from, to, code] of rules) {
+    if (code !== "200" || !from.endsWith("/*")) continue;
+    const prefix = from.slice(0, -1);
+    if (
+      to === prefix ||
+      to.startsWith(prefix) ||
+      to === `${prefix}index.html`
+    ) {
+      fail(
+        `_redirects: ${from} -> ${to} 200 would rewrite into its own source`,
+      );
+    }
   }
 }
 

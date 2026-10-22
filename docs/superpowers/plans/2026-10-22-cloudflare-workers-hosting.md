@@ -26,7 +26,8 @@
 - `/admin/*` inheriting the strict CSP would break Sveltia CMS; the detach line is load-bearing.
 - `/_astro/*` and `/images/*` inheriting the global `must-revalidate` cache rule would silently disable immutable caching.
 - A request for `/.htaccess` must return 404, not the Apache config text.
-- A missing `_redirects` copy would make `/admin/anything` 404.
+- A missing `_redirects` copy drops the `/favicon.ico` → `/favicon.svg` 301.
+- A 200 rewrite whose destination matches its own source is rejected by Cloudflare (`/admin/* → /admin/index.html` loops).
 - A missing `_headers` copy would ship the site with no CSP at all.
 
 ---
@@ -50,7 +51,7 @@ Create `sites/viper/scripts/prepare-cloudflare-dist.mjs` that:
 1. Resolves `siteDir = sites/viper` relative to the script location.
 2. Copies `deploy/cloudflare/_headers`, `_redirects`, `.assetsignore` into `dist/` (overwrite).
 3. Parses `_headers` into ordered rules (`/*`, `/_astro/*`, `/images/*`, `/sw.js`, `/favicon.svg`, `/manifest.webmanifest`, `/admin/*`), tracking detach lines (`! Header-Name`).
-4. For four probe paths — `/`, `/admin/index.html`, `/_astro/app.js`, `/images/x.webp` — computes the final headers by applying every matching rule in file order, where a detach removes that header and a set replaces it.
+4. For five probe paths — `/`, `/admin/index.html`, `/_astro/app.js`, `/images/x.webp`, `/sw.js` — computes the final headers by applying every matching rule in file order, where a detach removes that header and a set replaces it.
 5. Exits non-zero with a concrete message when any assertion fails:
    - each probe has exactly one `Content-Security-Policy`;
    - `/` and `/images/x.webp` carry the strict CSP; `/admin/index.html` carries the lax CSP;
@@ -60,7 +61,7 @@ Create `sites/viper/scripts/prepare-cloudflare-dist.mjs` that:
    - every header line is ≤ 2,000 characters;
    - `dist` has ≤ 20,000 files and no file > 25 MiB;
    - `.assetsignore` contains `**/.htaccess`;
-   - `_redirects` contains `/admin/*` → `/admin/index.html` with code `200`.
+   - `_redirects` contains `/favicon.ico` → `/favicon.svg` with code `301`, and no 200 rule rewrites into its own source prefix.
 6. Prints a one-line summary: file count, total bytes, largest file, probes checked.
 
 - [ ] **Step 2: Run it to verify it fails**
@@ -129,8 +130,9 @@ Exact content:
 
 ```
 # Cloudflare Workers static assets — copied into dist/ by scripts/prepare-cloudflare-dist.mjs.
+# No /admin/* rewrite: Cloudflare rejects a 200 rule whose destination normalizes back
+# into its own source, and static assets serve admin/index.html for /admin/ already.
 /favicon.ico  /favicon.svg  301
-/admin/*  /admin/index.html  200
 ```
 
 - [ ] **Step 3: Create `sites/viper/deploy/cloudflare/.assetsignore`**
