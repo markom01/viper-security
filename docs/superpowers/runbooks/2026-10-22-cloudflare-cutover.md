@@ -61,11 +61,15 @@ curl -s -o /dev/null -w '%{http_code}\n' "$BASE/admin/"         # 200
 
 Also confirm `/`, `/gallery/`, `/services/armored-vehicles/` render and the gallery images load. `wrangler deployments list` should show the deploy.
 
-## Phase 3 — Switch nameservers
+## Phase 3 — Disable DNSSEC, then switch nameservers
 
-1. In the Infomaniak Manager, replace `nsany1.infomaniak.com` / `nsany2.infomaniak.com` with the two Cloudflare nameservers.
-2. Wait for delegation. Check with the Node command above: `NS` must return the Cloudflare pair.
-3. Confirm MX, SPF, DMARC, the mail SRV records, and the `_domainkey` NS delegation still resolve. The records now come from Cloudflare.
+Zone: `vipersecurity.ch` (`1c6621708676ba7f839a5df2a35f711b`). Cloudflare nameservers: `james.ns.cloudflare.com`, `surina.ns.cloudflare.com`.
+
+1. Disable DNSSEC at Infomaniak **before** delegation: `POST /2/domains/domains/vipersecurity.ch/dnssec/disable`, then confirm `has_dnssec=false` with `GET /2/domains/domains/vipersecurity.ch/dnssec/check`.
+2. Wait until the DS record leaves resolver caches. `https://dns.google/resolve?name=vipersecurity.ch&type=DS` must return no `Answer`. The DS TTL is 3600 s, so this can take up to an hour. Switching earlier leaves validators with a cached DS and no DNSKEY, which causes `SERVFAIL`.
+3. Point the domain at Cloudflare: `PUT /2/domains/domains/vipersecurity.ch/nameservers` with `{"nameservers":["james.ns.cloudflare.com","surina.ns.cloudflare.com"],"verify_ns_availability":true}`. In the Manager this is Domain → DNS Servers → Custom nameservers.
+4. Wait for the Cloudflare zone status to become `active`; public `NS` must return the Cloudflare pair.
+5. Confirm MX, SPF, DMARC, the mail SRV records, and the `_domainkey` NS delegation still resolve. The records now come from Cloudflare.
 
 At this point `https://vipersecurity.ch` still serves from Infomaniak through the grey-cloud apex `A` record. Nothing is broken yet.
 
