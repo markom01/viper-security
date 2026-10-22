@@ -1,0 +1,3 @@
+# Apache artifacts from sites/viper/public must never be uploaded.
+**/.htaccess
+**/.ftpquota
