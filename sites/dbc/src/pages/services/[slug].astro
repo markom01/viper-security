@@ -29,14 +29,14 @@ const isAuction = slug === "auction";
 const sellingEntries = isAuction ? await getCollection("selling") : [];
 const sourceFleet: FleetEntry[] = sellingEntries.length
   ? sellingEntries.map((e) => ({ id: e.id, collection: "fleet" as const, data: e.data }))
-  : (offering.fleet || []).map((f) => ({ id: `${offering.slug ?? offering.title}-${slugify(f.name)}`, collection: "fleet" as const, data: f as FleetEntry["data"] }));
+  : (offering.fleet || []).map((f) => ({ id: `${offering.slug ?? offering.title}-${slugify(f.name)}`, collection: "fleet" as const, data: f }));
 const fleetVehicles = sourceFleet.sort((a, z) => (a.data.order ?? Infinity) - (z.data.order ?? Infinity) || a.id.localeCompare(z.id));
 const hasFleet = fleetVehicles.length > 0;
 
 const a = assembleService({
   offering, siteGlobals, home: homeContent, siteName: SITE_NAME,
   fleetVehicles,
-  hasFleet: !!offering.fleet?.length,
+  hasFleet,
   howItWorksSteps: siteGlobals.howItWorksSteps,
 });
 // Apply DBC per-service fleet heading override (assembler leaves this to the template)

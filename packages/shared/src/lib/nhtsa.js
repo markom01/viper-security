@@ -5,6 +5,10 @@
 // Callers own their caches, sorting and state machines — these helpers only
 // wrap the raw fetches and tolerate network/parse failures with empty results,
 // exactly like the inline code they replaced.
+//
+// Normalization notes: falsy Model_Name rows are dropped, and year-scoped
+// model results are deduped by name (`years` carries the queried year).
+// Model rows keep `{ name, years }` — the CMS widget consumes `name`.
 
 export const nhtsaApi = "https://vpic.nhtsa.dot.gov/api/vehicles";
 
