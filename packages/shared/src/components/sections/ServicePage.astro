@@ -64,6 +64,9 @@ interface Props {
   fleetVehicles?: FleetEntry[];
   fleetFeaturesText?: string;
   hasFleet?: boolean;
+  /** WhatsApp inquiry number for per-card buttons (e.g. "currently selling"
+   *  cards). Omitted → cards render no WhatsApp button. */
+  whatsappPhone?: string;
   /** HowItWorks steps (site-global, shared with home). */
   howItWorksSteps?: { title: string; description: string; image?: string }[];
   /** Fallback service cards when the offering has no `include` list (VIPER:
@@ -89,6 +92,7 @@ const {
   fleetVehicles,
   fleetFeaturesText,
   hasFleet,
+  whatsappPhone,
   howItWorksSteps = [],
   defaultServices,
   showPricing = false,
@@ -183,7 +187,12 @@ const serviceAbout = hasAbout
   <Services pageContent={pageContent} marbella={defaultServices} milano={defaultServices} />
 ) : null}
 {hasFleet && (
-  <Fleet vehicles={fleetVehicles} pageContent={pageContent} fleetFeatures={fleetFeaturesText} />
+  <Fleet
+    vehicles={fleetVehicles}
+    pageContent={pageContent}
+    fleetFeatures={fleetFeaturesText}
+    whatsappPhone={whatsappPhone}
+  />
 )}
 <StatsSection pageContent={{ ...pageContent, stats: mergedStats }} />
 <HowItWorks steps={steps} pageContent={{ ...pageContent, howitworks: serviceHowItWorks }} />

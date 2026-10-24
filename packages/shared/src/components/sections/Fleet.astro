@@ -1,16 +1,33 @@
 ---
 import ZoomImage from "./ZoomImage.astro";
-import type { FleetEntry, PageContent } from "../../types";
+import ImageCarousel from "./ImageCarousel.astro";
+import type { FleetEntry, FleetVehicleData, PageContent } from "../../types";
+import { cleanPhone } from "../../lib/phone";
 interface Props {
   pageContent?: PageContent;
   fleetFeatures?: string;
   vehicles?: FleetEntry[];
+  /** Inquiry number for the per-card WhatsApp button. Omitted → no button. */
+  whatsappPhone?: string;
 }
-const { pageContent, fleetFeatures, vehicles } = Astro.props as Props;
+const { pageContent, fleetFeatures, vehicles, whatsappPhone } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
 const f = pageContent?.fleet;
+
+// CMS leaves empty strings for unset fields, so trim before treating a value
+// as present (schema does not coerce "" to undefined).
+const present = (x: unknown) => {
+  const v = String(x ?? "").trim();
+  return v || undefined;
+};
+
+const waMessage = (d: FleetVehicleData, pagePath: string) =>
+  [d.name, d.vehicle?.year || d.year, d.type, d.description, pagePath ? `Details: ${pagePath}` : ""]
+    .map(present)
+    .filter((x): x is string => !!x)
+    .join("\n");
 ---
 
 <section id="fleet" class="section home-about-section fleet">
@@ -31,6 +48,17 @@ const f = pageContent?.fleet;
           {
             vehicles?.map((v: FleetEntry) => {
               const d = v.data || {};
+              // Year: sale entries carry it on `vehicle`, chauffeur entries on
+              // the legacy top-level `year`. Empty strings count as absent.
+              const displayYear = present(d.vehicle?.year || d.year);
+              const legacyCaps = [
+                displayYear,
+                d.seats,
+                d.baggage,
+                d.capacity_passengers,
+                d.capacity_suitcases,
+                d.capacity_carryon,
+              ].some((x) => present(x) !== undefined);
               // Right-of-image data: per-vehicle `specs` rows when present, else the
               // legacy passenger-car fields. Chunked 3-per-row to reuse the card grid.
               const specRows: { label: string; value: string }[][] = [];
@@ -50,16 +78,28 @@ const f = pageContent?.fleet;
                           <h3 class="car-listing-name">{d.name}</h3>
                           <div class="car-listing-type">{d.type}</div>
                         </div>
+                        {d.description && (
+                          <p class="car-card-description">{d.description}</p>
+                        )}
                         <div class="car-listing-image-wrapper">
-                          {d.image && (
-                            <ZoomImage
-                              src={d.image}
+                          {d.images?.length ? (
+                            <ImageCarousel
+                              images={d.images}
                               alt={d.name}
-                              class="car-listing-image"
-                              group="fleet"
-                              widths={[320, 480, 640]}
-                              sizes="(max-width: 767px) 100vw, (max-width: 991px) 50vw, 400px"
+                              id={`fleet-${v.id}-carousel`}
+                              group={`fleet-${v.id}`}
                             />
+                          ) : (
+                            d.image && (
+                              <ZoomImage
+                                src={d.image}
+                                alt={d.name}
+                                class="car-listing-image"
+                                group="fleet"
+                                widths={[320, 480, 640]}
+                                sizes="(max-width: 767px) 100vw, (max-width: 991px) 50vw, 400px"
+                              />
+                            )
                           )}
                         </div>
                       </div>
@@ -80,12 +120,12 @@ const f = pageContent?.fleet;
                               ))}
                             </div>
                           ))
-                        ) : (
+                        ) : legacyCaps ? (
                           <>
                             <div class="car-listing-details-wrapper">
                               <div class="car-listing-detail">
                                 <div class="listing-label">{s.fleet.year}</div>
-                                <div class="listing-detail">{d.year}</div>
+                                <div class="listing-detail">{displayYear}</div>
                               </div>
                               <div class="listing-detail-divider" />
                               <div class="car-listing-detail">
@@ -127,9 +167,19 @@ const f = pageContent?.fleet;
                               </div>
                             </div>
                           </>
-                        )}
+                        ) : null}
                       </div>
                     </div>
+                    {whatsappPhone && (
+                      <a
+                        class="primary-button car-card-wa"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={`https://wa.me/${cleanPhone(whatsappPhone)}?text=${encodeURIComponent(waMessage(d, Astro.url.pathname))}`}
+                      >
+                        <div class="button-text">{s.fleet.waButton}</div>
+                      </a>
+                    )}
                     <div style="opacity: 0;" class="car-card-hover-bg" />
                   </div>
                 </li>
@@ -210,6 +260,18 @@ const f = pageContent?.fleet;
     border: 1px solid var(--colors--cloud);
     border-radius: 12px;
     display: block;
+  }
+  /* Sale-card copy: inherits the card's type scale, only spacing is set. */
+  .car-card-description {
+    margin-top: 12px;
+    line-height: var(--line-height-sizes--small);
+  }
+  /* Inquiry CTA sits outside .car-card-details (20px padding), so it carries
+     its own inset. */
+  .fleet .car-card-wa {
+    width: fit-content;
+    margin: 0 20px 20px;
+    padding: 10px 24px;
   }
   .car-card:hover .car-card-hover-bg {
     opacity: 1 !important;
