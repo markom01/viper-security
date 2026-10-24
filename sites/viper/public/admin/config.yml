@@ -873,6 +873,75 @@ collections:
         collapsed: true
         required: false
         field: { name: image, label: Image, widget: image }
+      - label: "Fleet Section (Currently Selling)"
+        name: fleet_section
+        widget: object
+        collapsed: true
+        required: false
+        fields:
+          - { name: heading, label: Heading, widget: string, required: false }
+          - {
+              name: subheadline,
+              label: Subheadline,
+              widget: string,
+              required: false,
+            }
+      - label: "Fleet Vehicles (Currently Selling)"
+        name: fleet
+        widget: list
+        summary: "{{fields.name}}"
+        collapsed: true
+        required: false
+        fields:
+          - { name: name, label: Vehicle Name, widget: string }
+          - {
+              name: vehicle,
+              label: "Vehicle (NHTSA lookup)",
+              widget: nhtsa_vehicle,
+              required: false,
+            }
+          - { name: type, label: Type, widget: string, required: false }
+          - {
+              name: description,
+              label: Description,
+              widget: text,
+              required: false,
+            }
+          - label: Gallery Images
+            name: images
+            widget: list
+            collapsed: true
+            required: false
+            field: { name: image, label: Image, widget: image }
+          - {
+              name: image,
+              label: "Vehicle Image",
+              widget: image,
+              required: false,
+            }
+          - label: Specs
+            name: specs
+            widget: list
+            summary: "{{fields.label}}: {{fields.value}}"
+            collapsed: true
+            required: false
+            fields:
+              - { name: label, label: Label, widget: string }
+              - { name: value, label: Value, widget: string }
+          - {
+              name: features,
+              label: Features,
+              widget: list,
+              field: { name: feature, label: Feature, widget: string },
+              required: false,
+            }
+          - {
+              name: order,
+              label: "Sort Order",
+              widget: number,
+              value_type: int,
+              required: false,
+            }
       - label: "Include (service cards)"
         name: include
         widget: list

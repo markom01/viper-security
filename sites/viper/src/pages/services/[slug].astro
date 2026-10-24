@@ -5,6 +5,7 @@ import ServicePage from "@garage/shared/sections/ServicePage.astro";
 import { assembleService } from "@garage/shared/lib/assemble";
 import { SITE_NAME } from "@garage/shared/config/strings";
 import { slugify } from "@garage/shared/lib/slugify";
+import type { FleetEntry } from "@garage/shared/types";
 import { buildNav, buildFooterNav } from "../../data/nav";
 
 // Chauffeur services live on the home page; their booking-form fields live in
@@ -25,16 +26,43 @@ const { offering } = Astro.props as { offering: import("@garage/shared/content/t
 const siteGlobals = (await getEntry("site", "content"))!.data;
 const homeContent = (await getEntry("home", "content"))!.data;
 
+// Per-service fleet (Currently Selling). Mapped before assembleService so the
+// assembler can derive fleetFeaturesText from the same entries.
+const slug = offering.slug ?? slugify(offering.title);
+const fleetVehicles: FleetEntry[] = (offering.fleet || [])
+  .map((f) => ({
+    id: `${slug}-${f.name}`,
+    collection: "fleet" as const,
+    data: f as FleetEntry["data"],
+  }))
+  .sort((a, z) => (a.data.order ?? Infinity) - (z.data.order ?? Infinity) || a.id.localeCompare(z.id));
+const hasFleet = fleetVehicles.length > 0;
+
 const a = assembleService({
   offering, siteGlobals, home: homeContent, siteName: SITE_NAME,
+  fleetVehicles,
+  hasFleet,
   howItWorksSteps: siteGlobals.howItWorksSteps,
 });
+
+// Per-service Fleet heading override (assembler leaves this to the template).
+// Guarded so an unset heading keeps the site-global fallback instead of
+// writing `undefined` into pageContent.fleet.heading.
+if (offering.fleet_section?.heading) {
+  a.pageContent.fleet = { ...(a.pageContent.fleet || {}), heading: offering.fleet_section.heading };
+}
 
 // Sveltia writes label keys with underscores (nav_contact); normalize to the
 // dot-path form buildNav and shared-section resolveLabels expect.
 const labels: Record<string, string> = Object.fromEntries(
   Object.entries(a.pageContent?.labels ?? {}).map(([k, v]) => [k.replace(/_/g, "."), String(v)]),
 );
+
+// Per-service Fleet subheadline — written into the normalized map, after
+// normalization, so resolveLabels finds `fleet.subheadline`.
+if (offering.fleet_section?.subheadline) {
+  labels["fleet.subheadline"] = offering.fleet_section.subheadline;
+}
 
 const navItems = buildNav(labels);
 const footerItems = buildFooterNav(labels);
@@ -55,6 +83,10 @@ const brandName = homeContent.hero?.brand_name ?? SITE_NAME;
       fleetHref: "#about", presetService: offering.title,
     }}
     howItWorksSteps={a.howItWorksSteps}
+    fleetVehicles={fleetVehicles}
+    fleetFeaturesText={a.fleetFeaturesText}
+    hasFleet={hasFleet}
+    whatsappPhone={siteGlobals.jsonld?.phoneSpain}
     showPricing={false}
     showMembership={false}
     ctaAnchorId="first-experience"
