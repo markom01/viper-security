@@ -31,7 +31,7 @@ const homeContent = (await getEntry("home", "content"))!.data;
 const slug = offering.slug ?? slugify(offering.title);
 const fleetVehicles: FleetEntry[] = (offering.fleet || [])
   .map((f) => ({
-    id: `${slug}-${f.name}`,
+    id: `${slug}-${slugify(f.name)}`,
     collection: "fleet" as const,
     data: f as FleetEntry["data"],
   }))
