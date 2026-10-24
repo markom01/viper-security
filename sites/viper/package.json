@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node ../../scripts/build-cms-field.mjs",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "test": "npx playwright test",

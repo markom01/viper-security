@@ -15,7 +15,8 @@
     "check": "npm run check --workspaces",
     "validate:cms": "node scripts/validate-cms.mjs",
     "format:check": "prettier --check .",
-    "format:write": "prettier --write ."
+    "format:write": "prettier --write .",
+    "cms:field": "node scripts/build-cms-field.mjs"
   },
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.10",
