@@ -77,7 +77,14 @@ const selectOptions = (values, current, placeholder) => {
 };
 
 const registerField = (CMS) => {
-  const { createElement: h, useState, useEffect } = CMS.React;
+  const { createElement: h, useState, useEffect, useRef } = CMS.React;
+  // Sveltia exposes its bundled React 19 as CMS.React ("the full React API,
+  // including hooks"), so useRef is normally available. Fall back to a stable
+  // mutable object for older builds that omit it.
+  const useLatestRef =
+    typeof useRef === "function"
+      ? useRef
+      : (initial) => useState(() => ({ current: initial }))[0];
 
   const currentYear = new Date().getFullYear();
   const YEARS = [];
@@ -95,7 +102,17 @@ const registerField = (CMS) => {
     const [makes, setMakes] = useState({ status: "loading", list: [] });
     const [models, setModels] = useState({ status: "idle", list: [] });
 
-    const emit = (next) => onChange(compose(next));
+    // Latest emitted composite. The CMS prop only seeds it at mount; composing
+    // against the render-time prop would drop a change made before the CMS
+    // re-renders (e.g. make followed quickly by year).
+    const latest = useLatestRef(compose(vehicle));
+
+    // Merge a patch into the latest composite and emit. Empty parts are
+    // omitted, so passing "" clears a key — including downstream keys.
+    const emit = (patch) => {
+      latest.current = compose({ ...latest.current, ...patch });
+      onChange(latest.current);
+    };
 
     // Makes follow the category (default "car" when unset). "other" has no
     // NHTSA list, so it lands on the empty state and renders a text input.
@@ -186,7 +203,7 @@ const registerField = (CMS) => {
       selectOptions(CATEGORIES, category, "Select category"),
       category,
       (next) =>
-        emit({ ...vehicle, category: next, make: "", model: "", year: "" }),
+        emit({ category: next, make: "", model: "", year: "" }),
       forID,
     );
 
@@ -195,7 +212,7 @@ const registerField = (CMS) => {
       makes.status === "empty"
         ? input(
             make,
-            (next) => emit({ ...vehicle, make: next, model: "", year: "" }),
+            (next) => emit({ make: next, model: "", year: "" }),
             `${forID}-make`,
             "Make",
           )
@@ -206,7 +223,7 @@ const registerField = (CMS) => {
               makes.status === "loading" ? "Loading makes…" : "Select make",
             ),
             make,
-            (next) => emit({ ...vehicle, make: next, model: "", year: "" }),
+            (next) => emit({ make: next, model: "", year: "" }),
             `${forID}-make`,
           );
 
@@ -215,7 +232,7 @@ const registerField = (CMS) => {
       models.status === "empty"
         ? input(
             model,
-            (next) => emit({ ...vehicle, model: next }),
+            (next) => emit({ model: next }),
             `${forID}-model`,
             "Model",
           )
@@ -226,14 +243,14 @@ const registerField = (CMS) => {
               models.status === "loading" ? "Loading models…" : "Select model",
             ),
             model,
-            (next) => emit({ ...vehicle, model: next }),
+            (next) => emit({ model: next }),
             `${forID}-model`,
           );
 
     const yearControl = select(
       selectOptions(YEARS, year, "Select year"),
       year,
-      (next) => emit({ ...vehicle, year: next }),
+      (next) => emit({ year: next }),
       `${forID}-year`,
     );
 
