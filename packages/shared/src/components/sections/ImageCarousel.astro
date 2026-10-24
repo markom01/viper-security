@@ -17,10 +17,15 @@ interface Props {
   /** Astro ImageMetadata refs or public-path strings (CMS-picked). */
   images: (ImageMetadata | string)[];
   alt: string;
+  /** Per-instance id prefix for slide element ids + dot anchors. */
+  id?: string;
+  /** Per-instance PhotoSwipe lightbox group. */
+  group?: string;
 }
-const { images, alt } = Astro.props as Props;
+const { images, alt, id, group } = Astro.props as Props;
 const total = images.length;
-const baseId = "about-carousel";
+const baseId = id ?? "about-carousel";
+const lbGroup = group ?? "about-carousel";
 ---
 
 <div
@@ -45,7 +50,7 @@ const baseId = "about-carousel";
               alt={alt}
               class="carousel-image"
               anchorClass="carousel-zoom"
-              group="about-carousel"
+              group={lbGroup}
               widths={[480, 768, 1200]}
               sizes="(max-width: 991px) 100vw, 50vw"
             />
