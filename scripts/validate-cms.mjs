@@ -26,6 +26,7 @@ const dbcSchemas = {
   home: join(DBC, "json-schemas", "home.json"),
   services: join(DBC, "json-schemas", "services.json"),
   site: join(DBC, "json-schemas", "site.json"),
+  "currently-selling": join(DBC, "json-schemas", "currently-selling.json"),
 };
 
 // VIPER: only home is validated here (it shares DBC's block shapes). The other
@@ -41,7 +42,10 @@ const compileAll = (map, baseDir) =>
   Object.fromEntries(
     Object.entries(map).map(([name, file]) => [
       join(baseDir, name),
-      { schema: JSON.parse(readFileSync(file, "utf8")), validate: ajv.compile(JSON.parse(readFileSync(file, "utf8"))) },
+      {
+        schema: JSON.parse(readFileSync(file, "utf8")),
+        validate: ajv.compile(JSON.parse(readFileSync(file, "utf8"))),
+      },
     ]),
   );
 const dbcValidators = compileAll(dbcSchemas, DBC);
@@ -94,6 +98,10 @@ for (const [dir, entry] of Object.entries(allValidators)) {
   }
 }
 
-console.log(`\nCMS structure check: ${checked.length} file(s) valid, ${errors} error(s).`);
+console.log(
+  `\nCMS structure check: ${checked.length} file(s) valid, ${errors} error(s).`,
+);
 if (errors) process.exit(1);
-console.log("DBC + VIPER home CMS pages share the canonical structure (gallery/privacy + other VIPER collections exempt).");
+console.log(
+  "DBC + VIPER home CMS pages share the canonical structure (gallery/privacy + other VIPER collections exempt).",
+);

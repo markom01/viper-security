@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "db-custom-garage/currently-selling",
+  "title": "DBC Currently Selling vehicle",
+  "description": "One file per vehicle currently available at the garage. Mirrors fleetVehicleSchema (@garage/shared) plus the selling-card fields.",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "type": { "type": "string" },
+    "description": { "type": "string" },
+    "images": {
+      "type": ["array", "null"],
+      "items": { "type": "string" }
+    },
+    "image": { "type": "string" },
+    "specs": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": { "type": "string" },
+          "value": { "type": "string" }
+        },
+        "required": ["label", "value"],
+        "additionalProperties": false
+      }
+    },
+    "features": {
+      "type": ["array", "null"],
+      "items": { "type": "string" }
+    },
+    "order": { "type": ["number", "null"] },
+    "vehicle": {
+      "type": ["object", "null"],
+      "properties": {
+        "category": { "type": "string" },
+        "make": { "type": "string" },
+        "model": { "type": "string" },
+        "year": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["name"],
+  "additionalProperties": false
+}

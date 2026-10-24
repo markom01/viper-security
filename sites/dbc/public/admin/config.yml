@@ -403,6 +403,31 @@ collections:
           - { name: name, label: Vehicle Name, widget: string }
           - { name: type, label: Type, widget: string, required: false }
           - {
+              name: vehicle,
+              label: "Vehicle (NHTSA lookup)",
+              widget: nhtsa_vehicle,
+              required: false,
+            }
+          - {
+              name: description,
+              label: Description,
+              widget: text,
+              required: false,
+            }
+          - label: Gallery Images
+            name: images
+            widget: list
+            collapsed: true
+            required: false
+            field: { name: image, label: Image, widget: image }
+          - {
+              name: order,
+              label: "Sort Order",
+              widget: number,
+              value_type: int,
+              required: false,
+            }
+          - {
               name: year,
               label: Year,
               widget: number,
@@ -1003,3 +1028,51 @@ collections:
               widget: string,
               required: false,
             }
+
+  - name: currently-selling
+    label: Currently Selling
+    description: Vehicles currently available at the garage (one file per vehicle)
+    folder: sites/dbc/src/content/currently-selling
+    extension: yaml
+    create: true
+    slug: "{{fields.name}}"
+    fields:
+      - { name: name, label: Vehicle Name, widget: string }
+      - { name: type, label: Type, widget: string, required: false }
+      - {
+          name: vehicle,
+          label: "Vehicle (NHTSA lookup)",
+          widget: nhtsa_vehicle,
+          required: false,
+        }
+      - { name: description, label: Description, widget: text, required: false }
+      - label: Gallery Images
+        name: images
+        widget: list
+        collapsed: true
+        required: false
+        field: { name: image, label: Image, widget: image }
+      - { name: image, label: "Main Image", widget: image, required: false }
+      - label: Specs
+        name: specs
+        widget: list
+        summary: "{{fields.label}}: {{fields.value}}"
+        collapsed: true
+        required: false
+        fields:
+          - { name: label, label: Label, widget: string }
+          - { name: value, label: Value, widget: string }
+      - {
+          name: features,
+          label: Features,
+          widget: list,
+          field: { name: feature, label: Feature, widget: string },
+          required: false,
+        }
+      - {
+          name: order,
+          label: "Sort Order",
+          widget: number,
+          value_type: int,
+          required: false,
+        }

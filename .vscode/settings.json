@@ -13,6 +13,9 @@
     "sites/dbc/src/content/json-schemas/site.json": [
       "/sites/dbc/src/content/site/content.yaml"
     ],
+    "sites/dbc/src/content/json-schemas/currently-selling.json": [
+      "/sites/dbc/src/content/currently-selling/*.yaml"
+    ],
     "sites/viper/src/content/json-schemas/home.json": [
       "/sites/viper/src/content/home/content.yaml"
     ]
