@@ -6,6 +6,7 @@ import ServicePage from "@garage/shared/sections/ServicePage.astro";
 import { assembleService } from "@garage/shared/lib/assemble";
 import { SITE_NAME } from "@garage/shared/config/strings";
 import { slugify } from "@garage/shared/lib/slugify";
+import type { FleetEntry } from "@garage/shared/types";
 
 export async function getStaticPaths() {
   const serviceEntries = await getCollection("service");
@@ -19,13 +20,18 @@ const { offering } = Astro.props as { offering: import("@garage/shared/content/t
 const siteGlobals = (await getEntry("site", "content"))!.data;
 const homeContent = (await getEntry("home", "content"))!.data;
 
-// Per-service fleet vehicles — mapped from offering.fleet[] to shared FleetEntry shape.
-// Built before assembleService so the assembler can derive fleetFeaturesText (VIPER symmetry).
-const fleetVehicles = (offering.fleet || []).map((f) => ({
-  id: `${offering.slug ?? offering.title}-${f.name}`,
-  collection: "fleet" as const,
-  data: f,
-}));
+// Per-service fleet vehicles. The auction page lists the CMS `currently-selling`
+// collection; every other service maps offering.fleet[] to the shared FleetEntry
+// shape. Built before assembleService so the assembler can derive
+// fleetFeaturesText (VIPER symmetry).
+const slug = offering.slug ?? slugify(offering.title);
+const isAuction = slug === "auction";
+const sellingEntries = isAuction ? await getCollection("selling") : [];
+const sourceFleet: FleetEntry[] = sellingEntries.length
+  ? sellingEntries.map((e) => ({ id: e.id, collection: "fleet" as const, data: e.data }))
+  : (offering.fleet || []).map((f) => ({ id: `${offering.slug ?? offering.title}-${f.name}`, collection: "fleet" as const, data: f as FleetEntry["data"] }));
+const fleetVehicles = sourceFleet.sort((a, z) => (a.data.order ?? Infinity) - (z.data.order ?? Infinity) || a.id.localeCompare(z.id));
+const hasFleet = fleetVehicles.length > 0;
 
 const a = assembleService({
   offering, siteGlobals, home: homeContent, siteName: SITE_NAME,
@@ -36,6 +42,9 @@ const a = assembleService({
 // Apply DBC per-service fleet heading override (assembler leaves this to the template)
 if (offering.fleet_section?.heading) {
   a.pageContent.fleet = { ...(a.pageContent.fleet || {}), heading: offering.fleet_section.heading };
+}
+if (offering.fleet_section?.subheadline) {
+  a.pageContent.labels = { ...(a.pageContent.labels || {}), fleet_subheadline: offering.fleet_section.subheadline };
 }
 
 const pageContent = {
@@ -51,7 +60,6 @@ const pageContent = {
     ]),
   ),
 };
-const hasFleet = !!offering.fleet?.length;
 const fleetFeaturesText = a.fleetFeaturesText;
 ---
 
@@ -68,6 +76,7 @@ const fleetFeaturesText = a.fleetFeaturesText;
     fleetVehicles={fleetVehicles}
     fleetFeaturesText={fleetFeaturesText}
     hasFleet={hasFleet}
+    whatsappPhone={site.whatsappNumber}
     ctaAnchorId="start-a-build"
     bottomCtaAnchorId="your-dream-car"
     howItWorksSteps={a.howItWorksSteps}

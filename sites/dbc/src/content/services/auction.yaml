@@ -37,6 +37,8 @@ include:
   - title: Representation & Sale
     text: We handle the auction process end to end — sold, funds to you.
     image: /images/cms/gallery/supercars-and-classic-cars-provider-8.webp
+fleet_section:
+  heading: Currently Selling
 stats:
   heading: Sold Without Leaving Your Garage
   subheading: Since 2010 — preparation, Catawiki reach, you stay home.
