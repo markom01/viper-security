@@ -62,6 +62,52 @@ export const serviceFieldSchema = z.object({
     .optional(),
 });
 
+/** Optional make/model identity of a fleet vehicle (Sveltia nhtsa_vehicle
+ *  widget writes the resolved vehicle as nested strings). Absent for legacy
+ *  entries that only carry a free-text `name`. */
+export const vehicleSpecSchema = z.object({
+  category: z.string().optional(),
+  make: z.string().optional(),
+  model: z.string().optional(),
+  year: z.string().optional(),
+});
+
+export const fleetVehicleSchema = z.object({
+  name: z.string(),
+  type: z.string().optional(),
+  // CMS number widgets write raw numbers; legacy YAML carries quoted
+  // strings ("2024"). Coerce both to string so display code is unchanged.
+  year: z
+    .preprocess(
+      (v) => (v === "" || v == null ? undefined : String(v)),
+      z.string().optional(),
+    )
+    .optional(),
+  seats: z
+    .preprocess(
+      (v) => (v === "" || v == null ? undefined : String(v)),
+      z.string().optional(),
+    )
+    .optional(),
+  baggage: z
+    .preprocess(
+      (v) => (v === "" || v == null ? undefined : String(v)),
+      z.string().optional(),
+    )
+    .optional(),
+  capacity_passengers: z.number().optional(),
+  capacity_suitcases: z.number().optional(),
+  capacity_carryon: z.number().optional(),
+  specs: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
+  features: z.array(z.string()).optional(),
+  image: z.string().optional(),
+  // Selling-card fields: explicit sort order, long copy, and a gallery.
+  order: z.number().optional(),
+  description: z.string().optional(),
+  images: z.array(z.string()).optional(),
+  vehicle: nullToUndefined(vehicleSpecSchema),
+});
+
 export const serviceDetailSchema = z.object({
   title: z.string(),
   slug: z.string().optional(),
@@ -133,42 +179,7 @@ export const serviceDetailSchema = z.object({
       subheadline: z.string().optional(),
     }),
   ),
-  fleet: z
-    .array(
-      z.object({
-        name: z.string(),
-        type: z.string().optional(),
-        // CMS number widgets write raw numbers; legacy YAML carries quoted
-        // strings ("2024"). Coerce both to string so display code is unchanged.
-        year: z
-          .preprocess(
-            (v) => (v === "" || v == null ? undefined : String(v)),
-            z.string().optional(),
-          )
-          .optional(),
-        seats: z
-          .preprocess(
-            (v) => (v === "" || v == null ? undefined : String(v)),
-            z.string().optional(),
-          )
-          .optional(),
-        baggage: z
-          .preprocess(
-            (v) => (v === "" || v == null ? undefined : String(v)),
-            z.string().optional(),
-          )
-          .optional(),
-        capacity_passengers: z.number().optional(),
-        capacity_suitcases: z.number().optional(),
-        capacity_carryon: z.number().optional(),
-        specs: z
-          .array(z.object({ label: z.string(), value: z.string() }))
-          .optional(),
-        features: z.array(z.string()).optional(),
-        image: z.string().optional(),
-      }),
-    )
-    .optional(),
+  fleet: z.array(fleetVehicleSchema).optional(),
 });
 
 export const statsSchema = nullToUndefined(
@@ -345,35 +356,6 @@ export const siteGlobalsSchema = z.object({
   footer_company_info: z.string().optional(),
   fleetHeading: z.string().optional(),
   howItWorksHeading: z.string().optional(),
-});
-
-export const fleetVehicleSchema = z.object({
-  name: z.string(),
-  type: z.string().optional(),
-  year: z
-    .preprocess(
-      (v) => (v === "" || v == null ? undefined : String(v)),
-      z.string().optional(),
-    )
-    .optional(),
-  seats: z
-    .preprocess(
-      (v) => (v === "" || v == null ? undefined : String(v)),
-      z.string().optional(),
-    )
-    .optional(),
-  baggage: z
-    .preprocess(
-      (v) => (v === "" || v == null ? undefined : String(v)),
-      z.string().optional(),
-    )
-    .optional(),
-  capacity_passengers: z.number().optional(),
-  capacity_suitcases: z.number().optional(),
-  capacity_carryon: z.number().optional(),
-  specs: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
-  features: z.array(z.string()).optional(),
-  image: z.string().optional(),
 });
 
 export const galleryItemSchema = z.object({

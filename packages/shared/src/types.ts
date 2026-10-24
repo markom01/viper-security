@@ -23,6 +23,15 @@ export interface FleetVehicleData {
   specs?: { label: string; value: string }[];
   features?: string[];
   image?: SiteImage;
+  description?: string;
+  images?: string[];
+  order?: number;
+  vehicle?: {
+    category?: string;
+    make?: string;
+    model?: string;
+    year?: string;
+  };
 }
 
 export interface FleetEntry {
