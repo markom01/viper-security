@@ -5,7 +5,7 @@ import type { PageContent } from "../../types";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 
-      interface FieldDef { label: string; placeholder?: string; name: string; type?: string; options?: string[]; side?: string }
+      interface FieldDef { label: string; placeholder?: string; name: string; type?: string; options?: string[]; side?: string; cars_only?: boolean }
 interface Props {
   pageContent?: PageContent;
   phoneItaly?: string;
@@ -19,6 +19,18 @@ const s = resolveLabels(pageContent, STRINGS);
 const bd = (pageContent as unknown as { booking_data?: { spain?: { label: string; services: { name: string; routes: unknown[] }[] }; italy?: { label: string; services: { name: string; routes: unknown[] }[] } } })?.booking_data;
 const hasBooking = !!(bd && (bd.spain?.services?.length || bd.italy?.services?.length));
 const isGarageHome = !hasBooking && !presetService && Array.isArray(services) && services.length > 0;
+
+// Cascade visibility: a service-detail page whose service is not part of the
+// booking cascade (e.g. VIPER Vehicle Armoring, Sale of Luxury Cars) renders
+// the DBC-style form — preset service hidden, service fields only. The
+// cascade's Location → Service → Destination list only carries chauffeur
+// services, so it must not appear on pages selling a different service.
+const bookingNames = new Set(
+  [...(bd?.spain?.services ?? []), ...(bd?.italy?.services ?? [])]
+    .map((x) => x?.name)
+    .filter((n): n is string => !!n),
+);
+const showCascade = hasBooking && (!presetService || bookingNames.has(presetService));
 
 // Map title -> fields for dynamic service-specific form.
 // Built whenever `services` carries field defs (garage home AND booking
@@ -44,7 +56,7 @@ const SCRIPT_DATA = {
   PS: phoneSpain || "",
   PSV: presetService || "",
   SN: (pageContent as unknown as { jsonld?: { org_name?: string } })?.jsonld?.org_name,
-  HB: hasBooking,
+  HB: showCascade,
   SERVICES: Array.isArray(services) ? (services as { title: string }[]).map((x) => x?.title).filter(Boolean) : [],
   SVC_FIELDS: svcFieldsMap,
   IS_GARAGE_HOME: isGarageHome,
@@ -57,7 +69,7 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
 <div id="contact" class="booking-form-wrapper booking-form-wrapper--hero">
   <div class="booking-form-block">
     <form
-      class={`booking-form${hasBooking ? "" : " garage-form"}`}
+      class={`booking-form${showCascade ? "" : " garage-form"}`}
       aria-label={s.hero.bookingFormAria}
       name="booking-form"
       method="POST"
@@ -74,7 +86,7 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
         {staticLeft.map((f) => <FormField f={f as never} />)}
         {isGarageHome && <div id="svc-fields-left" class="svc-fields-host" aria-live="polite"></div>}
         {
-          hasBooking && (
+          showCascade && (
             <div class="booking-form-label-field">
               <label class="booking-form-label" for="form-location">{s.form.location}</label>
               <select class="booking-form-field" name="Location" id="form-location" required aria-label="Location">
@@ -88,7 +100,7 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
       </div>
       <div class="right-side-fields">
         {
-          hasBooking && (
+          showCascade && (
             <div class="booking-form-label-field">
               <label class="booking-form-label" for="form-service">{s.form.service}</label>
               <select class="booking-form-field" name="Service" id="form-service" disabled aria-label="Service">
@@ -98,7 +110,7 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
           )
         }
         {
-          hasBooking && (
+          showCascade && (
             <div class="booking-form-label-field">
               <label class="booking-form-label" for="form-destination">{s.form.destination}</label>
               <select class="booking-form-field" name="Destination" id="form-destination" disabled aria-label="Destination">
@@ -116,7 +128,7 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
         {hasBooking && hasDynamicFields && <div id="svc-fields-left" class="svc-fields-host" aria-live="polite"></div>}
         {hasBooking && hasDynamicFields && <div id="svc-fields-right" class="svc-fields-host" aria-live="polite"></div>}
         {
-          !hasBooking && (
+          !showCascade && (
             <div class="booking-form-label-field">
               <label class="booking-form-label" for="form-message">{s.form.message}</label>
               <input class="booking-form-field" id="form-message" name="Message" type="text" placeholder={s.form.messagePlaceholder} aria-label="Message" />
@@ -136,11 +148,11 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
             </div>
           )
         }
-        {!hasBooking && presetService && <input type="hidden" name="Service" value={presetService} />}
+        {!showCascade && presetService && <input type="hidden" name="Service" value={presetService} />}
       </div>
       <div class="form-bottom-row">
         {
-          hasBooking && (
+          showCascade && (
             <div class="booking-form-label-field" id="form-price-field">
               <div class="booking-form-label" id="form-price-label">{s.form.priceLabel}</div>
               <div class="booking-form-price" id="form-price-value" data-state="placeholder" role="status" aria-live="polite" aria-labelledby="form-price-label">{s.form.pricePlaceholder}</div>
@@ -232,7 +244,7 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
   if (raw) {
     (() => {
       interface Region { label?: string; services: { name: string; routes: (string | { route: string; price?: string })[] }[] }
-interface FieldDef { label: string; placeholder?: string; name: string; type?: string; options?: string[]; side?: string }
+interface FieldDef { label: string; placeholder?: string; name: string; type?: string; options?: string[]; side?: string; other_vehicles?: boolean }
       interface HeroData {
         spain: Region; italy: Region;
         SS: string; SR: string; CL: string; CS: string; SP: string;
@@ -551,6 +563,10 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
         const optC = document.createElement("option"); optC.value = "car"; optC.textContent = "Car";
         const optM = document.createElement("option"); optM.value = "motorcycle"; optM.textContent = "Motorcycle";
         sel.appendChild(optC); sel.appendChild(optM);
+        if (f.other_vehicles) {
+          const optO = document.createElement("option"); optO.value = "other"; optO.textContent = "Other vehicles";
+          sel.appendChild(optO);
+        }
         selWrap.appendChild(selLab); selWrap.appendChild(sel);
 
         const makeW = mk("make", "Make", f.placeholder || "Select make...", { "data-vehicle-make": "", "aria-label": `${f.label} make`, "name": `${f.name}-make` });
@@ -663,6 +679,7 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
         const jf = (r: Response) => r.json();
         async function getMakes(): Promise<string[]> {
           const vt = activeType;
+          if (vt === "other") return []; // "Other vehicles" is free-text — no NHTSA list
           if (makesByType[vt]) return makesByType[vt];
           const ids = new Map<string, number>();
           try {
@@ -751,18 +768,33 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
           return years.slice().sort((a, b) => a - b).map((y) => String(y));
         }, () => { updateSummary(); });
         function openOnEmpty(ac: InstanceType<typeof AC>, input: HTMLInputElement): void {
-          input.addEventListener("focus", () => { if (input.disabled || input.value) return; openAll(ac, input); });
+          input.addEventListener("focus", () => { if (input.disabled || input.value || activeType === "other") return; openAll(ac, input); });
           let reopen: number | undefined;
           input.addEventListener("input", () => {
-            if (input.disabled || input.value || document.activeElement !== input) return;
+            if (input.disabled || input.value || activeType === "other" || document.activeElement !== input) return;
             if (reopen) return;
             reopen = window.setTimeout(() => { reopen = undefined; if (!input.value && document.activeElement === input) openAll(ac, input); }, 300);
           });
         }
         openOnEmpty(makeAC, makeInput); openOnEmpty(modelAC, modelInput); openOnEmpty(yearAC, yearInput);
         [makeInput, modelInput, yearInput].forEach((inp) => inp.addEventListener("input", updateSummary));
+        const INIT_MAKE_PH = makeInput.placeholder, INIT_MODEL_PH = modelInput.placeholder, INIT_YEAR_PH = yearInput.placeholder;
         typeInput.addEventListener("change", () => {
-          activeType = typeInput.value; activeMakeId = null; modelNames = []; modelYears = {}; makeInput.value = ""; modelInput.value = ""; yearInput.value = ""; modelInput.disabled = true; yearInput.disabled = true; updateSummary();
+          activeType = typeInput.value; activeMakeId = null; modelNames = []; modelYears = {}; makeInput.value = ""; modelInput.value = ""; yearInput.value = "";
+          if (activeType === "other") {
+            // Other vehicles: free-text mode, no NHTSA lists.
+            makeInput.placeholder = "Describe make (optional)";
+            modelInput.placeholder = "Describe model (optional)";
+            yearInput.placeholder = "Year (optional)";
+            modelInput.disabled = false; yearInput.disabled = false;
+          } else {
+            makeInput.placeholder = INIT_MAKE_PH;
+            modelInput.placeholder = INIT_MODEL_PH;
+            yearInput.placeholder = INIT_YEAR_PH;
+            modelInput.disabled = true; yearInput.disabled = true;
+          }
+          updateSummary();
+          if (activeType === "other") return;
           getMakes().then(() => { if (!makeInput.value && document.activeElement === makeInput) openAll(makeAC, makeInput); });
         });
         getMakes();

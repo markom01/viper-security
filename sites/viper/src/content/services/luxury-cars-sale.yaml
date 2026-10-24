@@ -2,125 +2,64 @@ title: Sale of Luxury Cars
 slug: luxury-cars-sale
 description: Curated sourcing, full inspection, warranty and delivery of luxury and executive cars across Marbella and Milano.
 hero:
-  subtitle: Curated sourcing, full inspection, warranty and delivery of luxury and executive cars across Marbella and Milano.
+  subtitle: Curated stock from trusted dealers and private sellers — inspected, warranted and delivered to your door in Marbella or Milano.
   cta_text: Enquire About Stock
-  tagline: Luxury Without Limits
-  image: /images/cms/hero-image_upscaled.webp
+  tagline: Luxury Car Sales & Sourcing in Marbella & Milano
+  image: /images/cms/maybach-hero.jpg
 form_fields:
-  - label: Vehicle of interest
-    placeholder: Make, model, year, budget
+  - label: Vehicle (make & model)
+    placeholder: Start typing — e.g. Porsche 911
     name: vehicle_interest
+    type: vehicle
+    options: []
+    cars_only: true
+    side: ''
   - label: Budget
     placeholder: Approximate budget
     name: budget
     type: number
+    options: []
+    cars_only: false
     side: right
   - label: Trade-in
     placeholder: Current car, year, mileage
     name: trade_in
+    type: ''
+    options: []
+    cars_only: false
     side: right
 marquee: CURATED STOCK · INSPECTED · WARRANTY · FIXED PRICE · Marbella · Milano
-about_text: We source luxury and executive cars to your exact spec, then inspect every vehicle for history and condition before it reaches you. Pricing is fixed and transparent, with trade-in welcome and clear guidance on financing. We finish with delivery and full registration support in Costa del Sol — Marbella and Northern Italy & Alps — Milano, so the car arrives ready to drive.
+about_text: We source luxury and executive cars to your exact spec, then inspect every vehicle for history and condition before it reaches you. Pricing is fixed and transparent, with trade-in welcome and clear guidance on financing. We finish with delivery and full registration support in Marbella and Milano, so the car arrives ready to drive.
 about_images:
-  - /images/cms/about-image-v2.webp
-  - /images/cms/marketing-v2.webp
-  - /images/cms/corporate-travel.webp
-  - /images/cms/security-chauffeur.webp
+  - /images/cms/WhatsApp Image 2026-07-24 at 10.19.02.webp
+  - /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (7).webp
+  - /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (5).webp
+  - /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (6).webp
 include:
   - title: Tell Us Your Spec
     text: Share the make, model, budget and must-haves. We turn it into a search brief and confirm what is in stock right now.
-    image: /images/cms/marketing-v2.webp
+    image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.43.webp
   - title: Sourcing and Inspection
     text: We source from trusted dealers and private sellers, then check history, mileage and condition before shortlisting anything.
-    image: /images/cms/about-image-v2.webp
+    image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.14.webp
   - title: Transparent Offer
     text: One fixed price with the full inspection report attached. Trade-in valued openly, financing options explained in plain terms.
-    image: /images/cms/corporate-travel.webp
+    image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.02.webp
   - title: Delivery and Handover
     text: Delivery to your door in Marbella or Milano, with registration support and a full walkaround at handover.
-    image: /images/cms/airport-transfer.webp
-fleet:
-  - name: Mercedes-Benz S-Class
-    type: Executive Sedan
-    year: "2023"
-    seats: "3"
-    baggage: "3"
-    capacity_passengers: 3
-    capacity_suitcases: 3
-    capacity_carryon: 2
-    specs:
-      - label: Mileage
-        value: 18,500 km
-      - label: Condition
-        value: Inspected, full service history
-      - label: Warranty
-        value: 12 months included
-      - label: Price
-        value: On request
-    image: /images/cms/corporate-travel.webp
-    features:
-      - Full service history
-      - Independent inspection report
-      - 12-month warranty
-      - Registration support included
-  - name: Porsche 911 Carrera
-    type: Sports Coupe
-    year: "2022"
-    seats: "2"
-    baggage: "1"
-    capacity_passengers: 2
-    capacity_suitcases: 1
-    capacity_carryon: 1
-    specs:
-      - label: Mileage
-        value: 12,300 km
-      - label: Condition
-        value: Inspected, collector grade
-      - label: Warranty
-        value: 12 months included
-      - label: Price
-        value: On request
-    image: /images/cms/security-chauffeur.webp
-    features:
-      - Collector-grade condition
-      - Independent inspection report
-      - 12-month warranty
-      - Delivery across Marbella and Milano
-  - name: Range Rover Autobiography
-    type: Luxury SUV
-    year: "2023"
-    seats: "4"
-    baggage: "4"
-    capacity_passengers: 4
-    capacity_suitcases: 4
-    capacity_carryon: 2
-    specs:
-      - label: Mileage
-        value: 21,700 km
-      - label: Condition
-        value: Inspected, one owner
-      - label: Warranty
-        value: 12 months included
-      - label: Price
-        value: On request
-    image: /images/cms/city-tour.webp
-    features:
-      - One previous owner
-      - Independent inspection report
-      - 12-month warranty
-      - Trade-in welcome
+    image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (6).webp
 stats:
   heading: Buy With Total Confidence
   subheading: Inspected, fixed-price luxury cars with warranty and delivery across Marbella and Milano.
-  image: /images/cms/stats-bg.webp
+  image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (4).webp
   items:
-    - label: '100%'
+    - label: 100%
       title: Inspected history and condition
-    - label: '12mo'
+    - label: 12mo
       title: Warranty on every car sold
-    - label: 'Fixed'
+    - label: Fixed
       title: One transparent price, no surprises
-    - label: 'A-Z'
+    - label: A-Z
       title: Delivery and registration handled
 steps:
   - title: Enquire on WhatsApp
@@ -134,7 +73,7 @@ howitworks:
 cta:
   heading: Ready to Find Your Car?
   text: Enquire about current stock on WhatsApp. Fixed price, inspected condition, warranty and delivery across Marbella and Milano.
-  image: /images/cms/security-chauffeur.webp
+  image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.14 (1).webp
 bottomcta:
   heading: Luxury Cars, Without the Risk
   values:
@@ -145,6 +84,6 @@ bottomcta:
     - title: Delivered Ready to Drive
       text: Warranty, registration and handover handled end to end.
 seo:
-  title: "VIPER Security — Sale of Luxury Cars"
-  description: Curated sourcing, inspection, warranty and delivery of luxury and executive cars across Marbella and Milano.
+  title: Luxury Car Sales Marbella & Milano | VIPER Security
+  description: Curated luxury and executive car sales in Marbella and Milano. Sourcing to spec, full inspection, 12-month warranty, trade-in and delivery.
   image: /images/og-viper.webp

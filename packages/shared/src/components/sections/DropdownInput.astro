@@ -28,6 +28,11 @@ interface Props {
   custom?: boolean;
   /** Address mode: restrict the Photon dropdown to countries only. */
   country?: boolean;
+  /** Vehicle mode: hide the type selector and always search car makes. */
+  carsOnly?: boolean;
+  /** Vehicle mode: offer "Other vehicles" as a type — selecting it turns
+   *  make/model/year into free-text fields (NHTSA has no "other" category). */
+  otherVehicles?: boolean;
 }
 
 const {
@@ -39,6 +44,8 @@ const {
   addressName,
   custom = false,
   country = false,
+  carsOnly = false,
+  otherVehicles = false,
 } = Astro.props as Props;
 const customAttrs = custom
   ? { "data-custom-field": "", "data-custom-location": "" }
@@ -66,13 +73,18 @@ const countryAttr = country ? { "data-country-location": "" } : {};
     </div>
   ) : (
     <div class="vehicle-fields">
-      <div class="booking-form-label-field">
-        <label class="booking-form-label" for={`${id}-type`}>Vehicle type</label>
-        <select class="booking-form-field" id={`${id}-type`} name={`${name}-type`} data-vehicle-type>
-          <option value="car">Car</option>
-          <option value="motorcycle">Motorcycle</option>
-        </select>
-      </div>
+      {carsOnly ? (
+        <input type="hidden" name={`${name}-type`} value="car" data-vehicle-type />
+      ) : (
+        <div class="booking-form-label-field">
+          <label class="booking-form-label" for={`${id}-type`}>Vehicle type</label>
+          <select class="booking-form-field" id={`${id}-type`} name={`${name}-type`} data-vehicle-type>
+            <option value="car">Car</option>
+            <option value="motorcycle">Motorcycle</option>
+            {otherVehicles && <option value="other">Other vehicles</option>}
+          </select>
+        </div>
+      )}
       <div class="booking-form-label-field">
         <label class="booking-form-label" for={`${id}-make`}>Make</label>
         <input
@@ -145,24 +157,30 @@ const countryAttr = country ? { "data-country-location": "" } : {};
       const makeInput = block.querySelector<HTMLInputElement>("[data-vehicle-make]");
       const modelInput = block.querySelector<HTMLInputElement>("[data-vehicle-model]");
       const yearInput = block.querySelector<HTMLInputElement>("[data-vehicle-year]");
-      const typeInput = block.querySelector<HTMLSelectElement>("[data-vehicle-type]");
+      const typeInput = block.querySelector<HTMLInputElement | HTMLSelectElement>("[data-vehicle-type]");
       const summary = block.querySelector<HTMLInputElement>("[data-vehicle-summary]");
       if (!makeInput || !modelInput || !yearInput || !typeInput) return;
       // Non-null refs for use inside nested closures (TS loses narrowing).
       const makeF: HTMLInputElement = makeInput;
       const modelF: HTMLInputElement = modelInput;
       const yearF: HTMLInputElement = yearInput;
-      const typeF: HTMLSelectElement = typeInput;
+      const typeF: HTMLInputElement | HTMLSelectElement = typeInput;
+      // Placeholders as rendered by the server — the free-text "other" branch
+      // restores these after switching back to a NHTSA-backed type.
+      const INIT_MAKE_PH = makeF.placeholder;
+      const INIT_MODEL_PH = modelF.placeholder;
+      const INIT_YEAR_PH = yearF.placeholder;
 
     const jf = (r: Response) => r.json();
 
-    let activeType: string = "car";       // currently selected vehicle type
+    let activeType: string = typeF.value || "car"; // cars-only blocks carry a fixed hidden value
     let modelNames: string[] = [];          // models for the selected make
     let modelYears: Record<string, number[]> = {}; // model → production years
     let activeMakeId: number | null = null;
 
     async function getMakes(): Promise<string[]> {
       const vt = activeType;
+      if (vt === "other") return []; // "Other vehicles" is free-text — no NHTSA list
       if (makesByType[vt]) return makesByType[vt];
       const ids = new Map<string, number>();
       try {
@@ -343,14 +361,14 @@ const countryAttr = country ? { "data-country-location": "" } : {};
     // re-open isn't stomped.
     function openOnEmpty(ac: InstanceType<typeof autoComplete>, input: HTMLInputElement): void {
       input.addEventListener("focus", () => {
-        if (input.disabled || input.value) return;
+        if (input.disabled || input.value || activeType === "other") return;
         openAll(ac, input);
       });
       let reopen: number | undefined;
       input.addEventListener("input", () => {
         // Re-open only when the field was emptied by deleting, is still empty,
         // and is still the active field (don't steal focus from another field).
-        if (input.disabled || input.value || document.activeElement !== input) return;
+        if (input.disabled || input.value || activeType === "other" || document.activeElement !== input) return;
         if (reopen) return; // one pending re-open is enough
         reopen = window.setTimeout(() => {
           reopen = undefined;
@@ -367,6 +385,8 @@ const countryAttr = country ? { "data-country-location": "" } : {};
     );
 
     // Switching vehicle type resets the cascade and swaps the make list.
+    // "other" (Other vehicles) is free-text: unlock all three fields — there is
+    // no NHTSA make list for it — and swap in describe-style placeholders.
     typeF.addEventListener("change", () => {
       activeType = typeF.value;
       activeMakeId = null;
@@ -375,9 +395,21 @@ const countryAttr = country ? { "data-country-location": "" } : {};
       makeF.value = "";
       modelF.value = "";
       yearF.value = "";
-      modelF.disabled = true;
-      yearF.disabled = true;
+      if (activeType === "other") {
+        makeF.placeholder = "Describe make (optional)";
+        modelF.placeholder = "Describe model (optional)";
+        yearF.placeholder = "Year (optional)";
+        modelF.disabled = false;
+        yearF.disabled = false;
+      } else {
+        makeF.placeholder = INIT_MAKE_PH;
+        modelF.placeholder = INIT_MODEL_PH;
+        yearF.placeholder = INIT_YEAR_PH;
+        modelF.disabled = true;
+        yearF.disabled = true;
+      }
       updateSummary();
+      if (activeType === "other") return;
       getMakes().then(() => {
         if (!makeF.value && document.activeElement === makeF) {
           openAll(makeAC, makeF); // show the new type's makes

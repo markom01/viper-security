@@ -58,11 +58,12 @@ interface Props {
     fleetHref?: string;
     presetService?: string;
   };
-  /** Fleet — a site passes the collection entries (VIPER) or per-offering
-   *  vehicles gated by `hasFleet` (DBC). */
-  fleetVehicles: FleetEntry[];
-  fleetFeaturesText: string;
-  hasFleet: boolean;
+  /** Fleet — opt-in; a site passes the collection entries (DBC) here. A site
+   *  that omits these props renders no Fleet section at all (VIPER service
+   *  pages). */
+  fleetVehicles?: FleetEntry[];
+  fleetFeaturesText?: string;
+  hasFleet?: boolean;
   /** HowItWorks steps (site-global, shared with home). */
   howItWorksSteps?: { title: string; description: string; image?: string }[];
   /** Fallback service cards when the offering has no `include` list (VIPER:

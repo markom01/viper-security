@@ -12,6 +12,8 @@ interface Props {
     type?: "text" | "location" | "country" | "vehicle" | "select" | "number";
     options?: string[];
     side?: "left" | "right";
+    cars_only?: boolean;
+    other_vehicles?: boolean;
   };
 }
 
@@ -32,7 +34,15 @@ const selectPrompt = f.placeholder || `Select ${f.label.toLowerCase()}...`;
     country={f.type === "country"}
   />
 ) : f.type === "vehicle" ? (
-  <DropdownInput kind="vehicle" id={id} label={f.label} placeholder={f.placeholder} name={f.name} />
+  <DropdownInput
+    kind="vehicle"
+    id={id}
+    label={f.label}
+    placeholder={f.placeholder}
+    name={f.name}
+    carsOnly={f.cars_only}
+    otherVehicles={f.other_vehicles}
+  />
 ) : f.type === "select" ? (
   <div class="booking-form-label-field">
     <label class="booking-form-label" for={id}

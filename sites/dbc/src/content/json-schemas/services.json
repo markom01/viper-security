@@ -94,6 +94,7 @@
           "name": { "type": "string" },
           "type": { "type": ["string", "null"], "enum": ["text", "location", "country", "vehicle", "select", "number", "", null] },
           "options": { "type": ["array", "null"], "items": { "type": "string" } },
+          "cars_only": { "type": "boolean" },
           "side": { "type": ["string", "null"], "enum": ["left", "right", "", null] }
         },
         "required": ["label", "name"],

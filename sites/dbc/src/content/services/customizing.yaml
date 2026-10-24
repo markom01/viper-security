@@ -2,7 +2,7 @@ title: Automotive Customizing & Design Projects
 slug: customizing
 description: Bespoke design and build projects — restomod, widebody, interior and show-grade finishing.
 hero:
-  subtitle: Bespoke design and build — from restomod to show-grade.
+  subtitle: Bespoke design and build — cars and motorcycles, from restomod to show-grade.
   cta_text: Get A Quote
   tagline: Customize · Design · Build
   image: /images/cms/custom design hero.webp
@@ -16,21 +16,27 @@ form_fields:
       - Widebody
       - Interior
       - Design
-    side: ''
+    side: ""
+  - label: Vehicle (make & model)
+    placeholder: Start typing — e.g. Ferrari 812
+    name: vehicle_model
+    type: vehicle
+    cars_only: false
+    other_vehicles: true
   - label: Budget
     placeholder: Approximate budget
     name: budget
     type: number
-    side: ''
+    side: ""
 marquee: Custom Builds · Design · Repair · Motorcycles
-about_text: An in-house design studio and build shop for custom cars and motorcycles — restomod, widebody, interior and show-grade finishing — plus general repair and maintenance.
+about_text: An in-house design studio and build shop for custom cars and motorcycles — from Harley-Davidson and Indian customs to restomods, widebodies and show-grade finishes — plus general repair and maintenance.
 include:
-  - title: Custom Builds
-    text: Complete builds from vision to show floor.
+  - title: Custom Builds & Body Kits
+    text: Vision-to-show-floor builds — body kits and bumpers fabricated in metal, hand powder-coated.
     image: /images/cms/gallery/screenshot-2025-08-16-alle-14-03-21.webp
-  - title: Body Kits
-    text: Fabricated in metal, powder-coated — e.g. Jeep Wrangler bumpers.
-    image: /images/cms/gallery/jeep-wrangler-body-kit.webp
+  - title: Custom Motorcycles
+    text: Harley-Davidson, Indian and one-offs — flame tanks, bars and full builds, painted by hand.
+    image: /images/cms/gallery/screenshot-2025-04-09-alle-22-30-38.webp
   - title: Design Projects
     text: Concept, industrial and interior design from our in-house studio.
     image: /images/cms/gallery/design.webp
@@ -43,13 +49,13 @@ stats:
   subheading: Design, fabrication and finish — one roof, by hand.
   image: /images/cms/gallery/gallery-18.webp
   items:
-    - label: '1'
+    - label: "1"
       title: In-house design studio & build shop
-    - label: '100%'
+    - label: "100%"
       title: Fabricated in-house — not bought off the shelf
-    - label: '2'
+    - label: "2"
       title: Cars & motorcycles covered
-    - label: '5'
+    - label: "5"
       title: Stage process — sketch to street
 steps:
   - title: Vision & Scope
@@ -57,12 +63,12 @@ steps:
   - title: Design & Fabrication
     description: In-house studio draws it, then metal is fabricated and powder-coated by hand. No off-the-shelf parts.
   - title: Finish & Delivery
-    description: Paint, trim and final assembly, then a shakedown so the car leaves show-ready.
+    description: Paint, trim and final assembly, then a shakedown so the build leaves show-ready — on the road or on the street.
 howitworks:
   heading: How Your Build Comes Together
 cta:
   heading: Ready to Build Your Dream?
-  text: From restomod to show-grade — tell us the vision and we take it from sketch to street.
+  text: Cars or motorcycles — tell us the vision and we take it from sketch to street.
   image: /images/cms/gallery/db-custom-garage-hero.webp
 bottomcta:
   heading: Your Dream Build, Done

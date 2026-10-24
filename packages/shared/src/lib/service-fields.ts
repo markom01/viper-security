@@ -1,7 +1,8 @@
 import { slugify } from "./slugify";
 import type { SiteGlobalsData } from "../content/types";
 
-export type ServiceFieldType = "text" | "location" | "country" | "vehicle" | "select" | "number";
+export type ServiceFieldType =
+  "text" | "location" | "country" | "vehicle" | "select" | "number";
 export type ServiceFieldSide = "left" | "right";
 
 export interface ServiceFieldDef {
@@ -33,7 +34,11 @@ function asData(e: EntryInput): ServiceEntryLike {
     // Collection-entry id fallback (e.g. "customizing.yaml") when the entry
     // carries no explicit slug — mirrors the previous per-site merge logic.
     if (!d.slug && typeof e.id === "string") {
-      const base = e.id.replace(/\.ya?ml$/, "").split("/").pop() || "";
+      const base =
+        e.id
+          .replace(/\.ya?ml$/, "")
+          .split("/")
+          .pop() || "";
       if (base) return { ...d, slug: base };
     }
     return d;
@@ -42,14 +47,18 @@ function asData(e: EntryInput): ServiceEntryLike {
 }
 
 /**
- * Merge per-service `form_fields` (service collection) into a list of
- * offerings (home offerings, booking service names, …) so the shared hero
- * BookingForm can inject service-specific fields on service select.
+ * Merge per-service `form_fields` (service collection entries or
+ * booking_data.service_fields) into a list of offerings (home offerings,
+ * booking service names, …) so the shared hero BookingForm can inject
+ * service-specific fields on service select.
  *
  * Match order per offering: slug first, then title. No match → `form_fields: []`.
  * Accepts raw service data objects or `getCollection("service")` entries.
  */
-export function withServiceFields<T extends OfferingLike>(offerings: T[], entries: EntryInput[]): (T & { form_fields: ServiceFieldDef[] })[] {
+export function withServiceFields<T extends OfferingLike>(
+  offerings: T[],
+  entries: EntryInput[],
+): (T & { form_fields: ServiceFieldDef[] })[] {
   const data = entries.map(asData);
   const bySlug = new Map<string, ServiceFieldDef[]>();
   const byTitle = new Map<string, ServiceFieldDef[]>();
@@ -61,7 +70,8 @@ export function withServiceFields<T extends OfferingLike>(offerings: T[], entrie
   }
   return offerings.map((o) => ({
     ...o,
-    form_fields: (o.slug ? bySlug.get(o.slug) : undefined) ?? byTitle.get(o.title) ?? [],
+    form_fields:
+      (o.slug ? bySlug.get(o.slug) : undefined) ?? byTitle.get(o.title) ?? [],
   }));
 }
 
@@ -71,7 +81,9 @@ export function withServiceFields<T extends OfferingLike>(offerings: T[], entrie
  * `services` prop on booking-driven sites (VIPER) so the shared
  * BookingForm can load service-specific fields per selected service.
  */
-export function bookingServiceNames(booking_data?: SiteGlobalsData["booking_data"] | null): string[] {
+export function bookingServiceNames(
+  booking_data?: SiteGlobalsData["booking_data"] | null,
+): string[] {
   const names: string[] = [];
   const seen = new Set<string>();
   for (const region of [booking_data?.spain, booking_data?.italy]) {

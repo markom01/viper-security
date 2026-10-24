@@ -2,67 +2,173 @@ import type { ImageMetadata } from "astro";
 
 export interface HomeData {
   hero: {
-    brand_name?: string; tagline?: string; subtitle?: string;
-    cta_text?: string; hero_image?: string; phone_italy?: string; phone_spain?: string;
+    brand_name?: string;
+    tagline?: string;
+    subtitle?: string;
+    cta_text?: string;
+    hero_image?: string;
+    phone_italy?: string;
+    phone_spain?: string;
   };
-  services: { offerings: {
-    region: string; title: string; description: string;
-    image?: string; slug?: string;
-  }[] };
-  seo?: { title?: string; description?: string; theme_color?: string; image?: string };
-  stats?: { subheading?: string; image?: string; items?: { label: string; title: string }[] };
+  services: {
+    offerings: {
+      region: string;
+      title: string;
+      description: string;
+      image?: string;
+      slug?: string;
+    }[];
+  };
+  seo?: {
+    title?: string;
+    description?: string;
+    theme_color?: string;
+    image?: string;
+  };
+  stats?: {
+    subheading?: string;
+    image?: string;
+    items?: { label: string; title: string }[];
+  };
   cta?: { heading?: string; text?: string; image?: string };
   bottomcta?: { heading?: string; values?: { title: string; text: string }[] };
-  about?: { heading?: string; text?: string; image?: string; images?: string[] };
-  branding?: { logo?: string; luxury_without_limits?: string; professional_discreet_reliable?: string };
+  about?: {
+    heading?: string;
+    text?: string;
+    image?: string;
+    images?: string[];
+  };
+  branding?: {
+    logo?: string;
+    luxury_without_limits?: string;
+    professional_discreet_reliable?: string;
+  };
   labels?: Record<string, string>;
-  howitworks?: { heading?: string; steps?: { title: string; description: string }[] };
+  howitworks?: {
+    heading?: string;
+    steps?: { title: string; description: string }[];
+  };
+}
+
+/** One dynamic booking-form field (service pages + booking_data.service_fields). */
+export interface ServiceFieldData {
+  label: string;
+  placeholder?: string;
+  name: string;
+  type?: "text" | "location" | "country" | "vehicle" | "select" | "number";
+  options?: string[];
+  cars_only?: boolean;
+  /** Adds an "Other vehicles" type option; selecting it turns the vehicle
+   *  make/model/year cascade into plain text fields. */
+  other_vehicles?: boolean;
+  side?: "left" | "right";
 }
 
 export interface ServiceDetailData {
-  title: string; slug?: string; description?: string; marquee?: string;
+  title: string;
+  slug?: string;
+  description?: string;
+  marquee?: string;
   /** Per-page SEO (title/description/og image URL) for the generated service page. */
   seo?: { title?: string; description?: string; image?: string };
-  about_text?: string; about_image?: string;
-  hero?: { subtitle?: string; cta_text?: string; tagline?: string; image?: string };
+  about_text?: string;
+  about_image?: string;
+  hero?: {
+    subtitle?: string;
+    cta_text?: string;
+    tagline?: string;
+    image?: string;
+  };
   steps?: { title: string; description: string }[];
   include?: { title: string; text: string; image?: string }[];
-  stats?: { heading?: string; subheading?: string; image?: string; items?: { label: string; title: string }[] };
+  stats?: {
+    heading?: string;
+    subheading?: string;
+    image?: string;
+    items?: { label: string; title: string }[];
+  };
   cta?: { heading?: string; text?: string; image?: string };
   howitworks?: { heading?: string };
-  form_fields?: { label: string; placeholder?: string; name: string;
-    type?: "text" | "location" | "country" | "vehicle"; side?: "left" | "right" }[];
+  form_fields?: ServiceFieldData[];
   bottomcta?: { heading?: string; values?: { title: string; text: string }[] };
   fleet_section?: { heading?: string; subheadline?: string };
   fleet?: {
-    name: string; type?: string; year?: string; seats?: string; baggage?: string;
-    capacity_passengers?: number; capacity_suitcases?: number; capacity_carryon?: number;
-    specs?: { label: string; value: string }[]; features?: string[]; image?: string;
+    name: string;
+    type?: string;
+    year?: string;
+    seats?: string;
+    baggage?: string;
+    capacity_passengers?: number;
+    capacity_suitcases?: number;
+    capacity_carryon?: number;
+    specs?: { label: string; value: string }[];
+    features?: string[];
+    image?: string;
   }[];
 }
 
 export interface SiteGlobalsData {
   jsonld?: {
-    org_name?: string; org_url?: string; org_logo?: string; org_description?: string;
-    phoneSpain?: string; phoneItaly?: string; phoneSpainWhatsapp?: string;
-    webSiteName?: string; webSiteUrl?: string;
+    org_name?: string;
+    org_url?: string;
+    org_logo?: string;
+    org_description?: string;
+    phoneSpain?: string;
+    phoneItaly?: string;
+    phoneSpainWhatsapp?: string;
+    webSiteName?: string;
+    webSiteUrl?: string;
     privacy_policy?: string;
   };
   booking_data?: {
-    spain?: { label?: string; short_label?: string; region?: string;
-      services?: { name: string; routes: { route: string; price?: string }[] }[] };
-    italy?: { label?: string; short_label?: string; region?: string;
-      services?: { name: string; routes: { route: string; price?: string }[] }[] };
+    spain?: {
+      label?: string;
+      short_label?: string;
+      region?: string;
+      services?: {
+        name: string;
+        routes: { route: string; price?: string }[];
+      }[];
+    };
+    italy?: {
+      label?: string;
+      short_label?: string;
+      region?: string;
+      services?: {
+        name: string;
+        routes: { route: string; price?: string }[];
+      }[];
+    };
+    /** Per-service booking-form fields, matched by the service `name` above. */
+    service_fields?: { name: string; form_fields?: ServiceFieldData[] }[];
   };
   vehicle_name?: string;
   labels?: Record<string, string>;
   howItWorksSteps?: { title: string; description: string; image?: string }[];
-  branding?: { logo?: string; luxury_without_limits?: string; professional_discreet_reliable?: string };
-  stats?: { subheading?: string; image: string; items?: { label: string; title: string }[] };
+  branding?: {
+    logo?: string;
+    luxury_without_limits?: string;
+    professional_discreet_reliable?: string;
+  };
+  stats?: {
+    subheading?: string;
+    image: string;
+    items?: { label: string; title: string }[];
+  };
   cta?: { heading?: string; text?: string; image?: string };
   bottomcta?: { heading?: string; values?: { title: string; text: string }[] };
-  about?: { heading?: string; text?: string; image?: string; images?: string[] };
-  seo?: { title?: string; description?: string; theme_color?: string; image?: string };
+  about?: {
+    heading?: string;
+    text?: string;
+    image?: string;
+    images?: string[];
+  };
+  seo?: {
+    title?: string;
+    description?: string;
+    theme_color?: string;
+    image?: string;
+  };
   map_embed_url?: string;
   /** Structured footer identity; address lines derive from `map_embed_url`. */
   footer_company_name?: string;

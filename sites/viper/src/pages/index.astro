@@ -40,12 +40,12 @@ const footerItems = buildFooterNav(labels);
 const hero = a.hero;
 const howItWorks = { steps: siteGlobals.howItWorksSteps };
 // Service-specific hero fields (shared BookingForm dynamic path, same as DBC):
-// key the services prop on booking service names so the cascade's Service
-// select loads each service's form_fields from the service collection.
-const serviceEntries = await getCollection("service");
+// key the services prop on booking service names; the field definitions live in
+// siteGlobals.booking_data.service_fields (not the service collection).
+const bookingServiceFields = siteGlobals.booking_data?.service_fields ?? [];
 const services = withServiceFields(
   bookingServiceNames(siteGlobals.booking_data).map((title) => ({ title })),
-  serviceEntries,
+  bookingServiceFields.map(({ name, form_fields }) => ({ title: name, form_fields })),
 );
 const universalServices = { services: a.services.offerings };
 const fleetVehicles = a.fleetVehicles || [];

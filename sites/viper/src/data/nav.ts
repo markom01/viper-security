@@ -16,20 +16,38 @@ function navTree(labels: Record<string, string>): NavLink[] {
         { label: labels["nav.services"] ?? "Services", href: "/#services" },
         { label: labels["nav.fleet"] ?? "Fleet", href: "/#fleet" },
         { label: labels["nav.stats"] ?? "Why VIPER", href: "/#stats" },
-        { label: labels["nav.howItWorks"] ?? "How It Works", href: "/#how-it-works" },
+        {
+          label: labels["nav.howItWorks"] ?? "How It Works",
+          href: "/#how-it-works",
+        },
         { label: labels["nav.pricing"] ?? "Pricing", href: "/#pricing" },
-        { label: labels["nav.membership"] ?? "Membership", href: "/#membership" },
-        { label: labels["nav.ctaBanner"] ?? "First Experience", href: "/#first-experience" },
+        {
+          label: labels["nav.membership"] ?? "Membership",
+          href: "/#membership",
+        },
+        {
+          label: labels["nav.ctaBanner"] ?? "First Experience",
+          href: "/#first-experience",
+        },
         { label: labels["nav.contact"] ?? "Contact Us", href: "/#contact" },
-        { label: labels["nav.bottomCta"] ?? "Begin Your Journey", href: "/#begin-your-journey" },
+        {
+          label: labels["nav.bottomCta"] ?? "Begin Your Journey",
+          href: "/#begin-your-journey",
+        },
       ],
     },
     {
       label: labels["nav.services"] ?? "Services",
       href: "/services/armored-vehicles",
       children: [
-        { label: labels["nav.armoredVehicles"] ?? "Armored Vehicles", href: "/services/armored-vehicles" },
-        { label: labels["nav.luxuryCarsSale"] ?? "Sale of Luxury Cars", href: "/services/luxury-cars-sale" },
+        {
+          label: labels["nav.armoredVehicles"] ?? "Vehicle Armoring",
+          href: "/services/armored-vehicles",
+        },
+        {
+          label: labels["nav.luxuryCarsSale"] ?? "Sale of Luxury Cars",
+          href: "/services/luxury-cars-sale",
+        },
       ],
     },
     { label: labels["nav.contact"] ?? "Contact Us", href: "/#contact" },

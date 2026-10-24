@@ -60,9 +60,9 @@ Astro 7 static site (no SSR, no adapter, no routing beyond `/`, `/404`, `/admin`
 - **DBC CMS stores label keys with underscores** (`nav_contact`), not dots (`nav.contact`) — Sveltia rejects dotted field names. `SiteLayout.astro` (and `gallery.astro`) normalize `_`→`.` before passing labels to `resolveLabels`. VIPER's CMS does the same normalization in its own config. Add DBC labels as `foo_bar`, not `foo.bar`.
 - **`fleetSection` arg is declared but NOT consumed by `assembleService`.** DBC's `[slug].astro` monkeypatches `a.pageContent.fleet.heading` post-assembly (the source notes this as "Task 8" — the assembler side was never wired). Don't assume `fleetSection` flows through the assembler; it does not today.
 
-## graphify
+## graphify (only when the CLI is installed)
 
-This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+If the `graphify` CLI is installed and this project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships, use it. Otherwise skip this section and use normal search.
 
 Rules:
 
@@ -70,3 +70,16 @@ Rules:
 - If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
 - Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
 - After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+
+## TypeScript errors — editor Problems tab vs CLI checkers
+
+When a user reports "TS errors" in a TS/TSX/Astro project, the VS Code Problems tab uses **tsserver + the framework's TS plugin** (e.g. `@astrojs/ts-plugin`). The CLI `astro check` (for Astro) and `tsc --noEmit` (for TS/TSX) use the SAME checker core — they match the editor **as long as the framework TS plugin is installed + listed in tsconfig `compilerOptions.plugins`**.
+
+**If `astro check`/`tsc` report 0 errors but the editor shows errors, the first thing to check is whether the framework's TS plugin is installed + in tsconfig `plugins`.** Missing plugin = CLI checker never runs the plugin → CLI clean but editor dirty. Adding the plugin to tsconfig makes `astro check` catch exactly what the editor shows (verify by planting a deliberate type error — both should report it).
+
+Pre-handoff checklist for TS work:
+1. `astro check` on every site/workspace (or `tsc --noEmit` for plain TS projects)
+2. If editor-only errors persist with CLI clean → check plugin present in tsconfig `plugins`
+3. If CLI matches editor but errors remain in `node_modules/**` → framework-internal bugs, not app code — leave them, don't write custom checkers
+
+Known framework-internal errors (Astro): `virtual:astro:assets/fonts/internal` (2307) + `inferSize` (2339) in `node_modules/astro/components/Font.astro`/`Picture.astro` are Astro's own bugs. `env.d.ts` can clear the 2307 via `declare module`; the 2339 is unfixable app-side. `astro check` ignores both. Leave them.

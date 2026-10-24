@@ -29,7 +29,8 @@ collections:
           name: category,
           label: Category,
           widget: select,
-          options: [brand, supercar, customizing, auction, import-export, all-builds],
+          options:
+            [brand, supercar, customizing, auction, import-export, all-builds],
           default: all-builds,
         }
       - { name: image, label: Image, widget: image }
@@ -47,23 +48,74 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { name: brand_name, label: Brand Name, widget: string, required: false }
-              - { name: tagline, label: Tagline, widget: string, required: false }
-              - { name: subtitle, label: Subtitle, widget: text, required: false }
-              - { name: cta_text, label: CTA Button Text, widget: string, required: false }
-              - { name: hero_image, label: "Hero Background Image", widget: image, required: false }
-              - { name: phone_italy, label: "Phone (Italy)", widget: string, required: false }
-              - { name: phone_spain, label: "Phone (Spain)", widget: string, required: false }
+              - {
+                  name: brand_name,
+                  label: Brand Name,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: tagline,
+                  label: Tagline,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: subtitle,
+                  label: Subtitle,
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: cta_text,
+                  label: CTA Button Text,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: hero_image,
+                  label: "Hero Background Image",
+                  widget: image,
+                  required: false,
+                }
+              - {
+                  name: phone_italy,
+                  label: "Phone (Italy)",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: phone_spain,
+                  label: "Phone (Spain)",
+                  widget: string,
+                  required: false,
+                }
           - name: about
             label: About Section
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: heading, label: Heading, widget: string, required: false }
+              - {
+                  name: heading,
+                  label: Heading,
+                  widget: string,
+                  required: false,
+                }
               - { name: text, label: Body Text, widget: text, required: false }
-              - { name: image, label: About Image, widget: image, required: false }
-              - { name: images, label: "About Carousel Images", widget: list, field: { name: image, label: Image, widget: image }, required: false }
+              - {
+                  name: image,
+                  label: About Image,
+                  widget: image,
+                  required: false,
+                }
+              - {
+                  name: images,
+                  label: "About Carousel Images",
+                  widget: list,
+                  field: { name: image, label: Image, widget: image },
+                  required: false,
+                }
           - label: Services
             name: services
             widget: object
@@ -77,17 +129,42 @@ collections:
                   - { name: region, label: Region, widget: string }
                   - { name: title, label: Service Title, widget: string }
                   - { name: description, label: Description, widget: text }
-                  - { name: image, label: "Service Image", widget: image, required: false }
-                  - { name: slug, label: "Slug (URL path, e.g. supercar-transport)", widget: string, required: false }
+                  - {
+                      name: image,
+                      label: "Service Image",
+                      widget: image,
+                      required: false,
+                    }
+                  - {
+                      name: slug,
+                      label: "Slug (URL path, e.g. supercar-transport)",
+                      widget: string,
+                      required: false,
+                    }
           - name: stats
             label: Stats Section
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: heading, label: Heading, widget: string, required: false }
-              - { name: subheading, label: Subheading, widget: text, required: false }
-              - { name: image, label: Background Image, widget: image, required: false }
+              - {
+                  name: heading,
+                  label: Heading,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: subheading,
+                  label: Subheading,
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: image,
+                  label: Background Image,
+                  widget: image,
+                  required: false,
+                }
               - label: Items
                 name: items
                 widget: list
@@ -95,14 +172,23 @@ collections:
                 required: false
                 fields:
                   - { name: label, label: "Label (e.g. 15+)", widget: string }
-                  - { name: title, label: "Title (e.g. Years Experience)", widget: string }
+                  - {
+                      name: title,
+                      label: "Title (e.g. Years Experience)",
+                      widget: string,
+                    }
           - name: howitworks
             label: How It Works Section
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: heading, label: Section Heading, widget: string, required: false }
+              - {
+                  name: heading,
+                  label: Section Heading,
+                  widget: string,
+                  required: false,
+                }
               - label: Steps
                 name: steps
                 widget: list
@@ -117,16 +203,31 @@ collections:
             collapsed: true
             required: false
             fields:
-              - { name: heading, label: Heading, widget: string, required: false }
+              - {
+                  name: heading,
+                  label: Heading,
+                  widget: string,
+                  required: false,
+                }
               - { name: text, label: Body Text, widget: text, required: false }
-              - { name: image, label: CTA Image, widget: image, required: false }
+              - {
+                  name: image,
+                  label: CTA Image,
+                  widget: image,
+                  required: false,
+                }
           - name: bottomcta
             label: Your Dream Car
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: heading, label: Heading, widget: string, required: false }
+              - {
+                  name: heading,
+                  label: Heading,
+                  widget: string,
+                  required: false,
+                }
               - label: Values
                 name: values
                 widget: list
@@ -141,18 +242,48 @@ collections:
             collapsed: true
             required: false
             fields:
-              - { name: title, label: Page Title, widget: string, required: false }
-              - { name: description, label: Meta Description, widget: text, required: false }
-              - { name: theme_color, label: Theme Color, widget: string, required: false }
-              - { name: image, label: "Share / OG Image", widget: image, required: false }
+              - {
+                  name: title,
+                  label: Page Title,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: description,
+                  label: Meta Description,
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: theme_color,
+                  label: Theme Color,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: image,
+                  label: "Share / OG Image",
+                  widget: image,
+                  required: false,
+                }
           - name: branding
             label: Branding
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: luxury_without_limits, label: Tagline Text, widget: string, required: false }
-              - { name: professional_discreet_reliable, label: Sub Tagline Text, widget: string, required: false }
+              - {
+                  name: luxury_without_limits,
+                  label: Tagline Text,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: professional_discreet_reliable,
+                  label: Sub Tagline Text,
+                  widget: string,
+                  required: false,
+                }
   - name: service
     label: Services
     description: Garage services (one file per service; fleet nested per-service)
@@ -162,7 +293,12 @@ collections:
     slug: "{{fields.title}}"
     fields:
       - { name: title, label: Service Title, widget: string }
-      - { name: slug, label: "Slug (URL path override)", widget: string, required: false }
+      - {
+          name: slug,
+          label: "Slug (URL path override)",
+          widget: string,
+          required: false,
+        }
       - { name: description, label: Description, widget: text, required: false }
       - label: Hero
         name: hero
@@ -171,7 +307,12 @@ collections:
         required: false
         fields:
           - { name: subtitle, label: Subtitle, widget: text, required: false }
-          - { name: cta_text, label: "CTA Button Text", widget: string, required: false }
+          - {
+              name: cta_text,
+              label: "CTA Button Text",
+              widget: string,
+              required: false,
+            }
           - { name: tagline, label: Tagline, widget: string, required: false }
           - { name: image, label: "Hero Image", widget: image, required: false }
       - label: "Form Fields"
@@ -182,12 +323,52 @@ collections:
         required: false
         fields:
           - { name: label, label: Label, widget: string }
-          - { name: placeholder, label: Placeholder, widget: string, required: false }
+          - {
+              name: placeholder,
+              label: Placeholder,
+              widget: string,
+              required: false,
+            }
           - { name: name, label: "Field Name", widget: string }
-          - { name: type, label: Type, widget: select, options: [text, location, country, vehicle, select, number], required: false }
-          - { name: options, label: "Dropdown Options (only for Type = select)", widget: list, field: { name: option, label: Option, widget: string }, required: false }
-          - { name: side, label: Side, widget: select, options: [left, right], required: false }
-      - { name: marquee, label: "Marquee Text", widget: string, required: false }
+          - {
+              name: type,
+              label: Type,
+              widget: select,
+              options: [text, location, country, vehicle, select, number],
+              required: false,
+            }
+          - {
+              name: options,
+              label: "Dropdown Options (only for Type = select)",
+              widget: list,
+              field: { name: option, label: Option, widget: string },
+              required: false,
+            }
+          - {
+              name: cars_only,
+              label: "Cars only (hide vehicle type selector)",
+              widget: boolean,
+              required: false,
+            }
+          - {
+              name: other_vehicles,
+              label: "Other vehicles type option (free-text make/model)",
+              widget: boolean,
+              required: false,
+            }
+          - {
+              name: side,
+              label: Side,
+              widget: select,
+              options: [left, right],
+              required: false,
+            }
+      - {
+          name: marquee,
+          label: "Marquee Text",
+          widget: string,
+          required: false,
+        }
       - { name: about_text, label: "About Text", widget: text, required: false }
       - label: "Include (service cards)"
         name: include
@@ -206,7 +387,12 @@ collections:
         required: false
         fields:
           - { name: heading, label: Heading, widget: string, required: false }
-          - { name: subheadline, label: Subheadline, widget: string, required: false }
+          - {
+              name: subheadline,
+              label: Subheadline,
+              widget: string,
+              required: false,
+            }
       - label: "Fleet Vehicles"
         name: fleet
         widget: list
@@ -216,12 +402,45 @@ collections:
         fields:
           - { name: name, label: Vehicle Name, widget: string }
           - { name: type, label: Type, widget: string, required: false }
-          - { name: year, label: Year, widget: number, value_type: int, required: false }
-          - { name: seats, label: Seats, widget: number, value_type: int, required: false }
-          - { name: baggage, label: Baggage, widget: number, value_type: int, required: false }
-          - { name: capacity_passengers, label: "Capacity (Passengers)", widget: number, required: false }
-          - { name: capacity_suitcases, label: "Capacity (Suitcases)", widget: number, required: false }
-          - { name: capacity_carryon, label: "Capacity (Carry-on)", widget: number, required: false }
+          - {
+              name: year,
+              label: Year,
+              widget: number,
+              value_type: int,
+              required: false,
+            }
+          - {
+              name: seats,
+              label: Seats,
+              widget: number,
+              value_type: int,
+              required: false,
+            }
+          - {
+              name: baggage,
+              label: Baggage,
+              widget: number,
+              value_type: int,
+              required: false,
+            }
+          - {
+              name: capacity_passengers,
+              label: "Capacity (Passengers)",
+              widget: number,
+              required: false,
+            }
+          - {
+              name: capacity_suitcases,
+              label: "Capacity (Suitcases)",
+              widget: number,
+              required: false,
+            }
+          - {
+              name: capacity_carryon,
+              label: "Capacity (Carry-on)",
+              widget: number,
+              required: false,
+            }
           - label: Specs
             name: specs
             widget: list
@@ -231,17 +450,43 @@ collections:
             fields:
               - { name: label, label: Label, widget: string }
               - { name: value, label: Value, widget: string }
-          - { name: image, label: "Vehicle Image", widget: image, required: false }
-          - { name: features, label: Features, widget: list, field: { name: feature, label: Feature, widget: string }, required: false }
+          - {
+              name: image,
+              label: "Vehicle Image",
+              widget: image,
+              required: false,
+            }
+          - {
+              name: features,
+              label: Features,
+              widget: list,
+              field: { name: feature, label: Feature, widget: string },
+              required: false,
+            }
       - label: "Stats (per-service)"
         name: stats
         widget: object
         collapsed: true
         required: false
         fields:
-          - { name: heading, label: "Section Heading (optional)", widget: string, required: false }
-          - { name: subheading, label: Subheading, widget: text, required: false }
-          - { name: image, label: "Background Image (optional)", widget: image, required: false }
+          - {
+              name: heading,
+              label: "Section Heading (optional)",
+              widget: string,
+              required: false,
+            }
+          - {
+              name: subheading,
+              label: Subheading,
+              widget: text,
+              required: false,
+            }
+          - {
+              name: image,
+              label: "Background Image (optional)",
+              widget: image,
+              required: false,
+            }
           - label: Items
             name: items
             widget: list
@@ -265,7 +510,12 @@ collections:
         collapsed: true
         required: false
         fields:
-          - { name: heading, label: "Section Heading (optional)", widget: string, required: false }
+          - {
+              name: heading,
+              label: "Section Heading (optional)",
+              widget: string,
+              required: false,
+            }
       - label: "Closing Banner"
         name: cta
         widget: object
@@ -274,7 +524,12 @@ collections:
         fields:
           - { name: heading, label: Heading, widget: string, required: false }
           - { name: text, label: Text, widget: text, required: false }
-          - { name: image, label: "Image (optional, overrides hero fallback)", widget: image, required: false }
+          - {
+              name: image,
+              label: "Image (optional, overrides hero fallback)",
+              widget: image,
+              required: false,
+            }
       - label: "Final Banner"
         name: bottomcta
         widget: object
@@ -297,7 +552,12 @@ collections:
         required: false
         fields:
           - { name: title, label: "SEO Title", widget: string, required: false }
-          - { name: description, label: "SEO Description", widget: text, required: false }
+          - {
+              name: description,
+              label: "SEO Description",
+              widget: text,
+              required: false,
+            }
           - { name: image, label: "SEO Image", widget: image, required: false }
 
   - name: privacy
@@ -324,87 +584,422 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { name: org_name, label: Organization Name, widget: string, required: false }
-              - { name: org_url, label: Organization URL, widget: string, required: false }
-              - { name: org_logo, label: Logo URL, widget: string, required: false }
-              - { name: org_description, label: Description, widget: text, required: false }
-              - { name: phoneSpain, label: "Phone (Spain, footer display only)", widget: string, required: false }
-              - { name: phoneItaly, label: "Phone (Italy)", widget: string, required: false }
-              - { name: phoneSpainWhatsapp, label: "Phone (Spain, WhatsApp — footer + form enquiries)", widget: string, required: false }
+              - {
+                  name: org_name,
+                  label: Organization Name,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: org_url,
+                  label: Organization URL,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: org_logo,
+                  label: Logo URL,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: org_description,
+                  label: Description,
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: phoneSpain,
+                  label: "Phone (Spain, footer display only)",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: phoneItaly,
+                  label: "Phone (Italy)",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: phoneSpainWhatsapp,
+                  label: "Phone (Spain, WhatsApp — footer + form enquiries)",
+                  widget: string,
+                  required: false,
+                }
           - name: seo
             label: SEO / Meta
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: title, label: Page Title, widget: string, required: false }
-              - { name: description, label: Meta Description, widget: text, required: false }
-              - { name: theme_color, label: Theme Color, widget: string, required: false }
+              - {
+                  name: title,
+                  label: Page Title,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: description,
+                  label: Meta Description,
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: theme_color,
+                  label: Theme Color,
+                  widget: string,
+                  required: false,
+                }
           - name: branding
             label: Branding
             widget: object
             collapsed: true
             required: false
             fields:
-              - { name: logo, label: Site Logo (header + footer), widget: image, required: false }
-              - { name: luxury_without_limits, label: Tagline Text, widget: string, required: false }
-              - { name: professional_discreet_reliable, label: Sub Tagline Text, widget: string, required: false }
+              - {
+                  name: logo,
+                  label: Site Logo (header + footer),
+                  widget: image,
+                  required: false,
+                }
+              - {
+                  name: luxury_without_limits,
+                  label: Tagline Text,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: professional_discreet_reliable,
+                  label: Sub Tagline Text,
+                  widget: string,
+                  required: false,
+                }
           - name: labels
             label: UI Labels
             widget: object
             collapsed: true
             fields:
-              - { name: fleet_subheadline, label: "Builds Section Label", widget: string, required: false }
-              - { name: stats_heading, label: "Stats Heading", widget: string, required: false }
-              - { name: stats_button, label: "Stats Button", widget: string, required: false }
-              - { name: cta_button, label: "CTA Button", widget: string, required: false }
-              - { name: bottomCta_buttonServices, label: "Bottom CTA Services Button", widget: string, required: false }
-              - { name: bottomCta_buttonFleet, label: "Bottom CTA Builds Button", widget: string, required: false }
-              - { name: hero_learnMore, label: "Hero Learn More", widget: string, required: false }
-              - { name: hero_exploreFleet, label: "Hero Services Button", widget: string, required: false }
-              - { name: hero_formName, label: "Hero Form Title", widget: string, required: false }
-              - { name: form_bookNow, label: "Form Submit Button", widget: string, required: false }
-              - { name: marquee_text, label: "Marquee Text", widget: string, required: false }
-              - { name: nav_contact, label: "Nav Contact CTA", widget: string, required: false }
-              - { name: nav_home, label: "Nav Home Label", widget: string, required: false }
-              - { name: nav_about, label: "Nav About Label", widget: string, required: false }
-              - { name: nav_services, label: "Nav Services Label", widget: string, required: false }
-              - { name: nav_howItWorks, label: "Nav How It Works Label", widget: string, required: false }
-              - { name: nav_fleet, label: "Nav Fleet Label", widget: string, required: false }
-              - { name: nav_gallery, label: "Nav Gallery Label", widget: string, required: false }
-              - { name: nav_stats, label: "Nav Stats Label", widget: string, required: false }
-              - { name: nav_ctaBanner, label: "Nav Start A Build Label", widget: string, required: false }
-              - { name: nav_bottomCta, label: "Nav Your Dream Car Label", widget: string, required: false }
-              - { name: nav_supercarTransport, label: "Nav Service: Supercar Transport", widget: string, required: false }
-              - { name: nav_auctionSale, label: "Nav Service: Auction & Sale", widget: string, required: false }
-              - { name: nav_sourcingLogistics, label: "Nav Service: Sourcing & Logistics", widget: string, required: false }
-              - { name: nav_customizingDesign, label: "Nav Service: Customizing & Design", widget: string, required: false }
-              - { name: nav_privacy, label: "Nav Privacy Policy Label", widget: string, required: false }
-              - { name: nav_homeAria, label: "Nav Logo Aria Label", widget: string, required: false }
-              - { name: hero_imageAlt, label: "Hero Image Alt Text", widget: string, required: false }
-              - { name: hero_bookingFormAria, label: "Hero Form Aria Label", widget: string, required: false }
-              - { name: fleet_vehicleAltFallback, label: "Build Image Alt Fallback", widget: string, required: false }
-              - { name: gallery_heading, label: "Gallery Heading", widget: string, required: false }
-              - { name: gallery_subheadline, label: "Gallery Subheadline", widget: text, required: false }
-              - { name: gallery_group_brand, label: "Gallery Group: Brand", widget: string, required: false }
-              - { name: gallery_group_supercar, label: "Gallery Group: Supercar", widget: string, required: false }
-              - { name: gallery_group_customizing, label: "Gallery Group: Customizing", widget: string, required: false }
-              - { name: gallery_group_auction, label: "Gallery Group: Auction", widget: string, required: false }
-              - { name: gallery_group_all-builds, label: "Gallery Group: All Builds", widget: string, required: false }
-              - { name: howItWorks_subheadline, label: "How It Works Subheadline", widget: string, required: false }
-              - { name: form_date, label: "Form: Date Label", widget: string, required: false }
-              - { name: form_name, label: "Form: Name Label", widget: string, required: false }
-              - { name: form_phone, label: "Form: Phone Label", widget: string, required: false }
-              - { name: form_namePlaceholder, label: "Form: Name Placeholder", widget: string, required: false }
-              - { name: form_phonePlaceholder, label: "Form: Phone Placeholder", widget: string, required: false }
-              - { name: form_selectLocation, label: "Form: Select Location Label", widget: string, required: false }
-              - { name: form_pricePlaceholder, label: "Form: Price/Details Placeholder", widget: string, required: false }
-              - { name: form_success, label: "Form: Success Message", widget: text, required: false }
-              - { name: form_error, label: "Form: Error Message", widget: text, required: false }
-              - { name: cta_imageAlt, label: "CTA Image Alt Text", widget: string, required: false }
-              - { name: footer_pagesHeading, label: "Footer: Pages Heading", widget: string, required: false }
-          - { name: map_embed_url, label: "Map Embed URL (Google Maps iframe src)", widget: string, required: false }
-          - { name: footer_company_name, label: "Footer Company Name", widget: string, required: false }
-          - { name: footer_vat_number, label: "Footer VAT Number", widget: string, required: false }
-          - { name: fleetHeading, label: "Fleet Section Heading", widget: string, required: false }
-          - { name: howItWorksHeading, label: "How It Works Heading", widget: string, required: false }
+              - {
+                  name: fleet_subheadline,
+                  label: "Builds Section Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: stats_heading,
+                  label: "Stats Heading",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: stats_button,
+                  label: "Stats Button",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: cta_button,
+                  label: "CTA Button",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: bottomCta_buttonServices,
+                  label: "Bottom CTA Services Button",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: bottomCta_buttonFleet,
+                  label: "Bottom CTA Builds Button",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: hero_learnMore,
+                  label: "Hero Learn More",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: hero_exploreFleet,
+                  label: "Hero Services Button",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: hero_formName,
+                  label: "Hero Form Title",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_bookNow,
+                  label: "Form Submit Button",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: marquee_text,
+                  label: "Marquee Text",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_contact,
+                  label: "Nav Contact CTA",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_home,
+                  label: "Nav Home Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_about,
+                  label: "Nav About Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_services,
+                  label: "Nav Services Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_howItWorks,
+                  label: "Nav How It Works Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_fleet,
+                  label: "Nav Fleet Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_gallery,
+                  label: "Nav Gallery Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_stats,
+                  label: "Nav Stats Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_ctaBanner,
+                  label: "Nav Start A Build Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_bottomCta,
+                  label: "Nav Your Dream Car Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_supercarTransport,
+                  label: "Nav Service: Supercar Transport",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_auctionSale,
+                  label: "Nav Service: Auction & Sale",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_sourcingLogistics,
+                  label: "Nav Service: Sourcing & Logistics",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_customizingDesign,
+                  label: "Nav Service: Customizing & Design",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_privacy,
+                  label: "Nav Privacy Policy Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: nav_homeAria,
+                  label: "Nav Logo Aria Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: hero_imageAlt,
+                  label: "Hero Image Alt Text",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: hero_bookingFormAria,
+                  label: "Hero Form Aria Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: fleet_vehicleAltFallback,
+                  label: "Build Image Alt Fallback",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: gallery_heading,
+                  label: "Gallery Heading",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: gallery_subheadline,
+                  label: "Gallery Subheadline",
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: gallery_group_brand,
+                  label: "Gallery Group: Brand",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: gallery_group_supercar,
+                  label: "Gallery Group: Supercar",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: gallery_group_customizing,
+                  label: "Gallery Group: Customizing",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: gallery_group_auction,
+                  label: "Gallery Group: Auction",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: gallery_group_all-builds,
+                  label: "Gallery Group: All Builds",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: howItWorks_subheadline,
+                  label: "How It Works Subheadline",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_date,
+                  label: "Form: Date Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_name,
+                  label: "Form: Name Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_phone,
+                  label: "Form: Phone Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_namePlaceholder,
+                  label: "Form: Name Placeholder",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_phonePlaceholder,
+                  label: "Form: Phone Placeholder",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_selectLocation,
+                  label: "Form: Select Location Label",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_pricePlaceholder,
+                  label: "Form: Price/Details Placeholder",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: form_success,
+                  label: "Form: Success Message",
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: form_error,
+                  label: "Form: Error Message",
+                  widget: text,
+                  required: false,
+                }
+              - {
+                  name: cta_imageAlt,
+                  label: "CTA Image Alt Text",
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: footer_pagesHeading,
+                  label: "Footer: Pages Heading",
+                  widget: string,
+                  required: false,
+                }
+          - {
+              name: map_embed_url,
+              label: "Map Embed URL (Google Maps iframe src)",
+              widget: string,
+              required: false,
+            }
+          - {
+              name: footer_company_name,
+              label: "Footer Company Name",
+              widget: string,
+              required: false,
+            }
+          - {
+              name: footer_vat_number,
+              label: "Footer VAT Number",
+              widget: string,
+              required: false,
+            }
+          - {
+              name: fleetHeading,
+              label: "Fleet Section Heading",
+              widget: string,
+              required: false,
+            }
+          - {
+              name: howItWorksHeading,
+              label: "How It Works Heading",
+              widget: string,
+              required: false,
+            }

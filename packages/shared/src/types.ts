@@ -95,6 +95,9 @@ export interface ServiceOffering {
      *  date field on the right column — used to balance rows so e.g. a
      *  Vehicle type input fills the 2nd row instead of dropping to a 3rd. */
     side?: "left" | "right";
+    /** Vehicle pickers only: hide the Car/Motorcycle selector and search car
+     *  makes only (e.g. a vehicle-armoring enquiry). */
+    cars_only?: boolean;
   }[];
 }
 

@@ -18,7 +18,7 @@ booking_data:
         routes:
           - route: Malaga Airport → Marbella
             price: €280
-          - route: Malaga Airport → Puerto Banus
+          - route: Malaga Airport → Puerto Banús
             price: €300
           - route: Malaga Airport → Estepona
             price: €350
@@ -29,7 +29,7 @@ booking_data:
             price: €400
       - name: Yacht Transfer
         routes:
-          - route: Puerto Banus Marina
+          - route: Puerto Banús Marina
             price: ""
           - route: Marbella Marina
           - route: Estepona Marina
@@ -74,6 +74,59 @@ booking_data:
       - name: Nightlife & Events
         routes:
           - route: Milano — Nightlife & Events
+  # Dynamic form fields for the home hero booking form, matched by service name.
+  service_fields:
+    - name: Airport Transfer
+      form_fields:
+        - label: Flight number
+          placeholder: e.g. BA 349
+          name: flight_number
+        - label: Passengers
+          placeholder: e.g. 2
+          name: passengers
+          type: number
+          side: right
+    - name: Yacht Transfer
+      form_fields:
+        - label: Yacht name
+          placeholder: Yacht name and berth, if known
+          name: yacht_name
+        - label: Marina
+          placeholder: Pickup marina
+          name: marina
+          type: location
+          side: right
+    - name: Villa Transfer
+      form_fields:
+        - label: Villa address
+          placeholder: Villa or hotel address
+          name: villa_address
+          type: location
+        - label: Guests
+          placeholder: e.g. 4
+          name: guests
+          type: number
+          side: right
+    - name: Business Travel
+      form_fields:
+        - label: Company
+          placeholder: Company name
+          name: company
+        - label: Meeting address
+          placeholder: Meeting address
+          name: meeting_address
+          type: location
+          side: right
+    - name: Nightlife & Events
+      form_fields:
+        - label: Venue or event
+          placeholder: Venue or event name
+          name: venue
+        - label: Hours on standby
+          placeholder: e.g. 4
+          name: standby_hours
+          type: number
+          side: right
 vehicle_name: Mercedes-Benz S-Class
 seo:
   title: "{site_name} — Luxury Chauffeur & VIP Transport in {location1} & {location2}"
@@ -84,6 +137,7 @@ branding:
   luxury_without_limits: LUXURY WITHOUT LIMITS
   professional_discreet_reliable: Professional • Discreet • Reliable
 labels:
+  nav_armoredVehicles: Vehicle Armoring
   nav_contact: Contact Us
   nav_stats: Why VIPER
   nav_membership: Membership
@@ -109,8 +163,8 @@ about:
 stats:
   heading: "Why Choose VIPER Security"
   subheading: >-
-    Every pickup flight-tracked, every route priced upfront, and every
-    journey driven to one standard — 24/7.
+    Every pickup flight-tracked, every journey quoted upfront, and every
+    ride driven to one standard — 24/7.
   image: /images/cms/stats-bg.webp
   items:
     - label: "15"
@@ -127,7 +181,7 @@ howItWorksSteps:
   - title: "Pick a Service"
     description: "Choose from airport transfers, corporate travel, villa transfers, nightlife events, and more."
   - title: "Select Destination"
-    description: "Pick your specific route and get an instant price estimate before booking your ride."
+    description: "Pick your specific route and continue to booking."
 cta:
   heading: Your First Chauffeur Experience Just Got Better
   text: >-

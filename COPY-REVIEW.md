@@ -9,29 +9,29 @@ banners, privacy, 404, nav, footer), sourced from the CMS markdown collections
 
 ## 0. Priority map
 
-| # | Finding | Site | Impact | Effort | Status |
-|---|---------|------|--------|--------|--------|
-| 1 | Nav dead-ends: "Luxury Cars" + "Armoured Vehicles" → "Coming soon" placeholders | VIPER | High (live nav = live promise) | Low | SAVED |
-| 2 | Footer socials link to generic `x.com/`, `tiktok.com/`, `instagram.com/` homepages, not profiles | Both | Medium (dead ends, wasted trust signals) | Low | DONE — real IG/WA |
-| 3 | Hero CTAs are empty superlatives ("BEST LUXURY SERVICE") instead of credence/action | VIPER | Medium | Low | DONE — "Book Your Transfer" |
-| 4 | Stats contradict each other: "World-Class" + "1 Dedicated Chauffeur" + one-car fleet | VIPER | High (credibility) | Medium | DONE — "one trusted hand" |
-| 5 | Route pricing hollow: several routes carry no price → "instant price estimate" promise breaks; €280 Malaga→Marbella vs €120/hr hourly card feels off | VIPER | High (conversion integrity) | Medium | SAVED |
-| 6 | Membership value story never stated (Gold 40h/€3,500 ≈ 27% off hourly; the math is the sell) | VIPER | Medium | Low | DONE — math note |
-| 7 | SEO targets generic "luxury chauffeur", misses the high-intent geo queries competitors rank on ("malaga airport transfer marbella", "vip transfer costa del sol") | VIPER | Medium | Medium | DONE — geo titles/desc |
-| 8 | DBC home "How It Works" steps are all customizing-oriented; home is transport-first → mismatch | DBC | Medium | Medium | DONE — neutral steps |
-| 9 | Reach claims inconsistent per page ("across Europe" home vs "Europe and USA" / "worldwide" services) | DBC | Medium | Low | DONE — Europe & USA |
-| 10 | "team that never gives up" reads as ES-English, not native EN luxury | DBC | Low–Med | Low | DONE |
-| 11 | Copy grammar/register polish pass across both sites (below, ready to paste) | Both | Low | Low | SAVED |
-| 12 | DBC stats "3 Locations — Europe & USA" | DBC | Med | Low | DONE — bases |
-| 13 | "in the EU and other continents" | DBC | Low | Low | DONE |
-| 14 | Fixed-price framing missing | Both | Med | Low | DONE |
-| 15 | ogLocale es_ES with EN copy | Both | Low | Low | DONE — en_US |
-| 16 | Membership value must stay in sync with pricing (not hardcoded) | VIPER | Med | Med | DONE — computed |
-| 17 | Service pages reuse site-global how-it-works steps | Both | Med | Med | DONE — per-service steps |
-| 18 | Privacy policies hardcoded in .astro | Both | Med | Med | DONE — CMS markdown |
-| 19 | Gallery headings hardcoded | DBC | Low | Low | DONE — CMS labels |
-| 20 | VIPER service pages lacked most per-offering CMS fields | VIPER | Med | Med | DONE — full field set |
-| 21 | VIPER UI labels not CMS-editable | VIPER | Low | Med | DONE — labels block |
+| #   | Finding                                                                                                                                                           | Site  | Impact                                   | Effort | Status                      |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | ---------------------------------------- | ------ | --------------------------- |
+| 1   | Nav dead-ends: "Luxury Cars" + "Armoured Vehicles" → "Coming soon" placeholders                                                                                   | VIPER | High (live nav = live promise)           | Low    | SAVED                       |
+| 2   | Footer socials link to generic `x.com/`, `tiktok.com/`, `instagram.com/` homepages, not profiles                                                                  | Both  | Medium (dead ends, wasted trust signals) | Low    | DONE — real IG/WA           |
+| 3   | Hero CTAs are empty superlatives ("BEST LUXURY SERVICE") instead of credence/action                                                                               | VIPER | Medium                                   | Low    | DONE — "Book Your Transfer" |
+| 4   | Stats contradict each other: "World-Class" + "1 Dedicated Chauffeur" + one-car fleet                                                                              | VIPER | High (credibility)                       | Medium | DONE — "one trusted hand"   |
+| 5   | Route pricing hollow: several routes carry no price → "instant price estimate" promise breaks; €280 Malaga→Marbella vs €120/hr hourly card feels off              | VIPER | High (conversion integrity)              | Medium | SAVED                       |
+| 6   | Membership value story never stated (Gold 40h/€3,500 ≈ 27% off hourly; the math is the sell)                                                                      | VIPER | Medium                                   | Low    | DONE — math note            |
+| 7   | SEO targets generic "luxury chauffeur", misses the high-intent geo queries competitors rank on ("malaga airport transfer marbella", "vip transfer costa del sol") | VIPER | Medium                                   | Medium | DONE — geo titles/desc      |
+| 8   | DBC home "How It Works" steps are all customizing-oriented; home is transport-first → mismatch                                                                    | DBC   | Medium                                   | Medium | DONE — neutral steps        |
+| 9   | Reach claims inconsistent per page ("across Europe" home vs "Europe and USA" / "worldwide" services)                                                              | DBC   | Medium                                   | Low    | DONE — Europe & USA         |
+| 10  | "team that never gives up" reads as ES-English, not native EN luxury                                                                                              | DBC   | Low–Med                                  | Low    | DONE                        |
+| 11  | Copy grammar/register polish pass across both sites (below, ready to paste)                                                                                       | Both  | Low                                      | Low    | SAVED                       |
+| 12  | DBC stats "3 Locations — Europe & USA"                                                                                                                            | DBC   | Med                                      | Low    | DONE — bases                |
+| 13  | "in the EU and other continents"                                                                                                                                  | DBC   | Low                                      | Low    | DONE                        |
+| 14  | Fixed-price framing missing                                                                                                                                       | Both  | Med                                      | Low    | DONE                        |
+| 15  | ogLocale es_ES with EN copy                                                                                                                                       | Both  | Low                                      | Low    | DONE — en_US                |
+| 16  | Membership value must stay in sync with pricing (not hardcoded)                                                                                                   | VIPER | Med                                      | Med    | DONE — computed             |
+| 17  | Service pages reuse site-global how-it-works steps                                                                                                                | Both  | Med                                      | Med    | DONE — per-service steps    |
+| 18  | Privacy policies hardcoded in .astro                                                                                                                              | Both  | Med                                      | Med    | DONE — CMS markdown         |
+| 19  | Gallery headings hardcoded                                                                                                                                        | DBC   | Low                                      | Low    | DONE — CMS labels           |
+| 20  | VIPER service pages lacked most per-offering CMS fields                                                                                                           | VIPER | Med                                      | Med    | DONE — full field set       |
+| 21  | VIPER UI labels not CMS-editable                                                                                                                                  | VIPER | Low                                      | Med    | DONE — labels block         |
 
 ---
 
@@ -47,7 +47,8 @@ Current subtitle:
 > across Costa del Sol — Marbella, Northern Italy & Alps — Milano, and beyond.
 
 Problems:
-- You don't "travel in privacy" — you travel *with* privacy. Product-brochure register.
+
+- You don't "travel in privacy" — you travel _with_ privacy. Product-brochure register.
 - "VIP transportation" is redundant with the tagline "VIP CHAUFFEUR".
 - "and beyond" is filler; competitors name the actual second market (French Riviera, Monaco, St. Moritz — all in this repo's route data).
 - No Oxford comma, mixed enumerated register, passive "Available for".
@@ -108,6 +109,7 @@ Malaga Airport → Gibraltar, Gibraltar Airport → Marbella has €400, Milano 
 → Nice, Milano Airport → Lago di Garda, and every Yacht/Villa/Business/Nightlife
 route. The hero form advertises an instant estimate; for those it will silently
 render blank. Options, cheapest first:
+
 - Render "Price on request" instead of blank.
 - Or drop the no-price routes from the dropdown (they're a subset).
 - **Strategy note**: "Malaga → Gibraltar" reads odd for a Costa del Sol operator
@@ -130,17 +132,19 @@ mystery.
 Current titles: `VIPER Security — Luxury Chauffeur & VIP Transport`, services
 titled generically (`Airport Transfers | VIPER Security`). Competitor landscape
 researched today dominates on geo phrase-matches (Sources):
+
 - `Marbella Chauffeur — transfersvipmalaga.com`
 - `Marbella Airport Transfers — viptaxiluxury.com`
 - `Luxury Chauffeur & Private Transfers Malaga Airport — transfertomarbella.com`
 
-The repo already *owns* the geo data — 6 explicit Malaga/Costa del Sol routes
+The repo already _owns_ the geo data — 6 explicit Malaga/Costa del Sol routes
 and 6 Northern-Italy routes — but no page or title exposes it. Concrete:
+
 - Service-page H1/subtitle "Airport Transfers" → **"Airport Transfers — Malaga &
   Milano"** and include the specific route names (Malpensa → St. Moritz) in the
   hero subtitle + meta description.
 - Home SEO title → lead with geography: `Luxury Chauffeur Marbella & Milano |
-  VIPER Security`.
+VIPER Security`.
 - Each service page meta description should carry one real route, not a
   paraphrase: "…Malpensa Airport to St. Moritz private transfer."
 
@@ -194,11 +198,12 @@ The home renders garage-build steps (Share Your Vision → We Build → Drive It
 Home). But the dominant home traffic and the four service cards are transport /
 auction / sourcing / import-export. A visitor who wants a car transported reads
 three steps about building a custom car. Two options:
+
 - **Per-service steps** (transport: Quote → Collect → Deliver; auction: List →
   Bidders → Sold). This repo already has per-service `form_fields` — steps can
   live on the offering objects the same way.
 - **Neutral home steps** that span the offer: `Share Your Goal → We Handle It →
-  Delivered.`
+Delivered.`
 
 Option 1 matches the architecture (offerings are already per-service data).
 
@@ -232,26 +237,31 @@ all.)
 ### 2.5 Per-service copy drops (all in `sites/dbc/src/content/services/services.md`)
 
 **Enclosed Supercar Transport**
+
 - Include "EU, UK & USA Routes" text: "…across Europe and worldwide." →
   inconsistent. → `"Door-to-door across Europe, the UK, and the USA."`
 - "Transparent Pricing — price from €1/km, calculated both directions" →
   `"Flat per-route quotes from €1/km — door to door, both directions."`
 
 **Classic Cars & Motorcycles Sale & Auction**
+
 - Good specificity (Catawiki, Proxibid, Silverstone, Heritage, Bonhams). One
   polish: "consignment without leaving your garage" + "you stay home" repeats
   twice across the include list and bottom CTA — keep one, vary the other.
 
 **Off-Market Sourcing**
+
 - "with deep market knowledge built since 2010" — "built since 2010" is
   redundant with the 2010 stat on the same page; drop, keep the research/legal
   framing.
 
 **Import & Export**
+
 - About: "…in the EU and other continents." — EU isn't a continent; → `"…
-  across Europe and beyond — cars, motorcycles, classics, and supercars."`
+across Europe and beyond — cars, motorcycles, classics, and supercars."`
 
 **Customizing**
+
 - Strong. "Restomod, widebody, interior and show-grade finishing" is exactly
   right. No changes, just a note: this services page and the home "How It Works"
   overlap in message (see 2.2).
@@ -293,26 +303,29 @@ number on the face of a button, not bury it behind a whatsapp.com icon.
 
 ---
 
-*All copy ships through the CMS markdown collections — every drop above is a
+_All copy ships through the CMS markdown collections — every drop above is a
 paste-into-frontmatter, no renderer change. Structural items (per-service
 steps 2.2, geo service pages 1.6) touch config/renderers and should be planned
-separately.*
+separately._
 ---
 
 ## 5. Round 2 — computed values + CMS-editable copy (2026-08-19)
 
 ### 5.1 Membership value now computed, not hardcoded (#16)
+
 Hardcoded "pays for itself at 33 hours" removed. New `packages/shared/src/config/membership.ts`
 computes the note from live data:
+
 - `parsePrice` strips currency → number.
 - `baseHourly` = first `pricing.hourly.rates[].price`.
 - `membershipValueNote(tiers, rates)` → max savings % across tiers with an `hours` field.
 - Tiers gained a numeric `hours` (schema + CMS + tiers.md). Rendering: index.astro computes
   the note and passes `note` to Membership; ServicePage computes it internally from `hourly`
-  + `membershipTiers`. Result: "Members save up to 39% compared to the €120/hr hourly rate."
-  Change the hourly price or any tier price/hours and the line re-syncs on next build.
+  - `membershipTiers`. Result: "Members save up to 39% compared to the €120/hr hourly rate."
+    Change the hourly price or any tier price/hours and the line re-syncs on next build.
 
 ### 5.2 Service-specific How-It-Works steps (#17)
+
 Offerings now carry optional `steps[]` (both sites' schema + CMS widget). ServicePage renders
 `offering.steps` when present, falls back to the site-global `how-it-works` steps otherwise.
 Per-service steps added to all 4 VIPER + 5 DBC services. Audited the other ServicePage
@@ -320,11 +333,13 @@ sections: hero/marquee/about/includes/fleet/stats/bottomcta were already per-off
 was the only one still global.
 
 ### 5.3 Privacy policies → CMS markdown (#18)
+
 Both sites: new `privacy` collection (`src/content/privacy/content.md`), `privacy-policy.astro`
 renders via `render()` + `<Content/>`, style selectors converted to `:global`. CMS collection
 added (`Policy Body` markdown widget). Same legal copy preserved, now editable in admin.
 
 ### 5.4 Gallery + VIPER UI copy → CMS (#19–21)
+
 - DBC gallery: heading/subheadline/group titles now from `STRINGS.gallery` overridden by CMS
   labels (`gallery_heading`, `gallery_subheadline`, `gallery_group_*`). gallery.astro
   normalizes underscore CMS keys to dot-path before resolveLabels.
@@ -335,6 +350,7 @@ added (`Policy Body` markdown widget). Same legal copy preserved, now editable i
 - "Coming soon." placeholder pages left as-is (noindex placeholders slated for real content).
 
 ### CMS coverage summary
+
 - Each site's copy lives in content collections: hero, how-it-works, services, pricing,
   membership, page-content (+ privacy, gallery). Every field is exposed via the Sveltia
   config.yml. Remaining non-CMS copy: shared STRINGS tech strings (nav aria, error fallbacks,
@@ -345,20 +361,21 @@ added (`Policy Body` markdown widget). Same legal copy preserved, now editable i
 Audited each section rendered by the shared ServicePage against whether it pulls
 per-offering or site-global data:
 
-| Section | Before | After |
-|---|---|---|
-| Hero | offering.hero | ✅ unchanged |
-| Marquee | offering.marquee | ✅ unchanged |
-| About | offering.about_text/image | ✅ unchanged |
-| Services/Includes | VIPER: **all 4 offerings on every page** | ✅ per-service `include[]` |
-| Fleet | VIPER full collection / DBC per-offering | ✅ unchanged |
-| Stats | **global subheading/items** | ✅ per-service `stats{}` |
-| HowItWorks | offering.steps (round 2) | ✅ unchanged |
-| Pricing / Membership | site-global (product) | ✅ intentional |
-| CTA Banner | **global heading/text** | ✅ per-service `cta{}` |
-| BottomCTA | VIPER global / DBC per-offering | ✅ unchanged |
+| Section              | Before                                   | After                      |
+| -------------------- | ---------------------------------------- | -------------------------- |
+| Hero                 | offering.hero                            | ✅ unchanged               |
+| Marquee              | offering.marquee                         | ✅ unchanged               |
+| About                | offering.about_text/image                | ✅ unchanged               |
+| Services/Includes    | VIPER: **all 4 offerings on every page** | ✅ per-service `include[]` |
+| Fleet                | VIPER full collection / DBC per-offering | ✅ unchanged               |
+| Stats                | **global subheading/items**              | ✅ per-service `stats{}`   |
+| HowItWorks           | offering.steps (round 2)                 | ✅ unchanged               |
+| Pricing / Membership | site-global (product)                    | ✅ intentional             |
+| CTA Banner           | **global heading/text**                  | ✅ per-service `cta{}`     |
+| BottomCTA            | VIPER global / DBC per-offering          | ✅ unchanged               |
 
 Changes:
+
 - Offerings gained optional `stats { subheading, items[] }` + `cta { heading, text }`.
 - Shared ServicePage merges per-offering overrides over the site-global values
   (image falls back to the offering hero image), so the DBC `[slug].astro`
@@ -375,3 +392,70 @@ Changes:
 - YAML gotchas hit: (a) an edit that ends a list item must carry the next
   item's `- ` marker (duplicate-key errors, fixed twice), (b) unquoted numeric
   YAML labels (`4`, `2010`) fail the string schema — quote them.
+
+## 7. Round 4 — VIPER service-page copy review (2026-10-20)
+
+Scope: the seven VIPER service pages (`sites/viper/src/content/services/*.yaml`),
+with light fixes to shared site copy where it made a claim the pages could not keep.
+
+### 7.1 Structural fixes
+
+- `hero.tagline` was written but never rendered; `assembleService` hard-coded
+  `hero.title`, so every page H1 was the short service name. The template now
+  renders `offering.hero.tagline`, and each tagline was rewritten as the page H1
+  with both markets in it (e.g. "Airport Transfers in Marbella & Milano").
+- Nav/CMS label changed from "Armored Vehicles" to "Vehicle Armoring" to match
+  the uncommitted armoring pivot. The page title is now "Vehicle Armoring" and
+  the copy sells armoring, not chauffeur-driven armored hire.
+- Fake specific inventory removed from car sales and armoring (three named cars
+  each, with invented mileage, condition and warranty). The pages now sell
+  sourcing, inspection and delivery instead of implying stock that may not exist.
+- Global stats subheading: "every route priced upfront" → "every journey quoted
+  upfront", because several booking routes have no price and the form renders an
+  empty estimate. How-it-works step 3: "get an instant price estimate" →
+  "continue to booking", for the same reason.
+- Route labels standardised on "Puerto Banús" (accented) across booking data.
+
+### 7.2 Page-level positioning
+
+| Page               | H1 / angle                                          | Key changes                                                                                                                                         |
+| ------------------ | --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Airport Transfer   | Airport Transfers in Marbella & Milano              | Named all four airports; meet-and-greet, fixed price, delays included; removed "instantly".                                                         |
+| Business Travel    | Executive Chauffeur Service in Marbella & Milano    | Multi-stop roadshows, full-day hire, English-speaking chauffeur, privacy glass, monthly billing.                                                    |
+| Yacht Transfer     | Yacht Transfers in Marbella & the Italian Lakes     | Corrected "door-to-berth" to marina-gate drop-off; return pickup is pre-booked/on request, not a waiting chauffeur; removed Villa Erba name-drop.   |
+| Villa Transfer     | Villa, Hotel & Venue Transfers in Marbella & Milano | Replaced "knows the gate codes" with access details arranged ahead; "back routes" → "quiet routes".                                                 |
+| Nightlife & Events | Nightlife & Event Chauffeur in Marbella & Milano    | Kept standby model; replaced named venue claim with "private gala"; fixed Puerto Banús spelling.                                                    |
+| Luxury Car Sales   | Luxury Car Sales & Sourcing in Marbella & Milano    | Leads with sourcing to spec; inspection, warranty, trade-in, registration and delivery. SEO title no longer a bare brand string.                    |
+| Vehicle Armoring   | Vehicle Armoring in Marbella & Milano               | Reframed from B6 hire to B4–B7 armoring of the client's own vehicle or a sourced base; ballistic glass, body armor, run-flats, documented handover. |
+
+### 7.3 Claims flagged for client confirmation
+
+- **B4–B7 certification**: which standards/certifier, and whether all four levels
+  are actually offered. Copy currently says "certified B4–B7".
+- **OEM-grade fit and finish**: keep only if the workshop can substantiate it.
+- **12-month warranty on every car sold**: confirm term, coverage and provider.
+- **Fixed/transparent pricing on car sales**: confirm that sale prices are fixed
+  rather than negotiated.
+- **Monthly billing** for corporate clients: confirm it is offered.
+
+### 7.4 Verification
+
+- `npm run build -w @garage/viper` passes (6 pages after the removal); `astro check` 0/0/0.
+- `npx playwright test e2e/service-forms.spec.ts` 4/4: armoring fields, armoring
+  WhatsApp payload, car-sales vehicle picker/budget/trade-in, home booking cascade.
+- Generated H1s, titles and meta descriptions checked on all seven pages before
+  the five chauffeur routes were removed.
+- Desktop/mobile visual check on the yacht and luxury-car pages before removal.
+
+### 7.5 IA follow-up (2026-10-20)
+
+- Chauffeur services no longer have standalone pages. `/services/airport-transfer`,
+  `/services/business-travel`, `/services/yacht-transfer`, `/services/villa-transfer`
+  and `/services/nightlife-events` are no longer generated; the build now emits
+  only Vehicle Armoring and Sale of Luxury Cars under `/services/`.
+- The five chauffeur entries remain in the content collection as data-only: the
+  home booking form reads their `form_fields` (flight number, yacht name, villa
+  address, company, venue). Deleting the files would strip those fields from the
+  home form.
+- Home service cards are still display-only, not links. Their slugs no longer
+  matter because there are no chauffeur detail routes to mismatch.
