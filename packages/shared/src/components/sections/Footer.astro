@@ -26,6 +26,7 @@ const { pageContent, footerItems, brandName, brandLogoSrc, tagline, phoneItaly, 
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 import { addressLinesFromMapEmbedUrl } from "../../lib/map-address";
+import { cleanPhone } from "../../lib/phone";
 const s = resolveLabels(pageContent, STRINGS);
 const b = pageContent?.branding;
 const thisYear = new Date().getFullYear();
@@ -43,7 +44,6 @@ const links = footerItems ?? [
   { label: "Privacy Policy", href: "/privacy-policy" },
 ];
 
-const cleanPhone = (phone?: string) => (phone || "").replace(/\D/g, "");
 const phoneSep = s.footer.phoneSeparator;
 // Footer identity block. Structured fields win: company name + address lines
 // derived from `map_embed_url` (single source of truth) + VAT. Legacy

@@ -103,6 +103,7 @@ const STRINGS = {
     capacitySuitcases: "Suitcases",
     capacityCarryon: "Carry-on",
     featuresHeading: "Features",
+    waButton: "Ask About This Car",
   },
 
   stats: {
