@@ -99,12 +99,14 @@ export const fleetVehicleSchema = z.object({
   capacity_suitcases: z.number().optional(),
   capacity_carryon: z.number().optional(),
   specs: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
-  features: z.array(z.string()).optional(),
+  features: nullToUndefined(z.array(z.string())),
   image: z.string().optional(),
   // Selling-card fields: explicit sort order, long copy, and a gallery.
-  order: z.number().optional(),
+  // `nullToUndefined` matches `vehicle` below: Sveltia writes `null` for
+  // untouched optional fields and the build must not fail on a round-trip.
+  order: nullToUndefined(z.number()),
   description: z.string().optional(),
-  images: z.array(z.string()).optional(),
+  images: nullToUndefined(z.array(z.string())),
   vehicle: nullToUndefined(vehicleSpecSchema),
 });
 
