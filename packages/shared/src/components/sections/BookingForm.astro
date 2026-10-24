@@ -240,6 +240,7 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
 </style>
 <script is:inline type="application/json" id="hero-data" set:html={__data} />
 <script>
+  import { fetchMakes, fetchMakeId, fetchModels } from "../../lib/nhtsa";
   const raw = document.getElementById("hero-data");
   if (raw) {
     (() => {
@@ -668,7 +669,6 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
         const typeInput = block.querySelector<HTMLSelectElement>("[data-vehicle-type]")!;
         const summary = block.querySelector<HTMLInputElement>("[data-vehicle-summary]")!;
         if (!makeInput || !modelInput || !yearInput || !typeInput) return;
-        const NHTSA = "https://vpic.nhtsa.dot.gov/api/vehicles";
         const YEARS: number[] = [];
         for (let y = 1992; y <= new Date().getFullYear() + 1; y++) YEARS.push(y);
         const makesByType: Record<string, string[]> = {};
@@ -676,34 +676,28 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
         let modelNames: string[] = [];
         let modelYears: Record<string, number[]> = {};
         let activeMakeId: number | null = null;
-        const jf = (r: Response) => r.json();
         async function getMakes(): Promise<string[]> {
           const vt = activeType;
           if (vt === "other") return []; // "Other vehicles" is free-text — no NHTSA list
           if (makesByType[vt]) return makesByType[vt];
-          const ids = new Map<string, number>();
-          try {
-            const d = await fetch(`${NHTSA}/GetMakesForVehicleType/${vt}?format=json`).then(jf);
-            for (const r of d.Results || []) if (!ids.has(r.MakeName)) ids.set(r.MakeName, r.MakeId);
-          } catch {}
-          makesByType[vt] = [...ids.keys()].sort();
+          const makes = await fetchMakes(vt as "car" | "motorcycle" | "other");
+          makesByType[vt] = makes.map((m) => m.name).sort();
           return makesByType[vt];
         }
         async function loadModels(makeName: string): Promise<void> {
           let id = activeMakeId;
           if (!id) {
-            const d = await fetch(`${NHTSA}/GetMakesForVehicleType/${activeType}?format=json`).then(jf).catch(() => null);
-            const hit = (d?.Results || []).find((r: { MakeName: string; MakeId: number }) => r.MakeName === makeName);
-            id = hit?.MakeId ?? null;
+            const makes = await fetchMakes(activeType as "car" | "motorcycle" | "other");
+            id = await fetchMakeId(makes, makeName);
             activeMakeId = id;
           }
           modelNames = []; modelYears = {};
           if (!id) return;
-          const modelP = fetch(`${NHTSA}/GetModelsForMakeId/${id}?format=json`).then(jf).catch(() => ({ Results: [] }));
-          const yearP = Promise.all(YEARS.map((y) => fetch(`${NHTSA}/GetModelsForMakeIdYear/makeId/${id}/modelyear/${y}?format=json`).then(jf).then((dd) => ({ y, names: (dd.Results || []).map((m: { Model_Name: string }) => m.Model_Name) })).catch(() => ({ y, names: [] as string[] }))));
-          const [md, yrRows] = await Promise.all([modelP, yearP]);
+          const modelP = fetchModels(id);
+          const yearP = Promise.all(YEARS.map((y) => fetchModels(id, y).then((rows) => ({ y, names: rows.map((m) => m.name) }))));
+          const [models, yrRows] = await Promise.all([modelP, yearP]);
           for (const row of yrRows) for (const nm of row.names) { if (!modelYears[nm]) modelYears[nm] = []; modelYears[nm].push(row.y); }
-          modelNames = Array.from(new Set<string>((md.Results || []).map((m: { Model_Name: string }) => m.Model_Name))).sort();
+          modelNames = Array.from(new Set<string>(models.map((m) => m.name))).sort();
         }
         const SENTINEL = "::";
         const MAX = 500;

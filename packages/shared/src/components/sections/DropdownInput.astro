@@ -143,7 +143,7 @@ const countryAttr = country ? { "data-country-location": "" } : {};
     // at runtime; no bundled dataset, no hardcoded makes. Picking a make loads
     // its models into the model field; picking a model loads its years.
     import autoComplete from "@tarekraafat/autocomplete.js";
-    const NHTSA = "https://vpic.nhtsa.dot.gov/api/vehicles";
+    import { fetchMakes, fetchMakeId, fetchModels } from "../../lib/nhtsa";
     const YEARS: number[] = [];
     for (let y = 1992; y <= new Date().getFullYear() + 1; y++) YEARS.push(y);
 
@@ -171,8 +171,6 @@ const countryAttr = country ? { "data-country-location": "" } : {};
       const INIT_MODEL_PH = modelF.placeholder;
       const INIT_YEAR_PH = yearF.placeholder;
 
-    const jf = (r: Response) => r.json();
-
     let activeType: string = typeF.value || "car"; // cars-only blocks carry a fixed hidden value
     let modelNames: string[] = [];          // models for the selected make
     let modelYears: Record<string, number[]> = {}; // model → production years
@@ -182,12 +180,8 @@ const countryAttr = country ? { "data-country-location": "" } : {};
       const vt = activeType;
       if (vt === "other") return []; // "Other vehicles" is free-text — no NHTSA list
       if (makesByType[vt]) return makesByType[vt];
-      const ids = new Map<string, number>();
-      try {
-        const d = await fetch(`${NHTSA}/GetMakesForVehicleType/${vt}?format=json`).then(jf);
-        for (const r of d.Results || []) if (!ids.has(r.MakeName)) ids.set(r.MakeName, r.MakeId);
-      } catch { /* offline — empty */ }
-      makesByType[vt] = [...ids.keys()].sort();
+      const makes = await fetchMakes(vt as "car" | "motorcycle" | "other");
+      makesByType[vt] = makes.map((m) => m.name).sort();
       return makesByType[vt];
     }
 
@@ -196,28 +190,25 @@ const countryAttr = country ? { "data-country-location": "" } : {};
       let id = activeMakeId;
       if (!id) {
         // Resolve the make ID from the active type's make list.
-        const d = await fetch(`${NHTSA}/GetMakesForVehicleType/${activeType}?format=json`).then(jf).catch(() => null);
-        const hit = (d?.Results || []).find((r: { MakeName: string; MakeId: number }) => r.MakeName === makeName);
-        id = hit?.MakeId ?? null;
+        const makes = await fetchMakes(activeType as "car" | "motorcycle" | "other");
+        id = await fetchMakeId(makes, makeName);
         activeMakeId = id;
       }
       modelNames = [];
       modelYears = {};
       if (!id) return;
-      const modelP = fetch(`${NHTSA}/GetModelsForMakeId/${id}?format=json`).then(jf).catch(() => ({ Results: [] }));
+      const modelP = fetchModels(id);
       const yearP = Promise.all(YEARS.map((y) =>
-        fetch(`${NHTSA}/GetModelsForMakeIdYear/makeId/${id}/modelyear/${y}?format=json`)
-          .then(jf).then((d) => ({ y, names: (d.Results || []).map((m: { Model_Name: string }) => m.Model_Name) }))
-          .catch(() => ({ y, names: [] as string[] }))
+        fetchModels(id, y).then((rows) => ({ y, names: rows.map((m) => m.name) }))
       ));
-      const [md, yrRows] = await Promise.all([modelP, yearP]);
+      const [models, yrRows] = await Promise.all([modelP, yearP]);
       for (const row of yrRows) {
         for (const nm of row.names) {
           if (!modelYears[nm]) modelYears[nm] = [];
           modelYears[nm].push(row.y);
         }
       }
-      modelNames = Array.from(new Set<string>((md.Results || []).map((m: { Model_Name: string }) => m.Model_Name))).sort();
+      modelNames = Array.from(new Set<string>(models.map((m) => m.name))).sort();
     }
 
     // Sentinel query used by openAll() to force the dropdown open with every
