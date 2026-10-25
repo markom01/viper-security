@@ -1,10 +1,10 @@
-type: Pickup
 car_number: 5
 vehicle: { category: car, make: Ford, model: "F-150 Super Snake", year: "2017" }
 description: >-
   Blue with white Le Mans stripes. Supercharged 5.0L V8, 750 hp — Shelby's
   performance take on the F-150. Available now at the garage.
-image: "/images/cms/gallery/2017-shelby-f-150-super-snake-01-copia.webp"
+images:
+  - /images/cms/gallery/2017-shelby-f-150-super-snake-01-copia.webp
 specs:
   - label: Engine
     value: 5.0L supercharged V8

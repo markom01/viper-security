@@ -1,10 +1,12 @@
-type: Supercar
 car_number: 3
-vehicle: { category: car, make: Ferrari, model: California }
-description: >-
-  Bianco with black wheels. 4.3L V8, 460 hp, 7-speed dual-clutch. Shown here
-  secured in the enclosed transport; WhatsApp us for the full walk-around.
-image: "/images/cms/gallery/WhatsApp Image 2026-09-08 at 21.28.44.webp"
+vehicle:
+  category: car
+  make: Ferrari
+  model: California
+  year: "2010"
+description: Bianco with black wheels. 4.3L V8, 460 hp, 7-speed dual-clutch. Shown here secured in the enclosed transport; WhatsApp us for the full walk-around.
+images:
+  - /images/cms/gallery/WhatsApp Image 2026-09-08 at 21.28.44.webp
 specs:
   - label: Engine
     value: 4.3L V8

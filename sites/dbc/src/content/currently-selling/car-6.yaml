@@ -1,10 +1,10 @@
-type: SUV
 car_number: 6
 vehicle: { category: car, make: Hummer, model: H2 }
 description: >-
   Black, wearing the DBC livery, shown with the enclosed Turatello
   transporter. Sold as a custom project; WhatsApp us to discuss the build.
-image: "/images/cms/from-wix/hummer-project.webp"
+images:
+  - /images/cms/from-wix/hummer-project.webp
 specs:
   - label: Engine
     value: 6.0L V8

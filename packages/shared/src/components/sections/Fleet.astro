@@ -56,6 +56,9 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
             vehicles?.map((v: FleetEntry) => {
               const d = v.data || {};
               const title = vehicleTitle(d);
+              // Card image: gallery first (carousel only when there are several),
+              // then the legacy single `image` field used by chauffeur fleets.
+              const primaryImage = d.images?.[0] ?? d.image;
               // Year: sale entries carry it on `vehicle`, chauffeur entries on
               // the legacy top-level `year`. Empty strings count as absent.
               const displayYear = present(d.vehicle?.year || d.year);
@@ -84,31 +87,31 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
                       <div class="car-card-left">
                         <div class="car-listing-info-wrapper">
                           <h3 class="car-listing-name">{title}</h3>
-                          <div class="car-listing-type">{d.type}</div>
+                          {present(d.type) && (
+                            <div class="car-listing-type">{d.type}</div>
+                          )}
                         </div>
                         {present(d.description) && (
                           <p class="car-card-description">{d.description}</p>
                         )}
                         <div class="car-listing-image-wrapper">
-                          {d.images?.length ? (
+                          {d.images && d.images.length > 1 ? (
                             <ImageCarousel
                               images={d.images}
                               alt={title}
                               id={`fleet-${v.id}-carousel`}
                               group={`fleet-${v.id}`}
                             />
-                          ) : (
-                            d.image && (
-                              <ZoomImage
-                                src={d.image}
-                                alt={title}
-                                class="car-listing-image"
-                                group="fleet"
-                                widths={[320, 480, 640]}
-                                sizes="(max-width: 767px) 100vw, (max-width: 991px) 50vw, 400px"
-                              />
-                            )
-                          )}
+                          ) : primaryImage ? (
+                            <ZoomImage
+                              src={primaryImage}
+                              alt={title}
+                              class="car-listing-image"
+                              group="fleet"
+                              widths={[320, 480, 640]}
+                              sizes="(max-width: 767px) 100vw, (max-width: 991px) 50vw, 400px"
+                            />
+                          ) : null}
                         </div>
                       </div>
                       <div class="car-card-data">

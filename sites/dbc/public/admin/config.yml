@@ -1043,7 +1043,6 @@ collections:
     # feeds the template; see the field below.
     slug: "car-{{car_number}}"
     fields:
-      - { name: type, label: Type, widget: string, required: false }
       - {
           name: car_number,
           label: "Car Number",
@@ -1074,7 +1073,6 @@ collections:
           required: false,
           hint: "Pick or upload several photos. More than one photo gives the card a carousel on the site.",
         }
-      - { name: image, label: "Main Image", widget: image, required: false }
       - label: Specs
         name: specs
         widget: list
