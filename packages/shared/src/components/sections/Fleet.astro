@@ -214,10 +214,14 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
   .fleet ._3-column-collection[data-count="1"] .car-card-data {
     flex: 1;
   }
-  @media (min-width: 768px) {
-    .fleet .car-card-details {
-      align-items: center;
-    }
+  /* In a 4-wide grid a card is ~310px: side-by-side data (specs column =
+     half card) leaves the label/value rows ~140px wide, so space-between
+     collapses to zero gap ("Transmission5-speed manual"). Stack info above
+     the specs list at every card size; data-count="1" re-enables the wide
+     single-card row below. */
+  .fleet .car-card-details {
+    flex-direction: column;
+    align-items: stretch;
   }
   .car-card-left {
     display: flex;
