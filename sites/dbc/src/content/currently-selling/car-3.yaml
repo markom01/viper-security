@@ -1,4 +1,5 @@
 type: Supercar
+car_number: 3
 vehicle: { category: car, make: Ferrari, model: California }
 description: >-
   Bianco with black wheels. 4.3L V8, 460 hp, 7-speed dual-clutch. Shown here

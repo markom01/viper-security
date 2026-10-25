@@ -1,4 +1,5 @@
 type: SUV
+car_number: 6
 vehicle: { category: car, make: Hummer, model: H2 }
 description: >-
   Black, wearing the DBC livery, shown with the enclosed Turatello

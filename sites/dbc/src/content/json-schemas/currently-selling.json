@@ -29,6 +29,7 @@
       "items": { "type": "string" }
     },
     "order": { "type": ["number", "null"] },
+    "car_number": { "type": ["number", "null"] },
     "vehicle": {
       "type": ["object", "null"],
       "properties": {

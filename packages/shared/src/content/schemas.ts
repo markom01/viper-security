@@ -107,6 +107,9 @@ export const fleetVehicleSchema = z.object({
   // `nullToUndefined` matches `vehicle` below: Sveltia writes `null` for
   // untouched optional fields and the build must not fail on a round-trip.
   order: nullToUndefined(z.number()),
+  // CMS-assigned sequential number used to build the entry slug (`car-7`).
+  // Stored in the file so the CMS can feed it to the slug template.
+  car_number: nullToUndefined(z.number()),
   description: z.string().optional(),
   images: nullToUndefined(z.array(z.string())),
   vehicle: nullToUndefined(vehicleSpecSchema),

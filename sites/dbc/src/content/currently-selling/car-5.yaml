@@ -1,4 +1,5 @@
 type: Pickup
+car_number: 5
 vehicle: { category: car, make: Ford, model: "F-150 Super Snake", year: "2017" }
 description: >-
   Blue with white Le Mans stripes. Supercharged 5.0L V8, 750 hp — Shelby's

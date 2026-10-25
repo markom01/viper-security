@@ -1038,16 +1038,28 @@ collections:
     folder: sites/dbc/src/content/currently-selling
     extension: yaml
     create: true
-    slug: "{{vehicle.make}}-{{vehicle.model}}"
+    # Slugs are sequential (`car-1`, `car-2`, …) because the file name never
+    # appears on the site. `car_number` is assigned automatically on save and
+    # feeds the template; see the field below.
+    slug: "car-{{car_number}}"
     fields:
       - { name: type, label: Type, widget: string, required: false }
+      - {
+          name: car_number,
+          label: "Car Number",
+          widget: number,
+          value_type: int,
+          auto_increment: true,
+          required: false,
+          hint: "Assigned automatically when the entry is saved.",
+        }
       - name: vehicle
         label: "Vehicle (NHTSA lookup)"
         widget: nhtsa_vehicle
         required: true
-        # Subfield metadata only: lets Sveltia validate the
-        # {{vehicle.make}}-{{vehicle.model}} slug template. The widget stores
-        # all four keys as one object, exactly as before.
+        # Subfield metadata only: lets Sveltia resolve the nested `vehicle.*`
+        # tags used by the `summary` label. The widget stores all four keys as
+        # one object, exactly as before.
         fields:
           - { name: category, label: Category, widget: string, required: false }
           - { name: make, label: Make, widget: string, required: false }
