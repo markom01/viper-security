@@ -1,0 +1,14 @@
+vehicle:
+  category: car
+  make: ACURA
+  model: Integra
+  year: '2023'
+description: Black, wearing the DBC livery, shown with the enclosed Turatello transporter. Sold as a custom project; WhatsApp us to discuss the build.
+images:
+  - /images/cms/from-wix/hummer-project.webp
+specs:
+  - label: Engine
+    value: 6.0L V8
+  - label: Power
+    value: 316 hp
+order: 6

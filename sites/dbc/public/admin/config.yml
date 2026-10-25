@@ -1038,20 +1038,11 @@ collections:
     folder: sites/dbc/src/content/currently-selling
     extension: yaml
     create: true
-    # Slugs are sequential (`car-1`, `car-2`, …) because the file name never
-    # appears on the site. `car_number` is assigned automatically on save and
-    # feeds the template; see the field below.
-    slug: "car-{{car_number}}"
+    # Slugs are sequential (`1`, `2`, …) because the file name never appears on
+    # the site; the card title comes from the vehicle fields via `summary`.
+    slug:
+      auto_increment: true
     fields:
-      - {
-          name: car_number,
-          label: "Car Number",
-          widget: number,
-          value_type: int,
-          auto_increment: true,
-          required: false,
-          hint: "Assigned automatically when the entry is saved.",
-        }
       - name: vehicle
         label: "Vehicle (NHTSA lookup)"
         widget: nhtsa_vehicle
