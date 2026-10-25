@@ -7,7 +7,7 @@ import type { ImageMetadata } from "astro";
 
 // ----- Fleet ---------------------------------------------------------------
 export interface FleetVehicleData {
-  name: string;
+  name?: string;
   type?: string;
   year?: string;
   seats?: string;
@@ -200,10 +200,18 @@ export interface PageContent {
     privacy_policy?: string;
   };
   fleet?: { heading?: string };
-  howitworks?: { heading?: string; steps?: { title: string; description: string; image?: string }[] };
+  howitworks?: {
+    heading?: string;
+    steps?: { title: string; description: string; image?: string }[];
+  };
   /** Vehicle brand/model (VIPER: "Mercedes-Benz S-Class"), from {vehicle} template. */
   vehicle_name?: string;
-  about?: { heading?: string; text?: string; image?: SiteImage; images?: SiteImage[] };
+  about?: {
+    heading?: string;
+    text?: string;
+    image?: SiteImage;
+    images?: SiteImage[];
+  };
   stats?: {
     subheading?: string;
     /** Optional: service pages may omit (falls back to theme). */

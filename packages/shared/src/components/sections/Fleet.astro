@@ -24,8 +24,20 @@ const present = (x: unknown) => {
   return v || undefined;
 };
 
+// Card title: composed from the NHTSA `vehicle` fields (year make model) so
+// sale cards need no separate name field. Falls back to the legacy `name`
+// for chauffeur/armored entries that carry no make/model breakdown.
+const vehicleTitle = (d: FleetVehicleData) => {
+  const make = present(d.vehicle?.make);
+  const model = present(d.vehicle?.model);
+  if (!make && !model) return present(d.name) || "";
+  return [present(d.vehicle?.year || d.year), make, model]
+    .filter((x): x is string => !!x)
+    .join(" ");
+};
+
 const waMessage = (d: FleetVehicleData, pagePath: string) =>
-  [d.name, d.vehicle?.year || d.year, d.type, d.description, pagePath ? `Details: ${pagePath}` : ""]
+  [vehicleTitle(d), d.type, d.description, pagePath ? `Details: ${pagePath}` : ""]
     .map(present)
     .filter((x): x is string => !!x)
     .join("\n");
@@ -43,6 +55,7 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
           {
             vehicles?.map((v: FleetEntry) => {
               const d = v.data || {};
+              const title = vehicleTitle(d);
               // Year: sale entries carry it on `vehicle`, chauffeur entries on
               // the legacy top-level `year`. Empty strings count as absent.
               const displayYear = present(d.vehicle?.year || d.year);
@@ -70,7 +83,7 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
                     <div class="car-card-details">
                       <div class="car-card-left">
                         <div class="car-listing-info-wrapper">
-                          <h3 class="car-listing-name">{d.name}</h3>
+                          <h3 class="car-listing-name">{title}</h3>
                           <div class="car-listing-type">{d.type}</div>
                         </div>
                         {present(d.description) && (
@@ -80,7 +93,7 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
                           {d.images?.length ? (
                             <ImageCarousel
                               images={d.images}
-                              alt={d.name}
+                              alt={title}
                               id={`fleet-${v.id}-carousel`}
                               group={`fleet-${v.id}`}
                             />
@@ -88,7 +101,7 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
                             d.image && (
                               <ZoomImage
                                 src={d.image}
-                                alt={d.name}
+                                alt={title}
                                 class="car-listing-image"
                                 group="fleet"
                                 widths={[320, 480, 640]}

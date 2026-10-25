@@ -1,4 +1,3 @@
-name: Hummer H2 Project
 type: SUV
 vehicle: { category: car, make: Hummer, model: H2 }
 description: >-

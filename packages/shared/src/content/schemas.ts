@@ -73,7 +73,9 @@ export const vehicleSpecSchema = z.object({
 });
 
 export const fleetVehicleSchema = z.object({
-  name: z.string(),
+  // Optional: sale cards compose their title from the `vehicle` make/model/
+  // year. Kept for chauffeur/armored entries that carry no vehicle breakdown.
+  name: z.string().optional(),
   type: z.string().optional(),
   // CMS number widgets write raw numbers; legacy YAML carries quoted
   // strings ("2024"). Coerce both to string so display code is unchanged.

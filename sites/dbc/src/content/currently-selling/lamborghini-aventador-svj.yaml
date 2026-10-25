@@ -1,4 +1,3 @@
-name: Lamborghini Aventador SVJ
 type: Supercar
 vehicle: { category: car, make: Lamborghini, model: "Aventador SVJ" }
 description: >-

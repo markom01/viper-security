@@ -5,7 +5,6 @@
   "description": "One file per vehicle currently available at the garage. Mirrors fleetVehicleSchema (@garage/shared) plus the selling-card fields.",
   "type": "object",
   "properties": {
-    "name": { "type": "string" },
     "type": { "type": "string" },
     "description": { "type": "string" },
     "images": {
@@ -41,6 +40,6 @@
       "additionalProperties": false
     }
   },
-  "required": ["name"],
+  "required": ["vehicle"],
   "additionalProperties": false
 }

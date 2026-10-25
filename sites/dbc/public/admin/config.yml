@@ -1031,20 +1031,25 @@ collections:
 
   - name: currently-selling
     label: Currently Selling
-    description: Vehicles currently available at the garage (one file per vehicle)
+    description: Vehicles currently available at the garage (one file per vehicle). The card title is built from the vehicle make, model and year.
     folder: sites/dbc/src/content/currently-selling
     extension: yaml
     create: true
-    slug: "{{fields.name}}"
+    slug: "{{vehicle.make}}-{{vehicle.model}}"
     fields:
-      - { name: name, label: Vehicle Name, widget: string }
       - { name: type, label: Type, widget: string, required: false }
-      - {
-          name: vehicle,
-          label: "Vehicle (NHTSA lookup)",
-          widget: nhtsa_vehicle,
-          required: false,
-        }
+      - name: vehicle
+        label: "Vehicle (NHTSA lookup)"
+        widget: nhtsa_vehicle
+        required: true
+        # Subfield metadata only: lets Sveltia validate the
+        # {{vehicle.make}}-{{vehicle.model}} slug template. The widget stores
+        # all four keys as one object, exactly as before.
+        fields:
+          - { name: category, label: Category, widget: string, required: false }
+          - { name: make, label: Make, widget: string, required: false }
+          - { name: model, label: Model, widget: string, required: false }
+          - { name: year, label: Year, widget: string, required: false }
       - { name: description, label: Description, widget: text, required: false }
       - label: Gallery Images
         name: images
