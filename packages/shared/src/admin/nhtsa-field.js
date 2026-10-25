@@ -197,6 +197,10 @@ const registerField = (CMS) => {
         },
       },
     });
+    // The instance is needed by openAll() (focus opens the list). Returning it
+    // is what makes the CMS behave like the booking form, which holds its
+    // autoComplete instances.
+    return ac;
   };
 
   const openAll = (ac, input) => {
