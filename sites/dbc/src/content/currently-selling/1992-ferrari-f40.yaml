@@ -2,11 +2,9 @@ type: Supercar
 vehicle:
   category: car
   make: Ferrari
-  model: F40
-  year: "1992"
-description: >-
-  Rosso Corsa over red cloth. Twin-turbo V8, 478 hp, non-cat, non-adjust.
-  Documented history and recent major service. Available now at the garage.
+  model: '296'
+  year: '2022'
+description: Rosso Corsa over red cloth. Twin-turbo V8, 478 hp, non-cat, non-adjust. Documented history and recent major service. Available now at the garage.
 images:
   - /images/cms/red-ferrari-f40-studio-side.webp
   - /images/cms/gallery/red-ferrari-in-enclosed-trailer.webp
