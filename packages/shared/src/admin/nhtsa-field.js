@@ -131,8 +131,8 @@ const registerField = (CMS) => {
   // (BookingForm.astro initAC): same thresholds, same SENTINEL "open all",
   // same selection wiring — only the list/item CSS classes differ (the admin
   // page does not load the site stylesheet the form's classes live in).
-  const makeAc = (input, getCandidates, onPick) =>
-    new autoComplete({
+  const makeAc = (input, getCandidates, onPick) => {
+    const ac = new autoComplete({
       selector: () => input,
       threshold: 2,
       debounce: 250,
@@ -179,6 +179,7 @@ const registerField = (CMS) => {
         },
       },
     });
+  };
 
   const openAll = (ac, input) => {
     input.focus();
