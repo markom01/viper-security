@@ -208,10 +208,16 @@ const registerField = (CMS) => {
     }
   };
 
-  /** Focus/typing on an empty input re-opens the full list, like the form. */
-  const openOnEmpty = (ac, input, isFreeText) => {
+  /**
+   * Focus opens the list, like the form. A prefilled field (every existing
+   * entry) also selects its text so the next keystroke replaces the value
+   * instead of appending to it — otherwise typing into `2022` filters the
+   * nonsense string `20222…` and the panel stays empty.
+   */
+  const openOnFocus = (ac, input, isFreeText) => {
     const onFocus = () => {
-      if (isFreeText() || input.value) return;
+      if (isFreeText()) return;
+      if (input.value) input.select();
       openAll(ac, input);
     };
     let reopen;
@@ -410,7 +416,7 @@ const registerField = (CMS) => {
         },
       ];
       const teardowns = acs.map(({ ac, input }) =>
-        openOnEmpty(ac, input, freeText),
+        openOnFocus(ac, input, freeText),
       );
       // After picking a make, open the model list once models arrive — same
       // "next field opens" feel as the form.
