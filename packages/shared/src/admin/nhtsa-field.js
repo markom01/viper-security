@@ -22,6 +22,7 @@ import {
   getMakesRaw,
   loadMakeModels,
   makeNamesFrom,
+  vehicleYears,
 } from "../lib/vehicle-cascade.js";
 
 const FIELD_TYPE = "nhtsa_vehicle";
@@ -120,10 +121,29 @@ const registerField = (CMS) => {
       ? useRef
       : (initial) => useState(() => ({ current: initial }))[0];
 
-  // The year list is no longer a static range: it is model-scoped (per-model
-  // year probe from the shared ../lib/vehicle-cascade.js loadMakeModels), the
-  // same behavior as the booking form's year field. The canonical year RANGE
-  // travels inside loadMakeModels' probing.
+  // Years probed for a model name. Exact (case-insensitive) match first, then
+  // the longest model name that is a prefix of the value — legacy content
+  // stores marketing trims ("Aventador SVJ" → "Aventador", "F-150 Super
+  // Snake" → "F-150", "Mustang Mach 1" → "Mustang") and the base model's
+  // years are the closest truthful answer. Returns null when nothing matches.
+  const yearsForModel = (byModel, name) => {
+    const key = (name || "").trim().toLowerCase();
+    if (!key) return null;
+    let bestName = "";
+    for (const modelName of Object.keys(byModel)) {
+      const lower = modelName.toLowerCase();
+      if (lower === key) return byModel[modelName];
+      if (key.startsWith(lower) && modelName.length > bestName.length) {
+        bestName = modelName;
+      }
+    }
+    return bestName ? byModel[bestName] : null;
+  };
+
+  // The year list is model-scoped (per-model year probe from the shared
+  // ../lib/vehicle-cascade.js loadMakeModels), the same behavior as the
+  // booking form's year field. The canonical year RANGE travels inside
+  // loadMakeModels' probing.
 
   // Type-ahead configuration mirrored from the booking form's vehicle fields
   // (BookingForm.astro initAC): same thresholds, same SENTINEL "open all",
@@ -224,7 +244,8 @@ const registerField = (CMS) => {
 
     const [makes, setMakes] = useState({ status: "loading", list: [] });
     const [models, setModels] = useState({ status: "idle", list: [] });
-    const [modelYears, setModelYears] = useState({});
+    // { byModel: model → probed years, all: years the make itself was offered }
+    const [yearData, setYearData] = useState({ byModel: {}, all: [] });
 
     // Latest emitted composite. The CMS prop only seeds it at mount; composing
     // against the render-time prop would drop a change made before the CMS
@@ -243,15 +264,15 @@ const registerField = (CMS) => {
       modelsRef.current = models.list;
     }, [models]);
     useEffect(() => {
-      yearsRef.current = modelYears;
-    }, [modelYears]);
+      yearsRef.current = yearData;
+    }, [yearData]);
 
     // The type-ahead inputs (uncontrolled) — autoComplete.js wraps each input
     // and injects its list below it.
     const makeInputRef = useRef(null);
     const modelInputRef = useRef(null);
     const yearInputRef = useRef(null);
-    const yearsRef = useRef({});
+    const yearsRef = useRef({ byModel: {}, all: [] });
 
     // Merge a patch into the latest composite and emit. Empty parts are
     // omitted, so passing "" clears a key — including downstream keys.
@@ -282,14 +303,14 @@ const registerField = (CMS) => {
     useEffect(() => {
       if (!make) {
         setModels({ status: "idle", list: [] });
-        setModelYears({});
+        setYearData({ byModel: {}, all: [] });
         return undefined;
       }
       if (makes.status === "loading") return undefined;
 
       let active = true;
       setModels({ status: "loading", list: [] });
-      setModelYears({});
+      setYearData({ byModel: {}, all: [] });
       (async () => {
         const makeId = await fetchMakeId(makes.list, make);
         if (!active) return;
@@ -303,7 +324,7 @@ const registerField = (CMS) => {
           status: data.names.length ? "ready" : "empty",
           list: data.names,
         });
-        setModelYears(data.yearsByModel);
+        setYearData({ byModel: data.yearsByModel, all: data.years });
       })();
       return () => {
         active = false;
@@ -362,14 +383,25 @@ const registerField = (CMS) => {
           ac: makeAc(
             yrInput,
             () => {
-              // Form parity: only the years of the picked model, ascending.
-              const yrs = yearsRef.current[text(latest.current.model)];
-              const list = Array.isArray(yrs)
-                ? yrs
-                    .slice()
-                    .sort((a, b) => a - b)
-                    .map(String)
-                : [];
+              // Form parity, with graceful degrades for legacy content: the
+              // picked model's own years (exact, then base-model prefix for
+              // marketing trims), else every year the make was offered, else
+              // the canonical range while the probe is still in flight or the
+              // make is unknown to vPic.
+              const { byModel, all } = yearsRef.current;
+              const matched = yearsForModel(
+                byModel,
+                text(latest.current.model),
+              );
+              const source =
+                matched && matched.length
+                  ? matched
+                  : all && all.length
+                    ? all
+                    : vehicleYears();
+              const list = [...new Set(source)]
+                .sort((a, b) => a - b)
+                .map(String);
               return saved("year", list);
             },
             onYearPick,
@@ -409,9 +441,9 @@ const registerField = (CMS) => {
         : "Pick a make first — or type manually";
     const yearPlaceholder = freeText
       ? "Year (optional)"
-      : text(latest.current.model)
-        ? "Start typing — year"
-        : "Pick a model first — or type manually";
+      : models.status === "loading"
+        ? "Loading model years…"
+        : "Start typing — year";
 
     const field = (label, control) =>
       h(

@@ -67,9 +67,13 @@ export function modelNamesFrom(models) {
 const modelsByMake = new Map();
 
 /**
- * All models for a NHTSA make id, plus the years each model was offered.
+ * All models for a NHTSA make id, the years each model was offered, and the
+ * union of years the make itself was offered. The union is the CMS widget's
+ * middle fallback: legacy entries often carry marketing trim names
+ * (`F-150 Super Snake`, `Aventador SVJ`) that vPic does not list, and a
+ * make-wide year list still beats an empty type-ahead.
  * @param {number} makeId
- * @returns {Promise<{ names: string[]; yearsByModel: Record<string, number[]> }>}
+ * @returns {Promise<{ names: string[]; yearsByModel: Record<string, number[]>; years: number[] }>}
  */
 export async function loadMakeModels(makeId) {
   if (modelsByMake.has(makeId)) return modelsByMake.get(makeId);
@@ -86,13 +90,21 @@ export async function loadMakeModels(makeId) {
   const [models, yrRows] = await Promise.all([modelP, yearP]);
   /** @type {Record<string, number[]>} */
   const yearsByModel = {};
+  /** @type {number[]} */
+  const makeYears = [];
   for (const row of yrRows) {
+    if (!row.names.length) continue;
+    makeYears.push(row.y);
     for (const nm of row.names) {
       if (!yearsByModel[nm]) yearsByModel[nm] = [];
       yearsByModel[nm].push(row.y);
     }
   }
-  const out = { names: modelNamesFrom(models), yearsByModel };
+  const out = {
+    names: modelNamesFrom(models),
+    yearsByModel,
+    years: [...new Set(makeYears)].sort((a, b) => a - b),
+  };
   if (out.names.length) modelsByMake.set(makeId, out);
   return out;
 }
