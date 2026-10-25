@@ -1066,12 +1066,14 @@ collections:
           - { name: model, label: Model, widget: string, required: false }
           - { name: year, label: Year, widget: string, required: false }
       - { name: description, label: Description, widget: text, required: false }
-      - label: Gallery Images
-        name: images
-        widget: list
-        collapsed: true
-        required: false
-        field: { name: image, label: Image, widget: image }
+      - {
+          name: images,
+          label: "Gallery Images",
+          widget: image,
+          multiple: true,
+          required: false,
+          hint: "Pick or upload several photos. More than one photo gives the card a carousel on the site.",
+        }
       - { name: image, label: "Main Image", widget: image, required: false }
       - label: Specs
         name: specs
