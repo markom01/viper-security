@@ -16,7 +16,7 @@
 // free-text by design with no NHTSA list), so a failed lookup retries on the
 // next call.
 
-import { fetchMakes } from "./nhtsa.js";
+import { fetchMakes, fetchModels } from "./nhtsa.js";
 
 /** @typedef {{ name: string; id: number }} NhtsaMake */
 
@@ -55,4 +55,44 @@ export function makeNamesFrom(makes) {
 /** Sorted, deduped model names from fetchModels rows (`{ name, years }`). */
 export function modelNamesFrom(models) {
   return [...new Set(models.map((m) => m.name))].sort();
+}
+
+// Per-make model data cache: keyed by NHTSA make id → all model names plus
+// the years each model was offered (built by probing every year in the
+// canonical range against the year-scoped models endpoint — the same ~
+// `${YEARS.length}`-call probe the booking form's `loadModels` ran inline).
+// Both the form and the CMS widget consume this, so a make's model/year map
+// is fetched once per page load. Cache fills only on success; empty lookups
+// retry.
+const modelsByMake = new Map();
+
+/**
+ * All models for a NHTSA make id, plus the years each model was offered.
+ * @param {number} makeId
+ * @returns {Promise<{ names: string[]; yearsByModel: Record<string, number[]> }>}
+ */
+export async function loadMakeModels(makeId) {
+  if (modelsByMake.has(makeId)) return modelsByMake.get(makeId);
+  const years = vehicleYears();
+  const modelP = fetchModels(makeId);
+  const yearP = Promise.all(
+    years.map((y) =>
+      fetchModels(makeId, y).then((rows) => ({
+        y,
+        names: rows.map((m) => m.name),
+      })),
+    ),
+  );
+  const [models, yrRows] = await Promise.all([modelP, yearP]);
+  /** @type {Record<string, number[]>} */
+  const yearsByModel = {};
+  for (const row of yrRows) {
+    for (const nm of row.names) {
+      if (!yearsByModel[nm]) yearsByModel[nm] = [];
+      yearsByModel[nm].push(row.y);
+    }
+  }
+  const out = { names: modelNamesFrom(models), yearsByModel };
+  if (out.names.length) modelsByMake.set(makeId, out);
+  return out;
 }

@@ -240,8 +240,8 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
 </style>
 <script is:inline type="application/json" id="hero-data" set:html={__data} />
 <script>
-  import { fetchMakeId, fetchModels } from "../../lib/nhtsa";
-  import { getMakesRaw, makeNamesFrom, modelNamesFrom, vehicleYears } from "../../lib/vehicle-cascade";
+  import { fetchMakeId } from "../../lib/nhtsa";
+  import { getMakesRaw, loadMakeModels, makeNamesFrom } from "../../lib/vehicle-cascade";
   const raw = document.getElementById("hero-data");
   if (raw) {
     (() => {
@@ -670,7 +670,6 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
         const typeInput = block.querySelector<HTMLSelectElement>("[data-vehicle-type]")!;
         const summary = block.querySelector<HTMLInputElement>("[data-vehicle-summary]")!;
         if (!makeInput || !modelInput || !yearInput || !typeInput) return;
-        const YEARS: number[] = vehicleYears();
         let activeType: string = typeInput.value || "car";
         let modelNames: string[] = [];
         let modelYears: Record<string, number[]> = {};
@@ -688,11 +687,11 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
           }
           modelNames = []; modelYears = {};
           if (!id) return;
-          const modelP = fetchModels(id);
-          const yearP = Promise.all(YEARS.map((y) => fetchModels(id, y).then((rows) => ({ y, names: rows.map((m) => m.name) }))));
-          const [models, yrRows] = await Promise.all([modelP, yearP]);
-          for (const row of yrRows) for (const nm of row.names) { if (!modelYears[nm]) modelYears[nm] = []; modelYears[nm].push(row.y); }
-          modelNames = modelNamesFrom(models);
+          // Shared with the CMS vehicle field: full model list + per-model
+          // year probe over the canonical range, cached per make.
+          const data = await loadMakeModels(id);
+          modelNames = data.names;
+          modelYears = data.yearsByModel;
         }
         const SENTINEL = "::";
         const MAX = 500;

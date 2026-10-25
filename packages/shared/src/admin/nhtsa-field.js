@@ -17,12 +17,11 @@
 // (or its bundled React) is unavailable.
 
 import autoComplete from "@tarekraafat/autocomplete.js";
-import { fetchMakeId, fetchModels } from "../lib/nhtsa.js";
+import { fetchMakeId } from "../lib/nhtsa.js";
 import {
   getMakesRaw,
+  loadMakeModels,
   makeNamesFrom,
-  modelNamesFrom,
-  vehicleYears,
 } from "../lib/vehicle-cascade.js";
 
 const FIELD_TYPE = "nhtsa_vehicle";
@@ -121,11 +120,10 @@ const registerField = (CMS) => {
       ? useRef
       : (initial) => useState(() => ({ current: initial }))[0];
 
-  // Years reuse the booking form's canonical range (shared ../lib/
-  // vehicle-cascade.js), reversed into newest-first display order.
-  const YEARS = vehicleYears()
-    .map((y) => String(y))
-    .reverse();
+  // The year list is no longer a static range: it is model-scoped (per-model
+  // year probe from the shared ../lib/vehicle-cascade.js loadMakeModels), the
+  // same behavior as the booking form's year field. The canonical year RANGE
+  // travels inside loadMakeModels' probing.
 
   // Type-ahead configuration mirrored from the booking form's vehicle fields
   // (BookingForm.astro initAC): same thresholds, same SENTINEL "open all",
@@ -226,6 +224,7 @@ const registerField = (CMS) => {
 
     const [makes, setMakes] = useState({ status: "loading", list: [] });
     const [models, setModels] = useState({ status: "idle", list: [] });
+    const [modelYears, setModelYears] = useState({});
 
     // Latest emitted composite. The CMS prop only seeds it at mount; composing
     // against the render-time prop would drop a change made before the CMS
@@ -243,12 +242,16 @@ const registerField = (CMS) => {
     useEffect(() => {
       modelsRef.current = models.list;
     }, [models]);
+    useEffect(() => {
+      yearsRef.current = modelYears;
+    }, [modelYears]);
 
     // The type-ahead inputs (uncontrolled) — autoComplete.js wraps each input
     // and injects its list below it.
     const makeInputRef = useRef(null);
     const modelInputRef = useRef(null);
     const yearInputRef = useRef(null);
+    const yearsRef = useRef({});
 
     // Merge a patch into the latest composite and emit. Empty parts are
     // omitted, so passing "" clears a key — including downstream keys.
@@ -271,18 +274,22 @@ const registerField = (CMS) => {
       };
     }, [category]);
 
-    // Models follow make + year. Wait for the make list before resolving the
-    // id; a make that is not in the list (free text) stays editable and its
-    // model input degrades to text.
+    // Models follow the make (full all-model list), and the per-model year
+    // map is probed once per make — both identical to the booking form's
+    // loadModels (shared loadMakeModels). The year type-ahead then offers
+    // ONLY the years of the picked model. A make that is not in the list
+    // (free text) stays editable and its model input degrades to text.
     useEffect(() => {
       if (!make) {
         setModels({ status: "idle", list: [] });
+        setModelYears({});
         return undefined;
       }
       if (makes.status === "loading") return undefined;
 
       let active = true;
       setModels({ status: "loading", list: [] });
+      setModelYears({});
       (async () => {
         const makeId = await fetchMakeId(makes.list, make);
         if (!active) return;
@@ -290,16 +297,18 @@ const registerField = (CMS) => {
           setModels({ status: "empty", list: [] });
           return;
         }
-        const list = await lookup(() =>
-          fetchModels(makeId, year ? Number(year) : undefined),
-        );
+        const data = await lookup(() => loadMakeModels(makeId));
         if (!active) return;
-        setModels({ status: list.length ? "ready" : "empty", list });
+        setModels({
+          status: data.names.length ? "ready" : "empty",
+          list: data.names,
+        });
+        setModelYears(data.yearsByModel);
       })();
       return () => {
         active = false;
       };
-    }, [make, year, makes.status, makes.list]);
+    }, [make, makes.status, makes.list]);
 
     // Mount the same type-ahead component the booking forms use. Re-created
     // when the category changes (free-text mode needs no type-ahead). The
@@ -319,6 +328,7 @@ const registerField = (CMS) => {
       };
       const onModelPick = (val) => {
         emit({ model: val });
+        yrInput.value = ""; // form parity: year follows the picked model
       };
       const onYearPick = (val) => {
         emit({ year: val });
@@ -343,13 +353,27 @@ const registerField = (CMS) => {
         {
           ac: makeAc(
             mdInput,
-            () => saved("model", modelNamesFrom(modelsRef.current)),
+            () => saved("model", modelsRef.current.slice()),
             onModelPick,
           ),
           input: mdInput,
         },
         {
-          ac: makeAc(yrInput, () => saved("year", YEARS.slice()), onYearPick),
+          ac: makeAc(
+            yrInput,
+            () => {
+              // Form parity: only the years of the picked model, ascending.
+              const yrs = yearsRef.current[text(latest.current.model)];
+              const list = Array.isArray(yrs)
+                ? yrs
+                    .slice()
+                    .sort((a, b) => a - b)
+                    .map(String)
+                : [];
+              return saved("year", list);
+            },
+            onYearPick,
+          ),
           input: yrInput,
         },
       ];
@@ -385,7 +409,9 @@ const registerField = (CMS) => {
         : "Pick a make first — or type manually";
     const yearPlaceholder = freeText
       ? "Year (optional)"
-      : "Start typing — year";
+      : text(latest.current.model)
+        ? "Start typing — year"
+        : "Pick a model first — or type manually";
 
     const field = (label, control) =>
       h(
