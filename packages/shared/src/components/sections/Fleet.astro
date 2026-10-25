@@ -1,6 +1,7 @@
 ---
 import ZoomImage from "./ZoomImage.astro";
 import ImageCarousel from "./ImageCarousel.astro";
+import CollectionHeading from "./CollectionHeading.astro";
 import type { FleetEntry, FleetVehicleData, PageContent } from "../../types";
 import { cleanPhone } from "../../lib/phone";
 interface Props {
@@ -32,18 +33,13 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
 
 <section id="fleet" class="section home-about-section fleet">
   <div class="content-wrapper">
-    <div data-scroll-reveal class="collection-heading-wrapper">
-      <div class="services-subheadline">
-        <div class="subheadline-wrapper">
-          <div class="subheadline-line"></div>
-          <div class="subheadline">{s.fleet.subheadline}</div>
-        </div>
-        <h2>{f?.heading}</h2>
-        {fleetFeatures && <p>{fleetFeatures}</p>}
-      </div>
-    </div>
+    <CollectionHeading>
+      <div class="subheadline" slot="label">{s.fleet.subheadline}</div>
+      <h2>{f?.heading}</h2>
+      {fleetFeatures && <p>{fleetFeatures}</p>}
+    </CollectionHeading>
     <div data-scroll-reveal>
-        <ul class="_3-column-collection" data-count={(vehicles?.length ?? 0) >= 3 ? "many" : String(vehicles?.length ?? 0)}>
+        <ul class="_3-column-collection" data-count={String(vehicles?.length ?? 0)}>
           {
             vehicles?.map((v: FleetEntry) => {
               const d = v.data || {};
@@ -192,17 +188,16 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
 <style>
   /* Card count decides the rule:
        1 = full row "before" layout (single wide card)
-       2 = current auto-fit horizontal (2 side-by-side, wraps naturally)
-       3+ = tablet layout on all sizes, wrapping new rows when out of space
-     Without a :has(count) selector the grid alone can't distinguish, so
-     the list carries data-count and three scoped overrides below. */
+       3+ = services grid semantics — repeat(auto-fit, minmax(300px, 1fr))
+            gives up to 4 cards per row on desktop, 2 at tablet width and
+            1 on a phone, exactly like _4-column-collection
+       2 = the same base rule (empty auto-fit tracks collapse → 2 wide cards)
+     The list carries data-count so the 1-card exception stays selectable
+     without :has(). */
   /* Layout mirrors the services section: the .collection-heading-wrapper
-     block sits above a full-width grid (global styles supply the spacing).
-     Grid defaults apply; the count-driven overrides below are the only
-     scoped rules. */
-  /* Default (2-card case): auto-fit horizontal wrapping. Works as "now". */
+     block sits above a full-width grid (global styles supply the spacing). */
   .fleet ._3-column-collection {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
   /* 1 card → restore "before" (full row, same as original 1024+ row layout). */
   .fleet ._3-column-collection[data-count="1"] {
@@ -218,10 +213,6 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
   }
   .fleet ._3-column-collection[data-count="1"] .car-card-data {
     flex: 1;
-  }
-  /* 3+ cards → "tablet" rule on every viewport: fixed 2-col wrapping. */
-  .fleet ._3-column-collection[data-count="many"] {
-    grid-template-columns: 1fr 1fr;
   }
   @media (min-width: 768px) {
     .fleet .car-card-details {
@@ -267,9 +258,6 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
   }
   /* Tablet "1fr 1fr" must collapse to 1-col on phone, otherwise cards squeeze. */
   @media (max-width: 767.98px) {
-    .fleet ._3-column-collection[data-count="many"] {
-      grid-template-columns: 1fr;
-    }
     /* On mobile the "single wide card" row would over-stretch; stack inside. */
     .fleet ._3-column-collection[data-count="1"] .car-card-details {
       flex-direction: column;

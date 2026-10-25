@@ -1,5 +1,6 @@
 ---
 import ZoomImage from "./ZoomImage.astro";
+import CollectionHeading from "./CollectionHeading.astro";
 import type { ServiceOffering, PageContent } from "../../types";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
@@ -16,14 +17,9 @@ const services = marbella || milano || [];
 
 <section id="services" class="section services-section">
   <div class="content-wrapper">
-    <div data-scroll-reveal class="collection-heading-wrapper">
-      <div class="services-subheadline">
-        <div class="subheadline-wrapper">
-          <div class="subheadline-line"></div>
-          <h2 class="subheadline">{s.services.subheadline}</h2>
-        </div>
-      </div>
-    </div>
+    <CollectionHeading>
+      <h2 class="subheadline" slot="label">{s.services.subheadline}</h2>
+    </CollectionHeading>
     <div data-scroll-reveal>
       <ul class="_4-column-collection">
         {

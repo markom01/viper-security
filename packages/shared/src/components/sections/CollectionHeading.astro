@@ -1,0 +1,20 @@
+---
+/** Shared services-style heading for collection sections (Services, Fleet).
+ *  Owns the services chrome: .collection-heading-wrapper flex block with the
+ *  orange subheadline line. Slots keep each section's exact DOM:
+ *  - `label`: the small subheadline element(s) beside the line —
+ *    `<h2 class="subheadline">` for Services, `<div class="subheadline">`
+ *    for Fleet (Fleet renders its big `<h2>` title separately).
+ *  - default: section title / intro paragraph rendered below the line
+ *    (empty for Services).
+ */
+---
+<div data-scroll-reveal class="collection-heading-wrapper">
+  <div class="services-subheadline">
+    <div class="subheadline-wrapper">
+      <div class="subheadline-line"></div>
+      <slot name="label" />
+    </div>
+    <slot />
+  </div>
+</div>
