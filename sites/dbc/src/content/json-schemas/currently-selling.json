@@ -22,10 +22,6 @@
         "additionalProperties": false
       }
     },
-    "features": {
-      "type": ["array", "null"],
-      "items": { "type": "string" }
-    },
     "order": { "type": ["number", "null"] },
     "vehicle": {
       "type": ["object", "null"],

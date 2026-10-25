@@ -36,11 +36,8 @@ const vehicleTitle = (d: FleetVehicleData) => {
     .join(" ");
 };
 
-const waMessage = (d: FleetVehicleData, pagePath: string) =>
-  [vehicleTitle(d), d.type, d.description, pagePath ? `Details: ${pagePath}` : ""]
-    .map(present)
-    .filter((x): x is string => !!x)
-    .join("\n");
+// Inquiry message: the listing title only, per the client's request.
+const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
 ---
 
 <section id="fleet" class="section home-about-section fleet">
@@ -186,7 +183,7 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
                         class="primary-button car-card-wa"
                         target="_blank"
                         rel="noopener noreferrer"
-                        href={`https://wa.me/${cleanPhone(whatsappPhone)}?text=${encodeURIComponent(waMessage(d, Astro.url.pathname))}`}
+                        href={`https://wa.me/${cleanPhone(whatsappPhone)}?text=${encodeURIComponent(waMessage(d))}`}
                       >
                         <div class="button-text">{s.fleet.waButton}</div>
                       </a>

@@ -1074,13 +1074,6 @@ collections:
           - { name: label, label: Label, widget: string }
           - { name: value, label: Value, widget: string }
       - {
-          name: features,
-          label: Features,
-          widget: list,
-          field: { name: feature, label: Feature, widget: string },
-          required: false,
-        }
-      - {
           name: order,
           label: "Sort Order",
           widget: number,
