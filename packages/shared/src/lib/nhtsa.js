@@ -49,7 +49,10 @@ export async function fetchMakes(type) {
  * @returns {Promise<number | null>}
  */
 export async function fetchMakeId(makes, name) {
-  const hit = makes.find((m) => m.name === name);
+  // Case-insensitive: vPic returns uppercase names ("FERRARI") while saved
+  // values (form autocompletes, CMS seeds) are human-cased ("Ferrari").
+  const lower = name.toLowerCase();
+  const hit = makes.find((m) => m.name.toLowerCase() === lower);
   return hit ? hit.id : null;
 }
 
