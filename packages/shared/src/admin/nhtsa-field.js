@@ -1,8 +1,14 @@
 // Sveltia CMS custom field type: "nhtsa_vehicle".
 //
-// Renders a category → make → model → year cascade backed by the NHTSA vPic
-// API (via ../lib/nhtsa.js) and stores the resolved vehicle as
+// Renders a category select plus make/model/year type-ahead inputs backed by
+// the NHTSA vPic API (raw fetches via ../lib/nhtsa.js, cascade logic shared
+// from ../lib/vehicle-cascade.js) and stores the resolved vehicle as
 // `{ category, make, model, year }` — all strings, empty parts omitted.
+//
+// The type-ahead deliberately reuses the same component as the page's booking
+// form vehicle fields (@tarekraafat/autocomplete.js, configured the same way
+// in BookingForm.astro's initAC/openAll/openOnEmpty), so editing matches the
+// site's form UX instead of native select dropdowns.
 //
 // Bundled by scripts/build-cms-field.mjs into each site's
 // public/admin/vehicle-lookup.js and loaded after the Sveltia CDN script.
@@ -10,6 +16,7 @@
 // request fails, so editing never blocks. It self-aborts when the CMS global
 // (or its bundled React) is unavailable.
 
+import autoComplete from "@tarekraafat/autocomplete.js";
 import { fetchMakeId, fetchModels } from "../lib/nhtsa.js";
 import {
   getMakesRaw,
@@ -22,6 +29,8 @@ const FIELD_TYPE = "nhtsa_vehicle";
 const CATEGORIES = ["car", "motorcycle", "other"];
 const LOOKUP_TIMEOUT_MS = 8000;
 const VALUE_KEYS = ["category", "make", "model", "year"];
+const SENTINEL = "::";
+const MAX = 500;
 
 /** Coerce any CMS value into the plain object this control edits. */
 const asVehicle = (value) => {
@@ -81,7 +90,28 @@ const selectOptions = (values, current, placeholder) => {
   return options;
 };
 
+/** Styles for the type-ahead panels. Injected once per admin page. */
+const injectStyles = () => {
+  if (typeof document === "undefined") return;
+  if (document.getElementById("nhtsa-ac-styles")) return;
+  const style = document.createElement("style");
+  style.id = "nhtsa-ac-styles";
+  style.textContent = `
+.autoComplete_wrapper { position: relative; display: block; }
+.autoComplete_wrapper .nhtsa-ac-list {
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 60;
+  background: #fff; color: #111; border: 1px solid rgba(0,0,0,.25);
+  max-height: 260px; overflow-y: auto; margin: 0; padding: 2px 0;
+  list-style: none; box-shadow: 0 6px 16px rgba(0,0,0,.18);
+}
+.autoComplete_wrapper .nhtsa-ac-item { padding: 6px 10px; cursor: pointer; }
+.autoComplete_wrapper .nhtsa-ac-item:hover { background: #f0f0f0; }
+`;
+  document.head.appendChild(style);
+};
+
 const registerField = (CMS) => {
+  injectStyles();
   const { createElement: h, useState, useEffect, useRef } = CMS.React;
   // Sveltia exposes its bundled React 19 as CMS.React ("the full React API,
   // including hooks"), so useRef is normally available. Fall back to a stable
@@ -92,13 +122,101 @@ const registerField = (CMS) => {
       : (initial) => useState(() => ({ current: initial }))[0];
 
   // Years reuse the booking form's canonical range (shared ../lib/
-  // vehicle-cascade.js), reversed into the CMS select's newest-first order.
+  // vehicle-cascade.js), reversed into newest-first display order.
   const YEARS = vehicleYears()
     .map((y) => String(y))
     .reverse();
 
+  // Type-ahead configuration mirrored from the booking form's vehicle fields
+  // (BookingForm.astro initAC): same thresholds, same SENTINEL "open all",
+  // same selection wiring — only the list/item CSS classes differ (the admin
+  // page does not load the site stylesheet the form's classes live in).
+  const makeAc = (input, getCandidates, onPick) =>
+    new autoComplete({
+      selector: () => input,
+      threshold: 2,
+      debounce: 250,
+      data: {
+        src: async (query) => {
+          const candidates = await getCandidates();
+          if (query === SENTINEL) {
+            return candidates
+              .slice(0, MAX)
+              .map((c) => ({ value: c, _q: SENTINEL }));
+          }
+          const q = (query || "").trim().toLowerCase();
+          return candidates
+            .filter((c) => c.toLowerCase().includes(q))
+            .slice(0, MAX)
+            .map((c) => ({ value: c, _q: query || "" }));
+        },
+        cache: false,
+        keys: ["_q"],
+      },
+      resultsList: {
+        element: (list) => list.classList.add("nhtsa-ac-list"),
+        maxResults: MAX,
+        noResults: true,
+      },
+      resultItem: {
+        highlight: false,
+        element: (item, data) => {
+          item.classList.add("nhtsa-ac-item");
+          item.textContent = String(data.value.value);
+        },
+      },
+      events: {
+        input: {
+          selection: (event) => {
+            const detail = (event && event.detail) || {};
+            const picked = detail.selection ? detail.selection.value : {};
+            const val =
+              typeof picked === "string" ? picked : String(picked.value ?? "");
+            if (!val) return;
+            input.value = val;
+            onPick(val);
+          },
+        },
+      },
+    });
+
+  const openAll = (ac, input) => {
+    input.focus();
+    try {
+      ac.start(SENTINEL);
+    } catch {
+      /* version drift — ignore */
+    }
+  };
+
+  /** Focus/typing on an empty input re-opens the full list, like the form. */
+  const openOnEmpty = (ac, input, isFreeText) => {
+    const onFocus = () => {
+      if (isFreeText() || input.value) return;
+      openAll(ac, input);
+    };
+    let reopen;
+    const onInput = () => {
+      if (isFreeText() || input.value || document.activeElement !== input)
+        return;
+      if (reopen) return;
+      reopen = window.setTimeout(() => {
+        reopen = undefined;
+        if (!input.value && document.activeElement === input)
+          openAll(ac, input);
+      }, 300);
+    };
+    input.addEventListener("focus", onFocus);
+    input.addEventListener("input", onInput);
+    return () => {
+      input.removeEventListener("focus", onFocus);
+      input.removeEventListener("input", onInput);
+      if (reopen) window.clearTimeout(reopen);
+    };
+  };
+
   const Control = (props) => {
-    const { value, onChange, forID } = props;
+    const { value, onChange } = props;
     const vehicle = asVehicle(value);
     const category = text(vehicle.category);
     const make = text(vehicle.make);
@@ -113,6 +231,24 @@ const registerField = (CMS) => {
     // re-renders (e.g. make followed quickly by year).
     const latest = useLatestRef(compose(vehicle));
 
+    // Lists mirrored into refs so the type-ahead getters always read the
+    // freshest data without re-mounting the autocomplete instances.
+    const makesRef = useRef([]);
+    const modelsRef = useRef([]);
+
+    useEffect(() => {
+      makesRef.current = makes.list;
+    }, [makes]);
+    useEffect(() => {
+      modelsRef.current = models.list;
+    }, [models]);
+
+    // The type-ahead inputs (uncontrolled) — autoComplete.js wraps each input
+    // and injects its list below it.
+    const makeInputRef = useRef(null);
+    const modelInputRef = useRef(null);
+    const yearInputRef = useRef(null);
+
     // Merge a patch into the latest composite and emit. Empty parts are
     // omitted, so passing "" clears a key — including downstream keys.
     const emit = (patch) => {
@@ -121,7 +257,7 @@ const registerField = (CMS) => {
     };
 
     // Makes follow the category (default "car" when unset). "other" has no
-    // NHTSA list, so it lands on the empty state and renders a text input.
+    // NHTSA list, so it lands on the empty state and stays free-text.
     useEffect(() => {
       let active = true;
       setMakes({ status: "loading", list: [] });
@@ -164,103 +300,147 @@ const registerField = (CMS) => {
       };
     }, [make, year, makes.status, makes.list]);
 
+    // Mount the same type-ahead component the booking forms use. Re-created
+    // when the category changes (free-text mode needs no type-ahead). The
+    // getter closures read the ref-mirrored lists, so while the fields are
+    // loading or refetch nothing is re-bounded.
+    useEffect(() => {
+      const freeText = () => (category || "car") === "other";
+      const mkInput = makeInputRef.current;
+      const mdInput = modelInputRef.current;
+      const yrInput = yearInputRef.current;
+      if (!mkInput || !mdInput || !yrInput || freeText()) return undefined;
+
+      const onMakePick = (val) => {
+        emit({ make: val, model: "", year: "" });
+        mdInput.value = "";
+        yrInput.value = "";
+      };
+      const onModelPick = (val) => {
+        emit({ model: val });
+      };
+      const onYearPick = (val) => {
+        emit({ year: val });
+      };
+
+      const saved = (key, list, lower) => {
+        const cur = text(latest.current[key]);
+        if (cur && !list.some((n) => n.toLowerCase() === cur.toLowerCase()))
+          list.push(cur);
+        return list;
+      };
+
+      const acs = [
+        {
+          ac: makeAc(
+            mkInput,
+            () => saved("make", makeNamesFrom(makesRef.current)),
+            onMakePick,
+          ),
+          input: mkInput,
+        },
+        {
+          ac: makeAc(
+            mdInput,
+            () => saved("model", modelNamesFrom(modelsRef.current)),
+            onModelPick,
+          ),
+          input: mdInput,
+        },
+        {
+          ac: makeAc(yrInput, () => saved("year", YEARS.slice()), onYearPick),
+          input: yrInput,
+        },
+      ];
+      const teardowns = acs.map(({ ac, input }) =>
+        openOnEmpty(ac, input, freeText),
+      );
+      // After picking a make, open the model list once models arrive — same
+      // "next field opens" feel as the form.
+      return () => {
+        teardowns.forEach((fn) => fn());
+        acs.forEach(({ ac }) => {
+          try {
+            if (ac && typeof ac.destroy === "function") ac.destroy();
+          } catch {
+            /* already gone */
+          }
+        });
+      };
+    }, [category]);
+
+    const freeText = (category || "car") === "other";
+    const makePlaceholder = freeText
+      ? "Describe make (optional)"
+      : makes.status === "loading"
+        ? "Loading makes…"
+        : "Start typing — make";
+    const modelPlaceholder = freeText
+      ? "Describe model (optional)"
+      : make
+        ? models.status === "loading"
+          ? "Loading models…"
+          : "Start typing — model"
+        : "Pick a make first — or type manually";
+    const yearPlaceholder = freeText
+      ? "Year (optional)"
+      : "Start typing — year";
+
     const field = (label, control) =>
       h(
         "label",
         {
-          style: { display: "flex", flexDirection: "column", gap: "4px" },
+          style: {
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
+            position: "relative",
+          },
           key: label,
         },
         h("span", { style: { fontSize: "12px", opacity: 0.75 } }, label),
         control,
       );
 
-    const select = (options, selected, onChangeHandler, id) =>
-      h(
-        "select",
-        {
-          id,
-          value: selected,
-          onChange: (event) => onChangeHandler(event.target.value),
-          className: props.classNameWrapper,
-          style: { width: "100%" },
-        },
-        options.map((option) =>
-          h(
-            "option",
-            { key: option.value || "placeholder", value: option.value },
-            option.label,
-          ),
-        ),
-      );
-
-    const input = (selected, onChangeHandler, id, placeholder) =>
+    const acFieldInput = (ref, id, ph, val) =>
       h("input", {
+        ref,
         id,
         type: "text",
-        value: selected,
-        placeholder,
-        className: props.classNameWrapper,
-        onChange: (event) => onChangeHandler(event.target.value),
+        defaultValue: val,
+        placeholder: ph,
         style: { width: "100%" },
+        autoComplete: "off",
       });
 
-    const categoryControl = select(
-      selectOptions(CATEGORIES, category, "Select category"),
-      category,
-      (next) => emit({ category: next, make: "", model: "", year: "" }),
-      forID,
-    );
-
-    const makeValues = makeNamesFrom(makes.list);
-    const makeControl =
-      makes.status === "empty"
-        ? input(
-            make,
-            (next) => emit({ make: next, model: "", year: "" }),
-            `${forID}-make`,
-            "Make",
-          )
-        : select(
-            selectOptions(
-              makeValues,
-              make,
-              makes.status === "loading" ? "Loading makes…" : "Select make",
-            ),
-            make,
-            (next) => emit({ make: next, model: "", year: "" }),
-            `${forID}-make`,
-          );
-
-    const modelValues = modelNamesFrom(models.list);
-    const modelControl =
-      models.status === "empty"
-        ? input(
-            model,
-            (next) => emit({ model: next }),
-            `${forID}-model`,
-            "Model",
-          )
-        : select(
-            selectOptions(
-              modelValues,
-              model,
-              models.status === "loading" ? "Loading models…" : "Select model",
-            ),
-            model,
-            (next) => emit({ model: next }),
-            `${forID}-model`,
-          );
-
-    const yearControl = select(
-      selectOptions(YEARS, year, "Select year"),
-      year,
-      (next) => emit({ year: next }),
-      `${forID}-year`,
+    const categoryControl = h(
+      "select",
+      {
+        id: `${props.forID}-category`,
+        value: category,
+        onChange: (event) => {
+          const next = event.target.value;
+          emit({ category: next, make: "", model: "", year: "" });
+          const mk = makeInputRef.current;
+          const md = modelInputRef.current;
+          const yr = yearInputRef.current;
+          if (mk) mk.value = "";
+          if (md) md.value = "";
+          if (yr) yr.value = "";
+        },
+        style: { width: "100%" },
+      },
+      selectOptions(CATEGORIES, category, "Select category").map((option) =>
+        h(
+          "option",
+          { key: option.value || "placeholder", value: option.value },
+          option.label,
+        ),
+      ),
     );
 
     const note =
-      makes.status === "empty" || models.status === "empty"
+      !freeText && (makes.status === "empty" || models.status === "empty")
         ? h(
             "p",
             { style: { margin: 0, fontSize: "12px", opacity: 0.65 } },
@@ -270,7 +450,10 @@ const registerField = (CMS) => {
 
     return h(
       "div",
-      { style: { display: "flex", flexDirection: "column", gap: "8px" } },
+      {
+        className: props.classNameWrapper,
+        style: { display: "flex", flexDirection: "column", gap: "8px" },
+      },
       h(
         "div",
         {
@@ -282,9 +465,18 @@ const registerField = (CMS) => {
         },
         [
           field("Category", categoryControl),
-          field("Make", makeControl),
-          field("Model", modelControl),
-          field("Year", yearControl),
+          field(
+            "Make",
+            acFieldInput(makeInputRef, "make", makePlaceholder, make),
+          ),
+          field(
+            "Model",
+            acFieldInput(modelInputRef, "model", modelPlaceholder, model),
+          ),
+          field(
+            "Year",
+            acFieldInput(yearInputRef, "year", yearPlaceholder, year),
+          ),
         ],
       ),
       note,
