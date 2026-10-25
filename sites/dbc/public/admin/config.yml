@@ -1032,6 +1032,9 @@ collections:
   - name: currently-selling
     label: Currently Selling
     description: Vehicles currently available at the garage (one file per vehicle). The card title is built from the vehicle make, model and year.
+    # Entry label in the collection list/editor: recomputed from the vehicle
+    # fields, so it follows make/model/year edits instead of the file slug.
+    summary: "{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}"
     folder: sites/dbc/src/content/currently-selling
     extension: yaml
     create: true
