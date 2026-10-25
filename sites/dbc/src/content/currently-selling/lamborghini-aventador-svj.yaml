@@ -1,0 +1,15 @@
+name: Lamborghini Aventador SVJ
+type: Supercar
+vehicle: { category: car, make: Lamborghini, model: "Aventador SVJ" }
+description: >-
+  White bodywork. 6.5L V12, 770 hp, 0-100 km/h in 2.8 s. Shown on the open
+  trailer after import; WhatsApp us for equipment and availability.
+image: "/images/cms/gallery/gallery-15.webp"
+specs:
+  - label: Engine
+    value: 6.5L V12
+  - label: Power
+    value: 770 hp
+  - label: 0-100 km/h
+    value: 2.8 s
+order: 4
