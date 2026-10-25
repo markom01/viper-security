@@ -10,11 +10,16 @@
 // request fails, so editing never blocks. It self-aborts when the CMS global
 // (or its bundled React) is unavailable.
 
-import { fetchMakes, fetchMakeId, fetchModels } from "../lib/nhtsa.js";
+import { fetchMakeId, fetchModels } from "../lib/nhtsa.js";
+import {
+  getMakesRaw,
+  makeNamesFrom,
+  modelNamesFrom,
+  vehicleYears,
+} from "../lib/vehicle-cascade.js";
 
 const FIELD_TYPE = "nhtsa_vehicle";
 const CATEGORIES = ["car", "motorcycle", "other"];
-const YEAR_MIN = 1992;
 const LOOKUP_TIMEOUT_MS = 8000;
 const VALUE_KEYS = ["category", "make", "model", "year"];
 
@@ -86,10 +91,11 @@ const registerField = (CMS) => {
       ? useRef
       : (initial) => useState(() => ({ current: initial }))[0];
 
-  const currentYear = new Date().getFullYear();
-  const YEARS = [];
-  for (let year = currentYear + 2; year >= YEAR_MIN; year -= 1)
-    YEARS.push(String(year));
+  // Years reuse the booking form's canonical range (shared ../lib/
+  // vehicle-cascade.js), reversed into the CMS select's newest-first order.
+  const YEARS = vehicleYears()
+    .map((y) => String(y))
+    .reverse();
 
   const Control = (props) => {
     const { value, onChange, forID } = props;
@@ -119,7 +125,7 @@ const registerField = (CMS) => {
     useEffect(() => {
       let active = true;
       setMakes({ status: "loading", list: [] });
-      lookup(() => fetchMakes(category || "car")).then((list) => {
+      lookup(() => getMakesRaw(category || "car")).then((list) => {
         if (!active) return;
         setMakes({ status: list.length ? "ready" : "empty", list });
       });
@@ -202,12 +208,11 @@ const registerField = (CMS) => {
     const categoryControl = select(
       selectOptions(CATEGORIES, category, "Select category"),
       category,
-      (next) =>
-        emit({ category: next, make: "", model: "", year: "" }),
+      (next) => emit({ category: next, make: "", model: "", year: "" }),
       forID,
     );
 
-    const makeValues = makes.list.map((item) => item.name);
+    const makeValues = makeNamesFrom(makes.list);
     const makeControl =
       makes.status === "empty"
         ? input(
@@ -227,7 +232,7 @@ const registerField = (CMS) => {
             `${forID}-make`,
           );
 
-    const modelValues = models.list.map((item) => item.name);
+    const modelValues = modelNamesFrom(models.list);
     const modelControl =
       models.status === "empty"
         ? input(

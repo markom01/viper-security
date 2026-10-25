@@ -240,7 +240,8 @@ const staticRight = isGarageHome ? [] : form_fields.filter((f) => f.side === "ri
 </style>
 <script is:inline type="application/json" id="hero-data" set:html={__data} />
 <script>
-  import { fetchMakes, fetchMakeId, fetchModels } from "../../lib/nhtsa";
+  import { fetchMakeId, fetchModels } from "../../lib/nhtsa";
+  import { getMakesRaw, makeNamesFrom, modelNamesFrom, vehicleYears } from "../../lib/vehicle-cascade";
   const raw = document.getElementById("hero-data");
   if (raw) {
     (() => {
@@ -669,25 +670,19 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
         const typeInput = block.querySelector<HTMLSelectElement>("[data-vehicle-type]")!;
         const summary = block.querySelector<HTMLInputElement>("[data-vehicle-summary]")!;
         if (!makeInput || !modelInput || !yearInput || !typeInput) return;
-        const YEARS: number[] = [];
-        for (let y = 1992; y <= new Date().getFullYear() + 1; y++) YEARS.push(y);
-        const makesByType: Record<string, string[]> = {};
+        const YEARS: number[] = vehicleYears();
         let activeType: string = typeInput.value || "car";
         let modelNames: string[] = [];
         let modelYears: Record<string, number[]> = {};
         let activeMakeId: number | null = null;
         async function getMakes(): Promise<string[]> {
-          const vt = activeType;
-          if (vt === "other") return []; // "Other vehicles" is free-text — no NHTSA list
-          if (makesByType[vt]) return makesByType[vt];
-          const makes = await fetchMakes(vt as "car" | "motorcycle" | "other");
-          makesByType[vt] = makes.map((m) => m.name).sort();
-          return makesByType[vt];
+          if (activeType === "other") return []; // "Other vehicles" is free-text — no NHTSA list
+          return makeNamesFrom(await getMakesRaw(activeType));
         }
         async function loadModels(makeName: string): Promise<void> {
           let id = activeMakeId;
           if (!id) {
-            const makes = await fetchMakes(activeType as "car" | "motorcycle" | "other");
+            const makes = await getMakesRaw(activeType);
             id = await fetchMakeId(makes, makeName);
             activeMakeId = id;
           }
@@ -697,7 +692,7 @@ interface FieldDef { label: string; placeholder?: string; name: string; type?: s
           const yearP = Promise.all(YEARS.map((y) => fetchModels(id, y).then((rows) => ({ y, names: rows.map((m) => m.name) }))));
           const [models, yrRows] = await Promise.all([modelP, yearP]);
           for (const row of yrRows) for (const nm of row.names) { if (!modelYears[nm]) modelYears[nm] = []; modelYears[nm].push(row.y); }
-          modelNames = Array.from(new Set<string>(models.map((m) => m.name))).sort();
+          modelNames = modelNamesFrom(models);
         }
         const SENTINEL = "::";
         const MAX = 500;
