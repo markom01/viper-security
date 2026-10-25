@@ -5,7 +5,7 @@ hero:
   subtitle: We sell your classic or supercar — without you leaving your garage.
   cta_text: Get A Quote
   tagline: Supercars & Classics, No Limits
-  image: /images/cms/f40-ai-hero.jpg
+  image: /images/cms/red-ferrari-f40-studio-side.webp
 form_fields:
   - label: Details
     placeholder: Year, condition, mileage
@@ -27,22 +27,22 @@ about_text: Active since 2010 in classic and supercar auctions. We prepare your 
 include:
   - title: Car & Motorcycle Auctions
     text: Classic cars, supercars and motorcycles — consignment, you stay home.
-    image: /images/cms/gallery/screenshot-20200411-153756.webp
+    image: /images/cms/gallery/yellow-ford-gt40-kit-car-with-racing-poster.webp
   - title: Full Auction Preparation
     text: Complete description and professional photography before listing.
-    image: /images/cms/gallery/motorcycle-transport.webp
+    image: /images/cms/gallery/white-suzuki-gsx-r-sportbike.webp
   - title: Catawiki Listing
     text: Listed on Catawiki, Europe's leading online auction.
-    image: /images/cms/gallery/supercars-and-classic-cars-provider-2.webp
+    image: /images/cms/gallery/grey-porsche-911-turbo-s-cabriolet.webp
   - title: Representation & Sale
     text: We handle the auction process end to end — sold, funds to you.
-    image: /images/cms/gallery/supercars-and-classic-cars-provider-8.webp
+    image: /images/cms/gallery/red-ferrari-purosangue-unveiling.webp
 fleet_section:
   heading: Currently Selling
 stats:
   heading: Sold Without Leaving Your Garage
   subheading: Since 2010 — preparation, Catawiki reach, you stay home.
-  image: /images/cms/gallery/supercars-and-classic-cars-provider-7.webp
+  image: /images/cms/gallery/blue-lamborghini-lm002.webp
   items:
     - label: "2010"
       title: Active in auctions since
@@ -64,7 +64,7 @@ howitworks:
 cta:
   heading: Ready to Sell Your Classic?
   text: Consign with us and we prepare, list and represent your car on Catawiki — funds to you.
-  image: /images/cms/gallery/supercars-and-classic-cars-provider-7.webp
+  image: /images/cms/gallery/blue-lamborghini-lm002.webp
 bottomcta:
   heading: From Your Garage to the Auction Block
   values:
@@ -77,10 +77,10 @@ bottomcta:
 seo:
   title: DB Custom Garage — Classic Cars & Motorcycles Sale & Auction
   description: We sell your classic or supercar at auction — without you leaving your garage.
-  image: /images/cms/Logo.png
+  image: /images/cms/db-custom-garage-logo.png
 about_images:
-  - /images/cms/gallery/screenshot-20200411-153756.webp
-  - /images/cms/gallery/motorcycle-transport.webp
-  - /images/cms/gallery/supercars-and-classic-cars-provider-2.webp
-  - /images/cms/gallery/supercars-and-classic-cars-provider-8.webp
-  - /images/cms/gallery/supercars-and-classic-cars-provider-7.webp
+  - /images/cms/gallery/yellow-ford-gt40-kit-car-with-racing-poster.webp
+  - /images/cms/gallery/white-suzuki-gsx-r-sportbike.webp
+  - /images/cms/gallery/grey-porsche-911-turbo-s-cabriolet.webp
+  - /images/cms/gallery/red-ferrari-purosangue-unveiling.webp
+  - /images/cms/gallery/blue-lamborghini-lm002.webp

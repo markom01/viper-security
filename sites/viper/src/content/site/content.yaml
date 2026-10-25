@@ -156,16 +156,16 @@ about:
     business travel, VIP events, yacht transfers, and exclusive experiences.
     Every journey is tailored to your schedule with privacy, comfort, and
     punctuality at our core."
-  image: /images/cms/about-image-v2.webp
+  image: /images/cms/black-mercedes-s-class-by-stone-building.webp
   images:
-    - /images/cms/about-image-v2.webp
-    - /images/cms/stats-bg.webp
+    - /images/cms/black-mercedes-s-class-by-stone-building.webp
+    - /images/cms/chauffeur-driving-mercedes-s-class.webp
 stats:
   heading: "Why Choose VIPER Security"
   subheading: >-
     Every pickup flight-tracked, every journey quoted upfront, and every
     ride driven to one standard — 24/7.
-  image: /images/cms/stats-bg.webp
+  image: /images/cms/chauffeur-driving-mercedes-s-class.webp
   items:
     - label: "15"
       title: Years Driving Experience
@@ -188,7 +188,7 @@ cta:
     Experience the difference of professional chauffeur service. Our {vehicle}
     and experienced chauffeur are ready to serve you across {location1},
     {location2}, and the French Riviera.
-  image: /images/cms/marketing-v2.webp
+  image: /images/cms/businessman-writing-in-rear-seat.webp
 bottomcta:
   heading: Ready to Begin Your Journey with Us?
   values:

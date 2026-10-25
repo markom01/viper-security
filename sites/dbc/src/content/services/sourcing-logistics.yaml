@@ -5,7 +5,7 @@ hero:
   subtitle: Off-market sourcing, consulting, and full-service vehicle import/export — from finding your dream car to door-to-door delivery across borders.
   cta_text: Get A Quote
   tagline: Supercars & Classics, No Limits
-  image: /images/cms/import hero.webp
+  image: /images/cms/red-ferrari-348-studio-side.webp
 form_fields:
   - label: Target vehicle
     placeholder: Make, model, year, budget
@@ -25,29 +25,29 @@ form_fields:
 marquee: Sourcing · Consulting · Legal · Import · Export · Logistics
 about_text: Research, consulting, and legal support to find your dream car off the open market — plus full-service import and export logistics across Europe and worldwide.
 about_images:
-  - /images/cms/gallery/2e95eecc-3bd2-4375-987e-dedf95b3f1c2.webp
-  - /images/cms/gallery/neo.webp
-  - /images/cms/gallery/7cdcbfe3-cb87-4056-bbcd-86cdab0f5943.webp
-  - /images/cms/gallery/motorcycle-transport.webp
-  - /images/cms/gallery/gallery-14.webp
+  - /images/cms/gallery/black-hummer-h2-in-driveway.webp
+  - /images/cms/gallery/black-harley-davidson-chopper-in-garage.webp
+  - /images/cms/gallery/red-ferrari-laferrari-aperta-in-showroom.webp
+  - /images/cms/gallery/white-suzuki-gsx-r-sportbike.webp
+  - /images/cms/gallery/red-ferrari-laferrari-with-classic-ferrari-in-showroom.webp
 include:
   - title: Off-Market Sourcing & Research
     text: Access to vehicles never listed publicly, with valuation and provenance research before you buy.
-    image: /images/cms/gallery/7cdcbfe3-cb87-4056-bbcd-86cdab0f5943.webp
+    image: /images/cms/gallery/red-ferrari-laferrari-aperta-in-showroom.webp
   - title: Advisory & Paperwork
     text: Consulting, legal support, and full import/export documentation for cars and motorcycles.
-    image: /images/cms/gallery/motorcycle-transport.webp
+    image: /images/cms/gallery/white-suzuki-gsx-r-sportbike.webp
   - title: Customs & Shipping
     text: Duties, registration, compliance, and enclosed transport across the EU and worldwide.
-    image: /images/cms/gallery/gallery-14.webp
+    image: /images/cms/gallery/red-ferrari-laferrari-with-classic-ferrari-in-showroom.webp
   - title: Delivery & Investment
     text: End-to-end logistics delivered to your door, plus collectible portfolio advisory.
-    image: /images/cms/gallery/gallery-13.webp
+    image: /images/cms/gallery/mercedes-slr-stirling-moss-in-trailer.webp
 fleet: []
 stats:
   heading: Your Dream Car, Found & Delivered
   subheading: Research, legal support, and logistics — from off-market access to door-to-door delivery across borders.
-  image: /images/cms/gallery/neo.webp
+  image: /images/cms/gallery/black-harley-davidson-chopper-in-garage.webp
   items:
     - label: '1:1'
       title: Private sourcing & valuation
@@ -71,7 +71,7 @@ howitworks:
 cta:
   heading: Ready to Source & Ship Your Dream Car?
   text: Off-market sourcing and consulting plus full-service import/export — from finding your car to delivering it to your door.
-  image: /images/cms/gallery/7cdcbfe3-cb87-4056-bbcd-86cdab0f5943.webp
+  image: /images/cms/gallery/red-ferrari-laferrari-aperta-in-showroom.webp
 bottomcta:
   heading: Your Dream Car, Sourced & Shipped
   values:
@@ -84,4 +84,4 @@ bottomcta:
 seo:
   title: DB Custom Garage — Sourcing & Logistics
   description: Off-market sourcing, consulting, and full-service vehicle import/export — research, legal support, customs, and shipping handled end to end.
-  image: /images/cms/Logo.png
+  image: /images/cms/db-custom-garage-logo.png

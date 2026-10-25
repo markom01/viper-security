@@ -9,27 +9,27 @@ hero:
     fixed price, driver included.
   cta_text: Book Your Transfer
   phone_italy: +39 349 663 8171
-  hero_image: /images/cms/hero-image_upscaled.webp
+  hero_image: /images/cms/hero-black-mercedes-s-class-side.webp
   phone_spain: +34 670 038 541
 services:
   offerings:
     - region: Universal
       title: Airport Transfers
       description: Seamless airport transfers in a luxury vehicle with a professional chauffeur from Malaga Airport to Marbella, and from Milano Malpensa, Linate and Bergamo to the Alps and beyond.
-      image: /images/cms/airport-transfer.webp
+      image: /images/cms/chauffeur-with-suitcase-at-airport.webp
       slug: airport-transfers
     - region: Universal
       title: Corporate Travel
       description: Executive transportation for meetings, conferences, and corporate events in {location1_name}. Professional chauffeur service for meetings and conferences across {location2_name}.
-      image: /images/cms/corporate-travel.webp
+      image: /images/cms/businessman-on-phone-in-rear-seat.webp
       slug: corporate-travel
     - region: Universal
       title: VIP & Villa Transfers
       description: Luxury transportation between villas, hotels, beach clubs, restaurants, and exclusive venues.
-      image: /images/cms/city-tour.webp
+      image: /images/cms/passenger-with-coffee-in-rear-seat.webp
       slug: vip-villa-transfers
     - region: Universal
       title: Nightlife & Events
       description: Exclusive transportation to restaurants, beach clubs, nightclubs, and private events in {location2}. Available with waiting service.
-      image: /images/cms/security-chauffeur.webp
+      image: /images/cms/bodyguards-and-client-by-mercedes-g63.webp
       slug: nightlife-events

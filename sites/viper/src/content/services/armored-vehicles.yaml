@@ -5,7 +5,7 @@ hero:
   subtitle: Certified B4–B7 armoring for cars and SUVs — ballistic glass, body armor and run-flats, engineered around your vehicle in Marbella and Milano.
   cta_text: Get an Armoring Quote
   tagline: Vehicle Armoring in Marbella & Milano
-  image: /images/cms/g class-hero.jpeg
+  image: /images/cms/armored-mercedes-g63-studio-side.webp
 form_fields:
   - label: Vehicle to be armored
     placeholder: Start typing — e.g. Range Rover
@@ -42,27 +42,27 @@ form_fields:
 marquee: ARMORING B4–B7 · BALLISTIC GLASS · RUN-FLATS · Marbella — Milano
 about_text: We armor cars and SUVs to certified B4–B7 protection, built around your own vehicle or sourced to spec. Ballistic glass, body armor and run-flats are installed with OEM-grade fit and finish, keeping the interior discreet and factory-clean — every build is finished, documented and delivered in Marbella and Milano.
 about_images:
-  - /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (1).webp
-  - /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (4).webp
-  - /images/cms/WhatsApp Image 2026-07-24 at 10.19.15 (1).webp
-  - /images/cms/WhatsApp Image 2026-07-24 at 10.19.15 (2).webp
+  - /images/cms/mercedes-g63-black-interior-red-leather.webp
+  - /images/cms/mercedes-g63-front-cabin-red-leather.webp
+  - /images/cms/maybach-s580-door-trim.webp
+  - /images/cms/maybach-s580-rear-cabin.webp
 include:
   - title: Protection B4–B7
     text: Certified armoring from B4 to B7, specified to your threat profile and installed with OEM-grade fit and finish.
-    image: /images/cms/04476f4e-36be-459e-a711-663b683a0fd0.webp
+    image: /images/cms/black-lexus-lx-600-front.webp
   - title: Built Around Your Vehicle
     text: Bring your own car or SUV and we armor it to spec — or we source the right base vehicle for you.
-    image: /images/cms/4f10a2e3-78b4-4a1f-ba5e-bbdca78264e3.webp
+    image: /images/cms/white-toyota-land-cruiser-300-front.webp
   - title: Discreet by Design
     text: Ballistic glass, body armor and run-flats that keep the interior factory-clean and draw no attention.
-    image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.15 (7).webp
+    image: /images/cms/maybach-s580-headlight.webp
   - title: Certified & Documented
     text: Every build is certified and documented, with handover and aftercare included.
-    image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.15 (5).webp
+    image: /images/cms/maybach-s580-dashboard.webp
 stats:
   heading: Protection Built Into Your Own Vehicle
   subheading: Certified B4–B7 armoring with OEM-grade fit and finish in Costa del Sol — Marbella and Northern Italy & Alps — Milano.
-  image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.15 (6).webp
+  image: /images/cms/maybach-s580-door-panel.webp
   items:
     - label: B4–B7
       title: Certified protection levels
@@ -84,7 +84,7 @@ howitworks:
 cta:
   heading: Certified Armor, Optional Close Protection
   text: We armor your car or SUV to B4–B7, and licensed security agent can ride with you whenever the route demands. Send vehicle and protection level for a fixed quote.
-  image: /images/cms/private security section.jpeg
+  image: /images/cms/armored-mercedes-g63-bodyguards-and-client.webp
 bottomcta:
   heading: Discreet Protection, Built to Last
   values:
@@ -97,4 +97,4 @@ bottomcta:
 seo:
   title: Vehicle Armoring Marbella & Milano | VIPER Security
   description: Certified B4–B7 vehicle armoring in Marbella and Milano. Ballistic glass, body armor and run-flats with a fixed quote and documented build.
-  image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (1).webp
+  image: /images/cms/mercedes-g63-black-interior-red-leather.webp

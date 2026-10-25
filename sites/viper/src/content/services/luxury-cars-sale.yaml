@@ -5,7 +5,7 @@ hero:
   subtitle: Curated stock from trusted dealers and private sellers — inspected, warranted and delivered to your door in Marbella or Milano.
   cta_text: Enquire About Stock
   tagline: Luxury Car Sales & Sourcing in Marbella & Milano
-  image: /images/cms/maybach-hero.jpg
+  image: /images/cms/black-maybach-s-class-studio-side.webp
 form_fields:
   - label: Vehicle (make & model)
     placeholder: Start typing — e.g. Porsche 911
@@ -31,10 +31,10 @@ form_fields:
 marquee: CURATED STOCK · INSPECTED · WARRANTY · FIXED PRICE · Marbella · Milano
 about_text: We source luxury and executive cars to your exact spec, then inspect every vehicle for history and condition before it reaches you. Pricing is fixed and transparent, with trade-in welcome and clear guidance on financing. We finish with delivery and full registration support in Marbella and Milano, so the car arrives ready to drive.
 about_images:
-  - /images/cms/WhatsApp Image 2026-07-24 at 10.19.02.webp
-  - /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (7).webp
-  - /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (5).webp
-  - /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (6).webp
+  - /images/cms/mercedes-g63-black-exterior.webp
+  - /images/cms/mercedes-g63-v8-biturbo-badge.webp
+  - /images/cms/mercedes-g63-forged-wheel.webp
+  - /images/cms/mercedes-g63-illuminated-door-sill.webp
 fleet_section:
   heading: Currently Selling
   subheadline: Available now
@@ -54,8 +54,8 @@ fleet:
       - label: Mileage
         value: 12,400 km
     images:
-      - /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (4).webp
-      - /images/cms/WhatsApp Image 2026-07-24 at 10.19.02.webp
+      - /images/cms/mercedes-g63-front-cabin-red-leather.webp
+      - /images/cms/mercedes-g63-black-exterior.webp
   - name: Mercedes-Maybach S 580
     type: Luxury Saloon
     vehicle:
@@ -72,25 +72,25 @@ fleet:
       - label: Mileage
         value: 8,900 km
     images:
-      - /images/cms/maybach-hero.jpg
-      - /images/cms/WhatsApp Image 2026-07-24 at 10.19.15 (1).webp
+      - /images/cms/black-maybach-s-class-studio-side.webp
+      - /images/cms/maybach-s580-door-trim.webp
 include:
   - title: Tell Us Your Spec
     text: Share the make, model, budget and must-haves. We turn it into a search brief and confirm what is in stock right now.
-    image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.43.webp
+    image: /images/cms/mercedes-g63-grey-rear.webp
   - title: Sourcing and Inspection
     text: We source from trusted dealers and private sellers, then check history, mileage and condition before shortlisting anything.
-    image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.14.webp
+    image: /images/cms/maybach-s580-front.webp
   - title: Transparent Offer
     text: One fixed price with the full inspection report attached. Trade-in valued openly, financing options explained in plain terms.
-    image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.02.webp
+    image: /images/cms/mercedes-g63-black-exterior.webp
   - title: Delivery and Handover
     text: Delivery to your door in Marbella or Milano, with registration support and a full walkaround at handover.
-    image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (6).webp
+    image: /images/cms/mercedes-g63-illuminated-door-sill.webp
 stats:
   heading: Buy With Total Confidence
   subheading: Inspected, fixed-price luxury cars with warranty and delivery across Marbella and Milano.
-  image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.02 (4).webp
+  image: /images/cms/mercedes-g63-front-cabin-red-leather.webp
   items:
     - label: 100%
       title: Inspected history and condition
@@ -112,7 +112,7 @@ howitworks:
 cta:
   heading: Ready to Find Your Car?
   text: Enquire about current stock on WhatsApp. Fixed price, inspected condition, warranty and delivery across Marbella and Milano.
-  image: /images/cms/WhatsApp Image 2026-07-24 at 10.19.14 (1).webp
+  image: /images/cms/maybach-s580-rear.webp
 bottomcta:
   heading: Luxury Cars, Without the Risk
   values:

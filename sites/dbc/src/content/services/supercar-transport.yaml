@@ -5,7 +5,7 @@ hero:
   subtitle: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs — across Europe.
   cta_text: Get A Quote
   tagline: Supercars & Classics, No Limits
-  image: /images/cms/supercar transport hero.webp
+  image: /images/cms/black-hummer-towing-turatello-trailer-studio.webp
 form_fields:
   - label: Origin
     placeholder: Pick-up location
@@ -18,24 +18,24 @@ form_fields:
 marquee: Enclosed Transport · Insured · Tracked · Across Europe
 about_text: Enclosed transport with our own trucks and enclosed vehicles — fully insured, secure, safe and clean — across Europe.
 about_images:
-  - /images/cms/gallery/17865778411891254.webp
-  - /images/cms/gallery/17875396738808884.webp
-  - /images/cms/gallery/f26-db-custom-garage.webp
-  - /images/cms/gallery/17919567229428928.webp
-  - /images/cms/gallery/supercars-and-classic-cars-provider-5.webp
+  - /images/cms/gallery/grey-mercedes-amg-gt-in-trailer.webp
+  - /images/cms/gallery/red-ferrari-laferrari-in-turatello-trailer.webp
+  - /images/cms/gallery/blue-ford-mustang-next-to-trailer.webp
+  - /images/cms/gallery/red-porsche-911-gt3-rs-beside-trailer.webp
+  - /images/cms/gallery/blue-porsche-911-cabriolet-rear.webp
 include:
   - title: Enclosed Trailers & Trucks
     text: Fully enclosed, never open-deck — full insurance on every move.
-    image: /images/cms/gallery/17865778411891254.webp
+    image: /images/cms/gallery/grey-mercedes-amg-gt-in-trailer.webp
   - title: EU & UK Routes
     text: Door-to-door supercar transport across Europe.
-    image: /images/cms/gallery/17875396738808884.webp
+    image: /images/cms/gallery/red-ferrari-laferrari-in-turatello-trailer.webp
   - title: Door-to-Door Delivery
     text: Origin collection to final destination, tracked throughout.
-    image: /images/cms/gallery/f26-db-custom-garage.webp
+    image: /images/cms/gallery/blue-ford-mustang-next-to-trailer.webp
   - title: Transparent Pricing
     text: Quoted per route — price from €2/km, calculated both directions.
-    image: /images/cms/gallery/17919567229428928.webp
+    image: /images/cms/gallery/red-porsche-911-gt3-rs-beside-trailer.webp
 fleet:
   - name: Hummer H3 Alpha with Enclosed Trailer
     type: Heavy-Duty Hauler
@@ -53,7 +53,7 @@ fleet:
         value: Hydraulic
       - label: Tracking
         value: GPS live
-    image: /images/cms/from-wix/hummer-project.webp
+    image: /images/cms/from-wix/black-hummer-h2-towing-white-trailer-palm-trees.webp
     features:
       - Enclosed trailer
       - Hydraulic liftgate
@@ -62,7 +62,7 @@ fleet:
 stats:
   heading: Transport, Built Around the Car
   subheading: Enclosed, insured and tracked — every single move.
-  image: /images/cms/gallery/supercars-transport.webp
+  image: /images/cms/gallery/red-ferrari-f12-in-open-trailer.webp
   items:
     - label: '100%'
       title: Enclosed — never open-deck
@@ -84,7 +84,7 @@ howitworks:
 cta:
   heading: Ready to Move Your Supercar?
   text: Book enclosed, insured transport across Europe — quoted per route, tracked end to end.
-  image: /images/cms/gallery/supercars-transport.webp
+  image: /images/cms/gallery/red-ferrari-f12-in-open-trailer.webp
 bottomcta:
   heading: Transport, Handled End to End
   values:
@@ -97,4 +97,4 @@ bottomcta:
 seo:
   title: DB Custom Garage — Enclosed Supercar Transport
   description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe.
-  image: /images/cms/Logo.png
+  image: /images/cms/db-custom-garage-logo.png

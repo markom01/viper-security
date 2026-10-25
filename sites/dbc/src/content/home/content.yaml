@@ -3,7 +3,7 @@ hero:
   tagline: Supercars & Classics, No Limits
   subtitle: Enclosed supercar transport, import/export logistics, and off-market buying and selling across Europe. Flat per-route quotes — what you see is what you pay.
   cta_text: View Our Fleet
-  hero_image: /images/cms/home hero.webp
+  hero_image: /images/cms/jeep-and-motorcycle-flames-home-hero.webp
   phone_italy: ''
   phone_spain: ''
 about:
@@ -11,35 +11,35 @@ about:
   text: Founded by Dragan Meseldzija, DB Custom Garage brings together decades of automotive design, customizing for Harley-Davidson and Indian motorcycles, industrial design, and enclosed supercar and classic car transport. Active since 2010 and operating from Marbella and Milan, we combine precision logistics with deep market knowledge for collectors, dealers, and enthusiasts.
   image: ''
   images:
-    - /images/cms/gallery/2e95eecc-3bd2-4375-987e-dedf95b3f1c2.webp
-    - /images/cms/gallery/jeep-wrangler-body-kit.webp
-    - /images/cms/gallery/17893265884587428.webp
+    - /images/cms/gallery/black-hummer-h2-in-driveway.webp
+    - /images/cms/gallery/jeep-wrangler-body-kit-parts-render.webp
+    - /images/cms/gallery/red-ferrari-f12-front-in-trailer.webp
 services:
   offerings:
     - region: Garage
       title: Enclosed Supercar Transport
       description: Fully enclosed, insured and tracked transport for supercars, exotics and one-offs, across Europe.
-      image: /images/cms/gallery/17938274953373973.webp
+      image: /images/cms/gallery/black-hummer-h2-towing-trailer-on-palm-road.webp
       slug: supercar-transport
     - region: Garage
       title: Classic Cars & Motorcycles Sale & Auction
       description: Auction preparation and representation on Catawiki — consignment without leaving your garage.
-      image: /images/cms/gallery/screenshot-2025-04-09-alle-22-35-43.webp
+      image: /images/cms/gallery/blue-harley-davidson-heritage-softail-street.webp
       slug: auction
     - region: Garage
       title: Sourcing & Logistics
       description: Off-market sourcing, consulting, and full-service vehicle import/export — from finding your dream car to door-to-door delivery across borders.
-      image: /images/cms/gallery/supercars-and-classic-cars-provider-5.webp
+      image: /images/cms/gallery/blue-porsche-911-cabriolet-rear.webp
       slug: sourcing-logistics
     - region: Garage
       title: Automotive Customizing & Design Projects
       description: Bespoke design and build projects — restomod, widebody, interior and show-grade finishing.
-      image: /images/cms/gallery/jeep-wrangler-body-kit-3.webp
+      image: /images/cms/gallery/grey-jeep-wrangler-bull-bar-render-rear.webp
       slug: customizing
 stats:
   heading: ''
   subheading: Two bases, one standard — precision logistics and deep market knowledge for collectors, dealers, and enthusiasts.
-  image: /images/cms/gallery/gallery-16.webp
+  image: /images/cms/gallery/porsche-356-body-shell-restoration.webp
   items:
     - label: '2010'
       title: Serving Collectors Since
@@ -61,7 +61,7 @@ howitworks:
 cta:
   heading: Ready to Move, Sell, or Build?
   text: Tell us what you are buying, selling, or transporting and we will handle the rest.
-  image: /images/cms/gallery/WhatsApp Image 2026-09-08 at 21.28.44.webp
+  image: /images/cms/gallery/white-ferrari-in-turatello-trailer.webp
 bottomcta:
   heading: Your Dream Car Starts Here
   values:
@@ -75,7 +75,7 @@ seo:
   title: DB Custom Garage — Supercar Transport & Logistics
   description: Supercar and classic car enclosed transport, import/export logistics, auction representation, and off-market buying and selling, across Europe.
   theme_color: '#ea580c'
-  image: /images/cms/Logo.png
+  image: /images/cms/db-custom-garage-logo.png
 branding:
   luxury_without_limits: Supercars & Classics, No Limits
   professional_discreet_reliable: Professional • Discreet • Reliable
