@@ -16,7 +16,11 @@ export function initScrollReveal(): void {
           }
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -50px 0px" },
+      // threshold 0 (any visible pixel): a 0.15 ratio is unreachable for
+      // tall stacked grids (e.g. 6-card fleet ≈ 4200px on a phone) — the
+      // section would never reveal on small screens. The 50px bottom
+      // rootMargin keeps the trigger cosmetically inside the fold.
+      { threshold: 0, rootMargin: "0px 0px -50px 0px" },
     );
     els.forEach((el) => obs.observe(el));
   }
