@@ -16,6 +16,11 @@ import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
 const f = pageContent?.fleet;
 
+// More than 2 cards → heading stacks above the grid (markup sets
+// data-heading-top on .home-about-content; CSS below mirrors the ≤991.98px
+// column layout at every width, no :has needed).
+const manyCards = (vehicles?.length ?? 0) > 2;
+
 // CMS leaves empty strings for unset fields, so trim before treating a value
 // as present (schema does not coerce "" to undefined).
 const present = (x: unknown) => {
@@ -32,7 +37,7 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
 
 <section id="fleet" class="section home-about-section fleet">
   <div class="content-wrapper">
-    <div class="home-about-content">
+    <div class="home-about-content" data-heading-top={manyCards ? "true" : undefined}>
       <div data-scroll-reveal class="home-about-text-wrapper fleet-intro">
         <div class="about-heading">
           <div class="subheadline-wrapper">
@@ -205,6 +210,20 @@ const waMessage = (d: FleetVehicleData, pagePath: string) =>
   /* DOM is h2-first for heading outline; visuals keep vehicles left via order. */
   .fleet .fleet-intro { order: 2; }
   .fleet .fleet-vehicles { order: 1; }
+  /* More than 2 cards → heading stacks above the grid at every width
+     (mirrors the ≤991.98px column layout; selected via markup attribute,
+     no :has needed). */
+  .fleet .home-about-content[data-heading-top="true"] {
+    flex-direction: column;
+  }
+  .fleet .home-about-content[data-heading-top="true"] .fleet-intro {
+    order: 1;
+  }
+  .fleet .home-about-content[data-heading-top="true"] .fleet-vehicles {
+    order: 2;
+    flex: 0 0 auto;
+    width: 100%;
+  }
   /* Default (2-card case): auto-fit horizontal wrapping. Works as "now". */
   .fleet ._3-column-collection {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
