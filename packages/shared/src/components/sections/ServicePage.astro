@@ -16,6 +16,7 @@ import Marquee from "./Marquee.astro";
 import AboutSection from "./AboutSection.astro";
 import Services from "./Services.astro";
 import Fleet from "./Fleet.astro";
+import Selling from "./Selling.astro";
 import StatsSection from "./StatsSection.astro";
 import HowItWorks from "./HowItWorks.astro";
 import Pricing from "./Pricing.astro";
@@ -64,6 +65,10 @@ interface Props {
   fleetVehicles?: FleetEntry[];
   fleetFeaturesText?: string;
   hasFleet?: boolean;
+  /** True when `fleetVehicles` came from the currently-selling collection.
+   *  Sale cards carry no specs column, so they render through Selling.astro
+   *  (one listing keeps one card width) instead of Fleet.astro's wide row. */
+  selling?: boolean;
   /** WhatsApp inquiry number for per-card buttons (e.g. "currently selling"
    *  cards). Omitted → cards render no WhatsApp button. */
   whatsappPhone?: string;
@@ -92,6 +97,7 @@ const {
   fleetVehicles,
   fleetFeaturesText,
   hasFleet,
+  selling = false,
   whatsappPhone,
   howItWorksSteps = [],
   defaultServices,
@@ -186,14 +192,21 @@ const serviceAbout = hasAbout
 ) : defaultServices ? (
   <Services pageContent={pageContent} marbella={defaultServices} milano={defaultServices} />
 ) : null}
-{hasFleet && (
+{hasFleet && selling ? (
+  <Selling
+    vehicles={fleetVehicles}
+    pageContent={pageContent}
+    fleetFeatures={fleetFeaturesText}
+    whatsappPhone={whatsappPhone}
+  />
+) : hasFleet ? (
   <Fleet
     vehicles={fleetVehicles}
     pageContent={pageContent}
     fleetFeatures={fleetFeaturesText}
     whatsappPhone={whatsappPhone}
   />
-)}
+) : null}
 <StatsSection pageContent={{ ...pageContent, stats: mergedStats }} />
 <HowItWorks steps={steps} pageContent={{ ...pageContent, howitworks: serviceHowItWorks }} />
 {showPricing && <Pricing hourly={hourly} pageContent={pageContent} />}

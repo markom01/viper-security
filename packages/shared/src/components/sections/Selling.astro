@@ -1,0 +1,208 @@
+---
+/**
+ * Currently-selling section. Deliberately separate from Fleet.astro: sale cards
+ * carry only title/description/gallery/CTA, while fleet cards add a specs column
+ * on the right. Sharing Fleet's "one card spans the whole row" rule left that
+ * right-hand column empty, so selling cards stay in the normal 3/2/1 grid at
+ * every count — one listing keeps one card width.
+ */
+import ZoomImage from "./ZoomImage.astro";
+import ImageCarousel from "./ImageCarousel.astro";
+import CollectionHeading from "./CollectionHeading.astro";
+import type { FleetEntry, FleetVehicleData, PageContent } from "../../types";
+import { cleanPhone } from "../../lib/phone";
+import STRINGS from "../../config/strings";
+import { resolveLabels } from "../../config/labels";
+
+interface Props {
+  pageContent?: PageContent;
+  fleetFeatures?: string;
+  vehicles?: FleetEntry[];
+  /** Inquiry number for the per-card WhatsApp button. Omitted → no button. */
+  whatsappPhone?: string;
+}
+
+const { pageContent, fleetFeatures, vehicles, whatsappPhone } = Astro.props as Props;
+const s = resolveLabels(pageContent, STRINGS);
+const f = pageContent?.fleet;
+
+// CMS leaves empty strings for unset fields, so trim before treating a value
+// as present (schema does not coerce "" to undefined).
+const present = (x: unknown) => {
+  const v = String(x ?? "").trim();
+  return v || undefined;
+};
+
+// Card title: composed from the NHTSA `vehicle` fields (year make model), the
+// same rule Fleet.astro uses, with the legacy `name` as a fallback.
+const vehicleTitle = (d: FleetVehicleData) => {
+  const make = present(d.vehicle?.make);
+  const model = present(d.vehicle?.model);
+  if (!make && !model) return present(d.name) || "";
+  return [present(d.vehicle?.year || d.year), make, model]
+    .filter((x): x is string => !!x)
+    .join(" ");
+};
+
+// Inquiry message: the listing title only, per the client's request.
+const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
+---
+
+<section
+  id="fleet"
+  class="section home-about-section selling"
+  data-count={String(vehicles?.length ?? 0)}
+>
+  <div class="content-wrapper">
+    <CollectionHeading>
+      <div class="subheadline" slot="label">{s.fleet.subheadline}</div>
+      <h2>{f?.heading}</h2>
+      {fleetFeatures && <p>{fleetFeatures}</p>}
+    </CollectionHeading>
+    <div data-scroll-reveal>
+      <ul class="_3-column-collection" data-count={String(vehicles?.length ?? 0)}>
+        {
+          vehicles?.map((v: FleetEntry) => {
+            const d = v.data || {};
+            const title = vehicleTitle(d);
+            const primaryImage = d.images?.[0] ?? d.image;
+            return (
+              <li>
+                <div class="car-card" style="border-color: var(--colors--cloud);">
+                  <div class="car-card-details">
+                    <div class="car-card-left">
+                      <div class="car-listing-info-wrapper">
+                        <h3 class="car-listing-name">{title}</h3>
+                        {present(d.type) && (
+                          <div class="car-listing-type">{d.type}</div>
+                        )}
+                      </div>
+                      {present(d.description) && (
+                        <p class="car-card-description">{d.description}</p>
+                      )}
+                      <div
+                        class:list={[
+                          "car-listing-image-wrapper",
+                          {
+                            "car-listing-image-wrapper--single":
+                              primaryImage && !(d.images && d.images.length > 1),
+                          },
+                        ]}
+                      >
+                        {d.images && d.images.length > 1 ? (
+                          <ImageCarousel
+                            images={d.images}
+                            alt={title}
+                            id={`selling-${v.id}-carousel`}
+                            group={`selling-${v.id}`}
+                          />
+                        ) : primaryImage ? (
+                          <ZoomImage
+                            src={primaryImage}
+                            alt={title}
+                            class="car-listing-image"
+                            group="selling"
+                            widths={[320, 480, 640]}
+                            sizes="(max-width: 767px) 100vw, (max-width: 991px) 50vw, 400px"
+                          />
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                  {whatsappPhone && (
+                    <a
+                      class="primary-button car-card-wa"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={`https://wa.me/${cleanPhone(whatsappPhone)}?text=${encodeURIComponent(waMessage(d))}`}
+                    >
+                      <div class="button-text">{s.fleet.waButton}</div>
+                    </a>
+                  )}
+                  <div style="opacity: 0;" class="car-card-hover-bg" />
+                </div>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+<style>
+  /* The grid is global `._3-column-collection` (3 desktop / 2 tablet / 1
+     phone). No single-card override: one listing keeps one card width, unlike
+     Fleet's wide row that expects a specs column on the right. */
+  .selling .car-card {
+    --card-pad: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .selling .car-card-details {
+    padding: var(--card-pad);
+    flex: 1;
+  }
+  .selling .car-card-left {
+    display: flex;
+    flex-direction: column;
+  }
+  /* Copy needs breathing room before the media block; without it the
+     description sits flush against the image. */
+  .selling .car-listing-image-wrapper {
+    margin-top: 16px;
+  }
+  /* Match the carousel's 4:3 frame so cards keep the same media height. */
+  .selling .car-listing-image-wrapper--single {
+    aspect-ratio: 4 / 3;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  /* ZoomImage renders the anchor + img in its own scope, so reach them
+     globally. */
+  .selling .car-listing-image-wrapper--single > :global(.zoomable) {
+    height: 100%;
+  }
+  .selling .car-listing-image-wrapper--single :global(.car-listing-image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .selling .car-card-description {
+    margin-top: 12px;
+    line-height: var(--line-height-sizes--small);
+  }
+  /* Inquiry CTA sits outside .car-card-details, so it carries its own inset.
+     The auto top margin keeps buttons on one line when card copy differs. */
+  .selling .car-card-wa {
+    width: fit-content;
+    margin: auto var(--card-pad) var(--card-pad);
+    padding: 10px 24px;
+  }
+  /* Mirror the global card-padding breakpoints so the CTA inset tracks them. */
+  @media (max-width: 991.98px) {
+    .selling .car-card {
+      --card-pad: 16px;
+    }
+  }
+  @media (max-width: 767.98px) {
+    .selling .car-card {
+      --card-pad: 22px;
+    }
+  }
+  @media (max-width: 479.98px) {
+    .selling .car-card {
+      --card-pad: 14px;
+    }
+  }
+  .selling .car-card:hover .car-card-hover-bg {
+    opacity: 1 !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .home-about-section .car-card {
+      transform: none !important;
+      opacity: 1 !important;
+      transition: none !important;
+    }
+  }
+</style>
