@@ -1,0 +1,28 @@
+name: Cloudflare cutover (vipersecurity.ch)
+
+# One-off, idempotent: binds vipersecurity.ch to the viper-security Worker as a
+# Workers custom domain. Tries the attach before touching DNS, so a permission
+# error aborts with the Infomaniak origin still live. Safe to re-run.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: cloudflare-cutover
+  cancel-in-progress: false
+
+jobs:
+  cutover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Attach vipersecurity.ch to the Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node sites/viper/scripts/cloudflare-cutover.mjs
