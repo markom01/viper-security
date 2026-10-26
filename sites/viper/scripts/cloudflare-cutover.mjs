@@ -4,6 +4,7 @@
 // Order matters: attach first. Only when Cloudflare reports a conflicting DNS
 // record does this remove the legacy Infomaniak apex A record (128.65.195.180)
 // and retry, so a permission error aborts before the live site loses its origin.
+// If the retry still fails, the legacy record is restored.
 //
 // Env: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
 
@@ -64,12 +65,16 @@ function attach() {
 }
 
 let domain;
+let removedLegacy = false;
 try {
   domain = await attach();
 } catch (error) {
-  if (!/already exists|conflict/i.test(error.message)) throw error;
+  const conflict =
+    error.status === 409 ||
+    /already exists|conflict|externally managed/i.test(error.message);
+  if (!conflict) throw error;
 
-  console.log(`attach blocked by an existing record: ${error.message}`);
+  console.log(`attach blocked by existing DNS: ${error.message}`);
   const records = await api(`/zones/${zoneId}/dns_records?name=${HOST}`);
   const legacy = records.filter(
     (r) => r.type === "A" && r.content === LEGACY_IP,
@@ -89,11 +94,27 @@ try {
       `deleted legacy record: ${record.type} ${record.name} -> ${record.content}`,
     );
   }
-  domain = await attach();
+  removedLegacy = true;
+  try {
+    domain = await attach();
+  } catch (attachError) {
+    // Put the origin back so a failed attach never leaves the apex dark.
+    await api(`/zones/${zoneId}/dns_records`, {
+      method: "POST",
+      body: JSON.stringify({
+        type: "A",
+        name: HOST,
+        content: LEGACY_IP,
+        proxied: false,
+        ttl: 1,
+      }),
+    });
+    console.log(`restored legacy A record ${LEGACY_IP} after failed attach`);
+    throw attachError;
+  }
 }
-
 console.log(
-  `custom domain: ${domain.hostname} -> ${domain.service} (zone ${domain.zone_name})`,
+  `custom domain: ${domain.hostname} -> ${domain.service} (zone ${domain.zone_name}), legacy record removed: ${removedLegacy}`,
 );
 
 // Verify the edge serves the Worker rather than the old Infomaniak origin.
