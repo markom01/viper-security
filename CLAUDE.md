@@ -10,8 +10,8 @@ At the start of any task-oriented session — any interaction where you will use
 
 Monorepo (npm workspaces). This repo hosts two independent Astro sites + a shared package:
 
-- `sites/viper` — VIPER Security (live: https://viper-security.netlify.app)
-- `sites/dbc` — DB Custom Garage (live: https://dbcustomgarage.netlify.app)
+- `sites/viper` — VIPER Security (live: https://vipersecurity.ch — Cloudflare Workers)
+- `sites/dbc` — DB Custom Garage (live: https://dbcustomgarage.com — Netlify)
 - `packages/shared` — `@garage/shared`: layout, sections, config defaults (strings/labels/icons/templates), types
 
 Run per workspace from root, or `cd` into a site dir:
@@ -33,7 +33,7 @@ No lint script. Tests are Playwright-only (`sites/viper/e2e/a11y.spec.ts`); Buil
 
 ## Architecture
 
-Astro 7 static site (no SSR, no adapter, no routing beyond `/`, `/404`, `/admin`). Hand-written CSS (no Tailwind runtime; `global.css` + site `theme.css` tokens). Deployed to Netlify: push to `main` → auto-build.
+Astro 7 static site (no SSR, no adapter, no routing beyond `/`, `/404`, `/admin`). Hand-written CSS (no Tailwind runtime; `global.css` + site `theme.css` tokens). Deploy path differs per site: VIPER ships through GitHub Actions (`Deploy VIPER`) to Cloudflare Workers (`sites/viper/wrangler.toml`, `viper-security.garage-viper.workers.dev`, custom domain `vipersecurity.ch`); DBC ships through Netlify (`sites/dbc/netlify.toml`, gated by `npm run validate:cms`). Both trigger on push to `main`.
 
 - **Content**: per-page Zod-validated collections in each site's `src/content.config.ts`, each page owns one collection with one entry; all sections nested as sub-objects/arrays. VIPER: `home`, `service`, `fleet`, `pricing`, `membership`, `privacy`, `site`. DBC: `home`, `service`, `gallery`, `privacy`, `site` (DBC has no standalone fleet/pricing/membership — per-service vehicles live in `services/<slug>.yaml` `fleet[]`). All copy lives in `src/content/<collection>/<entry>.{yaml,md}`.
 - **Data hub / assembler**: shared `assembleHome` / `assembleService` (`@garage/shared/lib/assemble`) is the single source of truth for `{placeholder}` resolution (`resolveTemplates` for `{location1}/{location1_full}/{location1_name}`, `{location2...}`, `{site_name}`, `{vehicle}` using site-global `booking_data`). Page templates call the assembler — they do NOT call `resolveTemplates` themselves. `home`/`site` are singletons (id `content` via `content.yaml`); `service`/`fleet`/`gallery` are `*.yaml` globbed by filename slug; `privacy` stays `content.md` (rendered via `render()`).
