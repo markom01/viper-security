@@ -4,11 +4,4 @@ description: >-
   trailer after import; WhatsApp us for equipment and availability.
 images:
   - /images/cms/gallery/white-lamborghini-in-enclosed-trailer.webp
-specs:
-  - label: Engine
-    value: 6.5L V12
-  - label: Power
-    value: 770 hp
-  - label: 0-100 km/h
-    value: 2.8 s
 order: 4

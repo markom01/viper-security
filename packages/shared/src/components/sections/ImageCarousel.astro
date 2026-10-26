@@ -148,10 +148,12 @@ const lbGroup = group ?? "about-carousel";
   .carousel-track {
     display: flex;
     height: 100%;
+    gap: 16px; /* spacing between slides */
   }
+  /* Full-width slides: a narrower first slide left a dead strip at the
+     right edge of card carousels. */
   .carousel-slide {
-    flex: 0 0 calc(100% - 16px);
-    margin-right: 16px; /* spacing between slides; keeps snap offsets = width */
+    flex: 0 0 100%;
     scroll-snap-align: start;
     scroll-snap-stop: always;
     scroll-margin-inline-start: 0;

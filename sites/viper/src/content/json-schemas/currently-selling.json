@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "viper-security/currently-selling",
+  "title": "VIPER Currently Selling vehicle",
+  "description": "One file per vehicle currently available for sale. Mirrors fleetVehicleSchema (@garage/shared) plus the selling-card fields.",
+  "type": "object",
+  "properties": {
+    "description": { "type": "string" },
+    "images": {
+      "type": ["array", "null"],
+      "items": { "type": "string" }
+    },
+    "order": { "type": ["number", "null"] },
+    "vehicle": {
+      "type": ["object", "null"],
+      "properties": {
+        "category": { "type": "string" },
+        "make": { "type": "string" },
+        "model": { "type": "string" },
+        "year": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["vehicle"],
+  "additionalProperties": false
+}

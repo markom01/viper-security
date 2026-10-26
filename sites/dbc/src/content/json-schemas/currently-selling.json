@@ -10,18 +10,6 @@
       "type": ["array", "null"],
       "items": { "type": "string" }
     },
-    "specs": {
-      "type": ["array", "null"],
-      "items": {
-        "type": "object",
-        "properties": {
-          "label": { "type": "string" },
-          "value": { "type": "string" }
-        },
-        "required": ["label", "value"],
-        "additionalProperties": false
-      }
-    },
     "order": { "type": ["number", "null"] },
     "vehicle": {
       "type": ["object", "null"],

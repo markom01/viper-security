@@ -1,10 +1,10 @@
 title: Vehicle Armoring
 slug: armored-vehicles
-description: Certified B4–B7 armoring for cars and SUVs — ballistic glass, body armor and run-flats in Marbella and Milano.
+description: Certified B4–B7 armoring for cars and SUVs — ballistic glass, body armor and run-flats in Lugano.
 hero:
-  subtitle: Certified B4–B7 armoring for cars and SUVs — ballistic glass, body armor and run-flats, engineered around your vehicle in Marbella and Milano.
+  subtitle: Certified B4–B7 armoring for cars and SUVs — ballistic glass, body armor and run-flats, engineered around your vehicle in Lugano.
   cta_text: Get an Armoring Quote
-  tagline: Vehicle Armoring in Marbella & Milano
+  tagline: Vehicle Armoring in Lugano
   image: /images/cms/armored-mercedes-g63-studio-side.webp
 form_fields:
   - label: Vehicle to be armored
@@ -13,7 +13,7 @@ form_fields:
     type: vehicle
     options: []
     cars_only: true
-    side: ''
+    side: ""
   - label: Protection level
     placeholder: Select protection level...
     name: protection_level
@@ -24,7 +24,7 @@ form_fields:
       - B7
       - Not sure — advise me
     cars_only: false
-    side: ''
+    side: ""
   - label: Budget
     placeholder: Approximate budget
     name: budget
@@ -35,12 +35,12 @@ form_fields:
   - label: Details
     placeholder: Year, current condition, requirements
     name: details
-    type: ''
+    type: ""
     options: []
     cars_only: false
     side: right
-marquee: ARMORING B4–B7 · BALLISTIC GLASS · RUN-FLATS · Marbella — Milano
-about_text: We armor cars and SUVs to certified B4–B7 protection, built around your own vehicle or sourced to spec. Ballistic glass, body armor and run-flats are installed with OEM-grade fit and finish, keeping the interior discreet and factory-clean — every build is finished, documented and delivered in Marbella and Milano.
+marquee: ARMORING B4–B7 · BALLISTIC GLASS · RUN-FLATS · Lugano
+about_text: We armor cars and SUVs to certified B4–B7 protection, built around your own vehicle or sourced to spec. Ballistic glass, body armor and run-flats are installed with OEM-grade fit and finish, keeping the interior discreet and factory-clean — every build is finished, documented and delivered in Lugano.
 about_images:
   - /images/cms/mercedes-g63-black-interior-red-leather.webp
   - /images/cms/mercedes-g63-front-cabin-red-leather.webp
@@ -61,7 +61,7 @@ include:
     image: /images/cms/maybach-s580-dashboard.webp
 stats:
   heading: Protection Built Into Your Own Vehicle
-  subheading: Certified B4–B7 armoring with OEM-grade fit and finish in Costa del Sol — Marbella and Northern Italy & Alps — Milano.
+  subheading: Certified B4–B7 armoring with OEM-grade fit and finish in Lugano.
   image: /images/cms/maybach-s580-door-panel.webp
   items:
     - label: B4–B7
@@ -78,7 +78,7 @@ steps:
   - title: Armoring & Build
     description: Ballistic glass, body armor and run-flats are installed with OEM-grade fit and finish, keeping the interior discreet and factory-clean.
   - title: Certification & Handover
-    description: Every build is certified and documented, then handed over in Marbella or Milano with full documentation and aftercare.
+    description: Every build is certified and documented, then handed over in Lugano with full documentation and aftercare.
 howitworks:
   heading: How Vehicle Armoring Works
 cta:
@@ -95,6 +95,6 @@ bottomcta:
     - title: Fixed Quote, Documented Build
       text: Price agreed upfront, every build certified and documented at handover.
 seo:
-  title: Vehicle Armoring Marbella & Milano | VIPER Security
-  description: Certified B4–B7 vehicle armoring in Marbella and Milano. Ballistic glass, body armor and run-flats with a fixed quote and documented build.
+  title: Vehicle Armoring Lugano | VIPER Security
+  description: Certified B4–B7 vehicle armoring in Lugano. Ballistic glass, body armor and run-flats with a fixed quote and documented build.
   image: /images/cms/mercedes-g63-black-interior-red-leather.webp

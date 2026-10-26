@@ -4,9 +4,4 @@ description: >-
   performance take on the F-150. Available now at the garage.
 images:
   - /images/cms/gallery/blue-shelby-f-150-super-snake.webp
-specs:
-  - label: Engine
-    value: 5.0L supercharged V8
-  - label: Power
-    value: 750 hp
 order: 5

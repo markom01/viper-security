@@ -370,6 +370,12 @@ collections:
           required: false,
         }
       - { name: about_text, label: "About Text", widget: text, required: false }
+      - label: "About Images"
+        name: about_images
+        widget: list
+        collapsed: true
+        required: false
+        field: { name: image, label: Image, widget: image }
       - label: "Include (service cards)"
         name: include
         widget: list
@@ -623,9 +629,10 @@ collections:
                 }
               - {
                   name: org_logo,
-                  label: Logo URL,
-                  widget: string,
+                  label: Organization Logo,
+                  widget: image,
                   required: false,
+                  hint: "Used in structured data (JSON-LD) and as a fallback social image.",
                 }
               - {
                   name: org_description,
@@ -673,6 +680,12 @@ collections:
                   name: theme_color,
                   label: Theme Color,
                   widget: string,
+                  required: false,
+                }
+              - {
+                  name: image,
+                  label: "SEO Image",
+                  widget: image,
                   required: false,
                 }
           - name: branding
@@ -1064,15 +1077,6 @@ collections:
           required: false,
           hint: "Pick or upload several photos. More than one photo gives the card a carousel on the site.",
         }
-      - label: Specs
-        name: specs
-        widget: list
-        summary: "{{fields.label}}: {{fields.value}}"
-        collapsed: true
-        required: false
-        fields:
-          - { name: label, label: Label, widget: string }
-          - { name: value, label: Value, widget: string }
       - {
           name: order,
           label: "Sort Order",

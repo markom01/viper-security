@@ -7,13 +7,4 @@ description: Rosso Corsa over red cloth. Twin-turbo V8, 478 hp, non-cat, non-adj
 images:
   - /images/cms/red-ferrari-f40-studio-side.webp
   - /images/cms/gallery/red-ferrari-in-enclosed-trailer.webp
-specs:
-  - label: Engine
-    value: 2.9L twin-turbo V8
-  - label: Power
-    value: 478 hp
-  - label: Mileage
-    value: 31,200 km
-  - label: Transmission
-    value: 5-speed manual
 order: 1

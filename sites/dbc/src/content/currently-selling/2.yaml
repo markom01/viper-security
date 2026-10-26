@@ -9,13 +9,4 @@ description: >-
 images:
   - /images/cms/gallery/blue-ford-mustang-next-to-trailer.webp
   - /images/cms/gallery/ford-mustang-shelby-sketch.webp
-specs:
-  - label: Engine
-    value: 428 Cobra Jet V8
-  - label: Power
-    value: 335 hp
-  - label: Mileage
-    value: 88,400 mi
-  - label: Transmission
-    value: 4-speed manual
 order: 2

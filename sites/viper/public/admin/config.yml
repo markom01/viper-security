@@ -262,9 +262,10 @@ collections:
                 }
               - {
                   name: org_logo,
-                  label: Logo URL,
-                  widget: string,
+                  label: Organization Logo,
+                  widget: image,
                   required: false,
+                  hint: "Used in structured data (JSON-LD) and as a fallback social image.",
                 }
               - {
                   name: org_description,
@@ -672,6 +673,14 @@ collections:
                   widget: image,
                   required: false,
                 }
+              - {
+                  name: images,
+                  label: "About Carousel Images",
+                  widget: list,
+                  collapsed: true,
+                  required: false,
+                  field: { name: image, label: Image, widget: image },
+                }
           - name: stats
             label: Stats Section
             widget: object
@@ -886,62 +895,6 @@ collections:
               widget: string,
               required: false,
             }
-      - label: "Fleet Vehicles (Currently Selling)"
-        name: fleet
-        widget: list
-        summary: "{{fields.name}}"
-        collapsed: true
-        required: false
-        fields:
-          - { name: name, label: Vehicle Name, widget: string }
-          - {
-              name: vehicle,
-              label: "Vehicle (NHTSA lookup)",
-              widget: nhtsa_vehicle,
-              required: false,
-            }
-          - { name: type, label: Type, widget: string, required: false }
-          - {
-              name: description,
-              label: Description,
-              widget: text,
-              required: false,
-            }
-          - label: Gallery Images
-            name: images
-            widget: list
-            collapsed: true
-            required: false
-            field: { name: image, label: Image, widget: image }
-          - {
-              name: image,
-              label: "Vehicle Image",
-              widget: image,
-              required: false,
-            }
-          - label: Specs
-            name: specs
-            widget: list
-            summary: "{{fields.label}}: {{fields.value}}"
-            collapsed: true
-            required: false
-            fields:
-              - { name: label, label: Label, widget: string }
-              - { name: value, label: Value, widget: string }
-          - {
-              name: features,
-              label: Features,
-              widget: list,
-              field: { name: feature, label: Feature, widget: string },
-              required: false,
-            }
-          - {
-              name: order,
-              label: "Sort Order",
-              widget: number,
-              value_type: int,
-              required: false,
-            }
       - label: "Include (service cards)"
         name: include
         widget: list
@@ -1048,3 +1001,46 @@ collections:
               required: false,
             }
           - { name: image, label: "SEO Image", widget: image, required: false }
+
+  - name: currently-selling
+    label: Currently Selling
+    description: Vehicles currently available for sale (one file per vehicle). The card title is built from the vehicle make, model and year.
+    # Entry label in the collection list/editor: recomputed from the vehicle
+    # fields, so it follows make/model/year edits instead of the file slug.
+    summary: "{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}"
+    folder: sites/viper/src/content/currently-selling
+    extension: yaml
+    create: true
+    # Slugs are sequential (`1`, `2`, …) because the file name never appears on
+    # the site; the card title comes from the vehicle fields via `summary`.
+    slug:
+      auto_increment: true
+    fields:
+      - name: vehicle
+        label: "Vehicle (NHTSA lookup)"
+        widget: nhtsa_vehicle
+        required: true
+        # Subfield metadata only: lets Sveltia resolve the nested `vehicle.*`
+        # tags used by the `summary` label. The widget stores all four keys as
+        # one object, exactly as before.
+        fields:
+          - { name: category, label: Category, widget: string, required: false }
+          - { name: make, label: Make, widget: string, required: false }
+          - { name: model, label: Model, widget: string, required: false }
+          - { name: year, label: Year, widget: string, required: false }
+      - { name: description, label: Description, widget: text, required: false }
+      - {
+          name: images,
+          label: "Gallery Images",
+          widget: image,
+          multiple: true,
+          required: false,
+          hint: "Pick or upload several photos. More than one photo gives the card a carousel on the site.",
+        }
+      - {
+          name: order,
+          label: "Sort Order",
+          widget: number,
+          value_type: int,
+          required: false,
+        }

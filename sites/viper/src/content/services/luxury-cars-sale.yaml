@@ -1,10 +1,10 @@
 title: Sale of Luxury Cars
 slug: luxury-cars-sale
-description: Curated sourcing, full inspection, warranty and delivery of luxury and executive cars across Marbella and Milano.
+description: Curated sourcing, full inspection, warranty and delivery of luxury and executive cars in Lugano.
 hero:
-  subtitle: Curated stock from trusted dealers and private sellers — inspected, warranted and delivered to your door in Marbella or Milano.
+  subtitle: Curated stock from trusted dealers and private sellers — inspected, warranted and delivered to your door in Lugano.
   cta_text: Enquire About Stock
-  tagline: Luxury Car Sales & Sourcing in Marbella & Milano
+  tagline: Luxury Car Sales & Sourcing in Lugano
   image: /images/cms/black-maybach-s-class-studio-side.webp
 form_fields:
   - label: Vehicle (make & model)
@@ -13,7 +13,7 @@ form_fields:
     type: vehicle
     options: []
     cars_only: true
-    side: ''
+    side: ""
   - label: Budget
     placeholder: Approximate budget
     name: budget
@@ -24,12 +24,12 @@ form_fields:
   - label: Trade-in
     placeholder: Current car, year, mileage
     name: trade_in
-    type: ''
+    type: ""
     options: []
     cars_only: false
     side: right
-marquee: CURATED STOCK · INSPECTED · WARRANTY · FIXED PRICE · Marbella · Milano
-about_text: We source luxury and executive cars to your exact spec, then inspect every vehicle for history and condition before it reaches you. Pricing is fixed and transparent, with trade-in welcome and clear guidance on financing. We finish with delivery and full registration support in Marbella and Milano, so the car arrives ready to drive.
+marquee: CURATED STOCK · INSPECTED · WARRANTY · FIXED PRICE · Lugano
+about_text: We source luxury and executive cars to your exact spec, then inspect every vehicle for history and condition before it reaches you. Pricing is fixed and transparent, with trade-in welcome and clear guidance on financing. We finish with delivery and full registration support in Lugano, so the car arrives ready to drive.
 about_images:
   - /images/cms/mercedes-g63-black-exterior.webp
   - /images/cms/mercedes-g63-v8-biturbo-badge.webp
@@ -38,42 +38,6 @@ about_images:
 fleet_section:
   heading: Currently Selling
   subheadline: Available now
-fleet:
-  - name: Mercedes-AMG G 63
-    type: Luxury SUV
-    vehicle: { category: car, make: Mercedes-AMG, model: "G 63", year: "2022" }
-    description: >-
-      Designo grey over red leather, with the full AMG package and Burmester
-      sound. Inspected, warranted and ready for delivery in Marbella.
-    order: 1
-    specs:
-      - label: Engine
-        value: 4.0L twin-turbo V8
-      - label: Power
-        value: 585 hp
-      - label: Mileage
-        value: 12,400 km
-    images:
-      - /images/cms/mercedes-g63-front-cabin-red-leather.webp
-      - /images/cms/mercedes-g63-black-exterior.webp
-  - name: Mercedes-Maybach S 580
-    type: Luxury Saloon
-    vehicle:
-      { category: car, make: Mercedes-Maybach, model: "S 580", year: "2023" }
-    description: >-
-      Long-wheelbase Maybach in obsidian black, with tan nappa leather and
-      executive rear seating. Supplied inspected, with warranty and delivery.
-    order: 2
-    specs:
-      - label: Engine
-        value: 4.0L V8 + EQ Boost
-      - label: Power
-        value: 503 hp
-      - label: Mileage
-        value: 8,900 km
-    images:
-      - /images/cms/black-maybach-s-class-studio-side.webp
-      - /images/cms/maybach-s580-door-trim.webp
 include:
   - title: Tell Us Your Spec
     text: Share the make, model, budget and must-haves. We turn it into a search brief and confirm what is in stock right now.
@@ -85,11 +49,11 @@ include:
     text: One fixed price with the full inspection report attached. Trade-in valued openly, financing options explained in plain terms.
     image: /images/cms/mercedes-g63-black-exterior.webp
   - title: Delivery and Handover
-    text: Delivery to your door in Marbella or Milano, with registration support and a full walkaround at handover.
+    text: Delivery to your door in Lugano, with registration support and a full walkaround at handover.
     image: /images/cms/mercedes-g63-illuminated-door-sill.webp
 stats:
   heading: Buy With Total Confidence
-  subheading: Inspected, fixed-price luxury cars with warranty and delivery across Marbella and Milano.
+  subheading: Inspected, fixed-price luxury cars with warranty and delivery in Lugano.
   image: /images/cms/mercedes-g63-front-cabin-red-leather.webp
   items:
     - label: 100%
@@ -106,12 +70,12 @@ steps:
   - title: Review the Report
     description: You get the full history and condition inspection plus one fixed price. No pressure, no hidden fees.
   - title: Take Delivery
-    description: We deliver to your door in Marbella or Milano, handle registration, and walk you through the car at handover.
+    description: We deliver to your door in Lugano, handle registration, and walk you through the car at handover.
 howitworks:
   heading: How Buying From VIPER Security Works
 cta:
   heading: Ready to Find Your Car?
-  text: Enquire about current stock on WhatsApp. Fixed price, inspected condition, warranty and delivery across Marbella and Milano.
+  text: Enquire about current stock on WhatsApp. Fixed price, inspected condition, warranty and delivery in Lugano.
   image: /images/cms/maybach-s580-rear.webp
 bottomcta:
   heading: Luxury Cars, Without the Risk
@@ -123,6 +87,6 @@ bottomcta:
     - title: Delivered Ready to Drive
       text: Warranty, registration and handover handled end to end.
 seo:
-  title: Luxury Car Sales Marbella & Milano | VIPER Security
-  description: Curated luxury and executive car sales in Marbella and Milano. Sourcing to spec, full inspection, 12-month warranty, trade-in and delivery.
+  title: Luxury Car Sales Lugano | VIPER Security
+  description: Curated luxury and executive car sales in Lugano. Sourcing to spec, full inspection, 12-month warranty, trade-in and delivery.
   image: /images/og-viper.webp

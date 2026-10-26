@@ -6,6 +6,7 @@ import ServicePage from "@garage/shared/sections/ServicePage.astro";
 import { assembleService } from "@garage/shared/lib/assemble";
 import { SITE_NAME } from "@garage/shared/config/strings";
 import { slugify } from "@garage/shared/lib/slugify";
+import { resolveServiceFleet } from "@garage/shared/lib/service-fleet";
 import type { FleetEntry } from "@garage/shared/types";
 
 export async function getStaticPaths() {
@@ -25,12 +26,8 @@ const homeContent = (await getEntry("home", "content"))!.data;
 // shape. Built before assembleService so the assembler can derive
 // fleetFeaturesText (VIPER symmetry).
 const slug = offering.slug ?? slugify(offering.title);
-const isAuction = slug === "auction";
-const sellingEntries = isAuction ? await getCollection("selling") : [];
-const sourceFleet: FleetEntry[] = sellingEntries.length
-  ? sellingEntries.map((e) => ({ id: e.id, collection: "fleet" as const, data: e.data }))
-  : (offering.fleet || []).map((f) => ({ id: `${offering.slug ?? offering.title}-${slugify(f.name)}`, collection: "fleet" as const, data: f }));
-const fleetVehicles = sourceFleet.sort((a, z) => (a.data.order ?? Infinity) - (z.data.order ?? Infinity) || a.id.localeCompare(z.id));
+const sellingEntries = slug === "auction" ? await getCollection("selling") : [];
+const fleetVehicles: FleetEntry[] = resolveServiceFleet(offering, sellingEntries);
 const hasFleet = fleetVehicles.length > 0;
 
 const a = assembleService({

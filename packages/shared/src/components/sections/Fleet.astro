@@ -40,7 +40,11 @@ const vehicleTitle = (d: FleetVehicleData) => {
 const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
 ---
 
-<section id="fleet" class="section home-about-section fleet">
+<section
+  id="fleet"
+  class="section home-about-section fleet"
+  data-count={String(vehicles?.length ?? 0)}
+>
   <div class="content-wrapper">
     <CollectionHeading>
       <div class="subheadline" slot="label">{s.fleet.subheadline}</div>
@@ -58,9 +62,12 @@ const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
               const primaryImage = d.images?.[0] ?? d.image;
               // Year: sale entries carry it on `vehicle`, chauffeur entries on
               // the legacy top-level `year`. Empty strings count as absent.
-              const displayYear = present(d.vehicle?.year || d.year);
+              // Legacy caps block is for chauffeur-fleet entries only. Sale
+              // entries carry the year on `vehicle`, so `vehicle.year` alone
+              // must not light up an otherwise empty Year/Seats/Baggage table.
+              const legacyYear = present(d.year);
               const legacyCaps = [
-                displayYear,
+                legacyYear,
                 d.seats,
                 d.baggage,
                 d.capacity_passengers,
@@ -91,7 +98,16 @@ const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
                         {present(d.description) && (
                           <p class="car-card-description">{d.description}</p>
                         )}
-                        <div class="car-listing-image-wrapper">
+                        <div
+                          class:list={[
+                            "car-listing-image-wrapper",
+                            {
+                              "car-listing-image-wrapper--single":
+                                primaryImage &&
+                                !(d.images && d.images.length > 1),
+                            },
+                          ]}
+                        >
                           {d.images && d.images.length > 1 ? (
                             <ImageCarousel
                               images={d.images}
@@ -111,72 +127,84 @@ const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
                           ) : null}
                         </div>
                       </div>
-                      <div class="car-card-data">
-                        {specRows.length ? (
-                          specRows.map((row) => (
-                            <div class="car-listing-details-wrapper">
-                              {row.map((cell, i) => (
-                                <>
-                                  <div class="car-listing-detail">
-                                    <div class="listing-label">{cell.label}</div>
-                                    <div class="listing-detail">{cell.value}</div>
+                      {(specRows.length > 0 || legacyCaps) && (
+                        <div class="car-card-data">
+                          {specRows.length ? (
+                            specRows.map((row) => (
+                              <div class="car-listing-details-wrapper">
+                                {row.map((cell, i) => (
+                                  <>
+                                    <div class="car-listing-detail">
+                                      <div class="listing-label">
+                                        {cell.label}
+                                      </div>
+                                      <div class="listing-detail">
+                                        {cell.value}
+                                      </div>
+                                    </div>
+                                    {i < row.length - 1 && (
+                                      <div class="listing-detail-divider" />
+                                    )}
+                                  </>
+                                ))}
+                              </div>
+                            ))
+                          ) : (
+                            <>
+                              <div class="car-listing-details-wrapper">
+                                <div class="car-listing-detail">
+                                  <div class="listing-label">
+                                    {s.fleet.year}
                                   </div>
-                                  {i < row.length - 1 && (
-                                    <div class="listing-detail-divider" />
-                                  )}
-                                </>
-                              ))}
-                            </div>
-                          ))
-                        ) : legacyCaps ? (
-                          <>
-                            <div class="car-listing-details-wrapper">
-                              <div class="car-listing-detail">
-                                <div class="listing-label">{s.fleet.year}</div>
-                                <div class="listing-detail">{displayYear}</div>
-                              </div>
-                              <div class="listing-detail-divider" />
-                              <div class="car-listing-detail">
-                                <div class="listing-label">{s.fleet.seats}</div>
-                                <div class="listing-detail">{d.seats}</div>
-                              </div>
-                              <div class="listing-detail-divider" />
-                              <div class="car-listing-detail">
-                                <div class="listing-label">{s.fleet.baggage}</div>
-                                <div class="listing-detail">{d.baggage}</div>
-                              </div>
-                            </div>
-                            <div class="car-listing-details-wrapper">
-                              <div class="car-listing-detail">
-                                <div class="listing-label">
-                                  {s.fleet.capacityPassengers}
+                                  <div class="listing-detail">{legacyYear}</div>
                                 </div>
-                                <div class="listing-detail">
-                                  {d.capacity_passengers}
+                                <div class="listing-detail-divider" />
+                                <div class="car-listing-detail">
+                                  <div class="listing-label">
+                                    {s.fleet.seats}
+                                  </div>
+                                  <div class="listing-detail">{d.seats}</div>
+                                </div>
+                                <div class="listing-detail-divider" />
+                                <div class="car-listing-detail">
+                                  <div class="listing-label">
+                                    {s.fleet.baggage}
+                                  </div>
+                                  <div class="listing-detail">{d.baggage}</div>
                                 </div>
                               </div>
-                              <div class="listing-detail-divider" />
-                              <div class="car-listing-detail">
-                                <div class="listing-label">
-                                  {s.fleet.capacitySuitcases}
+                              <div class="car-listing-details-wrapper">
+                                <div class="car-listing-detail">
+                                  <div class="listing-label">
+                                    {s.fleet.capacityPassengers}
+                                  </div>
+                                  <div class="listing-detail">
+                                    {d.capacity_passengers}
+                                  </div>
                                 </div>
-                                <div class="listing-detail">
-                                  {d.capacity_suitcases}
+                                <div class="listing-detail-divider" />
+                                <div class="car-listing-detail">
+                                  <div class="listing-label">
+                                    {s.fleet.capacitySuitcases}
+                                  </div>
+                                  <div class="listing-detail">
+                                    {d.capacity_suitcases}
+                                  </div>
+                                </div>
+                                <div class="listing-detail-divider" />
+                                <div class="car-listing-detail">
+                                  <div class="listing-label">
+                                    {s.fleet.capacityCarryon}
+                                  </div>
+                                  <div class="listing-detail">
+                                    {d.capacity_carryon}
+                                  </div>
                                 </div>
                               </div>
-                              <div class="listing-detail-divider" />
-                              <div class="car-listing-detail">
-                                <div class="listing-label">
-                                  {s.fleet.capacityCarryon}
-                                </div>
-                                <div class="listing-detail">
-                                  {d.capacity_carryon}
-                                </div>
-                              </div>
-                            </div>
-                          </>
-                        ) : null}
-                      </div>
+                            </>
+                          )}
+                        </div>
+                      )}
                     </div>
                     {whatsappPhone && (
                       <a
@@ -216,6 +244,24 @@ const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
   .fleet ._3-column-collection[data-count="1"] {
     grid-template-columns: 1fr;
   }
+  /* 1 card → heading sits beside the wide card (heading right, card left).
+     Desktop only: tablet/mobile keep the heading stacked above the card. */
+  @media (min-width: 992px) {
+    .fleet[data-count="1"] > .content-wrapper {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      column-gap: 40px;
+      align-items: start;
+    }
+    /* `:global` because the heading element lives in CollectionHeading.astro. */
+    .fleet[data-count="1"] > .content-wrapper > :global(.collection-heading-wrapper) {
+      grid-area: 1 / 2;
+      margin-bottom: 0;
+    }
+    .fleet[data-count="1"] > .content-wrapper > [data-scroll-reveal] {
+      grid-area: 1 / 1;
+    }
+  }
   .fleet ._3-column-collection[data-count="1"] .car-card-details {
     flex-direction: row;
     align-items: flex-start;
@@ -240,27 +286,83 @@ const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
     display: flex;
     flex-direction: column;
   }
+  /* Copy needs breathing room before the media block; without it the
+     description sits flush against the image. */
+  .car-listing-image-wrapper {
+    margin-top: 16px;
+  }
+  /* Single-image cards match the carousel's 4:3 frame so every card in a row
+     keeps the same media height. The wide one-card row keeps the image's
+     natural ratio; forcing 4:3 there would crop it and stretch the card. */
+  .fleet
+    ._3-column-collection:not([data-count="1"])
+    .car-listing-image-wrapper--single {
+    aspect-ratio: 4 / 3;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  /* ZoomImage renders the anchor + img in its own scope, so reach them
+     globally. */
+  .fleet
+    ._3-column-collection:not([data-count="1"])
+    .car-listing-image-wrapper--single
+    > :global(.zoomable) {
+    height: 100%;
+  }
+  .fleet
+    ._3-column-collection:not([data-count="1"])
+    .car-listing-image-wrapper--single
+    :global(.car-listing-image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   .car-card-data {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
   .car-card {
+    --card-pad: 20px;
     border: 1px solid var(--colors--cloud);
     border-radius: 12px;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  /* Card padding drives the details inset and the CTA inset, so the button
+     lines up with the copy at every breakpoint. */
+  .fleet .car-card-details {
+    padding: var(--card-pad);
+    flex: 1;
   }
   /* Sale-card copy: inherits the card's type scale, only spacing is set. */
   .car-card-description {
     margin-top: 12px;
     line-height: var(--line-height-sizes--small);
   }
-  /* Inquiry CTA sits outside .car-card-details (20px padding), so it carries
-     its own inset. */
+  /* Inquiry CTA sits outside .car-card-details, so it carries its own inset.
+     The auto top margin keeps buttons on one line when card copy differs. */
   .fleet .car-card-wa {
     width: fit-content;
-    margin: 0 20px 20px;
+    margin: auto var(--card-pad) var(--card-pad);
     padding: 10px 24px;
+  }
+  /* Mirror the global card-padding breakpoints so the CTA inset tracks them. */
+  @media (max-width: 991.98px) {
+    .fleet .car-card {
+      --card-pad: 16px;
+    }
+  }
+  @media (max-width: 767.98px) {
+    .fleet .car-card {
+      --card-pad: 22px;
+    }
+  }
+  @media (max-width: 479.98px) {
+    .fleet .car-card {
+      --card-pad: 14px;
+    }
   }
   .car-card:hover .car-card-hover-bg {
     opacity: 1 !important;

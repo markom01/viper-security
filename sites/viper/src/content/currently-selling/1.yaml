@@ -1,0 +1,12 @@
+vehicle:
+  category: car
+  make: Mercedes-AMG
+  model: "G 63"
+  year: "2022"
+description: >-
+  Designo grey over red leather, with the full AMG package and Burmester
+  sound. Inspected, warranted and ready for delivery in Lugano.
+images:
+  - /images/cms/mercedes-g63-front-cabin-red-leather.webp
+  - /images/cms/mercedes-g63-black-exterior.webp
+order: 1

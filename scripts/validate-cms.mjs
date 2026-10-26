@@ -29,11 +29,12 @@ const dbcSchemas = {
   "currently-selling": join(DBC, "json-schemas", "currently-selling.json"),
 };
 
-// VIPER: only home is validated here (it shares DBC's block shapes). The other
-// VIPER collections (fleet/pricing/membership/site) differ structurally and are
+// VIPER: home + currently-selling share DBC's structures. The other VIPER
+// collections (fleet/pricing/membership/site) differ structurally and are
 // intentionally out of scope — home is the page the user wants structure-checked.
 const viperSchemas = {
   home: join(VIPER, "json-schemas", "home.json"),
+  "currently-selling": join(VIPER, "json-schemas", "currently-selling.json"),
 };
 
 // gallery + privacy are site-specific and exempt (not in any map above).

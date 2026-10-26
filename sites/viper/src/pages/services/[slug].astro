@@ -5,6 +5,7 @@ import ServicePage from "@garage/shared/sections/ServicePage.astro";
 import { assembleService } from "@garage/shared/lib/assemble";
 import { SITE_NAME } from "@garage/shared/config/strings";
 import { slugify } from "@garage/shared/lib/slugify";
+import { resolveServiceFleet } from "@garage/shared/lib/service-fleet";
 import type { FleetEntry } from "@garage/shared/types";
 import { buildNav, buildFooterNav } from "../../data/nav";
 
@@ -26,16 +27,13 @@ const { offering } = Astro.props as { offering: import("@garage/shared/content/t
 const siteGlobals = (await getEntry("site", "content"))!.data;
 const homeContent = (await getEntry("home", "content"))!.data;
 
-// Per-service fleet (Currently Selling). Mapped before assembleService so the
-// assembler can derive fleetFeaturesText from the same entries.
+// Per-service fleet (Currently Selling). The sale page lists the CMS
+// `currently-selling` collection; any other service maps offering.fleet[] to
+// the shared FleetEntry shape. Resolved before assembleService so the
+// assembler derives fleetFeaturesText from the same entries.
 const slug = offering.slug ?? slugify(offering.title);
-const fleetVehicles: FleetEntry[] = (offering.fleet || [])
-  .map((f) => ({
-    id: `${slug}-${slugify(f.name)}`,
-    collection: "fleet" as const,
-    data: f as FleetEntry["data"],
-  }))
-  .sort((a, z) => (a.data.order ?? Infinity) - (z.data.order ?? Infinity) || a.id.localeCompare(z.id));
+const sellingEntries = slug === "luxury-cars-sale" ? await getCollection("selling") : [];
+const fleetVehicles: FleetEntry[] = resolveServiceFleet(offering, sellingEntries);
 const hasFleet = fleetVehicles.length > 0;
 
 const a = assembleService({
