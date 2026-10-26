@@ -1,7 +1,0 @@
-vehicle:
-  make: ALFA ROMEO
-  model: 4C
-  year: '2018'
-description: new car
-images:
-  - /images/cms/mercedes-g63-v8-biturbo-badge.webp
