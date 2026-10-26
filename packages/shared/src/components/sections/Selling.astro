@@ -44,8 +44,11 @@ const vehicleTitle = (d: FleetVehicleData) => {
     .join(" ");
 };
 
-// Inquiry message: the listing title only, per the client's request.
-const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
+// Inquiry message: greeting + car + deep link to this section, so the client
+// knows which listing the WhatsApp message is about.
+const pageUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+const waMessage = (d: FleetVehicleData) =>
+  `Hello Dragan, I'm interested in ${vehicleTitle(d)}: ${pageUrl.href}#fleet`;
 ---
 
 <section
