@@ -2,7 +2,10 @@
   # validate:cms gates the deploy: CMS (Sveltia) writes straight to main, so
   # catch schema-hostile values here with a readable message instead of a
   # cryptic Zod failure mid-build. Runs from repo root (workspace cwd).
-  command = "npm run validate:cms && rm -rf .astro node_modules/.astro && npm run build --workspace=@garage/dbc"
+  # The Astro content store is cached per workspace, so clear the site copies too
+  # (sites/dbc/.astro + sites/dbc/node_modules/.astro), not just the root ones.
+  # Without this, deleted CMS entries keep rendering from the cached data store.
+  command = "npm run validate:cms && rm -rf .astro node_modules/.astro sites/dbc/.astro sites/dbc/node_modules/.astro && npm run build --workspace=@garage/dbc"
   publish = "sites/dbc/dist-dbc"
 
   # Match .nvmrc — Astro 7 requires Node >= 22.12. Pin so a build-image
