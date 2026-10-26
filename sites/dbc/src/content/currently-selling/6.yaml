@@ -1,9 +1,0 @@
-vehicle:
-  category: car
-  make: ACURA
-  model: Integra
-  year: '2023'
-description: Black, wearing the DBC livery, shown with the enclosed Turatello transporter. Sold as a custom project; WhatsApp us to discuss the build.
-images:
-  - /images/cms/black-mercedes-g63-studio-side.webp
-order: 6

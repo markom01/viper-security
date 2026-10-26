@@ -1,9 +1,0 @@
-vehicle:
-  category: car
-  make: Ferrari
-  model: California
-  year: "2010"
-description: Bianco with black wheels. 4.3L V8, 460 hp, 7-speed dual-clutch. Shown here secured in the enclosed transport; WhatsApp us for the full walk-around.
-images:
-  - /images/cms/gallery/white-ferrari-in-turatello-trailer.webp
-order: 3

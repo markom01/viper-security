@@ -1,7 +1,0 @@
-vehicle: { category: car, make: Lamborghini, model: "Aventador SVJ" }
-description: >-
-  White bodywork. 6.5L V12, 770 hp, 0-100 km/h in 2.8 s. Shown on the open
-  trailer after import; WhatsApp us for equipment and availability.
-images:
-  - /images/cms/gallery/white-lamborghini-in-enclosed-trailer.webp
-order: 4
