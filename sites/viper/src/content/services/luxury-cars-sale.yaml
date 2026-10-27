@@ -1,35 +1,29 @@
 title: Sale of Luxury Cars
 slug: luxury-cars-sale
-description: Curated sourcing, full inspection, warranty and delivery of luxury and executive cars in Lugano.
+description: Curated sourcing, full inspection and delivery of luxury and executive cars.
 hero:
-  subtitle: Curated stock from trusted dealers and private sellers — inspected, warranted and delivered to your door in Lugano.
+  subtitle: Curated stock from trusted dealers and private sellers — inspected and delivered to your door.
   cta_text: Enquire About Stock
-  tagline: Luxury Car Sales & Sourcing in Lugano
+  tagline: Luxury Car Sales & Sourcing
   image: /images/cms/black-maybach-s-class-studio-side.webp
 form_fields:
-  - label: Vehicle (make & model)
-    placeholder: Start typing — e.g. Porsche 911
-    name: vehicle_interest
-    type: vehicle
-    options: []
-    cars_only: true
-    side: ""
-  - label: Budget
-    placeholder: Approximate budget
-    name: budget
+  - label: Details
+    placeholder: Condition, mileage
+    name: vehicle_details
+    cars_only: false
+  - label: Target price
+    placeholder: Estimated value or target sale price
+    name: target_price
     type: number
-    options: []
     cars_only: false
-    side: right
-  - label: Trade-in
-    placeholder: Current car, year, mileage
-    name: trade_in
-    type: ""
-    options: []
+  - label: Vehicle (make & model)
+    placeholder: Start typing — e.g. Ferrari 812
+    name: vehicle_model
+    type: vehicle
     cars_only: false
-    side: right
-marquee: CURATED STOCK · INSPECTED · WARRANTY · FIXED PRICE · Lugano
-about_text: We source luxury and executive cars to your exact spec, then inspect every vehicle for history and condition before it reaches you. Pricing is fixed and transparent, with trade-in welcome and clear guidance on financing. We finish with delivery and full registration support in Lugano, so the car arrives ready to drive.
+    other_vehicles: true
+marquee: CURATED STOCK · INSPECTED · TRANSPARENT PRICE
+about_text: We source luxury and executive cars to your exact spec, then inspect every vehicle for history and condition before it reaches you. Pricing is transparent, with trade-in welcome and clear guidance on financing. We finish with delivery and full registration support, so the car arrives ready to drive.
 about_images:
   - /images/cms/mercedes-g63-black-exterior.webp
   - /images/cms/mercedes-g63-v8-biturbo-badge.webp
@@ -46,47 +40,47 @@ include:
     text: We source from trusted dealers and private sellers, then check history, mileage and condition before shortlisting anything.
     image: /images/cms/maybach-s580-front.webp
   - title: Transparent Offer
-    text: One fixed price with the full inspection report attached. Trade-in valued openly, financing options explained in plain terms.
+    text: One transparent price with the full inspection report attached. Trade-in valued openly, financing options explained in plain terms.
     image: /images/cms/mercedes-g63-black-exterior.webp
   - title: Delivery and Handover
-    text: Delivery to your door in Lugano, with registration support and a full walkaround at handover.
+    text: Delivery to your door, with registration support and a full walkaround at handover.
     image: /images/cms/mercedes-g63-illuminated-door-sill.webp
 stats:
   heading: Buy With Total Confidence
-  subheading: Inspected, fixed-price luxury cars with warranty and delivery in Lugano.
+  subheading: Inspected luxury cars with transparent pricing and delivery.
   image: /images/cms/mercedes-g63-front-cabin-red-leather.webp
   items:
     - label: 100%
       title: Inspected history and condition
-    - label: 12mo
-      title: Warranty on every car sold
-    - label: Fixed
-      title: One transparent price, no surprises
+    - label: "1"
+      title: Price agreed upfront
+    - label: "0"
+      title: Hidden fees
     - label: A-Z
       title: Delivery and registration handled
 steps:
   - title: Enquire on WhatsApp
     description: Tell us the car you want or ask what is in stock. We reply fast with real availability and honest guidance.
   - title: Review the Report
-    description: You get the full history and condition inspection plus one fixed price. No pressure, no hidden fees.
+    description: You get the full history and condition inspection plus one transparent price. No pressure, no hidden fees.
   - title: Take Delivery
-    description: We deliver to your door in Lugano, handle registration, and walk you through the car at handover.
+    description: We deliver to your door, handle registration, and walk you through the car at handover.
 howitworks:
   heading: How Buying From VIPER Security Works
 cta:
   heading: Ready to Find Your Car?
-  text: Enquire about current stock on WhatsApp. Fixed price, inspected condition, warranty and delivery in Lugano.
+  text: Enquire about current stock on WhatsApp. Transparent price, inspected condition and delivery.
   image: /images/cms/maybach-s580-rear.webp
 bottomcta:
   heading: Luxury Cars, Without the Risk
   values:
     - title: Curated Sourcing
       text: Cars found to your spec from dealers and sellers we trust.
-    - title: Fixed Transparent Price
+    - title: Transparent Price
       text: One price agreed upfront, with the inspection report to back it.
     - title: Delivered Ready to Drive
-      text: Warranty, registration and handover handled end to end.
+      text: Registration and handover handled end to end.
 seo:
-  title: Luxury Car Sales Lugano | VIPER Security
-  description: Curated luxury and executive car sales in Lugano. Sourcing to spec, full inspection, 12-month warranty, trade-in and delivery.
+  title: Luxury Car Sales | VIPER Security
+  description: Curated luxury and executive car sales. Sourcing to spec, full inspection, transparent pricing, trade-in and delivery.
   image: /images/og-viper.webp

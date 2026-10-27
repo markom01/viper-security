@@ -619,6 +619,12 @@ collections:
                   required: false,
                 }
               - {
+                  name: bottomCta_buttonFleet,
+                  label: "Bottom CTA: Second Button",
+                  widget: string,
+                  required: false,
+                }
+              - {
                   name: form_bookNow,
                   label: "Form: Book Now",
                   widget: string,
@@ -859,6 +865,12 @@ collections:
           - {
               name: cars_only,
               label: "Cars only (hide vehicle type selector)",
+              widget: boolean,
+              required: false,
+            }
+          - {
+              name: other_vehicles,
+              label: "Other vehicles type option (free-text make/model)",
               widget: boolean,
               required: false,
             }

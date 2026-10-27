@@ -147,6 +147,9 @@ labels:
   gallery_heading: Gallery
   gallery_subheadline: Fleet, transfers and occasions across Marbella & Milano.
   marquee_text: Luxury Chauffeur & VIP Transport
+  # Read by service-page heroes/sections only (home labels stay un-normalized).
+  hero_exploreFleet: Our Services
+  bottomCta_buttonFleet: Learn More
 about:
   heading: Discreet Luxury, Tailored to Every Journey
   text: >-
@@ -204,6 +207,6 @@ bottomcta:
       text: >-
         From yacht transfers in Puerto Banús to corporate travel in {location2},
         every itinerary is customized to your schedule and preferences.
-map_embed_url: "https://www.google.com/maps?q=Costa+del+Sol,+Marbella,+Spain&output=embed"
+map_embed_url: "https://www.google.com/maps?q=Lugano,+Switzerland&output=embed"
 fleetHeading: Ride Luxury, Every Time
 howItWorksHeading: How We Simplify Your Experience

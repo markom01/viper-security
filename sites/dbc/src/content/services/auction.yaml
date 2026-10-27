@@ -8,7 +8,7 @@ hero:
   image: /images/cms/red-ferrari-f40-studio-side.webp
 form_fields:
   - label: Details
-    placeholder: Year, condition, mileage
+    placeholder: Condition, mileage
     name: vehicle_details
     cars_only: false
   - label: Target price

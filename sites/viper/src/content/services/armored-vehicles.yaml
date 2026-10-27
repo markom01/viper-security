@@ -1,10 +1,10 @@
 title: Vehicle Armoring
 slug: armored-vehicles
-description: Certified B4–B7 armoring for cars and SUVs — ballistic glass, body armor and run-flats in Lugano.
+description: B4–B7 armoring for cars and SUVs — ballistic glass, body armor and run-flats.
 hero:
-  subtitle: Certified B4–B7 armoring for cars and SUVs — ballistic glass, body armor and run-flats, engineered around your vehicle in Lugano.
+  subtitle: B4–B7 armoring for cars and SUVs — ballistic glass, body armor and run-flats, engineered around your vehicle.
   cta_text: Get an Armoring Quote
-  tagline: Vehicle Armoring in Lugano
+  tagline: Vehicle Armoring
   image: /images/cms/armored-mercedes-g63-studio-side.webp
 form_fields:
   - label: Vehicle to be armored
@@ -39,8 +39,8 @@ form_fields:
     options: []
     cars_only: false
     side: right
-marquee: ARMORING B4–B7 · BALLISTIC GLASS · RUN-FLATS · Lugano
-about_text: We armor cars and SUVs to certified B4–B7 protection, built around your own vehicle or sourced to spec. Ballistic glass, body armor and run-flats are installed with OEM-grade fit and finish, keeping the interior discreet and factory-clean — every build is finished, documented and delivered in Lugano.
+marquee: ARMORING B4–B7 · BALLISTIC GLASS · RUN-FLATS
+about_text: We armor cars and SUVs to B4–B7 protection, built around your own vehicle or sourced to spec. Ballistic glass, body armor and run-flats are installed with OEM-grade fit and finish, keeping the interior discreet and factory-clean — every build is finished and delivered.
 about_images:
   - /images/cms/mercedes-g63-black-interior-red-leather.webp
   - /images/cms/mercedes-g63-front-cabin-red-leather.webp
@@ -48,7 +48,7 @@ about_images:
   - /images/cms/maybach-s580-rear-cabin.webp
 include:
   - title: Protection B4–B7
-    text: Certified armoring from B4 to B7, specified to your threat profile and installed with OEM-grade fit and finish.
+    text: Armoring from B4 to B7, specified to your threat profile and installed with OEM-grade fit and finish.
     image: /images/cms/black-lexus-lx-600-front.webp
   - title: Built Around Your Vehicle
     text: Bring your own car or SUV and we armor it to spec — or we source the right base vehicle for you.
@@ -56,45 +56,45 @@ include:
   - title: Discreet by Design
     text: Ballistic glass, body armor and run-flats that keep the interior factory-clean and draw no attention.
     image: /images/cms/maybach-s580-headlight.webp
-  - title: Certified & Documented
-    text: Every build is certified and documented, with handover and aftercare included.
+  - title: Finished & Handed Over
+    text: Every build is finished and handed over with aftercare included.
     image: /images/cms/maybach-s580-dashboard.webp
 stats:
   heading: Protection Built Into Your Own Vehicle
-  subheading: Certified B4–B7 armoring with OEM-grade fit and finish in Lugano.
+  subheading: B4–B7 armoring with OEM-grade fit and finish.
   image: /images/cms/maybach-s580-door-panel.webp
   items:
-    - label: B4–B7
-      title: Certified protection levels
-    - label: OEM
+    - label: 4–7
+      title: Protection levels B4–B7
+    - label: 100%
       title: OEM-grade fit and finish
-    - label: Your car
-      title: Built around your vehicle
-    - label: NDA
-      title: Confidentiality on request
+    - label: "1"
+      title: Vehicle, built around yours
+    - label: "2"
+      title: Your own vehicle or sourced to spec
 steps:
   - title: Brief & Configuration
     description: Tell us the vehicle you want armored and how you use it. We advise on the right B4–B7 configuration and agree a fixed quote.
   - title: Armoring & Build
     description: Ballistic glass, body armor and run-flats are installed with OEM-grade fit and finish, keeping the interior discreet and factory-clean.
-  - title: Certification & Handover
-    description: Every build is certified and documented, then handed over in Lugano with full documentation and aftercare.
+  - title: Handover & Aftercare
+    description: Every build is handed over with aftercare included.
 howitworks:
   heading: How Vehicle Armoring Works
 cta:
-  heading: Certified Armor, Optional Close Protection
+  heading: Discreet Armor, Optional Close Protection
   text: We armor your car or SUV to B4–B7, and licensed security agent can ride with you whenever the route demands. Send vehicle and protection level for a fixed quote.
   image: /images/cms/armored-mercedes-g63-bodyguards-and-client.webp
 bottomcta:
   heading: Discreet Protection, Built to Last
   values:
-    - title: Certified B4–B7
+    - title: B4–B7 Protection
       text: Ballistic glass, body armor and run-flats specified to your threat profile.
     - title: Built Around Your Vehicle
       text: Your own car or SUV, armored with a factory-clean interior.
-    - title: Fixed Quote, Documented Build
-      text: Price agreed upfront, every build certified and documented at handover.
+    - title: Fixed Quote, Clean Handover
+      text: Price agreed upfront, every build handed over ready to drive.
 seo:
-  title: Vehicle Armoring Lugano | VIPER Security
-  description: Certified B4–B7 vehicle armoring in Lugano. Ballistic glass, body armor and run-flats with a fixed quote and documented build.
+  title: Vehicle Armoring | VIPER Security
+  description: B4–B7 vehicle armoring. Ballistic glass, body armor and run-flats with a fixed quote and a clean handover.
   image: /images/cms/mercedes-g63-black-interior-red-leather.webp
