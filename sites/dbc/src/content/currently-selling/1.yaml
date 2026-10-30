@@ -1,0 +1,8 @@
+vehicle:
+  category: car
+  year: '2006'
+description: |-
+  Hummer H3 with Denmark documents
+  Price 15.000,00 Euro
+images:
+  - /images/cms/IMG_2008.jpeg
