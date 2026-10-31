@@ -108,6 +108,14 @@ export const fleetVehicleSchema = z.object({
   // untouched optional fields and the build must not fail on a round-trip.
   order: nullToUndefined(z.number()),
   description: z.string().optional(),
+  // Sale-card price shown on the Currently Selling card. Entered as a plain
+  // euro amount in the CMS (number widget); the € symbol is appended at render.
+  price: z
+    .preprocess(
+      (v) => (v === "" || v == null ? undefined : Number(v)),
+      z.number().optional(),
+    )
+    .optional(),
   images: nullToUndefined(z.array(z.string())),
   vehicle: nullToUndefined(vehicleSpecSchema),
 });

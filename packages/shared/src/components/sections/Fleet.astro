@@ -91,6 +91,11 @@ const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
                       <div class="car-card-left">
                         <div class="car-listing-info-wrapper">
                           <h3 class="car-listing-name">{title}</h3>
+                          {typeof d.price === "number" && (
+                            <div class="car-listing-price">
+                              {d.price.toLocaleString("en-US")} €
+                            </div>
+                          )}
                           {present(d.type) && (
                             <div class="car-listing-type">{d.type}</div>
                           )}

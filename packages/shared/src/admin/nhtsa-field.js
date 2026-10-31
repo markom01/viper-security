@@ -350,7 +350,19 @@ const registerField = (CMS) => {
       const mkInput = makeInputRef.current;
       const mdInput = modelInputRef.current;
       const yrInput = yearInputRef.current;
-      if (!mkInput || !mdInput || !yrInput || freeText()) return undefined;
+      if (!mkInput || !mdInput || !yrInput) return undefined;
+
+      // Free-typed values are valid: when make/model/year is not in the NHTSA
+      // type-ahead, the typed text must still reach the CMS or the entry
+      // cannot be saved. Emit on every keystroke (the inputs are uncontrolled,
+      // so this never rewrites what is being typed); picking a suggestion
+      // later overrides the value and clears downstream fields.
+      const onMakeInput = () => emit({ make: mkInput.value });
+      const onModelInput = () => emit({ model: mdInput.value });
+      const onYearInput = () => emit({ year: yrInput.value });
+      mkInput.addEventListener("input", onMakeInput);
+      mdInput.addEventListener("input", onModelInput);
+      yrInput.addEventListener("input", onYearInput);
 
       const onMakePick = (val) => {
         emit({ make: val, model: "", year: "" });
@@ -372,53 +384,56 @@ const registerField = (CMS) => {
         return list;
       };
 
-      const acs = [
-        {
-          ac: makeAc(
-            mkInput,
-            () => saved("make", makeNamesFrom(makesRef.current)),
-            onMakePick,
-          ),
-          input: mkInput,
-        },
-        {
-          ac: makeAc(
-            mdInput,
-            () => saved("model", modelsRef.current.slice()),
-            onModelPick,
-          ),
-          input: mdInput,
-        },
-        {
-          ac: makeAc(
-            yrInput,
-            () => {
-              // Form parity, with graceful degrades for legacy content: the
-              // picked model's own years (exact, then base-model prefix for
-              // marketing trims), else every year the make was offered, else
-              // the canonical range while the probe is still in flight or the
-              // make is unknown to vPic.
-              const { byModel, all } = yearsRef.current;
-              const matched = yearsForModel(
-                byModel,
-                text(latest.current.model),
-              );
-              const source =
-                matched && matched.length
-                  ? matched
-                  : all && all.length
-                    ? all
-                    : vehicleYears();
-              const list = [...new Set(source)]
-                .sort((a, b) => a - b)
-                .map(String);
-              return saved("year", list);
-            },
-            onYearPick,
-          ),
-          input: yrInput,
-        },
-      ];
+      const acs = [];
+      if (!freeText()) {
+        acs.push(
+          {
+            ac: makeAc(
+              mkInput,
+              () => saved("make", makeNamesFrom(makesRef.current)),
+              onMakePick,
+            ),
+            input: mkInput,
+          },
+          {
+            ac: makeAc(
+              mdInput,
+              () => saved("model", modelsRef.current.slice()),
+              onModelPick,
+            ),
+            input: mdInput,
+          },
+          {
+            ac: makeAc(
+              yrInput,
+              () => {
+                // Form parity, with graceful degrades for legacy content: the
+                // picked model's own years (exact, then base-model prefix for
+                // marketing trims), else every year the make was offered, else
+                // the canonical range while the probe is still in flight or the
+                // make is unknown to vPic.
+                const { byModel, all } = yearsRef.current;
+                const matched = yearsForModel(
+                  byModel,
+                  text(latest.current.model),
+                );
+                const source =
+                  matched && matched.length
+                    ? matched
+                    : all && all.length
+                      ? all
+                      : vehicleYears();
+                const list = [...new Set(source)]
+                  .sort((a, b) => a - b)
+                  .map(String);
+                return saved("year", list);
+              },
+              onYearPick,
+            ),
+            input: yrInput,
+          },
+        );
+      }
       const teardowns = acs.map(({ ac, input }) =>
         openOnFocus(ac, input, freeText),
       );
@@ -433,6 +448,9 @@ const registerField = (CMS) => {
             /* already gone */
           }
         });
+        mkInput.removeEventListener("input", onMakeInput);
+        mdInput.removeEventListener("input", onModelInput);
+        yrInput.removeEventListener("input", onYearInput);
       };
     }, [category]);
 

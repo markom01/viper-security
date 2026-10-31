@@ -6,6 +6,7 @@
   "type": "object",
   "properties": {
     "description": { "type": "string" },
+    "price": { "type": ["number", "null"] },
     "images": {
       "type": ["array", "null"],
       "items": { "type": "string" }

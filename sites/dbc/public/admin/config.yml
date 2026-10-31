@@ -1060,6 +1060,7 @@ collections:
         label: "Vehicle (NHTSA lookup)"
         widget: nhtsa_vehicle
         required: true
+        hint: "Pick a suggestion or type your own make/model — free text is accepted and saved."
         # Subfield metadata only: lets Sveltia resolve the nested `vehicle.*`
         # tags used by the `summary` label. The widget stores all four keys as
         # one object, exactly as before.
@@ -1069,6 +1070,14 @@ collections:
           - { name: model, label: Model, widget: string, required: false }
           - { name: year, label: Year, widget: string, required: false }
       - { name: description, label: Description, widget: text, required: false }
+      - {
+          name: price,
+          label: "Price (EUR)",
+          widget: number,
+          value_type: int,
+          required: false,
+          hint: "Sale price in euro. Enter numbers only, e.g. 95000 — the € symbol is added on the site.",
+        }
       - {
           name: images,
           label: "Gallery Images",

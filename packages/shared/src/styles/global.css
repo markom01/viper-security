@@ -196,7 +196,9 @@ th {
 * {
   box-sizing: border-box;
 }
-figure { margin: 0 0 10px; }
+figure {
+  margin: 0 0 10px;
+}
 button,
 [type="button"] {
   cursor: pointer;
@@ -520,7 +522,7 @@ blockquote {
   align-items: center;
   display: flex;
   padding-inline: 30px;
-  padding-top:  30px;
+  padding-top: 30px;
 }
 .hero-image {
   object-fit: cover;
@@ -1151,6 +1153,11 @@ blockquote {
   font-size: var(--body-text-sizes--small);
   text-transform: uppercase;
   font-weight: 500;
+}
+.car-listing-price {
+  color: var(--colors--gold);
+  font-size: var(--body-text-sizes--large);
+  font-weight: 600;
 }
 ._3-column-collection {
   list-style: none;

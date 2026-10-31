@@ -24,6 +24,8 @@ export interface FleetVehicleData {
   features?: string[];
   image?: SiteImage;
   description?: string;
+  /** Sale price in euro, rendered with a € suffix (e.g. 95000 → 95,000 €). */
+  price?: number;
   images?: string[];
   order?: number;
   vehicle?: {
