@@ -1,5 +1,6 @@
 vehicle:
   category: car
+  year: '2006'
 description: Hummer H3 red
 images:
   - /images/cms/1f54864d-c1d6-43a8-b9da-b9b2ed701677.jpeg
