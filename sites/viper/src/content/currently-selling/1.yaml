@@ -1,5 +1,7 @@
 vehicle:
-  category: car
+  category: other
+  make: Hummer
+  model: H3
   year: '2006'
 description: |-
   Hummer H3 Luxury edition with full leather , pin striped body in excellent condition .
@@ -9,5 +11,6 @@ description: |-
   Hummer have Danmark documents .
   Denmark documents 
   Price 15.000,00 Euro
+price: null
 images:
   - /images/cms/IMG_2008.jpeg
