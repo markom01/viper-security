@@ -8,4 +8,6 @@ description: |-
   Engine and gearbox works good.
   Italian documents 
   Price 14.000,00 Euro
-images: []
+price: 14
+images:
+  - /images/cms/IMG_2003.jpeg
