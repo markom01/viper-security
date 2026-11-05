@@ -3,8 +3,17 @@ vehicle:
   make: Hummer
   model: H3
   year: '2006'
-description: Hummer H3 red
+description: |-
+  Hummer H3 Big Foot 
+  Italian documents . Youngtimer registration .
+  Wheels 18 “ Tyres 295/75/18 
+  Interior Black ( Not leather seats))
+price: 14
 images:
   - /images/cms/1f54864d-c1d6-43a8-b9da-b9b2ed701677.jpeg
   - /images/cms/E2B79371-DD63-44BA-89AD-F8D8363FF5D5.jpeg
   - /images/cms/EC266CD5-7204-4910-B45A-E2573CC72799.jpeg
+  - /images/cms/IMG-20260612-WA0012.jpeg
+  - /images/cms/IMG-20260612-WA0018.jpeg
+  - /images/cms/IMG-20260612-WA0008.jpeg
+  - /images/cms/IMG-20260612-WA0017.jpeg
