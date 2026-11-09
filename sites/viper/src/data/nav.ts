@@ -50,7 +50,6 @@ function navTree(labels: Record<string, string>): NavLink[] {
         },
       ],
     },
-    { label: labels["nav.contact"] ?? "Contact Us", href: "/#contact" },
     {
       label: labels["nav.gallery"] ?? "Gallery",
       href: "/gallery",
