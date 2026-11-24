@@ -28,6 +28,9 @@ export interface FleetVehicleData {
   price?: number;
   images?: string[];
   order?: number;
+  /** External listing URL. When set, the selling card's CTA opens it instead
+   *  of the WhatsApp inquiry button (used by the Catawiki On Auction section). */
+  url?: string;
   vehicle?: {
     category?: string;
     make?: string;

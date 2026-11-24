@@ -16,12 +16,14 @@
     "validate:cms": "node scripts/validate-cms.mjs",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
-    "cms:field": "node scripts/build-cms-field.mjs"
+    "cms:field": "node scripts/build-cms-field.mjs",
+    "sync:auction": "node scripts/sync-catawiki-auction.mjs"
   },
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.10",
     "@vite-pwa/astro": "^1.2.0",
     "esbuild": "^0.28.2",
+    "impit": "^0.14.9",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "vite-plugin-pwa": "^1.3.0"

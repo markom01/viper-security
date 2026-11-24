@@ -117,6 +117,9 @@ export const fleetVehicleSchema = z.object({
     )
     .optional(),
   images: nullToUndefined(z.array(z.string())),
+  // External listing URL (Catawiki On Auction cards). Optional: manual
+  // currently-selling entries keep using the WhatsApp CTA.
+  url: z.string().optional(),
   vehicle: nullToUndefined(vehicleSpecSchema),
 });
 
@@ -186,6 +189,14 @@ export const serviceDetailSchema = z.object({
   // DBC per-service sale-fleet heading override (import/export "Currently Selling"
   // vs site-global "Our Fleet"). Consumed by DBC [slug].astro → assembleService.
   fleet_section: nullToUndefined(
+    z.object({
+      heading: z.string().optional(),
+      subheadline: z.string().optional(),
+    }),
+  ),
+  // Catawiki On Auction section heading (DBC auction page). Cards come from
+  // the generated on-auction snapshot, not the CMS.
+  on_auction_section: nullToUndefined(
     z.object({
       heading: z.string().optional(),
       subheadline: z.string().optional(),

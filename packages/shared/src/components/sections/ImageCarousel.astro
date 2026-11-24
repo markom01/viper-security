@@ -130,6 +130,7 @@ const lbGroup = group ?? "about-carousel";
   .carousel {
     position: relative;
     width: 100%;
+    min-width: 0;
   }
   .carousel-viewport {
     overflow-x: auto;
@@ -194,9 +195,11 @@ const lbGroup = group ?? "about-carousel";
   }
   .carousel-dots {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
     padding: 10px 0 4px;
+    max-width: 100%;
   }
   .carousel-dot {
     width: 8px;

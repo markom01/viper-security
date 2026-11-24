@@ -153,6 +153,14 @@
       },
       "additionalProperties": false
     },
+    "on_auction_section": {
+      "type": ["object", "null"],
+      "properties": {
+        "heading": { "type": "string" },
+        "subheadline": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
     "fleet": {
       "type": ["array", "null"],
       "items": {

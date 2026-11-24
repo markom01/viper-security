@@ -399,6 +399,19 @@ collections:
               widget: string,
               required: false,
             }
+      - label: "On Auction Section Heading (Catawiki)"
+        name: on_auction_section
+        widget: object
+        collapsed: true
+        required: false
+        fields:
+          - { name: heading, label: Heading, widget: string, required: false }
+          - {
+              name: subheadline,
+              label: Subheadline,
+              widget: string,
+              required: false,
+            }
       - label: "Fleet Vehicles"
         name: fleet
         widget: list

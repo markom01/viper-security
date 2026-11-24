@@ -69,6 +69,10 @@ interface Props {
    *  Sale cards carry no specs column, so they render through Selling.astro
    *  (one listing keeps one card width) instead of Fleet.astro's wide row. */
   selling?: boolean;
+  /** Catawiki lots shown in the On Auction section above Currently Selling. */
+  onAuctionVehicles?: FleetEntry[];
+  onAuctionHeading?: string;
+  onAuctionSubheadline?: string;
   /** WhatsApp inquiry number for per-card buttons (e.g. "currently selling"
    *  cards). Omitted → cards render no WhatsApp button. */
   whatsappPhone?: string;
@@ -98,6 +102,9 @@ const {
   fleetFeaturesText,
   hasFleet,
   selling = false,
+  onAuctionVehicles,
+  onAuctionHeading,
+  onAuctionSubheadline,
   whatsappPhone,
   howItWorksSteps = [],
   defaultServices,
@@ -191,6 +198,17 @@ const serviceAbout = hasAbout
   <Services pageContent={pageContent} marbella={includes} milano={includes} />
 ) : defaultServices ? (
   <Services pageContent={pageContent} marbella={defaultServices} milano={defaultServices} />
+) : null}
+{onAuctionVehicles?.length ? (
+  <Selling
+    sectionId="on-auction"
+    heading={onAuctionHeading}
+    subheadline={onAuctionSubheadline}
+    vehicles={onAuctionVehicles}
+    pageContent={pageContent}
+    cta="link"
+    ctaLabel="Bid on Catawiki"
+  />
 ) : null}
 {hasFleet && selling ? (
   <Selling

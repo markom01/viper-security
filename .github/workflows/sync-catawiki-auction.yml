@@ -1,0 +1,55 @@
+name: Sync Catawiki auction
+
+# Catawiki has no API, so the DBC auction page reads a committed snapshot.
+# This job refreshes that snapshot on a schedule; a changed snapshot pushes to
+# main and Netlify rebuilds the static site. Expired lots are dropped by the
+# sync script, new lots are picked up from the seller feed.
+on:
+  schedule:
+    # Every 15 minutes. GitHub may delay scheduled runs under load.
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-catawiki-auction
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.12.0"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Sync Catawiki lots
+        run: npm run sync:auction
+
+      - name: Commit updated snapshot
+        run: |
+          if git diff --quiet -- sites/dbc/src/data/on-auction.json; then
+            echo "No listing changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sites/dbc/src/data/on-auction.json
+          git commit -m "chore(dbc): sync Catawiki auction listings"
+
+          # A CMS save can land while the scrape runs; rebase the data commit
+          # before pushing so the scheduled job does not fight a human commit.
+          git pull --rebase
+          git push

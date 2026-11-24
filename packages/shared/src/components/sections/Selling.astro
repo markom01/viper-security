@@ -20,9 +20,28 @@ interface Props {
   vehicles?: FleetEntry[];
   /** Inquiry number for the per-card WhatsApp button. Omitted → no button. */
   whatsappPhone?: string;
+  /** Anchor id; the WhatsApp message deep-links to it. */
+  sectionId?: string;
+  /** Section heading override (defaults to pageContent.fleet.heading). */
+  heading?: string;
+  /** Label override (defaults to the shared fleet subheadline). */
+  subheadline?: string;
+  /** `whatsapp` asks about the car; `link` opens the listing URL instead. */
+  cta?: "whatsapp" | "link";
+  ctaLabel?: string;
 }
 
-const { pageContent, fleetFeatures, vehicles, whatsappPhone } = Astro.props as Props;
+const {
+  pageContent,
+  fleetFeatures,
+  vehicles,
+  whatsappPhone,
+  sectionId = "fleet",
+  heading,
+  subheadline,
+  cta = "whatsapp",
+  ctaLabel,
+} = Astro.props as Props;
 const s = resolveLabels(pageContent, STRINGS);
 const f = pageContent?.fleet;
 
@@ -48,18 +67,19 @@ const vehicleTitle = (d: FleetVehicleData) => {
 // knows which listing the WhatsApp message is about.
 const pageUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
 const waMessage = (d: FleetVehicleData) =>
-  `Hello Dragan, I'm interested in ${vehicleTitle(d)}: ${pageUrl.href}#fleet`;
+  `Hello Dragan, I'm interested in ${vehicleTitle(d)}: ${pageUrl.href}#${sectionId}`;
+const ctaText = ctaLabel ?? (cta === "link" ? "Bid on Catawiki" : s.fleet.waButton);
 ---
 
 <section
-  id="fleet"
+  id={sectionId}
   class="section home-about-section selling"
   data-count={String(vehicles?.length ?? 0)}
 >
   <div class="content-wrapper">
     <CollectionHeading>
-      <div class="subheadline" slot="label">{s.fleet.subheadline}</div>
-      <h2>{f?.heading}</h2>
+      <div class="subheadline" slot="label">{subheadline ?? s.fleet.subheadline}</div>
+      <h2>{heading ?? f?.heading}</h2>
       {fleetFeatures && <p>{fleetFeatures}</p>}
     </CollectionHeading>
     <div data-scroll-reveal>
@@ -117,15 +137,28 @@ const waMessage = (d: FleetVehicleData) =>
                       </div>
                     </div>
                   </div>
-                  {whatsappPhone && (
-                    <a
-                      class="primary-button car-card-wa"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={`https://wa.me/${cleanPhone(whatsappPhone)}?text=${encodeURIComponent(waMessage(d))}`}
-                    >
-                      <div class="button-text">{s.fleet.waButton}</div>
-                    </a>
+                  {cta === "link" ? (
+                    d.url && (
+                      <a
+                        class="primary-button car-card-wa"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={d.url}
+                      >
+                        <div class="button-text">{ctaText}</div>
+                      </a>
+                    )
+                  ) : (
+                    whatsappPhone && (
+                      <a
+                        class="primary-button car-card-wa"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={`https://wa.me/${cleanPhone(whatsappPhone)}?text=${encodeURIComponent(waMessage(d))}`}
+                      >
+                        <div class="button-text">{ctaText}</div>
+                      </a>
+                    )
                   )}
                 </div>
               </li>
@@ -145,6 +178,15 @@ const waMessage = (d: FleetVehicleData) =>
     display: flex;
     flex-direction: column;
     height: 100%;
+  }
+  /* Carousel dots are min-content sized; with many Catawiki photos they can
+     widen the grid item past its 1/3 column. Let the item shrink to the track
+     and wrap the dots inside it. */
+  .selling ._3-column-collection > li,
+  .selling .car-card,
+  .selling .car-card-details,
+  .selling .car-card-left {
+    min-width: 0;
   }
   .selling .car-card-details {
     padding: var(--card-pad);

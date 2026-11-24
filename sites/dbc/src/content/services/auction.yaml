@@ -39,6 +39,9 @@ include:
     image: /images/cms/gallery/red-ferrari-purosangue-unveiling.webp
 fleet_section:
   heading: Currently Selling
+on_auction_section:
+  heading: On Auction
+  subheadline: Live on Catawiki
 stats:
   heading: Sold Without Leaving Your Garage
   subheading: Since 2010 — preparation, Catawiki reach, you stay home.

@@ -7,7 +7,8 @@ import { assembleService } from "@garage/shared/lib/assemble";
 import { SITE_NAME } from "@garage/shared/config/strings";
 import { slugify } from "@garage/shared/lib/slugify";
 import { resolveServiceFleet } from "@garage/shared/lib/service-fleet";
-import type { FleetEntry } from "@garage/shared/types";
+import type { FleetEntry, FleetVehicleData } from "@garage/shared/types";
+import onAuctionData from "../../data/on-auction.json";
 
 export async function getStaticPaths() {
   const serviceEntries = await getCollection("service");
@@ -29,6 +30,18 @@ const slug = offering.slug ?? slugify(offering.title);
 const sellingEntries = slug === "auction" ? await getCollection("selling") : [];
 const fleetVehicles: FleetEntry[] = resolveServiceFleet(offering, sellingEntries);
 const hasFleet = fleetVehicles.length > 0;
+
+// Catawiki lots are snapshotted by `npm run sync:auction` into a committed
+// JSON file, so the static build never calls Catawiki. Only the auction
+// service page renders them.
+const onAuctionVehicles: FleetEntry[] =
+  slug === "auction"
+    ? onAuctionData.lots.map((lot) => ({
+        id: lot.id,
+        collection: "fleet" as const,
+        data: lot as FleetVehicleData,
+      }))
+    : [];
 
 const a = assembleService({
   offering, siteGlobals, home: homeContent, siteName: SITE_NAME,
@@ -74,6 +87,9 @@ const fleetFeaturesText = a.fleetFeaturesText;
     fleetFeaturesText={fleetFeaturesText}
     hasFleet={hasFleet}
     selling={sellingEntries.length > 0}
+    onAuctionVehicles={onAuctionVehicles}
+    onAuctionHeading={offering.on_auction_section?.heading}
+    onAuctionSubheadline={offering.on_auction_section?.subheadline}
     whatsappPhone={site.whatsappNumber}
     ctaAnchorId="start-a-build"
     bottomCtaAnchorId="your-dream-car"

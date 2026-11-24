@@ -45,9 +45,18 @@ const {
   eager = false,
 } = Astro.props as Props;
 
+// Remote listing images (Catawiki On Auction) are not local assets: Astro
+// cannot read their dimensions or optimize them. Render the URL as-is and use
+// a stable 4:3 placeholder for the PhotoSwipe frame.
+const isRemote = typeof src === "string" && /^https?:\/\//i.test(src);
 let dims: { width: number; height: number };
 try {
-  dims = width && height ? { width: Number(width), height: Number(height) } : await imageDims(src);
+  dims =
+    width && height
+      ? { width: Number(width), height: Number(height) }
+      : isRemote
+        ? { width: 800, height: 600 }
+        : await imageDims(src);
 } catch (err) {
   console.warn(`[ZoomImage] fallback dims for ${typeof src === "string" ? src : src.src}`, err);
   dims = { width: Number(width) || 800, height: Number(height) || 600 };
@@ -55,6 +64,8 @@ try {
 let optimized: { src: string };
 if (typeof src === "string" && /^\s*(javascript|data|vbscript):/i.test(src)) {
   optimized = { src: "/images/placeholder.webp" };
+} else if (isRemote) {
+  optimized = { src: src as string };
 } else {
   try {
     optimized = await getImage({ src, width: dims.width, height: dims.height });

@@ -12,6 +12,7 @@
       "items": { "type": "string" }
     },
     "order": { "type": ["number", "null"] },
+    "url": { "type": "string" },
     "vehicle": {
       "type": ["object", "null"],
       "properties": {

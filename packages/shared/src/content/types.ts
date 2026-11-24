@@ -92,6 +92,8 @@ export interface ServiceDetailData {
   form_fields?: ServiceFieldData[];
   bottomcta?: { heading?: string; values?: { title: string; text: string }[] };
   fleet_section?: { heading?: string; subheadline?: string };
+  /** Heading/subheadline for the Catawiki On Auction section (auction page). */
+  on_auction_section?: { heading?: string; subheadline?: string };
   fleet?: {
     name: string;
     type?: string;
