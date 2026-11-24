@@ -34,7 +34,11 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
+      # JINA_API_KEY: free key from https://jina.ai/reader — required because
+      # Catawiki blocks datacenter IPs and anonymous Jina requests from them.
       - name: Sync Catawiki lots
+        env:
+          JINA_API_KEY: ${{ secrets.JINA_API_KEY }}
         run: npm run sync:auction
 
       - name: Commit updated snapshot

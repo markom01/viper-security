@@ -29,6 +29,15 @@ const USE_JINA =
   process.env.CATAWIKI_VIA_JINA === "1" ||
   (process.env.GITHUB_ACTIONS === "true" &&
     process.env.CATAWIKI_DIRECT !== "1");
+
+// Jina blocks anonymous requests from datacenter IPs (HTTP 401 "bad network
+// reputation"). CI must send a free API key from jina.ai/reader.
+const JINA_API_KEY = process.env.JINA_API_KEY;
+if (USE_JINA && !JINA_API_KEY) {
+  throw new Error(
+    "JINA_API_KEY is required for CI fetching (anonymous Jina requests are blocked from datacenter IPs)",
+  );
+}
 // The DBC site is English. Catawiki's English lot view exposes an
 // `autoTranslatedDescription`, so the card copy stays readable even when the
 // seller wrote the original listing in Italian.
@@ -61,7 +70,11 @@ async function fetchText(url, accept, referer) {
           Accept: accept,
           ...(referer ? { Referer: referer } : {}),
           ...(USE_JINA
-            ? { "X-Return-Format": accept.includes("html") ? "html" : "text" }
+            ? {
+                "X-Return-Format": accept.includes("html") ? "html" : "text",
+                Authorization: `Bearer ${JINA_API_KEY}`,
+                "X-No-Cache": "true",
+              }
             : {}),
         },
         redirect: "manual",
