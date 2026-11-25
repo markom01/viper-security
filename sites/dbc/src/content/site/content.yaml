@@ -1,14 +1,14 @@
 jsonld:
   org_name: DB Custom Garage
   org_url: https://dbcustomgarage.com
-  org_logo: https://dbcustomgarage.com/favicon.svg
+  org_logo: /images/cms/c24693a6-e7fd-4b1e-b5f6-8ec75fc45e76.jpeg
   org_description: Supercar and classic car transport, import/export logistics, auction services, and off-market buying and selling across Europe.
   phoneSpain: +34 637 137 730
   phoneItaly: +39 349 663 8171
   phoneSpainWhatsapp: +34 670 038 541
   privacy_policy: https://dbcustomgarage.com/privacy-policy
-  webSiteUrl: https://dbcustomgarage.com
   webSiteName: DB Custom Garage
+  webSiteUrl: https://dbcustomgarage.com
 seo:
   title: DB Custom Garage — Supercar Transport & Logistics
   description: Supercar and classic car enclosed transport, import/export logistics, auction representation, and off-market buying and selling, across Europe.
@@ -68,8 +68,8 @@ labels:
   form_error: Sorry — we could not send your enquiry. Please email us or try again.
   cta_imageAlt: DB Custom Garage automotive projects
   footer_pagesHeading: Links
-map_embed_url: "https://www.google.com/maps?q=DB+Custom+Garage+Design,+Cam.+de+Campanales,+6,+29651+M%C3%A1laga,+Spain&output=embed"
-footer_company_name: "DB Custom Garage Design SL"
-footer_vat_number: "ESB93658136"
+map_embed_url: https://www.google.com/maps?q=DB+Custom+Garage+Design,+Cam.+de+Campanales,+6,+29651+M%C3%A1laga,+Spain&output=embed
+footer_company_name: DB Custom Garage Design SL
+footer_vat_number: ESB93658136
 fleetHeading: Our Fleet
 howItWorksHeading: How We Build Your Dream
