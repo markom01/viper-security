@@ -250,5 +250,10 @@ const jsonLdWebSite = jd.webSiteName || jd.webSiteUrl
       // shared ZoomImage) opens a gallery grouped by its data-lightbox value.
       import "../scripts/lightbox";
     </script>
+    <script>
+      // Listing titles are buttons that copy the card's deep link.
+      import { initListingLinkCopy } from "../scripts/copy-listing-link";
+      initListingLinkCopy();
+    </script>
   </body>
 </html>

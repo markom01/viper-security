@@ -11,6 +11,7 @@ import ImageCarousel from "./ImageCarousel.astro";
 import CollectionHeading from "./CollectionHeading.astro";
 import type { FleetEntry, FleetVehicleData, PageContent } from "../../types";
 import { cleanPhone } from "../../lib/phone";
+import { listingAnchorId } from "../../lib/listing-anchor";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 
@@ -63,11 +64,12 @@ const vehicleTitle = (d: FleetVehicleData) => {
     .join(" ");
 };
 
-// Inquiry message: greeting + car + deep link to this section, so the client
-// knows which listing the WhatsApp message is about.
+// Inquiry message: greeting + car + deep link to this card, so the client
+// lands on the exact listing (highlighted by the global `.car-card:target`
+// rule) and knows which one the WhatsApp message is about.
 const pageUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
-const waMessage = (d: FleetVehicleData) =>
-  `Hello Dragan, I'm interested in ${vehicleTitle(d)}: ${pageUrl.href}#${sectionId}`;
+const waMessage = (d: FleetVehicleData, anchor: string) =>
+  `Hello Dragan, I'm interested in ${vehicleTitle(d)}: ${pageUrl.href}#${anchor}`;
 const ctaText = ctaLabel ?? (cta === "link" ? "Bid on Catawiki" : s.fleet.waButton);
 ---
 
@@ -88,14 +90,27 @@ const ctaText = ctaLabel ?? (cta === "link" ? "Bid on Catawiki" : s.fleet.waButt
           vehicles?.map((v: FleetEntry) => {
             const d = v.data || {};
             const title = vehicleTitle(d);
+            const anchor = listingAnchorId(title, v.id);
             const primaryImage = d.images?.[0] ?? d.image;
             return (
               <li>
-                <div class="car-card" style="border-color: var(--colors--cloud);">
+                <div
+                  class="car-card"
+                  id={anchor}
+                  style="border-color: var(--colors--cloud);"
+                >
                   <div class="car-card-details">
                     <div class="car-card-left">
                       <div class="car-listing-info-wrapper">
-                        <h3 class="car-listing-name">{title}</h3>
+                        <h3 class="car-listing-name">
+                          <button
+                            type="button"
+                            class="car-listing-copy"
+                            data-listing-copy
+                            title="Copy link to this car"
+                            aria-label={`Copy link to ${title}`}
+                          >{title}<span class="car-listing-copy-feedback" role="status" aria-live="polite"></span></button>
+                        </h3>
                         {typeof d.price === "number" && (
                           <div class="car-listing-price">
                             {d.price.toLocaleString("en-US")} €
@@ -154,7 +169,7 @@ const ctaText = ctaLabel ?? (cta === "link" ? "Bid on Catawiki" : s.fleet.waButt
                         class="primary-button car-card-wa"
                         target="_blank"
                         rel="noopener noreferrer"
-                        href={`https://wa.me/${cleanPhone(whatsappPhone)}?text=${encodeURIComponent(waMessage(d))}`}
+                        href={`https://wa.me/${cleanPhone(whatsappPhone)}?text=${encodeURIComponent(waMessage(d, anchor))}`}
                       >
                         <div class="button-text">{ctaText}</div>
                       </a>

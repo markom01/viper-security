@@ -1148,6 +1148,42 @@ blockquote {
   color: var(--colors--onyx);
   font-size: var(--body-text-sizes--large);
 }
+/* Title doubles as a copy-link button: keeps the heading semantics while
+   giving keyboard and pointer users the same one-click share action. */
+.car-listing-copy {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: underline dotted transparent;
+  text-underline-offset: 4px;
+}
+.car-listing-copy:hover,
+.car-listing-copy:focus-visible {
+  color: var(--colors--gold);
+  text-decoration-color: currentColor;
+}
+.car-listing-copy:focus-visible {
+  outline: 2px solid var(--colors--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.car-listing-copy-feedback {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: var(--body-text-sizes--extra-small);
+  color: var(--colors--gold);
+  opacity: 0;
+  white-space: nowrap;
+}
+.car-listing-copy[data-copied] .car-listing-copy-feedback {
+  opacity: 1;
+}
 .car-listing-type {
   color: var(--colors--onyx);
   font-size: var(--body-text-sizes--small);
@@ -1184,6 +1220,16 @@ blockquote {
   border: 1px solid var(--colors--cloud);
   border-radius: 12px;
   position: relative;
+}
+/* A card opened from a shared deep link (#year-make-model-idN): the accent
+   ring makes the destination obvious. The browser scrolls to the id itself,
+   so no script is needed. The reveal wrapper starts translated 40px down and
+   resets on intersection, so 64px keeps the card clear of the viewport edge. */
+.car-card:target {
+  box-shadow:
+    0 0 0 3px var(--colors--gold),
+    0 20px 40px -20px rgba(0, 0, 0, 0.45);
+  scroll-margin-top: 64px;
 }
 .car-card-hover-bg {
   opacity: 0;
