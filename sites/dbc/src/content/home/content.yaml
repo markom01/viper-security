@@ -4,12 +4,10 @@ hero:
   subtitle: Enclosed supercar transport, import/export logistics, and off-market buying and selling across Europe. Flat per-route quotes — what you see is what you pay.
   cta_text: View Our Fleet
   hero_image: /images/cms/jeep-and-motorcycle-flames-home-hero.webp
-  phone_italy: ''
-  phone_spain: ''
 about:
   heading: About DB Custom Garage
   text: Founded by Dragan Meseldzija, DB Custom Garage brings together decades of automotive design, customizing for Harley-Davidson and Indian motorcycles, industrial design, and enclosed supercar and classic car transport. Active since 2010 and operating from Marbella and Milan, we combine precision logistics with deep market knowledge for collectors, dealers, and enthusiasts.
-  image: ''
+  image: /images/cms/e6c8f92a-24f5-42fb-ae60-6b904681be2f.jpeg
   images:
     - /images/cms/gallery/black-hummer-h2-in-driveway.webp
     - /images/cms/gallery/jeep-wrangler-body-kit-parts-render.webp
@@ -37,7 +35,6 @@ services:
       image: /images/cms/gallery/grey-jeep-wrangler-bull-bar-render-rear.webp
       slug: customizing
 stats:
-  heading: ''
   subheading: Two bases, one standard — precision logistics and deep market knowledge for collectors, dealers, and enthusiasts.
   image: /images/cms/gallery/porsche-356-body-shell-restoration.webp
   items:
@@ -47,7 +44,7 @@ stats:
       title: Two Bases — Marbella & Milan
     - label: '4'
       title: Transport, Auction, Sourcing & Build
-    - label: '30+'
+    - label: 30+
       title: European Countries Covered
 howitworks:
   heading: How We Build Your Dream
