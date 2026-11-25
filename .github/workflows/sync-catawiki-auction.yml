@@ -6,8 +6,9 @@ name: Sync Catawiki auction
 # sync script, new lots are picked up from the seller feed.
 on:
   schedule:
-    # Every 15 minutes. GitHub may delay scheduled runs under load.
-    - cron: "*/15 * * * *"
+    # Every 15 minutes at off-peak minutes. GitHub drops or delays scheduled
+    # runs during high load, so avoid :00/:15/:30/:45.
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
 
 permissions:
