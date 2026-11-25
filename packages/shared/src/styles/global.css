@@ -1153,20 +1153,18 @@ blockquote {
 .car-listing-copy {
   appearance: none;
   border: 0;
-  background: none;
+  background: transparent !important;
   padding: 0;
   margin: 0;
   color: inherit;
   font: inherit;
   text-align: left;
   cursor: pointer;
-  text-decoration: underline dotted transparent;
-  text-underline-offset: 4px;
-}
-.car-listing-copy:hover,
-.car-listing-copy:focus-visible {
-  color: var(--colors--gold);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: underline;
   text-decoration-color: currentColor;
+  text-underline-offset: 4px;
 }
 .car-listing-copy:focus-visible {
   outline: 2px solid var(--colors--focus);
@@ -1183,6 +1181,10 @@ blockquote {
 }
 .car-listing-copy[data-copied] .car-listing-copy-feedback {
   opacity: 1;
+}
+.car-listing-copy::selection {
+  background: transparent;
+  color: inherit;
 }
 .car-listing-type {
   color: var(--colors--onyx);
