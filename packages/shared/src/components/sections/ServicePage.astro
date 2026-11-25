@@ -76,6 +76,8 @@ interface Props {
   /** WhatsApp inquiry number for per-card buttons (e.g. "currently selling"
    *  cards). Omitted → cards render no WhatsApp button. */
   whatsappPhone?: string;
+  /** Base path for per-listing detail pages (DBC: "/cars"). Titles link there. */
+  detailBase?: string;
   /** HowItWorks steps (site-global, shared with home). */
   howItWorksSteps?: { title: string; description: string; image?: string }[];
   /** Fallback service cards when the offering has no `include` list (VIPER:
@@ -106,6 +108,7 @@ const {
   onAuctionHeading,
   onAuctionSubheadline,
   whatsappPhone,
+  detailBase,
   howItWorksSteps = [],
   defaultServices,
   showPricing = false,
@@ -208,6 +211,7 @@ const serviceAbout = hasAbout
     pageContent={pageContent}
     cta="link"
     ctaLabel="Bid on Catawiki"
+    detailBase={detailBase}
   />
 ) : null}
 {hasFleet && selling ? (
@@ -216,6 +220,7 @@ const serviceAbout = hasAbout
     pageContent={pageContent}
     fleetFeatures={fleetFeaturesText}
     whatsappPhone={whatsappPhone}
+    detailBase={detailBase}
   />
 ) : hasFleet ? (
   <Fleet
@@ -223,6 +228,7 @@ const serviceAbout = hasAbout
     pageContent={pageContent}
     fleetFeatures={fleetFeaturesText}
     whatsappPhone={whatsappPhone}
+    detailBase={detailBase}
   />
 ) : null}
 <StatsSection pageContent={{ ...pageContent, stats: mergedStats }} />

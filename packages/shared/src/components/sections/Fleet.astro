@@ -5,14 +5,17 @@ import CollectionHeading from "./CollectionHeading.astro";
 import type { FleetEntry, FleetVehicleData, PageContent } from "../../types";
 import { cleanPhone } from "../../lib/phone";
 import { listingAnchorId } from "../../lib/listing-anchor";
+import { vehicleTitle } from "../../lib/vehicle-title";
 interface Props {
   pageContent?: PageContent;
   fleetFeatures?: string;
   vehicles?: FleetEntry[];
   /** Inquiry number for the per-card WhatsApp button. Omitted → no button. */
   whatsappPhone?: string;
+  /** Base path for per-listing detail pages. Omitted → plain title text. */
+  detailBase?: string;
 }
-const { pageContent, fleetFeatures, vehicles, whatsappPhone } = Astro.props as Props;
+const { pageContent, fleetFeatures, vehicles, whatsappPhone, detailBase } = Astro.props as Props;
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 const s = resolveLabels(pageContent, STRINGS);
@@ -23,18 +26,6 @@ const f = pageContent?.fleet;
 const present = (x: unknown) => {
   const v = String(x ?? "").trim();
   return v || undefined;
-};
-
-// Card title: composed from the NHTSA `vehicle` fields (year make model) so
-// sale cards need no separate name field. Falls back to the legacy `name`
-// for chauffeur/armored entries that carry no make/model breakdown.
-const vehicleTitle = (d: FleetVehicleData) => {
-  const make = present(d.vehicle?.make);
-  const model = present(d.vehicle?.model);
-  if (!make && !model) return present(d.name) || "";
-  return [present(d.vehicle?.year || d.year), make, model]
-    .filter((x): x is string => !!x)
-    .join(" ");
 };
 
 // Inquiry message: the listing title only, per the client's request.
@@ -93,13 +84,9 @@ const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
                       <div class="car-card-left">
                         <div class="car-listing-info-wrapper">
                           <h3 class="car-listing-name">
-                            <button
-                              type="button"
-                              class="car-listing-copy"
-                              data-listing-copy
-                              title="Copy link to this car"
-                              aria-label={`Copy link to ${title}`}
-                            >{title}<span class="car-listing-copy-feedback" role="status" aria-live="polite"></span></button>
+                            {detailBase ? (
+                              <a class="car-listing-link" href={`${detailBase}/${listingAnchorId(title, v.id)}`}>{title}</a>
+                            ) : title}
                           </h3>
                           {typeof d.price === "number" && (
                             <div class="car-listing-price">

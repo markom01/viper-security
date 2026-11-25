@@ -1148,43 +1148,24 @@ blockquote {
   color: var(--colors--onyx);
   font-size: var(--body-text-sizes--large);
 }
-/* Title doubles as a copy-link button: keeps the heading semantics while
-   giving keyboard and pointer users the same one-click share action. */
-.car-listing-copy {
-  appearance: none;
-  border: 0;
-  background: transparent !important;
-  padding: 0;
-  margin: 0;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
+/* Card title links to its detail page. Global `a` is gold, so keep the
+   heading color and mark the link with an underline instead. */
+.car-listing-link {
+  color: var(--colors--onyx);
+  background: transparent;
   text-decoration: underline;
   text-decoration-color: currentColor;
   text-underline-offset: 4px;
+  -webkit-tap-highlight-color: transparent;
 }
-.car-listing-copy:focus-visible {
+.car-listing-link:hover,
+.car-listing-link:focus-visible {
+  color: var(--colors--gold);
+}
+.car-listing-link:focus-visible {
   outline: 2px solid var(--colors--focus);
   outline-offset: 3px;
   border-radius: 2px;
-}
-.car-listing-copy-feedback {
-  display: inline-block;
-  margin-left: 8px;
-  font-size: var(--body-text-sizes--extra-small);
-  color: var(--colors--gold);
-  opacity: 0;
-  white-space: nowrap;
-}
-.car-listing-copy[data-copied] .car-listing-copy-feedback {
-  opacity: 1;
-}
-.car-listing-copy::selection {
-  background: transparent;
-  color: inherit;
 }
 .car-listing-type {
   color: var(--colors--onyx);

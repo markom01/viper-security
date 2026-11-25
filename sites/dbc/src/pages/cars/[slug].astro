@@ -1,0 +1,220 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import ImageCarousel from "@garage/shared/sections/ImageCarousel.astro";
+import ZoomImage from "@garage/shared/sections/ZoomImage.astro";
+import { listingAnchorId } from "@garage/shared/lib/listing-anchor";
+import { vehicleTitle } from "@garage/shared/lib/vehicle-title";
+import { cleanPhone } from "@garage/shared/lib/phone";
+import type { FleetEntry, FleetVehicleData, PageContent } from "@garage/shared/types";
+import { site } from "../../config/site";
+import onAuctionData from "../../data/on-auction.json";
+
+/**
+ * One static page per listing. Sources mirror the card lists: the CMS
+ * `currently-selling` collection, the Catawiki snapshot, and the legacy
+ * `offering.fleet[]` fallback used when the collection is empty.
+ */
+export async function getStaticPaths() {
+  const [selling, services] = await Promise.all([
+    getCollection("selling"),
+    getCollection("service"),
+  ]);
+
+  const entries: FleetEntry[] = [
+    ...selling.map((entry) => ({
+      id: entry.id,
+      collection: "fleet" as const,
+      data: entry.data as FleetVehicleData,
+    })),
+    ...onAuctionData.lots.map((lot) => ({
+      id: lot.id,
+      collection: "fleet" as const,
+      data: lot as FleetVehicleData,
+    })),
+    ...services.flatMap((service) =>
+      (service.data.fleet ?? []).map((vehicle, index) => ({
+        id: `${service.id}-${index}`,
+        collection: "fleet" as const,
+        data: vehicle as FleetVehicleData,
+      })),
+    ),
+  ];
+
+  return entries.map((vehicle) => {
+    const title = vehicleTitle(vehicle.data);
+    const slug = listingAnchorId(title, vehicle.id);
+    return { params: { slug }, props: { vehicle, title, slug } };
+  });
+}
+
+const { vehicle, title, slug } = Astro.props as {
+  vehicle: FleetEntry;
+  title: string;
+  slug: string;
+};
+const d = vehicle.data;
+const siteGlobals = (await getEntry("site", "content"))!.data;
+const pageContent: PageContent = {
+  ...siteGlobals,
+  seo: {
+    ...(siteGlobals?.seo ?? {}),
+    title: `${title} — DB Custom Garage`,
+    description:
+      d.description?.trim().slice(0, 155) ||
+      `${title} available from DB Custom Garage.`,
+    image:
+      d.images?.[0] ??
+      (typeof d.image === "string" ? d.image : undefined) ??
+      siteGlobals?.seo?.image,
+    theme_color: siteGlobals?.seo?.theme_color ?? site.themeColor,
+  },
+};
+
+const present = (value: unknown): string | undefined => {
+  const text = String(value ?? "").trim();
+  return text || undefined;
+};
+const primaryImage = d.images?.[0] ?? d.image;
+const waHref = `https://wa.me/${cleanPhone(site.whatsappNumber)}?text=${encodeURIComponent(`Hello Dragan, I'm interested in ${title}: ${site.url}/cars/${slug}`)}`;
+---
+
+<SiteLayout
+  pageContent={pageContent}
+  ogLocale="en_US"
+  preloadImage={typeof primaryImage === "string" ? primaryImage : undefined}
+>
+  <main class="section car-detail">
+    <div class="content-wrapper">
+      <a class="car-detail-back" href={`/services/auction/#${slug}`}>
+        ← Back to listings
+      </a>
+      <div class="car-detail-grid">
+        <div class="car-detail-media">
+          {
+            d.images && d.images.length > 1 ? (
+              <ImageCarousel
+                images={d.images}
+                alt={title}
+                id={`car-${vehicle.id}-carousel`}
+                group={`car-${vehicle.id}`}
+              />
+            ) : primaryImage ? (
+              <div class="car-listing-image-wrapper car-listing-image-wrapper--single">
+                <ZoomImage
+                  src={primaryImage}
+                  alt={title}
+                  class="car-listing-image"
+                  group={`car-${vehicle.id}`}
+                  widths={[320, 480, 640]}
+                  sizes="(max-width: 767px) 100vw, (max-width: 991px) 50vw, 400px"
+                />
+              </div>
+            ) : null
+          }
+        </div>
+        <div class="car-detail-info">
+          <h1 class="car-detail-title">{title}</h1>
+          {typeof d.price === "number" && (
+            <p class="car-detail-price">{d.price.toLocaleString("en-US")} €</p>
+          )}
+          {present(d.type) && <p class="car-detail-type">{d.type}</p>}
+          {d.description && <p class="car-detail-description">{d.description}</p>}
+          <div class="car-detail-actions">
+            {
+              d.url && (
+                <a
+                  class="primary-button"
+                  href={d.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Bid on Catawiki
+                </a>
+              )
+            }
+            <a
+              class={d.url ? "secondary-button" : "primary-button"}
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ask about this car
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</SiteLayout>
+
+<style>
+  .car-detail {
+    background-color: var(--colors--pure);
+    color: var(--colors--onyx);
+    padding-top: 160px;
+  }
+  .car-detail-back {
+    display: inline-block;
+    margin-bottom: 32px;
+    color: var(--colors--gold-on-light);
+  }
+  .car-detail-media {
+    min-width: 0;
+  }
+  .car-detail-grid {
+    display: grid;
+    gap: 48px;
+    align-items: start;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  }
+  /* Mirror the card media frame exactly: multi-image listings use the same
+     ImageCarousel component; single-image listings get the same 4:3 frame. */
+  .car-listing-image-wrapper--single {
+    aspect-ratio: 4 / 3;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .car-listing-image-wrapper--single > :global(.zoomable) {
+    height: 100%;
+  }
+  .car-listing-image-wrapper--single :global(.car-listing-image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .car-detail-title {
+    margin-bottom: 12px;
+  }
+  .car-detail-price {
+    color: var(--colors--gold);
+    font-size: var(--body-text-sizes--large);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .car-detail-type {
+    text-transform: uppercase;
+    font-size: var(--body-text-sizes--small);
+    letter-spacing: 0.04em;
+  }
+  .car-detail-description {
+    margin-top: 24px;
+    white-space: pre-line;
+  }
+  .car-detail-actions {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .car-detail-actions :global(.secondary-button) {
+    border-color: var(--colors--onyx);
+    color: var(--colors--onyx);
+  }
+  @media (max-width: 991.98px) {
+    .car-detail-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+  }
+</style>

@@ -12,6 +12,7 @@ import CollectionHeading from "./CollectionHeading.astro";
 import type { FleetEntry, FleetVehicleData, PageContent } from "../../types";
 import { cleanPhone } from "../../lib/phone";
 import { listingAnchorId } from "../../lib/listing-anchor";
+import { vehicleTitle } from "../../lib/vehicle-title";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 
@@ -30,6 +31,9 @@ interface Props {
   /** `whatsapp` asks about the car; `link` opens the listing URL instead. */
   cta?: "whatsapp" | "link";
   ctaLabel?: string;
+  /** Base path for per-listing detail pages. Cards link to
+   *  `<detailBase>/<title-slug>-id<id>` when set; omitted → plain title text. */
+  detailBase?: string;
 }
 
 const {
@@ -42,6 +46,7 @@ const {
   subheadline,
   cta = "whatsapp",
   ctaLabel,
+  detailBase,
 } = Astro.props as Props;
 const s = resolveLabels(pageContent, STRINGS);
 const f = pageContent?.fleet;
@@ -51,17 +56,6 @@ const f = pageContent?.fleet;
 const present = (x: unknown) => {
   const v = String(x ?? "").trim();
   return v || undefined;
-};
-
-// Card title: composed from the NHTSA `vehicle` fields (year make model), the
-// same rule Fleet.astro uses, with the legacy `name` as a fallback.
-const vehicleTitle = (d: FleetVehicleData) => {
-  const make = present(d.vehicle?.make);
-  const model = present(d.vehicle?.model);
-  if (!make && !model) return present(d.name) || "";
-  return [present(d.vehicle?.year || d.year), make, model]
-    .filter((x): x is string => !!x)
-    .join(" ");
 };
 
 // Inquiry message: greeting + car + deep link to this card, so the client
@@ -103,13 +97,9 @@ const ctaText = ctaLabel ?? (cta === "link" ? "Bid on Catawiki" : s.fleet.waButt
                     <div class="car-card-left">
                       <div class="car-listing-info-wrapper">
                         <h3 class="car-listing-name">
-                          <button
-                            type="button"
-                            class="car-listing-copy"
-                            data-listing-copy
-                            title="Copy link to this car"
-                            aria-label={`Copy link to ${title}`}
-                          >{title}<span class="car-listing-copy-feedback" role="status" aria-live="polite"></span></button>
+                          {detailBase ? (
+                            <a class="car-listing-link" href={`${detailBase}/${anchor}`}>{title}</a>
+                          ) : title}
                         </h3>
                         {typeof d.price === "number" && (
                           <div class="car-listing-price">
