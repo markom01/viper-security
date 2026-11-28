@@ -2,6 +2,10 @@
  * Snapshot the DB Custom Garage Catawiki auction lots for the DBC
  * /services/auction/ page.
  *
+ * Syncs every seller auction type except Automobilia Car Parts Auction
+ * (`auction_type=1157`), which lists parts and memorabilia rather than
+ * vehicles.
+ *
  * Catawiki has no public API. Each listing page is a Next.js app whose
  * `__NEXT_DATA__` script contains the lot, bid and image data the browser
  * renders. Local runs read that HTML directly with `impit` (Firefox TLS
@@ -33,7 +37,8 @@ const USE_FIRECRAWL =
 // seller wrote the original listing in Italian.
 const LOCALE = "en";
 const SELLER = "979497-db-custom-garage";
-const AUCTION_TYPE = "311"; // Youngtimer car auction — cars only.
+// Automobilia Car Parts Auction — parts and memorabilia, not vehicles.
+const EXCLUDED_AUCTION_TYPES = ["1157"];
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = resolve(ROOT, "sites/dbc/src/data/on-auction.json");
@@ -146,12 +151,34 @@ function normalizeLot(detail, card, order) {
   };
 }
 
-const sellerUrl = `${ORIGIN}/${LOCALE}/u/${SELLER}?auction_type=${AUCTION_TYPE}`;
+const sellerUrl = `${ORIGIN}/${LOCALE}/u/${SELLER}`;
 const sellerProps = await fetchPageProps(sellerUrl);
-const cards = sellerProps.lots ?? [];
+// The unfiltered seller page exposes every auction type in `auctions.values`
+// and returns every lot. Fetch only the excluded types to learn which lot ids
+// to drop, then keep the rest in the seller's own order.
+const auctionValues = sellerProps.auctions?.values ?? [];
+const auctionTypeIds = auctionValues.map((value) => String(value.id));
+const auctionTypes = auctionTypeIds.filter(
+  (id) => !EXCLUDED_AUCTION_TYPES.includes(id),
+);
+
+const excludedCardIds = new Set();
+for (const auctionType of auctionTypeIds.filter((id) =>
+  EXCLUDED_AUCTION_TYPES.includes(id),
+)) {
+  const typeProps = await fetchPageProps(
+    `${sellerUrl}?auction_type=${auctionType}`,
+  );
+  for (const card of typeProps.lots ?? []) excludedCardIds.add(card.id);
+  await sleep(250);
+}
+
+const cards = (sellerProps.lots ?? []).filter(
+  (card) => !excludedCardIds.has(card.id),
+);
 
 console.log(
-  `Catawiki seller ${SELLER}, auction_type=${AUCTION_TYPE}: ${sellerProps.total ?? cards.length} lot(s)`,
+  `Catawiki seller ${SELLER}, auction types ${auctionTypes.join(",")}: ${cards.length} lot(s), ${excludedCardIds.size} excluded`,
 );
 
 const now = Date.now();
@@ -183,7 +210,9 @@ try {
 
 const unchanged =
   previous?.seller === SELLER &&
-  previous?.auctionType === AUCTION_TYPE &&
+  JSON.stringify(previous?.auctionTypes) === JSON.stringify(auctionTypes) &&
+  JSON.stringify(previous?.excludedAuctionTypes) ===
+    JSON.stringify(EXCLUDED_AUCTION_TYPES) &&
   JSON.stringify(previous?.lots) === JSON.stringify(lots);
 
 if (unchanged) {
@@ -194,7 +223,8 @@ if (unchanged) {
 const payload = {
   syncedAt: new Date().toISOString(),
   seller: SELLER,
-  auctionType: AUCTION_TYPE,
+  auctionTypes,
+  excludedAuctionTypes: EXCLUDED_AUCTION_TYPES,
   lots,
 };
 
