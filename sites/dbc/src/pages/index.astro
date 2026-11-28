@@ -60,7 +60,10 @@ const homeCarousel = [
     phoneSpain={site.whatsappNumber}
     services={services}
   />
-  <AboutSection pageContent={pageContent} images={homeCarousel} />
+  <AboutSection
+    pageContent={pageContent}
+    images={home.about?.images?.length ? home.about.images : homeCarousel}
+  />
   <Services pageContent={pageContent} marbella={services} milano={services} />
   <StatsSection pageContent={pageContent} />
   <HowItWorks steps={pageContent.howitworks?.steps ?? siteGlobals.howItWorksSteps} pageContent={pageContent} />
