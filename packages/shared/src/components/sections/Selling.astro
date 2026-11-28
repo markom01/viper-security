@@ -13,6 +13,7 @@ import type { FleetEntry, FleetVehicleData, PageContent } from "../../types";
 import { cleanPhone } from "../../lib/phone";
 import { listingAnchorId } from "../../lib/listing-anchor";
 import { vehicleTitle } from "../../lib/vehicle-title";
+import { cardDescription } from "../../lib/card-description";
 import STRINGS from "../../config/strings";
 import { resolveLabels } from "../../config/labels";
 
@@ -84,6 +85,7 @@ const ctaText = ctaLabel ?? (cta === "link" ? "Bid on Catawiki" : s.fleet.waButt
           vehicles?.map((v: FleetEntry) => {
             const d = v.data || {};
             const title = vehicleTitle(d);
+            const description = cardDescription(d.description);
             const anchor = listingAnchorId(title, v.id);
             const primaryImage = d.images?.[0] ?? d.image;
             return (
@@ -110,8 +112,8 @@ const ctaText = ctaLabel ?? (cta === "link" ? "Bid on Catawiki" : s.fleet.waButt
                           <div class="car-listing-type">{d.type}</div>
                         )}
                       </div>
-                      {present(d.description) && (
-                        <p class="car-card-description">{d.description}</p>
+                      {description && (
+                        <p class="car-card-description">{description}</p>
                       )}
                       <div
                         class:list={[
@@ -225,6 +227,12 @@ const ctaText = ctaLabel ?? (cta === "link" ? "Bid on Catawiki" : s.fleet.waButt
   .selling .car-card-description {
     margin-top: 12px;
     line-height: var(--line-height-sizes--small);
+    white-space: pre-line;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    line-clamp: 10;
+    overflow: hidden;
   }
   /* Inquiry CTA sits outside .car-card-details, so it carries its own inset.
      The auto top margin keeps buttons on one line when card copy differs. */

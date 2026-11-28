@@ -6,6 +6,7 @@ import type { FleetEntry, FleetVehicleData, PageContent } from "../../types";
 import { cleanPhone } from "../../lib/phone";
 import { listingAnchorId } from "../../lib/listing-anchor";
 import { vehicleTitle } from "../../lib/vehicle-title";
+import { cardDescription } from "../../lib/card-description";
 interface Props {
   pageContent?: PageContent;
   fleetFeatures?: string;
@@ -49,6 +50,7 @@ const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
             vehicles?.map((v: FleetEntry) => {
               const d = v.data || {};
               const title = vehicleTitle(d);
+              const description = cardDescription(d.description);
               // Card image: gallery first (carousel only when there are several),
               // then the legacy single `image` field used by chauffeur fleets.
               const primaryImage = d.images?.[0] ?? d.image;
@@ -97,8 +99,8 @@ const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
                             <div class="car-listing-type">{d.type}</div>
                           )}
                         </div>
-                        {present(d.description) && (
-                          <p class="car-card-description">{d.description}</p>
+                        {description && (
+                          <p class="car-card-description">{description}</p>
                         )}
                         <div
                           class:list={[
@@ -342,6 +344,12 @@ const waMessage = (d: FleetVehicleData) => vehicleTitle(d);
   .car-card-description {
     margin-top: 12px;
     line-height: var(--line-height-sizes--small);
+    white-space: pre-line;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    line-clamp: 10;
+    overflow: hidden;
   }
   /* Inquiry CTA sits outside .car-card-details, so it carries its own inset.
      The auto top margin keeps buttons on one line when card copy differs. */
